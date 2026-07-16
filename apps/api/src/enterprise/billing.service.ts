@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InvoiceStatus, OrgType, SubmissionStatus } from '@prisma/client';
+import { InvoiceStatus, OrgType, SubmissionStatus } from '@cannathera/db';
 import { PrismaService } from '../prisma/prisma.service';
 import { requirePermission } from './access';
 

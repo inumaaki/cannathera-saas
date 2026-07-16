@@ -7,7 +7,7 @@ import {
   Param,
   UseGuards,
 } from '@nestjs/common';
-import { OrgType, Role, SubscriptionTier } from '@prisma/client';
+import { OrgType, Role, SubscriptionTier } from '@cannathera/db';
 import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { Roles, RolesGuard, SessionGuard } from '../auth/auth.guard';
 import { AdminService } from './admin.service';

@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Locale, OrgType, Role, User } from '@prisma/client';
+import { Locale, OrgType, Role, User } from '@cannathera/db';
 import * as argon2 from 'argon2';
 import { randomBytes, randomInt } from 'crypto';
 import * as nodemailer from 'nodemailer';

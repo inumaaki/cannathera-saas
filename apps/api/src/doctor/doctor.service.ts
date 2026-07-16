@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Prisma, RedFlagSeverity, Role, SubmissionStatus } from '@prisma/client';
+import { Prisma, RedFlagSeverity, Role, SubmissionStatus } from '@cannathera/db';
 import { PrismaService } from '../prisma/prisma.service';
 
 type LogMetrics = { pain?: number; sleep?: number; activity?: number; qol?: number };

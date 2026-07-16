@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
-import { Role } from '@prisma/client';
+import { Role } from '@cannathera/db';
 import type { Request, Response } from 'express';
 import { PrismaService } from '../prisma/prisma.service';
 import type { SessionPayload } from './auth.service';

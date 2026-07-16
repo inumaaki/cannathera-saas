@@ -11,7 +11,7 @@ import {
   MinLength,
   ValidateNested,
 } from 'class-validator';
-import { Locale } from '@prisma/client';
+import { Locale } from '@cannathera/db';
 
 export const SIGNUP_ROLES = ['patient', 'doctor', 'pharmacy', 'enterprise'] as const;
 export type SignupRole = (typeof SIGNUP_ROLES)[number];

@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Locale, Prisma, SubmissionStatus } from '@prisma/client';
+import { Locale, Prisma, SubmissionStatus } from '@cannathera/db';
 import { evaluateCondition, type AnswerMap, type Condition } from '@cannathera/shared';
 import { PrismaService } from '../prisma/prisma.service';
 

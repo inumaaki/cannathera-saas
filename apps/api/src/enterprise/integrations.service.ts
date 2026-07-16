@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { OrgType, Prisma } from '@prisma/client';
+import { OrgType, Prisma } from '@cannathera/db';
 import { createHash, randomBytes, timingSafeEqual } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
 import { membershipOf, requirePermission } from './access';

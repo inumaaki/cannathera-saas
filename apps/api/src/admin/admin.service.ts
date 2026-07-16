@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
-import { OrgType, Role, SubscriptionTier } from '@prisma/client';
+import { OrgType, Role, SubscriptionTier } from '@cannathera/db';
 import { PrismaService } from '../prisma/prisma.service';
 import * as argon2 from 'argon2';
 import { randomBytes } from 'crypto';

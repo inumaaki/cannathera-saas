@@ -1,7 +1,7 @@
 import { Injectable, Logger, BadRequestException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PrismaService } from '../prisma/prisma.service';
-import { SubscriptionTier } from '@prisma/client';
+import { SubscriptionTier } from '@cannathera/db';
 import Stripe from 'stripe';
 import { NotificationsService } from '../notifications/notifications.service';
 import * as nodemailer from 'nodemailer';

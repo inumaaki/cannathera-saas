@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { ReportType, Role, SubscriptionTier } from '@prisma/client';
+import { ReportType, Role, SubscriptionTier } from '@cannathera/db';
 import { join } from 'path';
 import { PrismaService } from '../prisma/prisma.service';
 import { renderReportPdf } from './report-template';

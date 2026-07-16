@@ -9,7 +9,7 @@ import {
   RedFlagSeverity,
   SubmissionStatus,
   SubscriptionTier,
-} from '@prisma/client';
+} from '@cannathera/db';
 import { NotificationsService } from '../notifications/notifications.service';
 import { PrismaService } from '../prisma/prisma.service';
 

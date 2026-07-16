@@ -11,7 +11,7 @@ import {
   RedFlagSeverity,
   SubmissionStatus,
   SubscriptionTier,
-} from '@prisma/client';
+} from '@cannathera/db';
 import { PrismaService } from '../prisma/prisma.service';
 import { requirePermission } from './access';
 

@@ -13,7 +13,7 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { Role } from '@prisma/client';
+import { Role } from '@cannathera/db';
 import type { Response } from 'express';
 import {
   ArrayUnique,

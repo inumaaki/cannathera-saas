@@ -12,7 +12,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import type { Response } from 'express';
-import { SubscriptionTier } from '@prisma/client';
+import { SubscriptionTier } from '@cannathera/db';
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
 import { SessionGuard } from '../auth/auth.guard';
 import type { AuthedRequest } from '../auth/auth.guard';

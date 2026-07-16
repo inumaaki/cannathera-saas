@@ -7,7 +7,7 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import { Locale, Role } from '@prisma/client';
+import { Locale, Role } from '@cannathera/db';
 import { IsObject } from 'class-validator';
 import {
   CurrentUser,

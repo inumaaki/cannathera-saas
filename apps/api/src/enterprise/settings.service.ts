@@ -1,5 +1,5 @@
 import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
-import { Prisma, Role } from '@prisma/client';
+import { Prisma, Role } from '@cannathera/db';
 import * as argon2 from 'argon2';
 import { randomInt } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
