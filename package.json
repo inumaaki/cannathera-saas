@@ -5,7 +5,7 @@
   "description": "Cannathera — B2B SaaS platform for structured medical-cannabis therapy accompaniment",
   "packageManager": "pnpm@11.11.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "dev": "pnpm --parallel --filter \"./apps/*\" dev",
