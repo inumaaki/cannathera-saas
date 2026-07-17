@@ -15,8 +15,13 @@ async function bootstrap() {
   app.useStaticAssets(join(process.cwd(), 'uploads', 'public'), {
     prefix: '/uploads/',
   });
+  const rawOrigin = process.env.WEB_ORIGIN ?? 'http://localhost:3000';
+  const allowedOrigins = rawOrigin.endsWith('/') 
+    ? [rawOrigin, rawOrigin.slice(0, -1)] 
+    : [rawOrigin, rawOrigin + '/'];
+
   app.enableCors({
-    origin: process.env.WEB_ORIGIN ?? 'http://localhost:3000',
+    origin: allowedOrigins,
     credentials: true,
   });
   app.useGlobalPipes(
