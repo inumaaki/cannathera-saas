@@ -1,7 +1,7 @@
 import createMiddleware from "next-intl/middleware";
 import { routing } from "./i18n/routing";
 
-// Next.js 16: "Middleware" is now "Proxy" (proxy.ts). Same functionality.
+// Next.js standard middleware for internationalization
 // Handles locale detection + /de|/en|/tr|/bg|/ar prefix routing.
 export default createMiddleware(routing);
 
