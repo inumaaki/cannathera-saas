@@ -179,17 +179,20 @@ export class StripeService {
 
       // 2. Send transaction success email
       if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
-        try {
+        const smtpHost = process.env.SMTP_HOST;
+        require('dns/promises').lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
           const greetingName = user.firstName ? `${user.firstName} ${user.lastName ?? ''}`.trim() : user.email;
           const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
+            host: dnsResult.address,
             port: Number(process.env.SMTP_PORT ?? 587),
             secure: process.env.SMTP_SECURE === 'true',
             auth: {
               user: process.env.SMTP_USER,
               pass: process.env.SMTP_PASS,
             },
-            family: 4, // Force IPv4 to bypass Railway IPv6 reachability issues
+            tls: {
+              servername: smtpHost,
+            },
           } as any);
           transporter.sendMail({
             from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
@@ -233,9 +236,9 @@ export class StripeService {
           }).catch((err) => {
             this.logger.error(`Failed to send success email to patient ${user.email}: ${err instanceof Error ? err.message : String(err)}`);
           });
-        } catch (err) {
-          this.logger.error(`Failed to initialize success email transporter for patient ${user.email}: ${err instanceof Error ? err.message : String(err)}`);
-        }
+        }).catch((err: any) => {
+          this.logger.error(`Failed to resolve SMTP host to IPv4 for patient checkout: ${err instanceof Error ? err.message : String(err)}`);
+        });
       }
     }
   }
@@ -299,63 +302,66 @@ export class StripeService {
         });
 
         if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
-          try {
+          const smtpHost = process.env.SMTP_HOST;
+          require('dns/promises').lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
             const greetingName = updatedUser.firstName ? `${updatedUser.firstName} ${updatedUser.lastName ?? ''}`.trim() : updatedUser.email;
-          const transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: Number(process.env.SMTP_PORT ?? 587),
-            secure: process.env.SMTP_SECURE === 'true',
-            auth: {
-              user: process.env.SMTP_USER,
-              pass: process.env.SMTP_PASS,
-            },
-            family: 4, // Force IPv4 to bypass Railway IPv6 reachability issues
-          } as any);
-          transporter.sendMail({
-            from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
-            to: updatedUser.email,
-            subject: 'License Activated - Cannathera',
-            text: `Hello ${greetingName},\n\nYour organization license (${planTier} plan) has been successfully activated on Cannathera.\n\nBest regards,\nYour Cannathera Team`,
-            html: `
-              <div style="background-color: #f1f5f9; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; min-height: 100%;">
-                <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid #e2e8f0;">
-                  <!-- Header -->
-                  <div style="background: linear-gradient(135deg, #0d3a2e 0%, #164e43 100%); padding: 35px 30px; text-align: center;">
-                    <h1 style="color: #ffffff; margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; font-family: 'Outfit', sans-serif;">CANNATHERA</h1>
-                    <p style="color: #3cd3ad; margin: 5px 0 0 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">License Active</p>
-                  </div>
-                  <!-- Body -->
-                  <div style="padding: 40px 30px; line-height: 1.6; color: #334155;">
-                    <h2 style="color: #0d3a2e; margin-top: 0; font-size: 20px; font-weight: 700;">Hello ${greetingName},</h2>
-                    <p style="font-size: 15px; margin-bottom: 20px;">Your organization's partner license has been successfully activated.</p>
-                    
-                    <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 25px; margin: 25px 0; text-align: center;">
-                      <p style="margin: 0; font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Active Partner Plan</p>
-                      <h3 style="margin: 5px 0 0 0; color: #0d3a2e; font-size: 26px; font-weight: 800;">${planTier}</h3>
+            const transporter = nodemailer.createTransport({
+              host: dnsResult.address,
+              port: Number(process.env.SMTP_PORT ?? 587),
+              secure: process.env.SMTP_SECURE === 'true',
+              auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS,
+              },
+              tls: {
+                servername: smtpHost,
+              },
+            } as any);
+            transporter.sendMail({
+              from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
+              to: updatedUser.email,
+              subject: 'License Activated - Cannathera',
+              text: `Hello ${greetingName},\n\nYour organization license (${planTier} plan) has been successfully activated on Cannathera.\n\nBest regards,\nYour Cannathera Team`,
+              html: `
+                <div style="background-color: #f1f5f9; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; min-height: 100%;">
+                  <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid #e2e8f0;">
+                    <!-- Header -->
+                    <div style="background: linear-gradient(135deg, #0d3a2e 0%, #164e43 100%); padding: 35px 30px; text-align: center;">
+                      <h1 style="color: #ffffff; margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; font-family: 'Outfit', sans-serif;">CANNATHERA</h1>
+                      <p style="color: #3cd3ad; margin: 5px 0 0 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">License Active</p>
                     </div>
+                    <!-- Body -->
+                    <div style="padding: 40px 30px; line-height: 1.6; color: #334155;">
+                      <h2 style="color: #0d3a2e; margin-top: 0; font-size: 20px; font-weight: 700;">Hello ${greetingName},</h2>
+                      <p style="font-size: 15px; margin-bottom: 20px;">Your organization's partner license has been successfully activated.</p>
+                      
+                      <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 25px; margin: 25px 0; text-align: center;">
+                        <p style="margin: 0; font-size: 13px; color: #64748b; text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Active Partner Plan</p>
+                        <h3 style="margin: 5px 0 0 0; color: #0d3a2e; font-size: 26px; font-weight: 800;">${planTier}</h3>
+                      </div>
 
-                    <p style="font-size: 15px;">Your partner dashboard is fully reactivated. You can manage patient lists, compliance forms, and download monthly legally-compliant reports.</p>
+                      <p style="font-size: 15px;">Your partner dashboard is fully reactivated. You can manage patient lists, compliance forms, and download monthly legally-compliant reports.</p>
 
-                    <div style="text-align: center; margin: 35px 0 20px 0;">
-                      <a href="http://localhost:3000/en/enterprise/billing" style="background-color: #0d3a2e; color: #ffffff; text-decoration: none; padding: 14px 30px; font-size: 16px; font-weight: 600; border-radius: 8px; display: inline-block; box-shadow: 0 4px 6px rgba(13, 58, 46, 0.15); transition: background-color 0.2s;">Go to Billing Panel</a>
+                      <div style="text-align: center; margin: 35px 0 20px 0;">
+                        <a href="http://localhost:3000/en/enterprise/billing" style="background-color: #0d3a2e; color: #ffffff; text-decoration: none; padding: 14px 30px; font-size: 16px; font-weight: 600; border-radius: 8px; display: inline-block; box-shadow: 0 4px 6px rgba(13, 58, 46, 0.15); transition: background-color 0.2s;">Go to Billing Panel</a>
+                      </div>
                     </div>
-                  </div>
-                  <!-- Footer -->
-                  <div style="background-color: #f8fafc; padding: 20px; text-align: center; font-size: 13px; color: #94a3b8; border-top: 1px solid #e2e8f0;">
-                    <p style="margin: 0;">&copy; 2026 Cannathera GmbH. All rights reserved.</p>
-                    <p style="margin: 5px 0 0 0;">This is an automated operational message. Please do not reply.</p>
+                    <!-- Footer -->
+                    <div style="background-color: #f8fafc; padding: 20px; text-align: center; font-size: 13px; color: #94a3b8; border-top: 1px solid #e2e8f0;">
+                      <p style="margin: 0;">&copy; 2026 Cannathera GmbH. All rights reserved.</p>
+                      <p style="margin: 5px 0 0 0;">This is an automated operational message. Please do not reply.</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            `,
-          }).then(() => {
-            this.logger.log(`Success email sent to org member ${updatedUser.email}`);
-          }).catch((err) => {
-            this.logger.error(`Failed to send success email to B2B member ${updatedUser.email}: ${err instanceof Error ? err.message : String(err)}`);
+              `,
+            }).then(() => {
+              this.logger.log(`Success email sent to org member ${updatedUser.email}`);
+            }).catch((err) => {
+              this.logger.error(`Failed to send success email to B2B member ${updatedUser.email}: ${err instanceof Error ? err.message : String(err)}`);
+            });
+          }).catch((err: any) => {
+            this.logger.error(`Failed to resolve SMTP host to IPv4 for B2B member ${updatedUser.email}: ${err instanceof Error ? err.message : String(err)}`);
           });
-        } catch (err) {
-          this.logger.error(`Failed to initialize success email transporter for B2B member ${updatedUser.email}: ${err instanceof Error ? err.message : String(err)}`);
-        }
         }
       }
     }

@@ -172,16 +172,19 @@ export class AdminService {
 
     // Send onboarding email logic
     if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
-      try {
+      const smtpHost = process.env.SMTP_HOST;
+      require('dns/promises').lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
         const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST,
+          host: dnsResult.address,
           port: Number(process.env.SMTP_PORT ?? 587),
           secure: process.env.SMTP_SECURE === 'true',
           auth: {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
           },
-          family: 4, // Force IPv4 to bypass Railway IPv6 reachability issues
+          tls: {
+            servername: smtpHost,
+          },
         } as any);
         const greetingName = user.firstName ? user.firstName : 'Partner';
         transporter.sendMail({
@@ -226,9 +229,9 @@ export class AdminService {
         }).catch((err) => {
           console.error('Failed to send onboarding email:', err);
         });
-      } catch (err) {
-        console.error('Failed to initialize onboarding email transporter:', err);
-      }
+      }).catch((err: any) => {
+        console.error('Failed to resolve SMTP host to IPv4 for onboarding:', err);
+      });
     } else {
       console.log(`[ONBOARDING MOCK EMAIL] Temporary credentials for ${user.email}: ${tempPassword}`);
     }

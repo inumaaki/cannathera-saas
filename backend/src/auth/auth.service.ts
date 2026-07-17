@@ -496,16 +496,19 @@ export class AuthService {
     this.logger.log(`2FA code for ${user.email}: ${code}`);
 
     if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
-      try {
+      const smtpHost = process.env.SMTP_HOST;
+      require('dns/promises').lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
         const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST,
+          host: dnsResult.address,
           port: Number(process.env.SMTP_PORT ?? 587),
           secure: process.env.SMTP_SECURE === 'true',
           auth: {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
           },
-          family: 4, // Force IPv4 to bypass Railway IPv6 reachability issues
+          tls: {
+            servername: smtpHost,
+          },
         } as any);
         transporter.sendMail({
           from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
@@ -518,9 +521,9 @@ export class AuthService {
         }).catch((err) => {
           this.logger.error(`Failed to send 2FA email to ${user.email}: ${err instanceof Error ? err.message : String(err)}`);
         });
-      } catch (err) {
-        this.logger.error(`Failed to initialize 2FA email transporter: ${err instanceof Error ? err.message : String(err)}`);
-      }
+      }).catch((err: any) => {
+        this.logger.error(`Failed to resolve SMTP host to IPv4: ${err instanceof Error ? err.message : String(err)}`);
+      });
     }
 
     return process.env.NODE_ENV === 'production' ? undefined : code;
