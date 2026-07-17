@@ -87,6 +87,12 @@
     "testEnvironment": "node"
   },
   "pnpm": {
-    "dangerouslyAllowAllBuilds": true
+    "onlyBuiltDependencies": [
+      "@prisma/client",
+      "@prisma/engines",
+      "argon2",
+      "prisma",
+      "puppeteer"
+    ]
   }
 }
