@@ -505,7 +505,8 @@ export class AuthService {
             user: process.env.SMTP_USER,
             pass: process.env.SMTP_PASS,
           },
-        });
+          family: 4, // Force IPv4 to bypass Railway IPv6 reachability issues
+        } as any);
         transporter.sendMail({
           from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
           to: user.email,
