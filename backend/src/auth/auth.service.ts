@@ -495,7 +495,6 @@ export class AuthService {
     // TODO(M11): send via transactional email provider (GDPR-compliant, EU region).
     this.logger.log(`2FA code for ${user.email}: ${code}`);
 
-    // SMTP enabled
     if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
       try {
         const transporter = nodemailer.createTransport({
@@ -507,16 +506,19 @@ export class AuthService {
             pass: process.env.SMTP_PASS,
           },
         });
-        await transporter.sendMail({
+        transporter.sendMail({
           from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
           to: user.email,
           subject: 'Cannathera 2FA Code',
           text: `Your 2FA verification code is: ${code}`,
           html: `<p>Your 2FA verification code is: <strong>${code}</strong></p>`,
+        }).then(() => {
+          this.logger.log(`2FA email sent to ${user.email}`);
+        }).catch((err) => {
+          this.logger.error(`Failed to send 2FA email to ${user.email}: ${err instanceof Error ? err.message : String(err)}`);
         });
-        this.logger.log(`2FA email sent to ${user.email}`);
       } catch (err) {
-        this.logger.error(`Failed to send 2FA email to ${user.email}: ${err instanceof Error ? err.message : String(err)}`);
+        this.logger.error(`Failed to initialize 2FA email transporter: ${err instanceof Error ? err.message : String(err)}`);
       }
     }
 

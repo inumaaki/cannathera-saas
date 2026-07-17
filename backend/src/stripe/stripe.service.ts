@@ -190,7 +190,7 @@ export class StripeService {
               pass: process.env.SMTP_PASS,
             },
           });
-          await transporter.sendMail({
+          transporter.sendMail({
             from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
             to: user.email,
             subject: 'Subscription Activated - Cannathera',
@@ -227,10 +227,13 @@ export class StripeService {
                 </div>
               </div>
             `,
+          }).then(() => {
+            this.logger.log(`Success email sent to patient ${user.email}`);
+          }).catch((err) => {
+            this.logger.error(`Failed to send success email to patient ${user.email}: ${err instanceof Error ? err.message : String(err)}`);
           });
-          this.logger.log(`Success email sent to patient ${user.email}`);
         } catch (err) {
-          this.logger.error(`Failed to send success email to patient ${user.email}: ${err instanceof Error ? err.message : String(err)}`);
+          this.logger.error(`Failed to initialize success email transporter for patient ${user.email}: ${err instanceof Error ? err.message : String(err)}`);
         }
       }
     }
@@ -306,7 +309,7 @@ export class StripeService {
               pass: process.env.SMTP_PASS,
             },
           });
-          await transporter.sendMail({
+          transporter.sendMail({
             from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
             to: updatedUser.email,
             subject: 'License Activated - Cannathera',
@@ -343,11 +346,14 @@ export class StripeService {
                 </div>
               </div>
             `,
-          });
+          }).then(() => {
             this.logger.log(`Success email sent to org member ${updatedUser.email}`);
-          } catch (err) {
+          }).catch((err) => {
             this.logger.error(`Failed to send success email to B2B member ${updatedUser.email}: ${err instanceof Error ? err.message : String(err)}`);
-          }
+          });
+        } catch (err) {
+          this.logger.error(`Failed to initialize success email transporter for B2B member ${updatedUser.email}: ${err instanceof Error ? err.message : String(err)}`);
+        }
         }
       }
     }

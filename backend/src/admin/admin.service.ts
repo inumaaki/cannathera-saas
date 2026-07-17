@@ -183,7 +183,7 @@ export class AdminService {
           },
         });
         const greetingName = user.firstName ? user.firstName : 'Partner';
-        await transporter.sendMail({
+        transporter.sendMail({
           from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
           to: user.email,
           subject: 'Welcome to Cannathera - Account Activated',
@@ -220,9 +220,13 @@ export class AdminService {
               </div>
             </div>
           `,
+        }).then(() => {
+          console.log(`Onboarding email sent to ${user.email}`);
+        }).catch((err) => {
+          console.error('Failed to send onboarding email:', err);
         });
       } catch (err) {
-        console.error('Failed to send onboarding email:', err);
+        console.error('Failed to initialize onboarding email transporter:', err);
       }
     } else {
       console.log(`[ONBOARDING MOCK EMAIL] Temporary credentials for ${user.email}: ${tempPassword}`);
