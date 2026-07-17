@@ -38,9 +38,13 @@ const ROLE_HOME: Record<string, string> = {
 
 const isProd = process.env.NODE_ENV === 'production';
 
+// Cross-origin deployments (Vercel → Railway) require sameSite:'none' + secure.
+// In local dev keep 'lax' so plain http://localhost works.
+const cookieSameSite = isProd ? ('none' as const) : ('lax' as const);
+
 const preAuthCookieOpts = {
   httpOnly: true,
-  sameSite: 'lax' as const,
+  sameSite: cookieSameSite,
   secure: isProd,
   maxAge: 10 * 60 * 1000,
   path: '/',
@@ -117,7 +121,7 @@ export class AuthController {
   private setSessionCookie(res: Response, session: string, ttlMin: number) {
     res.cookie(SESSION_COOKIE, session, {
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: cookieSameSite,
       secure: isProd,
       maxAge: ttlMin * 60 * 1000,
       path: '/',
@@ -165,7 +169,7 @@ export class AuthController {
   @Post('logout')
   @HttpCode(200)
   logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie(SESSION_COOKIE, { path: '/' });
+    res.clearCookie(SESSION_COOKIE, { path: '/', sameSite: cookieSameSite, secure: isProd });
     return { ok: true };
   }
 }
