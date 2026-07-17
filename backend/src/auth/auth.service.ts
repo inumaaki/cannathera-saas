@@ -10,6 +10,7 @@ import { Locale, OrgType, Role, User } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { randomBytes, randomInt } from 'crypto';
 import * as nodemailer from 'nodemailer';
+import { lookup } from 'dns/promises';
 import { PrismaService } from '../prisma/prisma.service';
 import { ROLE_PRESETS } from '../shared';
 import type {
@@ -497,7 +498,7 @@ export class AuthService {
 
     if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
       const smtpHost = process.env.SMTP_HOST;
-      require('dns/promises').lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
+      lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
         const transporter = nodemailer.createTransport({
           host: dnsResult.address,
           port: Number(process.env.SMTP_PORT ?? 587),

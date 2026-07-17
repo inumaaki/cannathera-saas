@@ -5,6 +5,7 @@ import { SubscriptionTier } from '@prisma/client';
 import Stripe from 'stripe';
 import { NotificationsService } from '../notifications/notifications.service';
 import * as nodemailer from 'nodemailer';
+import { lookup } from 'dns/promises';
 
 @Injectable()
 export class StripeService {
@@ -180,7 +181,7 @@ export class StripeService {
       // 2. Send transaction success email
       if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
         const smtpHost = process.env.SMTP_HOST;
-        require('dns/promises').lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
+        lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
           const greetingName = user.firstName ? `${user.firstName} ${user.lastName ?? ''}`.trim() : user.email;
           const transporter = nodemailer.createTransport({
             host: dnsResult.address,
@@ -303,7 +304,7 @@ export class StripeService {
 
         if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
           const smtpHost = process.env.SMTP_HOST;
-          require('dns/promises').lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
+          lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
             const greetingName = updatedUser.firstName ? `${updatedUser.firstName} ${updatedUser.lastName ?? ''}`.trim() : updatedUser.email;
             const transporter = nodemailer.createTransport({
               host: dnsResult.address,

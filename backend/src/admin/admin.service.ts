@@ -4,6 +4,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import * as argon2 from 'argon2';
 import { randomBytes } from 'crypto';
 import * as nodemailer from 'nodemailer';
+import { lookup } from 'dns/promises';
 
 @Injectable()
 export class AdminService {
@@ -173,7 +174,7 @@ export class AdminService {
     // Send onboarding email logic
     if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
       const smtpHost = process.env.SMTP_HOST;
-      require('dns/promises').lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
+      lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
         const transporter = nodemailer.createTransport({
           host: dnsResult.address,
           port: Number(process.env.SMTP_PORT ?? 587),
