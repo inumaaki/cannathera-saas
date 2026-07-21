@@ -11,12 +11,12 @@ tsconfig.tsbuildinfo
 **/tsconfig.tsbuildinfo
 
 # Environment files
-.env
-.env.local
-.env.*.local
-.env.development.local
-.env.test.local
-.env.production.local
+# .env
+# .env.local
+# .env.*.local
+# .env.development.local
+# .env.test.local
+# .env.production.local
 
 # Logs
 *.log
