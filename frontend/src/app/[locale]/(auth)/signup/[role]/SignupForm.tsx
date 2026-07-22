@@ -166,14 +166,14 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
           <CheckboxField name="terms" required>
             {t.rich("terms", {
               terms: (chunks) => (
-                <a href="#terms" className="text-pine-600 hover:underline">
+                <Link href="/imprint" target="_blank" className="text-pine-600 hover:underline">
                   {chunks}
-                </a>
+                </Link>
               ),
               privacy: (chunks) => (
-                <a href="#privacy" className="text-pine-600 hover:underline">
+                <Link href="/privacy" target="_blank" className="text-pine-600 hover:underline">
                   {chunks}
-                </a>
+                </Link>
               ),
             })}
           </CheckboxField>
