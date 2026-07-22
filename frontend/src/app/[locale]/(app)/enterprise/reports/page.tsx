@@ -158,11 +158,8 @@ export default async function EnterpriseReports({
                   <tr key={p.id} className="border-b border-hairline last:border-0">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <span
-                          aria-hidden
-                          className="msym flex size-9 items-center justify-center rounded-lg bg-mint/30 text-[20px] text-pine-600"
-                        >
-                          {p.type === "PHARMACY" ? "local_pharmacy" : "medical_services"}
+                        <span className="flex size-9 items-center justify-center rounded-lg bg-mint/30 text-[20px] text-pine-600">
+                          <span aria-hidden className="msym">{p.type === "PHARMACY" ? "local_pharmacy" : "medical_services"}</span>
                         </span>
                         <span className="font-bold text-ink-strong">{p.name}</span>
                       </div>

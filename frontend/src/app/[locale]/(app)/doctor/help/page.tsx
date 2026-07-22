@@ -18,8 +18,8 @@ export default async function DoctorHelp({
 
   const card = (icon: string, tint: string, title: string, text: string) => (
     <div className="rounded-xl border border-hairline bg-white p-6">
-      <span aria-hidden className={`msym flex size-12 items-center justify-center rounded-xl text-[24px] ${tint}`}>
-        {icon}
+      <span className={`flex size-12 items-center justify-center rounded-xl text-[24px] ${tint}`}>
+        <span aria-hidden className="msym">{icon}</span>
       </span>
       <h2 className="mt-4 font-bold text-pine-600">{title}</h2>
       <p className="mt-1 text-sm leading-relaxed text-muted">{text}</p>

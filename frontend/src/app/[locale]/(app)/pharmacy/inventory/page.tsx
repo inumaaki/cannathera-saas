@@ -99,11 +99,8 @@ export default async function PharmacyInventory({
       {worst ? (
         <section className="mt-6 flex flex-wrap items-center justify-between gap-4 rounded-xl bg-brand p-6 text-white">
           <div className="flex items-start gap-4">
-            <span
-              aria-hidden
-              className="msym flex size-11 shrink-0 items-center justify-center rounded-xl bg-white/15 text-[24px] text-mint-bright"
-            >
-              warning
+            <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-white/15 text-[24px] text-mint-bright">
+              <span aria-hidden className="msym">warning</span>
             </span>
             <div>
               <h2 className="font-display text-xl font-bold">{t("alertTitle")}</h2>
@@ -167,11 +164,8 @@ function Stat({
 }>) {
   const body = (
     <>
-      <span
-        aria-hidden
-        className={`msym flex size-11 items-center justify-center rounded-xl text-[22px] ${tint}`}
-      >
-        {icon}
+      <span className={`flex size-11 items-center justify-center rounded-xl text-[22px] ${tint}`}>
+        <span aria-hidden className="msym">{icon}</span>
       </span>
       <p className="mt-4 font-display text-4xl font-bold text-pine">{value}</p>
       <p className="mt-1 text-muted">{label}</p>

@@ -34,11 +34,8 @@ export default async function PatientProfilePage({
       </section>
 
       <section className="mt-5 rounded-2xl bg-[#e8ece9] p-6 text-center">
-        <span
-          aria-hidden
-          className="msym mx-auto flex size-12 items-center justify-center rounded-xl text-[34px] text-pine-600"
-        >
-          verified_user
+        <span className="mx-auto flex size-12 items-center justify-center rounded-xl text-[34px] text-pine-600">
+          <span aria-hidden className="msym">verified_user</span>
         </span>
         <p className="mt-2 font-bold text-ink-strong">{t("gdprTitle")}</p>
         <p className="mx-auto mt-2 max-w-xs leading-relaxed text-muted">{t("gdprText")}</p>

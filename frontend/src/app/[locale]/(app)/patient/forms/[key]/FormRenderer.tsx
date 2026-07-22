@@ -105,11 +105,8 @@ export function FormRenderer({ structure }: Readonly<{ structure: Structure }>) 
   if (result) {
     return (
       <div className="flex min-h-[60dvh] flex-col items-center justify-center text-center">
-        <span
-          aria-hidden
-          className="msym flex size-16 items-center justify-center rounded-full bg-mint/40 text-[36px] text-pine-600"
-        >
-          check_circle
+        <span className="flex size-16 items-center justify-center rounded-full bg-mint/40 text-[36px] text-pine-600">
+          <span aria-hidden className="msym">check_circle</span>
         </span>
         <h1 className="mt-5 font-display text-3xl font-bold text-pine">
           {t("successTitle")}
@@ -346,14 +343,15 @@ function QuestionField({
                   }`}
                 >
                   <span
-                    aria-hidden
-                    className={`msym flex size-5 shrink-0 items-center justify-center rounded border text-[16px] ${
+                    className={`flex size-5 shrink-0 items-center justify-center rounded border ${
                       checked
                         ? "border-pine-600 bg-pine-600 text-white"
                         : "border-hairline text-transparent"
                     }`}
                   >
-                    check
+                    <span aria-hidden className="msym text-[16px]">
+                      check
+                    </span>
                   </span>
                   <span className="text-ink-strong">{o.label}</span>
                 </button>

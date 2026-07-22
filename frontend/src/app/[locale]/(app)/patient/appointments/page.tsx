@@ -45,11 +45,8 @@ export default async function PatientAppointments({
       ) : (
         <section className="cw-watermark mt-5 rounded-2xl border border-hairline bg-white p-5">
           <div className="flex items-start justify-between">
-            <span
-              aria-hidden
-              className="msym flex size-16 items-center justify-center rounded-xl bg-mint/30 text-[30px] text-pine-600"
-            >
-              stethoscope
+            <span className="flex size-16 items-center justify-center rounded-xl bg-mint/30 text-[30px] text-pine-600">
+              <span aria-hidden className="msym">stethoscope</span>
             </span>
             <span className="flex items-center gap-1.5 rounded-full bg-[#9ef5be] px-3 py-1 text-xs font-bold text-pine">
               <span aria-hidden className="size-2 rounded-full bg-pine-600" />
@@ -74,11 +71,8 @@ export default async function PatientAppointments({
       {later.map((s) => (
         <section key={s.id} className="mt-4 rounded-2xl border border-hairline bg-white p-5">
           <div className="flex items-start justify-between">
-            <span
-              aria-hidden
-              className="msym flex size-11 items-center justify-center rounded-xl bg-[#eef2fe] text-[22px] text-info"
-            >
-              medication
+            <span className="flex size-11 items-center justify-center rounded-xl bg-[#eef2fe] text-[22px] text-info">
+              <span aria-hidden className="msym">medication</span>
             </span>
             <span className="text-sm font-semibold text-muted">{t("confirmed")}</span>
           </div>

@@ -23,12 +23,13 @@ export default async function SettingsCompliance({
         <p className="mt-0.5 max-w-2xl text-sm text-muted">{text}</p>
       </div>
       <span
-        aria-hidden
-        className={`msym flex size-8 shrink-0 items-center justify-center rounded-full text-[18px] ${
+        className={`flex size-8 shrink-0 items-center justify-center rounded-full ${
           on ? "bg-pine-600 text-white" : "bg-hairline text-muted"
         }`}
       >
-        check
+        <span aria-hidden className="msym text-[18px]">
+          check
+        </span>
       </span>
     </div>
   );

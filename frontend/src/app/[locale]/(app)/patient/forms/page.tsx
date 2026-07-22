@@ -37,11 +37,8 @@ export default async function PatientForms({
             className="cw-watermark block rounded-2xl border border-hairline bg-white p-5 transition-all hover:border-pine-600"
           >
             <div className="flex items-start justify-between gap-3">
-              <span
-                aria-hidden
-                className="msym flex size-11 shrink-0 items-center justify-center rounded-xl bg-mint/30 text-[22px] text-pine-600"
-              >
-                assignment
+              <span className="flex size-11 shrink-0 items-center justify-center rounded-xl bg-mint/30 text-[22px] text-pine-600">
+                <span aria-hidden className="msym">assignment</span>
               </span>
               <span className="text-xs text-muted">{t("version", { version: f.version })}</span>
             </div>

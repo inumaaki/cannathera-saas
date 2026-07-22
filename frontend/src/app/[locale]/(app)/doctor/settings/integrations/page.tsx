@@ -46,8 +46,8 @@ export default async function SettingsIntegrations({
       <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
         <div className="rounded-xl border border-hairline bg-white p-5">
           <div className="flex items-start justify-between">
-            <span aria-hidden className="msym flex size-12 items-center justify-center rounded-xl bg-[#eef2fe] text-[24px] text-info">
-              videocam
+            <span className="flex size-12 items-center justify-center rounded-xl bg-[#eef2fe] text-[24px] text-info">
+              <span aria-hidden className="msym">videocam</span>
             </span>
             <span className="rounded-full bg-[#fdf3d7] px-3 py-1 text-[10px] font-bold uppercase text-gold">
               {t("planned")}
@@ -59,8 +59,8 @@ export default async function SettingsIntegrations({
 
         <div className="rounded-xl border border-hairline bg-white p-5">
           <div className="flex items-start justify-between">
-            <span aria-hidden className="msym flex size-12 items-center justify-center rounded-xl bg-mint/30 text-[24px] text-pine-600">
-              webhook
+            <span className="flex size-12 items-center justify-center rounded-xl bg-mint/30 text-[24px] text-pine-600">
+              <span aria-hidden className="msym">webhook</span>
             </span>
             <span className="rounded-full bg-[#fdf3d7] px-3 py-1 text-[10px] font-bold uppercase text-gold">
               {t("planned")}
@@ -71,8 +71,8 @@ export default async function SettingsIntegrations({
         </div>
 
         <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-info/40 bg-[#eef2fe]/50 p-8 text-center">
-          <span aria-hidden className="msym flex size-14 items-center justify-center rounded-full bg-white text-[26px] text-ink-strong">
-            apps
+          <span className="flex size-14 items-center justify-center rounded-full bg-white text-[26px] text-ink-strong">
+            <span aria-hidden className="msym">apps</span>
           </span>
           <h3 className="mt-4 text-lg font-bold text-ink-strong">{t("marketplace")}</h3>
           <p className="mt-1 text-sm text-muted">{t("marketplaceText")}</p>

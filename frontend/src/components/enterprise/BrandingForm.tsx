@@ -113,11 +113,8 @@ export function BrandingForm({ initial }: Readonly<{ initial: Branding }>) {
               className="size-12 shrink-0 rounded-xl object-contain"
             />
           ) : (
-            <span
-              aria-hidden
-              className="msym flex size-12 shrink-0 items-center justify-center rounded-xl bg-surface text-[24px] text-muted"
-            >
-              add_photo_alternate
+            <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-surface text-[24px] text-muted">
+              <span aria-hidden className="msym">add_photo_alternate</span>
             </span>
           )}
           <span>
@@ -262,12 +259,8 @@ export function BrandingForm({ initial }: Readonly<{ initial: Branding }>) {
                 className="size-8 rounded-lg object-contain"
               />
             ) : (
-              <span
-                aria-hidden
-                className="msym flex size-8 items-center justify-center rounded-lg text-[18px] text-white"
-                style={{ backgroundColor: primary }}
-              >
-                eco
+              <span className="flex size-8 items-center justify-center rounded-lg text-[18px] text-white" style={{ backgroundColor: primary }}>
+                <span aria-hidden className="msym">eco</span>
               </span>
             )}
             <span

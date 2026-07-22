@@ -145,11 +145,8 @@ export default async function EnterprisePartners({
                   <tr key={r.id} className="border-b border-hairline last:border-0">
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <span
-                          aria-hidden
-                          className="msym flex size-9 shrink-0 items-center justify-center rounded-lg bg-mint/30 text-[20px] text-pine-600"
-                        >
-                          {r.type === "PHARMACY" ? "local_pharmacy" : "medical_services"}
+                        <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-mint/30 text-[20px] text-pine-600">
+                          <span aria-hidden className="msym">{r.type === "PHARMACY" ? "local_pharmacy" : "medical_services"}</span>
                         </span>
                         <div>
                           <Link
@@ -261,11 +258,8 @@ function Stat({
 }>) {
   return (
     <div className="cw-watermark flex items-center gap-4 rounded-xl border border-hairline bg-white p-5">
-      <span
-        aria-hidden
-        className={`msym flex size-12 items-center justify-center rounded-xl text-[24px] ${tint}`}
-      >
-        {icon}
+      <span className={`flex size-12 items-center justify-center rounded-xl text-[24px] ${tint}`}>
+        <span aria-hidden className="msym">{icon}</span>
       </span>
       <div>
         <p className="font-display text-3xl font-bold text-pine">{value}</p>

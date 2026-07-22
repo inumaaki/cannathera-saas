@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "@/i18n/navigation";
 import { LOCALES, LOCALE_LABELS } from "@cannathera/shared";
@@ -52,6 +52,31 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
   const [account, setAccount] = useState<Record<string, string>>({});
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const langRef = useRef<HTMLDivElement>(null);
+  const [langOpen, setLangOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("de");
+
+  const partnerRef = useRef<HTMLDivElement>(null);
+  const [partnerOpen, setPartnerOpen] = useState(false);
+  const [selectedPartner, setSelectedPartner] = useState<
+    "telemedicine" | "clinic" | "platform" | "other"
+  >("telemedicine");
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (langRef.current && !langRef.current.contains(event.target as Node)) {
+        setLangOpen(false);
+      }
+      if (partnerRef.current && !partnerRef.current.contains(event.target as Node)) {
+        setPartnerOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   function handleStep1(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -174,22 +199,69 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
                 required
                 autoComplete="bday"
               />
-              <div>
+              <div className="relative" ref={langRef}>
                 <FieldLabel htmlFor="preferredLanguage">
                   {f("preferredLanguage")}
                 </FieldLabel>
-                <select
+                <input
+                  type="hidden"
                   id="preferredLanguage"
                   name="preferredLanguage"
-                  className={selectClass}
-                  defaultValue="de"
+                  value={selectedLanguage}
+                />
+                <button
+                  type="button"
+                  onClick={() => setLangOpen(!langOpen)}
+                  className={`${selectClass} flex items-center justify-between cursor-pointer`}
+                  aria-haspopup="listbox"
+                  aria-expanded={langOpen}
                 >
-                  {LOCALES.map((l) => (
-                    <option key={l} value={l}>
-                      {LOCALE_LABELS[l]}
-                    </option>
-                  ))}
-                </select>
+                  <span>{LOCALE_LABELS[selectedLanguage as keyof typeof LOCALE_LABELS]}</span>
+                  <span
+                    aria-hidden
+                    className={`msym text-[18px] text-muted transition-transform duration-200 ${
+                      langOpen ? "rotate-180" : ""
+                    }`}
+                  >
+                    keyboard_arrow_down
+                  </span>
+                </button>
+
+                {langOpen && (
+                  <div
+                    className="absolute left-0 top-full z-50 mt-1.5 w-full overflow-hidden rounded-xl border border-hairline bg-white py-1 shadow-lg animate-in fade-in zoom-in-95 duration-100 origin-top"
+                    role="listbox"
+                  >
+                    {LOCALES.map((l) => {
+                      const isSelected = l === selectedLanguage;
+                      return (
+                        <button
+                          key={l}
+                          type="button"
+                          onClick={() => {
+                            setSelectedLanguage(l);
+                            setLangOpen(false);
+                          }}
+                          className={`flex w-full items-center justify-between px-4 py-3 text-left text-sm font-semibold transition-colors cursor-pointer
+                            ${
+                              isSelected
+                                ? "bg-pine-600 text-white"
+                                : "text-ink-strong hover:bg-surface hover:text-pine-600"
+                            }`}
+                          role="option"
+                          aria-selected={isSelected}
+                        >
+                          <span>{LOCALE_LABELS[l]}</span>
+                          {isSelected && (
+                            <span aria-hidden className="msym text-[16px]">
+                              check
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
 
               <section className="cw-watermark rounded-xl border border-hairline bg-white p-6">
@@ -301,17 +373,67 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
                 required
                 placeholder={f("contactPersonPlaceholder")}
               />
-              <div>
+              <div className="relative" ref={partnerRef}>
                 <FieldLabel htmlFor="partnerType">{f("partnerType")}</FieldLabel>
-                <select id="partnerType" name="partnerType" className={selectClass}>
-                  {(["telemedicine", "clinic", "platform", "other"] as const).map(
-                    (v) => (
-                      <option key={v} value={v}>
-                        {f(`partnerTypes.${v}`)}
-                      </option>
-                    ),
-                  )}
-                </select>
+                <input
+                  type="hidden"
+                  id="partnerType"
+                  name="partnerType"
+                  value={selectedPartner}
+                />
+                <button
+                  type="button"
+                  onClick={() => setPartnerOpen(!partnerOpen)}
+                  className={`${selectClass} flex items-center justify-between cursor-pointer`}
+                  aria-haspopup="listbox"
+                  aria-expanded={partnerOpen}
+                >
+                  <span>{f(`partnerTypes.${selectedPartner}`)}</span>
+                  <span
+                    aria-hidden
+                    className={`msym text-[18px] text-muted transition-transform duration-200 ${
+                      partnerOpen ? "rotate-180" : ""
+                    }`}
+                  >
+                    keyboard_arrow_down
+                  </span>
+                </button>
+
+                {partnerOpen && (
+                  <div
+                    className="absolute left-0 top-full z-50 mt-1.5 w-full overflow-hidden rounded-xl border border-hairline bg-white py-1 shadow-lg animate-in fade-in zoom-in-95 duration-100 origin-top"
+                    role="listbox"
+                  >
+                    {(["telemedicine", "clinic", "platform", "other"] as const).map((v) => {
+                      const isSelected = v === selectedPartner;
+                      return (
+                        <button
+                          key={v}
+                          type="button"
+                          onClick={() => {
+                            setSelectedPartner(v);
+                            setPartnerOpen(false);
+                          }}
+                          className={`flex w-full items-center justify-between px-4 py-3 text-left text-sm font-semibold transition-colors cursor-pointer
+                            ${
+                              isSelected
+                                ? "bg-pine-600 text-white"
+                                : "text-ink-strong hover:bg-surface hover:text-pine-600"
+                            }`}
+                          role="option"
+                          aria-selected={isSelected}
+                        >
+                          <span>{f(`partnerTypes.${v}`)}</span>
+                          {isSelected && (
+                            <span aria-hidden className="msym text-[16px]">
+                              check
+                            </span>
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
               <TextField
                 label={f("phone")}

@@ -287,11 +287,8 @@ export default async function DoctorPatientDetail({
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <p className="flex items-center gap-2 font-bold text-pine">
-                        <span
-                          aria-hidden
-                          className="msym flex size-10 items-center justify-center rounded-lg bg-[#eef2fe] text-[20px] text-info"
-                        >
-                          assignment
+                        <span className="flex size-10 items-center justify-center rounded-lg bg-[#eef2fe] text-[20px] text-info">
+                          <span aria-hidden className="msym">assignment</span>
                         </span>
                         {t("submission", { name: item.data.questionnaire })}
                       </p>
@@ -330,11 +327,8 @@ export default async function DoctorPatientDetail({
                   >
                     <div className="flex flex-wrap items-center justify-between gap-2">
                       <p className="flex items-center gap-2 font-bold text-pine">
-                        <span
-                          aria-hidden
-                          className="msym flex size-10 items-center justify-center rounded-lg bg-mint/30 text-[20px] text-pine-600"
-                        >
-                          medication
+                        <span className="flex size-10 items-center justify-center rounded-lg bg-mint/30 text-[20px] text-pine-600">
+                          <span aria-hidden className="msym">medication</span>
                         </span>
                         {t("dosageLog", {
                           dosage: item.data.dosageG ?? "—",

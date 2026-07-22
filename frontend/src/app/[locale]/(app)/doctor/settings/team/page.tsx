@@ -139,8 +139,8 @@ function StatCard({
 }: Readonly<{ icon: string; tint: string; label: string; value: string }>) {
   return (
     <div className="rounded-xl border border-hairline bg-white p-5">
-      <span aria-hidden className={`msym flex size-11 items-center justify-center rounded-lg text-[22px] ${tint}`}>
-        {icon}
+      <span className={`flex size-11 items-center justify-center rounded-lg text-[22px] ${tint}`}>
+        <span aria-hidden className="msym">{icon}</span>
       </span>
       <p className="mt-3 text-xs font-bold uppercase tracking-wide text-sage-900">{label}</p>
       <p className="mt-1 font-display text-2xl font-bold text-ink-strong">{value}</p>

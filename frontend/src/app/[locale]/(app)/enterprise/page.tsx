@@ -269,11 +269,8 @@ function Stat({
       href={href}
       className="cw-watermark block rounded-xl border border-hairline bg-white p-5 transition-colors hover:border-pine-600"
     >
-      <span
-        aria-hidden
-        className={`msym flex size-11 items-center justify-center rounded-xl text-[22px] ${tint}`}
-      >
-        {icon}
+      <span className={`flex size-11 items-center justify-center rounded-xl text-[22px] ${tint}`}>
+        <span aria-hidden className="msym">{icon}</span>
       </span>
       <p className="mt-4 font-display text-3xl font-bold text-pine">{value}</p>
       <p className="mt-1 text-muted">{label}</p>

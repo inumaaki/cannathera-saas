@@ -359,11 +359,8 @@ function StatCard({
       className="cw-watermark block rounded-xl border border-hairline bg-white p-5 transition-colors hover:border-pine-600"
     >
       <div className="flex items-start justify-between">
-        <span
-          aria-hidden
-          className={`msym flex size-11 items-center justify-center rounded-xl text-[22px] ${tint}`}
-        >
-          {icon}
+        <span className={`flex size-11 items-center justify-center rounded-xl text-[22px] ${tint}`}>
+          <span aria-hidden className="msym">{icon}</span>
         </span>
         <span className="rounded-md bg-[#eef1f8] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-ink-strong">
           {badge}

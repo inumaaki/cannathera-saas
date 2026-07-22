@@ -285,11 +285,8 @@ function Stat({
       href={href}
       className="cw-watermark flex items-center gap-4 rounded-xl border border-hairline bg-white p-5 transition-colors hover:border-pine-600"
     >
-      <span
-        aria-hidden
-        className={`msym flex size-12 items-center justify-center rounded-xl text-[24px] ${tint}`}
-      >
-        {icon}
+      <span className={`flex size-12 items-center justify-center rounded-xl text-[24px] ${tint}`}>
+        <span aria-hidden className="msym">{icon}</span>
       </span>
       <div>
         <p className="font-display text-3xl font-bold text-pine">{value}</p>

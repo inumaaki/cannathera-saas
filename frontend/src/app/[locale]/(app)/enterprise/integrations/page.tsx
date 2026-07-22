@@ -90,11 +90,8 @@ export default async function EnterpriseIntegrations({
             className="cw-watermark rounded-xl border border-hairline bg-white p-5"
           >
             <div className="flex items-start justify-between">
-              <span
-                aria-hidden
-                className={`msym flex size-11 items-center justify-center rounded-xl text-[22px] ${c.tint}`}
-              >
-                {c.icon}
+              <span className={`flex size-11 items-center justify-center rounded-xl text-[22px] ${c.tint}`}>
+                <span aria-hidden className="msym">{c.icon}</span>
               </span>
               <span
                 className={`rounded-md px-2.5 py-1 text-[10px] font-bold uppercase ${c.badgeTone}`}

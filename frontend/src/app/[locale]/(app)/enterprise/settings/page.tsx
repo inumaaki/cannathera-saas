@@ -119,11 +119,8 @@ export default async function EnterpriseSettings({
 
       <div className="mt-6 grid gap-4 md:grid-cols-3">
         <div className="cw-watermark rounded-xl border border-hairline bg-white p-6 text-center">
-          <span
-            aria-hidden
-            className="msym mx-auto flex size-12 items-center justify-center rounded-full bg-mint/30 text-[24px] text-pine-600"
-          >
-            api
+          <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-mint/30 text-[24px] text-pine-600">
+            <span aria-hidden className="msym">api</span>
           </span>
           <h2 className="mt-3 font-display text-lg font-bold text-pine">
             {t("apiStatus")}
@@ -136,11 +133,8 @@ export default async function EnterpriseSettings({
         </div>
 
         <div className="cw-watermark rounded-xl border border-hairline bg-white p-6 text-center">
-          <span
-            aria-hidden
-            className="msym mx-auto flex size-12 items-center justify-center rounded-full bg-[#eef2fe] text-[24px] text-info"
-          >
-            lock
+          <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-[#eef2fe] text-[24px] text-info">
+            <span aria-hidden className="msym">lock</span>
           </span>
           <h2 className="mt-3 font-display text-lg font-bold text-pine">
             {t("storage")}
@@ -165,11 +159,8 @@ export default async function EnterpriseSettings({
         </div>
 
         <div className="rounded-xl bg-brand p-6 text-center text-white">
-          <span
-            aria-hidden
-            className="msym mx-auto flex size-12 items-center justify-center rounded-full bg-white/15 text-[24px] text-mint-bright"
-          >
-            support_agent
+          <span className="mx-auto flex size-12 items-center justify-center rounded-full bg-white/15 text-[24px] text-mint-bright">
+            <span aria-hidden className="msym">support_agent</span>
           </span>
           <h2 className="mt-3 font-display text-lg font-bold">{t("supportTitle")}</h2>
           <p className="mt-1 text-sm text-white/80">{t("supportNote")}</p>

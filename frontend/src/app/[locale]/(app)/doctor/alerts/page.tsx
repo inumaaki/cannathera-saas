@@ -148,14 +148,15 @@ export default async function DoctorAlerts({
                 }`}
               >
                 <span
-                  aria-hidden
-                  className={`msym flex size-14 shrink-0 items-center justify-center rounded-xl text-[26px] ${
+                  className={`flex size-14 shrink-0 items-center justify-center rounded-xl ${
                     f.severity === "CRITICAL"
                       ? "bg-red-100 text-red-600"
                       : "bg-[#fdf3d7] text-gold"
                   }`}
                 >
-                  {ICONS[f.severity] ?? "info"}
+                  <span aria-hidden className="msym text-[26px]">
+                    {ICONS[f.severity] ?? "info"}
+                  </span>
                 </span>
                 <div className="min-w-0 flex-1">
                   <p className="flex flex-wrap items-center gap-2">

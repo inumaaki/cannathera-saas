@@ -203,11 +203,15 @@ export function PatientShell({
                                    last:border-0 hover:bg-surface"
                       >
                         <span
-                          aria-hidden
-                          className="msym mt-0.5 flex size-9 shrink-0 items-center justify-center
-                                     rounded-full bg-mint/30 text-[18px] text-pine-600"
+                          className="mt-0.5 flex size-9 shrink-0 items-center justify-center
+                                     rounded-full bg-mint/30"
                         >
-                          {n.icon}
+                          <span
+                            aria-hidden
+                            className="msym text-[18px] text-pine-600"
+                          >
+                            {n.icon}
+                          </span>
                         </span>
                         <span>
                           <span className="block font-bold text-ink-strong">{n.title}</span>

@@ -34,11 +34,15 @@ export default function SignupPage({
                        transition-all hover:border-pine-600 hover:shadow-md"
           >
             <span
-              aria-hidden
-              className="msym flex size-11 items-center justify-center rounded-full
-                         bg-mint/30 text-[24px] text-pine-600"
+              className="flex size-11 items-center justify-center rounded-full
+                         bg-mint/30"
             >
-              {icon}
+              <span
+                aria-hidden
+                className="msym text-[24px] text-pine-600"
+              >
+                {icon}
+              </span>
             </span>
             <h2 className="mt-3 text-lg font-bold text-ink-strong group-hover:text-pine-600">
               {t(role)}
