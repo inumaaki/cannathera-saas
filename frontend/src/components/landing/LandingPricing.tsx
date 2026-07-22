@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Link } from "@/i18n/navigation";
 
 type PricingTab = "patients" | "pharmacies" | "enterprise";
 
@@ -16,8 +17,8 @@ export function LandingPricing() {
   ];
 
   return (
-    <section id="pricing" className="py-20 bg-surface border-t border-hairline">
-      <div className="mx-auto max-w-7xl px-6">
+    <section id="pricing" className="min-h-screen flex flex-col justify-center py-16 bg-surface border-t border-hairline">
+      <div className="mx-auto max-w-7xl px-6 w-full">
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-pine-600">
             Cooperation & Models
@@ -78,9 +79,12 @@ export function LandingPricing() {
                     </li>
                   </ul>
                 </div>
-                <button className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine">
+                <Link
+                  href="/signup/patient"
+                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                >
                   Start Basic Plan
-                </button>
+                </Link>
               </div>
 
               {/* Patient Plus */}
@@ -113,9 +117,12 @@ export function LandingPricing() {
                     </li>
                   </ul>
                 </div>
-                <button className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine">
+                <Link
+                  href="/signup/patient"
+                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                >
                   Start Plus Plan
-                </button>
+                </Link>
               </div>
 
               {/* Patient Premium */}
@@ -145,9 +152,12 @@ export function LandingPricing() {
                     </li>
                   </ul>
                 </div>
-                <button className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine">
+                <Link
+                  href="/signup/patient"
+                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                >
                   Start Premium Plan
-                </button>
+                </Link>
               </div>
             </div>
           )}
@@ -177,9 +187,12 @@ export function LandingPricing() {
                     </li>
                   </ul>
                 </div>
-                <button className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine">
+                <Link
+                  href="/signup/pharmacy"
+                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                >
                   Select Flex Pack
-                </button>
+                </Link>
               </div>
 
               {/* S Pack */}
@@ -208,9 +221,12 @@ export function LandingPricing() {
                     </li>
                   </ul>
                 </div>
-                <button className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine">
+                <Link
+                  href="/signup/pharmacy"
+                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                >
                   Select S Pack
-                </button>
+                </Link>
               </div>
 
               {/* M Pack */}
@@ -236,9 +252,12 @@ export function LandingPricing() {
                     </li>
                   </ul>
                 </div>
-                <button className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine">
+                <Link
+                  href="/signup/pharmacy"
+                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                >
                   Select M Pack
-                </button>
+                </Link>
               </div>
             </div>
           )}
@@ -296,6 +315,13 @@ export function LandingPricing() {
                 <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">hub</span> Make.com/Zapier</span>
                 <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">workspace_premium</span> Powered by Co-Branding</span>
               </div>
+              
+              <a
+                href="mailto:info@cannathera.de?subject=Enterprise%20Integration%20Request"
+                className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine shadow-md"
+              >
+                Request Enterprise Integration
+              </a>
             </div>
           )}
         </div>

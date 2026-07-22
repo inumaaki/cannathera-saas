@@ -48,6 +48,44 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
   const tc = useTranslations("common");
   const te = useTranslations("auth.errors");
   const router = useRouter();
+
+  if (role !== "patient") {
+    return (
+      <div className="text-center py-10 space-y-6">
+        <div className="flex justify-center">
+          <div className="flex size-16 items-center justify-center rounded-full bg-pine/10 text-pine">
+            <span className="msym text-[36px]">business_center</span>
+          </div>
+        </div>
+
+        <h1 className="font-display text-3xl font-extrabold tracking-tight text-pine">
+          Manual Onboarding Required
+        </h1>
+
+        <p className="text-sm leading-relaxed text-muted max-w-sm mx-auto">
+          To ensure professional compliance and clarify individual contractual details, registration for medical practices and pharmacies is personally handled by our team.
+        </p>
+
+        <div className="bg-surface rounded-xl p-4 text-xs text-sage-950 font-bold border border-hairline max-w-sm mx-auto">
+          Please contact our founder Dominique Larkin directly to onboard your practice or pharmacy.
+        </div>
+
+        <a
+          href="mailto:info@cannathera.de?subject=Partner%20Onboarding%20Request"
+          className="inline-flex h-11 items-center justify-center rounded-xl bg-pine-600 px-6 font-bold text-white transition-colors hover:bg-pine shadow-md cursor-pointer"
+        >
+          Contact Dominique Larkin
+        </a>
+
+        <div className="pt-4 border-t border-hairline">
+          <Link href="/login" className="text-xs font-bold text-pine-600 hover:underline">
+            ← Back to Login
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   const [step, setStep] = useState<1 | 2>(1);
   const [account, setAccount] = useState<Record<string, string>>({});
   const [pending, setPending] = useState(false);
@@ -87,6 +125,7 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
       lastName: String(form.get("lastName") ?? ""),
       email: String(form.get("email") ?? ""),
       password: String(form.get("password") ?? ""),
+      inviteCode: String(form.get("inviteCode") ?? ""),
     });
     setStep(2);
   }
@@ -163,6 +202,13 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
             placeholder={f("passwordPlaceholder")}
             autoComplete="new-password"
           />
+          {role === "patient" && (
+            <TextField
+              label="Invitation Code (optional)"
+              name="inviteCode"
+              placeholder="e.g. CANNATHERA2026"
+            />
+          )}
           <CheckboxField name="terms" required>
             {t.rich("terms", {
               terms: (chunks) => (
@@ -282,7 +328,7 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
             </>
           )}
 
-          {role === "doctor" && (
+          {role === ("doctor" as any) && (
             <>
               <TextField
                 label={f("practiceName")}
@@ -320,7 +366,7 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
             </>
           )}
 
-          {role === "pharmacy" && (
+          {role === ("pharmacy" as any) && (
             <>
               <TextField
                 label={f("pharmacyName")}
@@ -358,7 +404,7 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
             </>
           )}
 
-          {role === "enterprise" && (
+          {role === ("enterprise" as any) && (
             <>
               <TextField
                 label={f("companyName")}

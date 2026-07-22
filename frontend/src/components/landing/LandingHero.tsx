@@ -7,11 +7,11 @@ export function LandingHero() {
   const t = useTranslations("auth.signup.hero");
 
   return (
-    <section className="relative overflow-hidden bg-brand-gradient py-20 text-white lg:py-28">
+    <section className="relative overflow-hidden bg-brand-gradient min-h-[calc(100vh-4rem)] flex flex-col justify-center text-white py-12">
       {/* Background soft pattern */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(255,255,255,0.08),transparent)] pointer-events-none" />
 
-      <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2 lg:items-center">
+      <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-2 lg:items-center w-full">
         {/* Left Side Content */}
         <div className="space-y-6 max-w-xl">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider text-mint-bright">
@@ -33,14 +33,14 @@ export function LandingHero() {
 
           <div className="flex flex-wrap gap-4 pt-2">
             <Link
-              href="/signup"
-              className="flex h-12 items-center justify-center rounded-xl bg-mint px-6 font-bold text-pine transition-all hover:bg-mint-bright hover:shadow-lg hover:shadow-mint/20"
+              href="/signup/patient"
+              className="flex h-12 items-center justify-center rounded-xl bg-mint px-6 font-bold text-pine transition-colors hover:bg-mint-bright"
             >
               Start Free 90-Day Plan
             </Link>
             <Link
               href="/login"
-              className="flex h-12 items-center justify-center rounded-xl border-2 border-white/20 px-6 font-bold text-white transition-colors hover:bg-white/10"
+              className="flex h-12 items-center justify-center rounded-xl border border-white/50 px-6 font-bold text-white transition-colors hover:bg-white/10 hover:border-white"
             >
               Access Portal
             </Link>
@@ -65,9 +65,9 @@ export function LandingHero() {
 
         {/* Right Side Mockup Widget */}
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          <div className="relative rounded-2xl border border-white/10 bg-white/5 p-6 shadow-2xl backdrop-blur-xl">
+          <div className="relative rounded-2xl border border-white/15 bg-white/5 p-6 shadow-2xl backdrop-blur-xl">
             {/* Mock Header */}
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <div className="flex items-center justify-between border-b border-white/15 pb-4">
               <div className="flex items-center gap-3">
                 <span className="flex size-10 items-center justify-center rounded-full bg-white/10">
                   <span aria-hidden className="msym text-[20px] text-mint">
@@ -87,7 +87,7 @@ export function LandingHero() {
             {/* Mock Roster Grid */}
             <div className="mt-6 space-y-4">
               {/* Progress assessment card */}
-              <div className="rounded-xl bg-white/10 p-4 border border-white/5">
+              <div className="rounded-xl bg-white/10 p-4 border border-white/15">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-mint-bright">
                     Daily Assessment
@@ -110,7 +110,7 @@ export function LandingHero() {
               </div>
 
               {/* Chart Card */}
-              <div className="rounded-xl bg-white/10 p-4 border border-white/5">
+              <div className="rounded-xl bg-white/10 p-4 border border-white/15">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-white/75">
                     Symptom Window Performance
@@ -132,14 +132,14 @@ export function LandingHero() {
               </div>
 
               {/* Alert Indicator */}
-              <div className="flex items-center justify-between rounded-xl bg-orange-500/10 border border-orange-500/30 p-3 text-xs">
-                <p className="flex items-center gap-2 font-semibold text-orange-400">
-                  <span aria-hidden className="msym text-[16px]">
-                    warning
+              <div className="flex items-center justify-between rounded-xl bg-mint/10 border border-mint/30 p-3 text-xs">
+                <p className="flex items-center gap-2 font-semibold text-mint-bright">
+                  <span aria-hidden className="msym text-[16px] text-mint">
+                    check_circle
                   </span>
                   Compliance: No warnings detected
                 </p>
-                <span className="font-bold text-orange-300">92% Trust Score</span>
+                <span className="font-bold text-mint-bright">92% Trust Score</span>
               </div>
             </div>
           </div>

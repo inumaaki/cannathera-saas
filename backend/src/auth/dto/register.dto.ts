@@ -121,6 +121,10 @@ export class RegisterDto {
   locale?: Locale;
 
   @IsOptional()
+  @IsString()
+  inviteCode?: string;
+
+  @IsOptional()
   @ValidateNested()
   @Type((opts) => {
     switch ((opts?.object as RegisterDto | undefined)?.role) {

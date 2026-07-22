@@ -76,7 +76,7 @@ export class AuthService {
           firstName: dto.firstName,
           lastName: dto.lastName,
           locale: dto.locale ?? Locale.de,
-          isActive: role === Role.PATIENT,
+          isActive: role === Role.PATIENT && dto.inviteCode?.trim().toUpperCase() === 'CANNATHERA2026',
         },
       });
 

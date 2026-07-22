@@ -89,7 +89,7 @@ export function PaywallModal({ isOpen, onClose, type }: Readonly<PaywallModalPro
 
         {/* Title */}
         <h3 className="mt-4 text-center font-display text-2xl font-bold text-pine">
-          {isPatient ? "Upgrade to Premium" : "Activate Partner Account"}
+          {isPatient ? "Upgrade to premium service required" : "Please activate your partner account"}
         </h3>
         <p className="mt-2 text-center text-sm text-muted">
           {isPatient

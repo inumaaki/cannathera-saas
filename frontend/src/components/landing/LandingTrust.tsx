@@ -2,8 +2,8 @@
 
 export function LandingTrust() {
   return (
-    <section id="trust" className="py-20 bg-white border-t border-hairline">
-      <div className="mx-auto max-w-7xl px-6 grid gap-12 lg:grid-cols-2 lg:items-center">
+    <section id="trust" className="min-h-screen flex flex-col justify-center py-16 bg-white border-t border-hairline">
+      <div className="mx-auto max-w-7xl px-6 grid gap-12 lg:grid-cols-2 lg:items-center w-full">
         {/* Left Side Content */}
         <div className="space-y-6">
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-pine-600">

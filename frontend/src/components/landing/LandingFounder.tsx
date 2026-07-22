@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export function LandingFounder() {
   return (
-    <section id="founder" className="py-20 bg-white">
-      <div className="mx-auto max-w-7xl px-6 grid gap-12 lg:grid-cols-2 lg:items-center">
+    <section id="founder" className="min-h-screen flex flex-col justify-center py-16 bg-white border-t border-hairline">
+      <div className="mx-auto max-w-7xl px-6 grid gap-12 lg:grid-cols-2 lg:items-center w-full">
         {/* Left: Interactive clinical card representation or photo placeholder */}
         <div className="relative mx-auto w-full max-w-md lg:max-w-none">
           <div className="relative rounded-2xl border border-hairline bg-surface p-6 shadow-xl">

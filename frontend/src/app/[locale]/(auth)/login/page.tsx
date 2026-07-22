@@ -20,14 +20,16 @@ export default function LoginPage({
     <div className="min-h-dvh lg:grid lg:grid-cols-2">
       {/* Left — hero (hidden on small screens) */}
       <aside className="hidden lg:flex flex-col justify-between bg-brand-gradient p-10 text-white">
-        <Image
-          src="/brand/logo-banner-transparent.png"
-          alt="Cannathera"
-          width={280}
-          height={80}
-          className="w-56 h-auto"
-          priority
-        />
+        <Link href="/" className="inline-block w-fit">
+          <Image
+            src="/brand/logo-banner-transparent.png"
+            alt="Cannathera"
+            width={280}
+            height={80}
+            className="w-56 h-auto"
+            priority
+          />
+        </Link>
         <div className="max-w-lg">
           <h1 className="font-display text-4xl xl:text-5xl font-bold leading-tight whitespace-pre-line">
             {t("hero.title")}
@@ -42,18 +44,20 @@ export default function LoginPage({
           <span>{t("hero.gdpr")}</span>
         </div>
       </aside>
-
+ 
       {/* Right — form */}
       <main className="flex flex-col items-center justify-center bg-white px-6 py-6">
         <div className="w-full max-w-md">
-          <Image
-            src="/brand/logo.png"
-            alt=""
-            width={52}
-            height={52}
-            className="rounded-full"
-            priority
-          />
+          <Link href="/" className="inline-block w-fit">
+            <Image
+              src="/brand/logo.png"
+              alt=""
+              width={52}
+              height={52}
+              className="rounded-full"
+              priority
+            />
+          </Link>
           <h2 className="mt-5 font-display text-3xl font-bold text-pine">
             {t("login.title")}
           </h2>
