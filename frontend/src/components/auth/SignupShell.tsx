@@ -6,7 +6,7 @@ export function SignupShell({ children }: Readonly<{ children: React.ReactNode }
   const t = useTranslations("auth.signup.hero");
 
   return (
-    <div className="min-h-dvh lg:grid lg:grid-cols-[5fr_7fr]">
+    <div className="min-h-dvh lg:grid lg:grid-cols-2">
       {/* Left — deep green panel */}
       <aside className="hidden lg:flex flex-col items-center justify-center gap-8 bg-pine px-12 py-8 text-center text-white">
         <span className="flex size-20 items-center justify-center rounded-full bg-white/10">
@@ -57,8 +57,8 @@ export function SignupShell({ children }: Readonly<{ children: React.ReactNode }
       </aside>
 
       {/* Right — content */}
-      <main className="flex flex-col justify-center bg-surface px-6 py-6 lg:px-16">
-        <div className="mx-auto w-full max-w-2xl">
+      <main className="flex flex-col items-center justify-center bg-white px-6 py-6">
+        <div className="w-full max-w-md">
           <BrandMark />
           {children}
         </div>

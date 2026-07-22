@@ -25,18 +25,15 @@ export default function SignupPage({
       </h1>
       <p className="mt-2 text-muted">{t("subtitle")}</p>
 
-      <div className="mt-6 grid gap-4 sm:grid-cols-2">
+      <div className="mt-6 space-y-4">
         {ROLE_CARDS.map(({ role, icon }) => (
           <Link
             key={role}
             href={`/signup/${role}`}
-            className="cw-watermark group rounded-xl border border-hairline bg-white p-5
-                       transition-all hover:border-pine-600 hover:shadow-md"
+            className="cw-watermark group flex items-center gap-4 rounded-xl border border-hairline bg-white p-5
+                       transition-all hover:border-pine-600 hover:shadow-md cursor-pointer"
           >
-            <span
-              className="flex size-11 items-center justify-center rounded-full
-                         bg-mint/30"
-            >
+            <span className="flex size-12 shrink-0 items-center justify-center rounded-full bg-mint/30">
               <span
                 aria-hidden
                 className="msym text-[24px] text-pine-600"
@@ -44,10 +41,18 @@ export default function SignupPage({
                 {icon}
               </span>
             </span>
-            <h2 className="mt-3 text-lg font-bold text-ink-strong group-hover:text-pine-600">
-              {t(role)}
-            </h2>
-            <p className="mt-1 text-sm leading-relaxed text-muted">{t(`${role}Desc`)}</p>
+            <div className="flex-1 min-w-0">
+              <h2 className="text-lg font-bold text-ink-strong group-hover:text-pine-600 transition-colors">
+                {t(role)}
+              </h2>
+              <p className="mt-1 text-sm leading-relaxed text-muted">{t(`${role}Desc`)}</p>
+            </div>
+            <span
+              aria-hidden
+              className="msym text-[20px] text-muted group-hover:text-pine-600 transition-all transform group-hover:translate-x-1"
+            >
+              arrow_forward
+            </span>
           </Link>
         ))}
       </div>
