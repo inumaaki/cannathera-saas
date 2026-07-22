@@ -248,8 +248,8 @@ export function EnterpriseShell({
                     onClick={() => setMenuOpen(false)}
                     className="fixed inset-0 z-30 cursor-default"
                   />
-                  <div className="absolute end-0 top-12 z-40 w-64 overflow-hidden rounded-xl border border-hairline bg-white shadow-lg">
-                    <p className="border-b border-hairline px-5 py-3 text-sm text-muted">
+                  <div className="absolute end-0 top-12 z-40 w-64 rounded-xl border border-hairline bg-white shadow-lg">
+                    <p className="border-b border-hairline px-5 py-3 text-sm text-muted rounded-t-xl">
                       {networkName}
                     </p>
                     <div className="flex items-center justify-between border-b border-hairline px-5 py-3">
@@ -264,7 +264,7 @@ export function EnterpriseShell({
                     <button
                       type="button"
                       onClick={handleLogout}
-                      className="flex w-full items-center gap-3 px-5 py-3 text-sm font-semibold text-accent-print hover:bg-surface"
+                      className="flex w-full items-center gap-3 px-5 py-3 text-sm font-semibold text-accent-print hover:bg-surface rounded-b-xl"
                     >
                       <span aria-hidden className="msym text-[20px]">
                         logout

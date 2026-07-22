@@ -218,8 +218,8 @@ export function PatientShell({
                   )}
                 </div>
               ) : (
-                <div className="overflow-hidden rounded-2xl border border-hairline bg-white shadow-lg">
-                  <p className="border-b border-hairline px-5 py-3 text-sm text-muted">
+                <div className="rounded-2xl border border-hairline bg-white shadow-lg">
+                  <p className="border-b border-hairline px-5 py-3 text-sm text-muted rounded-t-2xl">
                     {userName}
                   </p>
                   <MenuLink href="/patient/profile" icon="person" label={th("myProfile")} />
@@ -239,7 +239,7 @@ export function PatientShell({
                     type="button"
                     onClick={handleLogout}
                     className="flex w-full items-center gap-3 px-5 py-3 font-semibold
-                               text-accent-print hover:bg-surface"
+                               text-accent-print hover:bg-surface rounded-b-2xl"
                   >
                     <span aria-hidden className="msym text-[20px]">
                       logout

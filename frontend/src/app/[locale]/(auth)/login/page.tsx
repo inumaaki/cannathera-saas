@@ -85,7 +85,7 @@ export default function LoginPage({
               {tc("privacy")}
             </Link>
             <span aria-hidden>·</span>
-            <LocaleSwitcher />
+            <LocaleSwitcher direction="up" />
           </footer>
         </div>
       </main>
