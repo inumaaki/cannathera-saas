@@ -6,7 +6,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Locale, OrgType, Role, User } from '@prisma/client';
+import { Locale, OrgType, Prisma, Role, User } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { randomBytes, randomInt } from 'crypto';
 import * as nodemailer from 'nodemailer';
@@ -59,151 +59,188 @@ export class AuthService {
 
   // ---------------------------------------------------------------- register
   async register(dto: RegisterDto, ip?: string) {
-    const existing = await this.prisma.user.findUnique({
-      where: { email: dto.email.toLowerCase() },
-    });
-    if (existing) throw new ConflictException('EMAIL_TAKEN');
-
-    const passwordHash = await argon2.hash(dto.password);
-    const role = ROLE_MAP[dto.role];
-
-    const user = await this.prisma.$transaction(async (tx) => {
-      const created = await tx.user.create({
-        data: {
-          email: dto.email.toLowerCase(),
-          passwordHash,
-          role,
-          firstName: dto.firstName,
-          lastName: dto.lastName,
-          locale: dto.locale ?? Locale.de,
-          isActive: role === Role.PATIENT && dto.inviteCode?.trim().toUpperCase() === 'CANNATHERA2026',
-        },
+    try {
+      const existing = await this.prisma.user.findUnique({
+        where: { email: dto.email.toLowerCase() },
       });
+      if (existing) throw new ConflictException('EMAIL_TAKEN');
 
-      switch (dto.role) {
-        case 'patient': {
-          const data = dto.roleData as PatientDataDto | undefined;
-          if (!data?.consentArt9) {
-            // Art. 9 GDPR consent is mandatory for processing health data.
-            throw new BadRequestException('CONSENT_ART9_REQUIRED');
-          }
-          await tx.patientProfile.create({
-            data: {
-              userId: created.id,
-              dateOfBirth: new Date(data.dateOfBirth),
-              therapyStart: new Date(),
-            },
-          });
-          if (data.preferredLanguage) {
-            await tx.user.update({
-              where: { id: created.id },
-              data: { locale: data.preferredLanguage },
+      const passwordHash = await argon2.hash(dto.password);
+      const role = ROLE_MAP[dto.role];
+
+      const user = await this.prisma.$transaction(async (tx) => {
+        const created = await tx.user.create({
+          data: {
+            email: dto.email.toLowerCase(),
+            passwordHash,
+            role,
+            firstName: dto.firstName,
+            lastName: dto.lastName,
+            locale: dto.locale ?? Locale.de,
+            isActive:
+              role === Role.PATIENT &&
+              dto.inviteCode?.trim().toUpperCase() === 'CANNATHERA2026',
+          },
+        });
+
+        switch (dto.role) {
+          case 'patient': {
+            const data = dto.roleData as PatientDataDto | undefined;
+            if (!data?.consentArt9) {
+              // Art. 9 GDPR consent is mandatory for processing health data.
+              throw new BadRequestException('CONSENT_ART9_REQUIRED');
+            }
+            await tx.patientProfile.create({
+              data: {
+                userId: created.id,
+                dateOfBirth: new Date(data.dateOfBirth),
+                therapyStart: new Date(),
+              },
             });
-          }
-          await tx.consent.create({
-            data: {
-              userId: created.id,
-              purpose: 'data_processing_art9',
-              version: CONSENT_VERSION,
-              ipAddress: ip,
-            },
-          });
-          if (data.consentShareDoctor) {
+            if (data.preferredLanguage) {
+              await tx.user.update({
+                where: { id: created.id },
+                data: { locale: data.preferredLanguage },
+              });
+            }
             await tx.consent.create({
               data: {
                 userId: created.id,
-                purpose: 'share_with_doctor',
+                purpose: 'data_processing_art9',
                 version: CONSENT_VERSION,
                 ipAddress: ip,
               },
             });
+            if (data.consentShareDoctor) {
+              await tx.consent.create({
+                data: {
+                  userId: created.id,
+                  purpose: 'share_with_doctor',
+                  version: CONSENT_VERSION,
+                  ipAddress: ip,
+                },
+              });
+            }
+            break;
           }
-          break;
+          case 'doctor': {
+            const data = dto.roleData as DoctorDataDto | undefined;
+            const org = await tx.organization.create({
+              data: {
+                name: data?.practiceName ?? `Praxis ${dto.lastName}`,
+                type: OrgType.PRACTICE,
+                branding: data
+                  ? {
+                      lanr: data.lanr,
+                      bsnr: data.bsnr,
+                      specialty: data.specialty,
+                      phone: data.phone,
+                    }
+                  : undefined,
+              },
+            });
+            await tx.membership.create({
+              data: {
+                userId: created.id,
+                orgId: org.id,
+                roleInOrg: Role.DOCTOR,
+                orgRole: 'ADMIN',
+                permissions: [...ROLE_PRESETS.ADMIN],
+              },
+            });
+            break;
+          }
+          case 'pharmacy': {
+            const data = dto.roleData as PharmacyDataDto | undefined;
+            const org = await tx.organization.create({
+              data: {
+                name: data?.pharmacyName ?? `Apotheke ${dto.lastName}`,
+                type: OrgType.PHARMACY,
+                branding: data
+                  ? {
+                      contactPerson: data.contactPerson,
+                      address: data.address,
+                      phone: data.phone,
+                      idf: data.idf,
+                    }
+                  : undefined,
+              },
+            });
+            await tx.membership.create({
+              data: {
+                userId: created.id,
+                orgId: org.id,
+                roleInOrg: Role.PHARMACY,
+                orgRole: 'ADMIN',
+                permissions: [...ROLE_PRESETS.ADMIN],
+              },
+            });
+            break;
+          }
+          case 'enterprise': {
+            const data = dto.roleData as EnterpriseDataDto | undefined;
+            const org = await tx.organization.create({
+              data: {
+                name: data?.companyName ?? `Enterprise ${dto.lastName}`,
+                type: OrgType.ENTERPRISE,
+                branding: data
+                  ? {
+                      contactPerson: data.contactPerson,
+                      partnerType: data.partnerType,
+                      phone: data.phone,
+                    }
+                  : undefined,
+              },
+            });
+            await tx.membership.create({
+              data: {
+                userId: created.id,
+                orgId: org.id,
+                roleInOrg: Role.ENTERPRISE,
+                orgRole: 'ADMIN',
+                permissions: [...ROLE_PRESETS.ADMIN],
+              },
+            });
+            break;
+          }
         }
-        case 'doctor': {
-          const data = dto.roleData as DoctorDataDto | undefined;
-          const org = await tx.organization.create({
-            data: {
-              name: data?.practiceName ?? `Praxis ${dto.lastName}`,
-              type: OrgType.PRACTICE,
-              branding: data
-                ? { lanr: data.lanr, bsnr: data.bsnr, specialty: data.specialty, phone: data.phone }
-                : undefined,
-            },
-          });
-          await tx.membership.create({
-            data: {
-              userId: created.id,
-              orgId: org.id,
-              roleInOrg: Role.DOCTOR,
-              orgRole: 'ADMIN',
-              permissions: [...ROLE_PRESETS.ADMIN],
-            },
-          });
-          break;
-        }
-        case 'pharmacy': {
-          const data = dto.roleData as PharmacyDataDto | undefined;
-          const org = await tx.organization.create({
-            data: {
-              name: data?.pharmacyName ?? `Apotheke ${dto.lastName}`,
-              type: OrgType.PHARMACY,
-              branding: data
-                ? { contactPerson: data.contactPerson, address: data.address, phone: data.phone, idf: data.idf }
-                : undefined,
-            },
-          });
-          await tx.membership.create({
-            data: {
-              userId: created.id,
-              orgId: org.id,
-              roleInOrg: Role.PHARMACY,
-              orgRole: 'ADMIN',
-              permissions: [...ROLE_PRESETS.ADMIN],
-            },
-          });
-          break;
-        }
-        case 'enterprise': {
-          const data = dto.roleData as EnterpriseDataDto | undefined;
-          const org = await tx.organization.create({
-            data: {
-              name: data?.companyName ?? `Enterprise ${dto.lastName}`,
-              type: OrgType.ENTERPRISE,
-              branding: data
-                ? { contactPerson: data.contactPerson, partnerType: data.partnerType, phone: data.phone }
-                : undefined,
-            },
-          });
-          await tx.membership.create({
-            data: {
-              userId: created.id,
-              orgId: org.id,
-              roleInOrg: Role.ENTERPRISE,
-              orgRole: 'ADMIN',
-              permissions: [...ROLE_PRESETS.ADMIN],
-            },
-          });
-          break;
-        }
-      }
 
-      await tx.auditLog.create({
-        data: {
-          userId: created.id,
-          action: 'USER_REGISTERED',
-          entityType: 'User',
-          entityId: created.id,
-          metadata: { role },
-          ipAddress: ip,
-        },
+        await tx.auditLog.create({
+          data: {
+            userId: created.id,
+            action: 'USER_REGISTERED',
+            entityType: 'User',
+            entityId: created.id,
+            metadata: { role },
+            ipAddress: ip,
+          },
+        });
+
+        return created;
       });
 
-      return created;
-    });
-
-    const devCode = await this.issueTwoFactorCode(user);
-    return { user, preAuthToken: this.signPreAuth(user), devCode };
+      const devCode = await this.issueTwoFactorCode(user);
+      return { user, preAuthToken: this.signPreAuth(user), devCode };
+    } catch (error) {
+      if (
+        error instanceof ConflictException ||
+        error instanceof BadRequestException
+      ) {
+        throw error;
+      }
+      if (error instanceof Prisma.PrismaClientKnownRequestError) {
+        this.logger.error(
+          `Registration database error ${error.code}: ${error.message}`,
+          error.stack,
+        );
+      } else {
+        this.logger.error(
+          `Registration failed: ${error instanceof Error ? error.message : String(error)}`,
+          error instanceof Error ? error.stack : undefined,
+        );
+      }
+      throw error;
+    }
   }
 
   /**
@@ -282,7 +319,11 @@ export class AuthService {
     }
 
     const devCode = await this.issueTwoFactorCode(user);
-    return { user, preAuthToken: this.signPreAuth(user, dto.remember), devCode };
+    return {
+      user,
+      preAuthToken: this.signPreAuth(user, dto.remember),
+      devCode,
+    };
   }
 
   // ------------------------------------------------------------------ verify
@@ -295,7 +336,8 @@ export class AuthService {
     } catch {
       throw new UnauthorizedException('NO_PENDING_LOGIN');
     }
-    if (payload.stage !== '2fa') throw new UnauthorizedException('NO_PENDING_LOGIN');
+    if (payload.stage !== '2fa')
+      throw new UnauthorizedException('NO_PENDING_LOGIN');
 
     const candidates = await this.prisma.twoFactorCode.findMany({
       where: {
@@ -353,7 +395,9 @@ export class AuthService {
     } catch {
       throw new UnauthorizedException('NO_PENDING_LOGIN');
     }
-    const user = await this.prisma.user.findUniqueOrThrow({ where: { id: payload.sub } });
+    const user = await this.prisma.user.findUniqueOrThrow({
+      where: { id: payload.sub },
+    });
     const devCode = await this.issueTwoFactorCode(user);
     return { devCode };
   }
@@ -375,7 +419,11 @@ export class AuthService {
       },
     });
     await this.prisma.auditLog.create({
-      data: { userId: user.id, action: 'PASSWORD_RESET_REQUESTED', ipAddress: ip },
+      data: {
+        userId: user.id,
+        action: 'PASSWORD_RESET_REQUESTED',
+        ipAddress: ip,
+      },
     });
 
     // TODO(M11): email the reset link via EU transactional provider.
@@ -416,7 +464,11 @@ export class AuthService {
         },
       }),
       this.prisma.auditLog.create({
-        data: { userId: match.userId, action: 'PASSWORD_RESET_DONE', ipAddress: ip },
+        data: {
+          userId: match.userId,
+          action: 'PASSWORD_RESET_DONE',
+          ipAddress: ip,
+        },
       }),
     ]);
 
@@ -501,35 +553,50 @@ export class AuthService {
     // TODO(M11): send via transactional email provider (GDPR-compliant, EU region).
     this.logger.log(`2FA code for ${user.email}: ${code}`);
 
-    if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    if (
+      process.env.SMTP_HOST &&
+      process.env.SMTP_USER &&
+      process.env.SMTP_PASS
+    ) {
       const smtpHost = process.env.SMTP_HOST;
-      lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
-        const transporter = nodemailer.createTransport({
-          host: dnsResult.address,
-          port: Number(process.env.SMTP_PORT ?? 587),
-          secure: process.env.SMTP_SECURE === 'true',
-          auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-          },
-          tls: {
-            servername: smtpHost,
-          },
-        } as any);
-        transporter.sendMail({
-          from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
-          to: user.email,
-          subject: 'Cannathera 2FA Code',
-          text: `Your 2FA verification code is: ${code}`,
-          html: `<p>Your 2FA verification code is: <strong>${code}</strong></p>`,
-        }).then(() => {
-          this.logger.log(`2FA email sent to ${user.email}`);
-        }).catch((err) => {
-          this.logger.error(`Failed to send 2FA email to ${user.email}: ${err instanceof Error ? err.message : String(err)}`);
+      lookup(smtpHost, { family: 4 })
+        .then((dnsResult: any) => {
+          const transporter = nodemailer.createTransport({
+            host: dnsResult.address,
+            port: Number(process.env.SMTP_PORT ?? 587),
+            secure: process.env.SMTP_SECURE === 'true',
+            auth: {
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS,
+            },
+            tls: {
+              servername: smtpHost,
+            },
+          } as any);
+          transporter
+            .sendMail({
+              from:
+                process.env.SMTP_FROM ??
+                '"Cannathera" <no-reply@cannathera.de>',
+              to: user.email,
+              subject: 'Cannathera 2FA Code',
+              text: `Your 2FA verification code is: ${code}`,
+              html: `<p>Your 2FA verification code is: <strong>${code}</strong></p>`,
+            })
+            .then(() => {
+              this.logger.log(`2FA email sent to ${user.email}`);
+            })
+            .catch((err) => {
+              this.logger.error(
+                `Failed to send 2FA email to ${user.email}: ${err instanceof Error ? err.message : String(err)}`,
+              );
+            });
+        })
+        .catch((err: any) => {
+          this.logger.error(
+            `Failed to resolve SMTP host to IPv4: ${err instanceof Error ? err.message : String(err)}`,
+          );
         });
-      }).catch((err: any) => {
-        this.logger.error(`Failed to resolve SMTP host to IPv4: ${err instanceof Error ? err.message : String(err)}`);
-      });
     }
 
     return process.env.NODE_ENV === 'production' ? undefined : code;
