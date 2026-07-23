@@ -15,7 +15,7 @@ export default function HomePage({
   setRequestLocale(locale);
 
   return (
-    <div className="min-h-screen bg-white flex flex-col">
+    <div className="flex min-h-screen max-w-full flex-col overflow-x-clip bg-white">
       <LandingHeader />
       <LandingHero />
       <LandingFeatures />

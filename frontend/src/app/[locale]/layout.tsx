@@ -26,6 +26,11 @@ const plexSans = IBM_Plex_Sans({
 export const metadata: Metadata = {
   title: "Cannathera",
   description: "Struktur · Orientierung · Verbindlichkeit",
+  icons: {
+    icon: [{ url: "/brand/logo.png", type: "image/png" }],
+    shortcut: "/brand/logo.png",
+    apple: "/brand/logo.png",
+  },
 };
 
 export function generateStaticParams() {

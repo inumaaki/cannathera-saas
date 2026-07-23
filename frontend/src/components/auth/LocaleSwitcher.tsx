@@ -66,7 +66,7 @@ export function LocaleSwitcher({ direction = "down", align = "right" }: LocaleSw
   // Position classes based on direction and alignment
   const positionClasses = [
     direction === "up" ? "bottom-full mb-2 origin-bottom" : "top-full mt-2 origin-top",
-    align === "right" ? "right-0" : "left-0",
+    align === "right" ? "end-0" : "start-0",
   ].join(" ");
 
   return (
@@ -103,7 +103,7 @@ export function LocaleSwitcher({ direction = "down", align = "right" }: LocaleSw
                 key={l}
                 type="button"
                 onClick={() => switchTo(l)}
-                className={`flex w-full items-center justify-between px-4 py-2.5 text-left text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer
+                className={`flex w-full items-center justify-between px-4 py-2.5 text-start text-xs font-bold uppercase tracking-wider transition-colors cursor-pointer
                   ${
                     isSelected
                       ? "bg-pine-600 text-white"

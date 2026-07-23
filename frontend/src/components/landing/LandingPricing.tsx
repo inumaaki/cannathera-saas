@@ -333,7 +333,20 @@ export function LandingPricing() {
           <h3 className="font-display text-xl font-bold text-pine text-center">{t("optionalsTitle")}</h3>
           <p className="mt-1.5 text-xs text-muted text-center">{t("optionalsDesc")}</p>
           <div className="mt-6 overflow-hidden rounded-xl border border-hairline bg-white shadow-sm">
-            <table className="w-full text-sm text-left">
+            <div className="divide-y divide-hairline md:hidden">
+              {optionals.map((opt, i) => (
+                <article key={i} className="p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <h4 className="min-w-0 font-bold text-ink-strong">{opt.name}</h4>
+                    <span className="shrink-0 rounded-full bg-mint/25 px-2.5 py-1 text-xs font-bold text-pine-600">
+                      {opt.price}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-xs leading-relaxed text-muted">{opt.desc}</p>
+                </article>
+              ))}
+            </div>
+            <table className="hidden w-full text-start text-sm md:table">
               <thead className="bg-surface text-ink-strong uppercase tracking-wider text-xs font-bold border-b border-hairline">
                 <tr>
                   <th className="px-6 py-4">{t("optionalsColName")}</th>
