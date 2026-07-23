@@ -38,7 +38,7 @@ export function LandingFounder() {
             {/* Clinical Value comparison */}
             <div className="mt-8 border-t border-white/10 pt-6 relative z-10">
               <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8cbda3]/60 mb-4 text-center">
-                Clinical Orchestration
+                {t("orchestration")}
               </p>
               <div className="flex items-center justify-between gap-2.5">
                 {/* Doctor */}

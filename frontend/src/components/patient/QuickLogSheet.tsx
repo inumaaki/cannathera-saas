@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { api } from "@/lib/api";
@@ -36,6 +36,17 @@ export function QuickLogSheet({
 
   const [pending, setPending] = useState(false);
   const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [open]);
 
   if (!open) return null;
 
@@ -95,7 +106,13 @@ export function QuickLogSheet({
         onClick={onClose}
         className="absolute inset-0 bg-black/50"
       />
-      <div className="absolute inset-x-0 bottom-0 mx-auto max-h-[92dvh] w-full max-w-md overflow-y-auto rounded-t-3xl bg-white px-6 pb-6 pt-3 shadow-2xl">
+      <div
+        className="absolute inset-x-0 bottom-0 mx-auto max-h-[calc(100dvh-0.75rem)] w-full max-w-md
+                   overflow-y-auto overscroll-contain rounded-t-3xl bg-white px-4 pt-3 shadow-2xl
+                   [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
+                   pb-[calc(1.5rem+env(safe-area-inset-bottom))]
+                   sm:bottom-3 sm:max-h-[calc(100dvh-1.5rem)] sm:rounded-3xl sm:px-6"
+      >
         <div aria-hidden className="mx-auto mb-4 h-1.5 w-12 rounded-full bg-hairline" />
         <div className="flex items-start justify-between">
           <div>

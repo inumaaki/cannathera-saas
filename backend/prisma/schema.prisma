@@ -98,6 +98,8 @@ model User {
   isActive      Boolean   @default(true)
   // Set for doctor-created accounts (temp password) — forces password change on first login.
   mustChangePassword Boolean @default(false)
+  // Short-lived, encrypted onboarding credential. Cleared as soon as the user sets a password.
+  temporaryPasswordEncrypted String?
   emailVerified DateTime?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt

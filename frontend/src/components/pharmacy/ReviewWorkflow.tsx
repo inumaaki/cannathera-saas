@@ -112,7 +112,7 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
             return;
           }
         }
-        alert("Action failed. Please try again.");
+        alert(t("actionFailed"));
         return;
       }
       const blob = await res.blob();
@@ -127,7 +127,7 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
       a.click();
       URL.revokeObjectURL(href);
     } catch {
-      alert("Action failed. Please try again.");
+      alert(t("actionFailed"));
     }
   }
 
@@ -435,9 +435,9 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
               {error ? (
                 <p className="mt-4 text-sm font-semibold text-red-600">
                   {error === "UPGRADE_REQUIRED"
-                    ? "Upgrade to premium service required to complete this monthly review."
+                    ? t("upgradeRequired")
                     : error === "PARTNER_INACTIVE"
-                    ? "Please activate your partner account."
+                    ? t("partnerInactive")
                     : error}
                 </p>
               ) : null}

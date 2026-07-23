@@ -74,6 +74,24 @@ body {
   color: var(--color-text);
 }
 
+/*
+ * Dialogs remain fully scrollable, but browser scrollbars stay visually hidden.
+ * The selector covers both the dialog surface and nested scroll areas such as
+ * long forms and custom dropdown option lists.
+ */
+:where(dialog, [role="dialog"], [aria-modal="true"]),
+:where(dialog, [role="dialog"], [aria-modal="true"]) * {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+:where(dialog, [role="dialog"], [aria-modal="true"])::-webkit-scrollbar,
+:where(dialog, [role="dialog"], [aria-modal="true"]) *::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
 /* Brand gradient utility. */
 .bg-brand-gradient {
   background-image: var(--gradient-brand);

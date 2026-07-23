@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 
 export function LandingFooter() {
   const t = useTranslations("common");
+  const tf = useTranslations("landing.footer");
 
   return (
     <footer className="border-t border-hairline bg-white py-12 text-sm text-muted">
@@ -18,27 +19,27 @@ export function LandingFooter() {
               </span>
             </div>
             <p className="text-xs text-muted max-w-xs">
-              Structured clinical therapy accompaniment connecting patients, practitioners, and pharmacies securely.
+              {tf("description")}
             </p>
           </div>
 
           {/* Directory Column 1 */}
           <div>
-            <h4 className="font-bold text-ink-strong uppercase tracking-wider text-xs">Portals</h4>
+            <h4 className="font-bold text-ink-strong uppercase tracking-wider text-xs">{tf("portals")}</h4>
             <ul className="mt-3 space-y-2">
               <li>
                 <Link href="/login" className="hover:text-pine-600 transition-colors">
-                  Patient Area
+                  {tf("patientArea")}
                 </Link>
               </li>
               <li>
                 <Link href="/login" className="hover:text-pine-600 transition-colors">
-                  Clinical Portal
+                  {tf("clinicalPortal")}
                 </Link>
               </li>
               <li>
                 <Link href="/login" className="hover:text-pine-600 transition-colors">
-                  Pharmacy Portal
+                  {tf("pharmacyPortal")}
                 </Link>
               </li>
             </ul>
@@ -46,7 +47,7 @@ export function LandingFooter() {
 
           {/* Directory Column 2 */}
           <div>
-            <h4 className="font-bold text-ink-strong uppercase tracking-wider text-xs">Company</h4>
+            <h4 className="font-bold text-ink-strong uppercase tracking-wider text-xs">{tf("company")}</h4>
             <ul className="mt-3 space-y-2">
               <li>
                 <Link href="/imprint" className="hover:text-pine-600 transition-colors">
@@ -63,26 +64,26 @@ export function LandingFooter() {
 
           {/* Certifications Badge */}
           <div className="space-y-2">
-            <h4 className="font-bold text-ink-strong uppercase tracking-wider text-xs">Certifications</h4>
+            <h4 className="font-bold text-ink-strong uppercase tracking-wider text-xs">{tf("certifications")}</h4>
             <div className="flex flex-col gap-1.5 pt-1 text-xs font-semibold text-sage-900">
               <span className="flex items-center gap-1.5">
                 <span aria-hidden className="msym text-[14px] text-pine-600">
                   verified_user
                 </span>
-                GDPR Compliant
+                {tf("gdpr")}
               </span>
               <span className="flex items-center gap-1.5">
                 <span aria-hidden className="msym text-[14px] text-pine-600">
                   security
                 </span>
-                CE Medical Device Class I
+                {tf("ceClass")}
               </span>
             </div>
           </div>
         </div>
 
         <div className="mt-12 border-t border-hairline pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-          <p>© 2026 Cannathera. All rights reserved.</p>
+          <p>{tf("copyright")}</p>
           <div className="flex gap-4">
             <Link href="/imprint" className="hover:underline">
               {t("imprint")}

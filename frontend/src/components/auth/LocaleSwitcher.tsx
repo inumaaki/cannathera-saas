@@ -1,7 +1,6 @@
 "use client";
 
 import { useLocale } from "next-intl";
-import { usePathname } from "@/i18n/navigation";
 import { LOCALES, LOCALE_LABELS } from "@cannathera/shared";
 import { useState, useRef, useEffect } from "react";
 
@@ -14,7 +13,6 @@ interface LocaleSwitcherProps {
    server component re-renders in the new locale; query string is preserved. */
 export function LocaleSwitcher({ direction = "down", align = "right" }: LocaleSwitcherProps) {
   const locale = useLocale();
-  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -23,9 +21,15 @@ export function LocaleSwitcher({ direction = "down", align = "right" }: LocaleSw
       setIsOpen(false);
       return;
     }
-    const search = window.location.search;
-    const hash = window.location.hash;
-    window.location.assign(`/${next}${pathname}${search}${hash}`);
+    const url = new URL(window.location.href);
+    const segments = url.pathname.split("/");
+    if (LOCALES.includes(segments[1] as (typeof LOCALES)[number])) {
+      segments[1] = next;
+    } else {
+      segments.splice(1, 0, next);
+    }
+    url.pathname = segments.join("/");
+    window.location.assign(url.toString());
   }
 
   // Close dropdown when clicking outside

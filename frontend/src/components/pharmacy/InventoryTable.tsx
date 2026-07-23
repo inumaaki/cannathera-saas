@@ -56,6 +56,15 @@ export function InventoryTable({ items }: Readonly<{ items: Item[] }>) {
   const [dialog, setDialog] = useState<Dialog>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const categoryLabel = (value: string) => {
+    const key = `category${value}` as
+      | "categoryFlower"
+      | "categoryOil"
+      | "categoryExtract"
+      | "categoryCapsule";
+    return CATEGORIES.includes(value as (typeof CATEGORIES)[number]) ? t(key) : value;
+  };
+  const unitLabel = (value: string) => (value === "Stk." ? t("unitPieces") : value);
 
   const day = (iso: string) =>
     format.dateTime(new Date(iso), { day: "2-digit", month: "2-digit", year: "numeric" });
@@ -147,16 +156,16 @@ export function InventoryTable({ items }: Readonly<{ items: Item[] }>) {
                         </p>
                       ) : null}
                     </td>
-                    <td className="px-6 py-4 text-ink-strong">{i.category}</td>
+                    <td className="px-6 py-4 text-ink-strong">{categoryLabel(i.category)}</td>
                     <td className="px-6 py-4 font-mono text-ink-strong">
                       THC {i.thc ?? 0}% · CBD {i.cbd ?? 0}%
                     </td>
                     <td className="px-6 py-4">
                       <p className="font-mono font-bold text-ink-strong">
-                        {i.stockLevel} {i.unit}
+                        {i.stockLevel} {unitLabel(i.unit)}
                       </p>
                       <p className="text-xs text-muted">
-                        {t("threshold")}: {i.safetyThreshold} {i.unit}
+                        {t("threshold")}: {i.safetyThreshold} {unitLabel(i.unit)}
                       </p>
                     </td>
                     <td className="px-6 py-4">
@@ -256,14 +265,14 @@ export function InventoryTable({ items }: Readonly<{ items: Item[] }>) {
           >
             <Field label={t("sku")} name="sku" type="text" required />
             <Field label={t("name")} name="name" type="text" required />
-            <Select label={t("category")} name="category" options={CATEGORIES} />
+            <Select label={t("category")} name="category" options={CATEGORIES} optionLabel={categoryLabel} />
             <div className="grid grid-cols-2 gap-4">
               <Field label={t("thc")} name="thc" defaultValue={0} />
               <Field label={t("cbd")} name="cbd" defaultValue={0} />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <Field label={t("stockLevel")} name="stockLevel" defaultValue={0} required />
-              <Select label={t("unit")} name="unit" options={UNITS} />
+              <Select label={t("unit")} name="unit" options={UNITS} optionLabel={unitLabel} />
             </div>
             <Field label={t("threshold")} name="safetyThreshold" defaultValue={50} required />
             <Actions
@@ -307,6 +316,7 @@ export function InventoryTable({ items }: Readonly<{ items: Item[] }>) {
               name="category"
               options={CATEGORIES}
               defaultValue={dialog.item.category}
+              optionLabel={categoryLabel}
             />
             <div className="grid grid-cols-2 gap-4">
               <Field label={t("thc")} name="thc" defaultValue={dialog.item.thc ?? 0} />
@@ -324,6 +334,7 @@ export function InventoryTable({ items }: Readonly<{ items: Item[] }>) {
                 name="unit"
                 options={UNITS}
                 defaultValue={dialog.item.unit}
+                optionLabel={unitLabel}
               />
             </div>
             <Field
@@ -622,11 +633,13 @@ function Select({
   name,
   options,
   defaultValue,
+  optionLabel = (value) => value,
 }: Readonly<{
   label: string;
   name: string;
   options: readonly string[];
   defaultValue?: string;
+  optionLabel?: (value: string) => string;
 }>) {
   return (
     <label className="block">
@@ -640,7 +653,7 @@ function Select({
       >
         {options.map((o) => (
           <option key={o} value={o}>
-            {o}
+            {optionLabel(o)}
           </option>
         ))}
       </select>
@@ -653,11 +666,12 @@ function Dialog({
   onClose,
   children,
 }: Readonly<{ title: string; onClose: () => void; children: React.ReactNode }>) {
+  const t = useTranslations("pharmacy.inventory");
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <button
         type="button"
-        aria-label="close"
+        aria-label={t("cancel")}
         onClick={onClose}
         className="absolute inset-0 cursor-default bg-pine/40"
       />

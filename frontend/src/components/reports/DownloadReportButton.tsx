@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { API_URL } from "@/lib/api";
 import { PaywallModal, type PaywallType } from "@/components/paywall/PaywallModal";
+import { useTranslations } from "next-intl";
 
 export function DownloadReportButton({
   patientId,
@@ -11,6 +12,7 @@ export function DownloadReportButton({
   patientId: string;
   label?: string;
 }>) {
+  const t = useTranslations("common");
   const [busy, setBusy] = useState(false);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const [paywallType, setPaywallType] = useState<PaywallType>(null);
@@ -33,7 +35,7 @@ export function DownloadReportButton({
             return;
           }
         }
-        alert("Action failed. Please try again.");
+        alert(t("actionFailed"));
         return;
       }
       const blob = await res.blob();
@@ -48,7 +50,7 @@ export function DownloadReportButton({
       a.click();
       URL.revokeObjectURL(href);
     } catch {
-      alert("Action failed. Please try again.");
+      alert(t("actionFailed"));
     } finally {
       setBusy(false);
     }

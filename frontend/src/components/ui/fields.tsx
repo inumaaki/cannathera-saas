@@ -1,6 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
+import { useTranslations } from "next-intl";
 
 /* Form primitives matching Figma auth screens (3.1–3.3):
    uppercase 12px/600 labels, 56px inputs, 8px radius, #d9d9d9 borders. */
@@ -85,6 +86,7 @@ export function PasswordField({
   autoComplete = "current-password",
   labelEnd,
 }: Readonly<BaseProps>) {
+  const t = useTranslations("common");
   const id = useId();
   const [visible, setVisible] = useState(false);
   return (
@@ -106,7 +108,7 @@ export function PasswordField({
           type="button"
           onClick={() => setVisible((v) => !v)}
           className="absolute end-4 top-1/2 -translate-y-1/2 text-muted/80 hover:text-ink-strong"
-          aria-label={visible ? "Hide password" : "Show password"}
+          aria-label={visible ? t("hidePassword") : t("showPassword")}
         >
           <span aria-hidden className="msym">
             {visible ? "visibility_off" : "visibility"}

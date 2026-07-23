@@ -16,7 +16,7 @@ export function LandingHeader() {
         <Link href="/" className="flex items-center gap-2.5 group transition-transform duration-300 active:scale-[0.97]">
           <Image
             src="/brand/logo.png"
-            alt="Cannathera Logo"
+            alt={tl("logoAlt")}
             width={34}
             height={34}
             className="rounded-full transition-transform duration-500 group-hover:rotate-[15deg] group-hover:scale-105"

@@ -131,7 +131,9 @@ export function LandingHero() {
                         }`}
                         style={{ height: `${h}px` }}
                       />
-                      <span className="text-[8px] text-[#8cbda3]/50 font-mono">D{i+6}</span>
+                      <span className="text-[8px] text-[#8cbda3]/50 font-mono">
+                        {t("dayShort", { day: i + 6 })}
+                      </span>
                     </div>
                   ))}
                 </div>

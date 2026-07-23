@@ -40,12 +40,15 @@ export function EnterpriseShell({
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [bellOpen, setBellOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    setMenuOpen(false);
-    setBellOpen(false);
-  }, [pathname]);
+    if (drawerOpen) document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [drawerOpen]);
 
   const isActive = (href: string) =>
     href === "/enterprise" ? pathname === "/enterprise" : pathname.startsWith(href);
@@ -68,31 +71,46 @@ export function EnterpriseShell({
 
   return (
     <div className="flex min-h-dvh bg-surface">
-      <aside className="sticky top-0 flex h-dvh w-64 shrink-0 flex-col bg-brand text-white max-lg:w-16 print:hidden">
-        <Link href="/enterprise" className="px-5 pt-6 max-lg:px-3">
+      {drawerOpen ? (
+        <button
+          type="button"
+          aria-label={t("menu")}
+          onClick={() => setDrawerOpen(false)}
+          className="fixed inset-0 z-40 bg-pine/50 backdrop-blur-sm lg:hidden"
+        />
+      ) : null}
+      <aside
+        role={drawerOpen ? "dialog" : undefined}
+        aria-modal={drawerOpen ? "true" : undefined}
+        aria-label={t("portal")}
+        className={`fixed inset-y-0 start-0 z-50 flex h-dvh w-72 shrink-0 flex-col overflow-y-auto bg-brand text-white shadow-2xl transition-transform duration-300 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden print:hidden lg:sticky lg:top-0 lg:z-auto lg:w-64 lg:translate-x-0 lg:rtl:translate-x-0 lg:shadow-none ${
+          drawerOpen ? "translate-x-0" : "-translate-x-full rtl:translate-x-full"
+        }`}
+      >
+        <button
+          type="button"
+          aria-label={t("menu")}
+          onClick={() => setDrawerOpen(false)}
+          className="absolute end-3 top-3 flex size-9 items-center justify-center rounded-lg text-white/80 hover:bg-white/10 hover:text-white lg:hidden"
+        >
+          <span aria-hidden className="msym text-[21px]">close</span>
+        </button>
+        <Link href="/enterprise" onClick={() => setDrawerOpen(false)} className="px-5 pt-6">
           <Image
             src="/brand/logo-banner-transparent.png"
             alt="Cannathera"
             width={220}
             height={62}
-            className="h-auto w-52 max-lg:hidden"
+            className="h-auto w-52"
             priority
           />
-          <Image
-            src="/brand/logo.png"
-            alt="Cannathera"
-            width={40}
-            height={40}
-            className="hidden rounded-full max-lg:block"
-            priority
-          />
-          <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-white/80 max-lg:hidden">
+          <p className="mt-3 text-xs font-bold uppercase tracking-[0.2em] text-white/80">
             {t("portal")}
           </p>
         </Link>
 
         {/* Network hub card (Figma) */}
-        <div className="mx-4 mt-6 rounded-xl bg-white/10 px-4 py-3 max-lg:hidden">
+        <div className="mx-4 mt-6 rounded-xl bg-white/10 px-4 py-3">
           <p className="text-[10px] font-bold uppercase tracking-wide text-white/60">
             {t("networkHub")}
           </p>
@@ -106,6 +124,7 @@ export function EnterpriseShell({
             <Link
               key={key}
               href={href}
+              onClick={() => setDrawerOpen(false)}
               className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${
                 isActive(href)
                   ? "bg-white/15 text-white"
@@ -115,7 +134,7 @@ export function EnterpriseShell({
               <span aria-hidden className="msym text-[20px]">
                 {icon}
               </span>
-              <span className="max-lg:hidden">{t(`nav.${key}`)}</span>
+              <span>{t(`nav.${key}`)}</span>
             </Link>
           ))}
         </nav>
@@ -128,13 +147,22 @@ export function EnterpriseShell({
           <span aria-hidden className="msym text-[20px]">
             logout
           </span>
-          <span className="max-lg:hidden">{t("logout")}</span>
+          <span>{t("logout")}</span>
         </button>
       </aside>
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="sticky top-0 z-30 flex items-center justify-between gap-4 border-b border-hairline bg-white px-6 py-3 print:hidden">
-          <form onSubmit={handleSearch} className="relative w-full max-w-md" role="search">
+        <header className="sticky top-0 z-30 flex items-center justify-between gap-2 border-b border-hairline bg-white px-3 py-3 print:hidden sm:gap-4 sm:px-6">
+          <button
+            type="button"
+            aria-label={t("menu")}
+            aria-expanded={drawerOpen}
+            onClick={() => setDrawerOpen(true)}
+            className="flex size-10 shrink-0 items-center justify-center rounded-lg border border-hairline text-pine hover:bg-surface lg:hidden"
+          >
+            <span aria-hidden className="msym text-[22px]">menu</span>
+          </button>
+          <form onSubmit={handleSearch} className="relative min-w-0 flex-1 lg:max-w-md" role="search">
             <span
               aria-hidden
               className="msym absolute start-3 top-1/2 -translate-y-1/2 text-[20px] text-muted"
@@ -181,7 +209,7 @@ export function EnterpriseShell({
                     onClick={() => setBellOpen(false)}
                     className="fixed inset-0 z-30 cursor-default"
                   />
-                  <div className="absolute end-0 top-12 z-40 w-80 overflow-hidden rounded-xl border border-hairline bg-white shadow-lg">
+                  <div className="absolute end-0 top-12 z-40 w-[min(calc(100vw-1.5rem),20rem)] overflow-hidden rounded-xl border border-hairline bg-white shadow-lg">
                     <p className="border-b border-hairline px-5 py-3 text-sm font-bold text-ink-strong">
                       {t("notifications")}
                     </p>
@@ -278,7 +306,7 @@ export function EnterpriseShell({
           </div>
         </header>
 
-        <main className="flex-1 p-6">{children}</main>
+        <main className="min-w-0 flex-1 p-3 sm:p-5 lg:p-6">{children}</main>
         <LiveNotifications />
       </div>
     </div>

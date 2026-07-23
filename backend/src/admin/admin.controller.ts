@@ -51,6 +51,11 @@ export class AdminController {
     return this.adminService.togglePartner(orgId);
   }
 
+  @Post('partners/:orgId/temporary-password')
+  async issueTemporaryPassword(@Param('orgId') orgId: string) {
+    return this.adminService.issueTemporaryPassword(orgId);
+  }
+
   @Post('partners')
   async onboardPartner(@Body() dto: OnboardPartnerDto) {
     return this.adminService.onboardPartner(dto);

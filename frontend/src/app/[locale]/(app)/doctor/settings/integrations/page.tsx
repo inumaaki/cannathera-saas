@@ -53,7 +53,7 @@ export default async function SettingsIntegrations({
               {t("planned")}
             </span>
           </div>
-          <h3 className="mt-4 text-lg font-bold text-ink-strong">Zoom Telemedizin</h3>
+          <h3 className="mt-4 text-lg font-bold text-ink-strong">{t("zoomTitle")}</h3>
           <p className="mt-1 text-sm leading-relaxed text-muted">{t("zoomText")}</p>
         </div>
 

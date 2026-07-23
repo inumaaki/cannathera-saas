@@ -275,7 +275,7 @@ export function PatientShell({
                       transition-all duration-300 ${
                         hidden ? "translate-y-24 opacity-0 pointer-events-none" : ""
                       }`}
-          aria-label="Navigation"
+          aria-label={t("navigation")}
         >
           <button
             type="button"

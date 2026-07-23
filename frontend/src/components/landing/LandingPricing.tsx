@@ -312,10 +312,10 @@ export function LandingPricing() {
               </div>
 
               <div className="mt-6 flex flex-wrap gap-4 justify-center text-xs font-bold text-ink-strong uppercase tracking-wide">
-                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">api</span> API</span>
-                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">webhook</span> Webhooks</span>
-                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">hub</span> Make.com/Zapier</span>
-                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">workspace_premium</span> Co-Branding</span>
+                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">api</span> {t("api")}</span>
+                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">webhook</span> {t("webhooks")}</span>
+                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">hub</span> {t("automation")}</span>
+                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">workspace_premium</span> {t("coBranding")}</span>
               </div>
               
               <a

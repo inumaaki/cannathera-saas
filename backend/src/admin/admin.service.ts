@@ -2,7 +2,7 @@ import { Injectable, NotFoundException, BadRequestException } from '@nestjs/comm
 import { OrgType, Role, SubscriptionTier } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import * as argon2 from 'argon2';
-import { randomBytes } from 'crypto';
+import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'crypto';
 import * as nodemailer from 'nodemailer';
 import { lookup } from 'dns/promises';
 
@@ -10,8 +10,49 @@ import { lookup } from 'dns/promises';
 export class AdminService {
   constructor(private readonly prisma: PrismaService) {}
 
+  private onboardingKey() {
+    const secret =
+      process.env.ONBOARDING_CREDENTIAL_SECRET ??
+      process.env.JWT_SECRET ??
+      'dev-only-onboarding-secret';
+    return createHash('sha256').update(secret).digest();
+  }
+
+  private encryptTemporaryPassword(password: string) {
+    const iv = randomBytes(12);
+    const cipher = createCipheriv('aes-256-gcm', this.onboardingKey(), iv);
+    const encrypted = Buffer.concat([
+      cipher.update(password, 'utf8'),
+      cipher.final(),
+    ]);
+    return [
+      iv.toString('base64url'),
+      cipher.getAuthTag().toString('base64url'),
+      encrypted.toString('base64url'),
+    ].join('.');
+  }
+
+  private decryptTemporaryPassword(value: string | null) {
+    if (!value) return null;
+    try {
+      const [iv, tag, encrypted] = value.split('.');
+      const decipher = createDecipheriv(
+        'aes-256-gcm',
+        this.onboardingKey(),
+        Buffer.from(iv, 'base64url'),
+      );
+      decipher.setAuthTag(Buffer.from(tag, 'base64url'));
+      return Buffer.concat([
+        decipher.update(Buffer.from(encrypted, 'base64url')),
+        decipher.final(),
+      ]).toString('utf8');
+    } catch {
+      return null;
+    }
+  }
+
   async listPartners() {
-    return this.prisma.organization.findMany({
+    const partners = await this.prisma.organization.findMany({
       where: {
         type: {
           in: [OrgType.PRACTICE, OrgType.PHARMACY, OrgType.ENTERPRISE, OrgType.CLINIC],
@@ -26,7 +67,18 @@ export class AdminService {
         },
         memberships: {
           include: {
-            user: true,
+            user: {
+              select: {
+                id: true,
+                email: true,
+                firstName: true,
+                lastName: true,
+                isActive: true,
+                createdAt: true,
+                mustChangePassword: true,
+                temporaryPasswordEncrypted: true,
+              },
+            },
           },
         },
       },
@@ -34,6 +86,21 @@ export class AdminService {
         createdAt: 'desc',
       },
     });
+    return partners.map((partner) => ({
+      ...partner,
+      memberships: partner.memberships.map((membership) => {
+        const { temporaryPasswordEncrypted, ...user } = membership.user;
+        return {
+          ...membership,
+          user: {
+            ...user,
+            temporaryPassword: user.mustChangePassword
+              ? this.decryptTemporaryPassword(temporaryPasswordEncrypted)
+              : null,
+          },
+        };
+      }),
+    }));
   }
 
   async togglePartner(orgId: string) {
@@ -82,6 +149,36 @@ export class AdminService {
     }
 
     return { orgId, isActive: newStatus };
+  }
+
+  async issueTemporaryPassword(orgId: string) {
+    const membership = await this.prisma.membership.findFirst({
+      where: { orgId, orgRole: 'ADMIN' },
+      include: { user: true },
+    });
+    if (!membership) throw new NotFoundException('PARTNER_ADMIN_NOT_FOUND');
+    if (!membership.user.mustChangePassword) {
+      throw new BadRequestException('PASSWORD_ALREADY_UPDATED');
+    }
+
+    const tempPassword = randomBytes(4).toString('hex');
+    await this.prisma.user.update({
+      where: { id: membership.userId },
+      data: {
+        passwordHash: await argon2.hash(tempPassword),
+        temporaryPasswordEncrypted:
+          this.encryptTemporaryPassword(tempPassword),
+      },
+    });
+    await this.prisma.auditLog.create({
+      data: {
+        userId: membership.userId,
+        action: 'TEMP_PASSWORD_REISSUED_BY_ADMIN',
+        entityType: 'Organization',
+        entityId: orgId,
+      },
+    });
+    return { userId: membership.userId, tempPassword };
   }
 
   async onboardPartner(dto: {
@@ -149,6 +246,7 @@ export class AdminService {
         lastName: dto.adminLastName,
         isActive: true,
         mustChangePassword: true,
+        temporaryPasswordEncrypted: this.encryptTemporaryPassword(tempPassword),
         memberships: {
           create: {
             orgId: org.id,

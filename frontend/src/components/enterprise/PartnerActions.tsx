@@ -172,11 +172,12 @@ function Dialog({
   onClose,
   children,
 }: Readonly<{ title: string; onClose: () => void; children: React.ReactNode }>) {
+  const t = useTranslations("enterprise.partners");
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <button
         type="button"
-        aria-label="close"
+        aria-label={t("cancel")}
         onClick={onClose}
         className="absolute inset-0 cursor-default bg-pine/40"
       />

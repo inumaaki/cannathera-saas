@@ -409,7 +409,11 @@ export class AuthService {
       }),
       this.prisma.user.update({
         where: { id: match.userId },
-        data: { passwordHash: await argon2.hash(password) },
+        data: {
+          passwordHash: await argon2.hash(password),
+          mustChangePassword: false,
+          temporaryPasswordEncrypted: null,
+        },
       }),
       this.prisma.auditLog.create({
         data: { userId: match.userId, action: 'PASSWORD_RESET_DONE', ipAddress: ip },
@@ -453,6 +457,7 @@ export class AuthService {
       data: {
         passwordHash: await argon2.hash(password),
         mustChangePassword: false,
+        temporaryPasswordEncrypted: null,
       },
     });
     await this.prisma.auditLog.create({

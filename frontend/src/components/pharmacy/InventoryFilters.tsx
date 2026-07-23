@@ -57,6 +57,15 @@ export function InventoryFilters({
           ? t("sortStock")
           : t("sortCategory");
 
+  const categoryLabel = (value: string) => {
+    const key = `category${value}` as
+      | "categoryFlower"
+      | "categoryOil"
+      | "categoryExtract"
+      | "categoryCapsule";
+    return ["Flower", "Oil", "Extract", "Capsule"].includes(value) ? t(key) : value;
+  };
+
   return (
     <form
       onSubmit={(e) => {
@@ -114,7 +123,7 @@ export function InventoryFilters({
           <option value="all">{t("allProducts")}</option>
           {categories.map((c) => (
             <option key={c} value={c}>
-              {c}
+              {categoryLabel(c)}
             </option>
           ))}
         </select>
