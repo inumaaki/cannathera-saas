@@ -40,6 +40,11 @@ export class PatientController {
         sleep: dto.sleep,
         activity: dto.activity,
         qol: dto.qol,
+        intakeTime: dto.intakeTime,
+        sideEffects: dto.sideEffects,
+        benefitRating: dto.benefitRating,
+        benefitOnset: dto.benefitOnset,
+        benefitDuration: dto.benefitDuration,
       },
       note: dto.note,
     });

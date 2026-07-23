@@ -9,7 +9,17 @@ import { PrismaService } from '../prisma/prisma.service';
 
 const PLAN_DAYS = 90;
 
-type LogMetrics = { pain?: number; sleep?: number; activity?: number; qol?: number };
+type LogMetrics = {
+  pain?: number;
+  sleep?: number;
+  activity?: number;
+  qol?: number;
+  intakeTime?: string;
+  sideEffects?: string[];
+  benefitRating?: number;
+  benefitOnset?: string;
+  benefitDuration?: string;
+};
 
 @Injectable()
 export class PatientService {
@@ -139,7 +149,7 @@ export class PatientService {
         value: current,
         delta:
           current !== null && before !== null
-            ? Math.round((current - before) * 10) / 10
+            ? Math.round(((current as number) - (before as number)) * 10) / 10
             : null,
       };
     });

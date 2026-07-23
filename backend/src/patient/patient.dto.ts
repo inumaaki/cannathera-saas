@@ -52,6 +52,31 @@ export class CreateLogDto {
   @IsString()
   @MaxLength(500)
   note?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  intakeTime?: string;
+
+  @IsOptional()
+  @IsString({ each: true })
+  sideEffects?: string[];
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  @Max(10)
+  benefitRating?: number;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  benefitOnset?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  benefitDuration?: string;
 }
 
 export class UpdateProfileDto {
