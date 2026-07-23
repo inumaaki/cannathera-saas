@@ -20,7 +20,7 @@ export function LandingPricing() {
 
   return (
     <section id="pricing" className="min-h-screen flex flex-col justify-center py-16 bg-surface border-t border-hairline">
-      <div className="mx-auto max-w-7xl px-6 w-full">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-pine-600">
             {t("tag")}
@@ -34,13 +34,13 @@ export function LandingPricing() {
         </div>
 
         {/* Tab Selectors */}
-        <div className="mt-10 flex justify-center">
-          <div className="flex rounded-xl border border-hairline bg-white p-1 shadow-sm">
+        <div className="mt-8 flex justify-center sm:mt-10">
+          <div className="grid w-full max-w-xl grid-cols-3 rounded-xl border border-hairline bg-white p-1 shadow-sm">
             {(["patients", "pharmacies", "enterprise"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
-                className={`rounded-lg px-6 py-2.5 text-sm font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                className={`min-w-0 rounded-lg px-1 py-2.5 text-[10px] font-bold uppercase leading-tight tracking-wide transition-all cursor-pointer sm:px-4 sm:text-sm sm:tracking-wider ${
                   activeTab === tab
                     ? "bg-pine-600 text-white shadow"
                     : "text-muted hover:text-ink-strong"
@@ -265,14 +265,34 @@ export function LandingPricing() {
           )}
 
           {activeTab === "enterprise" && (
-            <div className="mx-auto max-w-3xl rounded-2xl border border-hairline bg-white p-8 shadow-sm">
+            <div className="mx-auto max-w-3xl rounded-2xl border border-hairline bg-white p-4 shadow-sm sm:p-8">
               <h3 className="text-xl font-bold text-ink-strong text-center">{t("enterpriseTitle")}</h3>
               <p className="mt-2 text-sm text-muted text-center max-w-md mx-auto">
                 {t("enterpriseDesc")}
               </p>
 
-              <div className="mt-8 overflow-hidden rounded-xl border border-hairline">
-                <table className="w-full text-sm text-left">
+              <div className="mt-6 divide-y divide-hairline overflow-hidden rounded-xl border border-hairline sm:hidden">
+                {[
+                  { volume: `1 – 500 ${t("reviews")}`, price: `8,00 € ${t("netto")}` },
+                  { volume: `501 – 1.500 ${t("reviews")}`, price: `6,50 € ${t("netto")}` },
+                  { volume: `1.501+ ${t("reviews")}`, price: `5,00 € ${t("netto")}`, capped: true },
+                ].map((tier) => (
+                  <div key={tier.volume} className={`p-4 ${tier.capped ? "bg-mint/10" : ""}`}>
+                    <div className="flex items-start justify-between gap-3">
+                      <span className="min-w-0 font-semibold text-ink-strong">{tier.volume}</span>
+                      <span className="shrink-0 text-end font-bold text-pine-600">{tier.price}</span>
+                    </div>
+                    {tier.capped ? (
+                      <span className="mt-2 inline-flex rounded-full bg-pine-600 px-2 py-0.5 text-[9px] font-bold uppercase text-white">
+                        {t("priceCapLimit")}
+                      </span>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8 hidden overflow-hidden rounded-xl border border-hairline sm:block">
+                <table className="w-full text-start text-sm">
                   <thead className="bg-surface text-ink-strong uppercase tracking-wider text-xs font-bold border-b border-hairline">
                     <tr>
                       <th className="px-6 py-4">{t("enterpriseVol")}</th>
