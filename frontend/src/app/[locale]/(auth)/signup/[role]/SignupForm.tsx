@@ -151,7 +151,16 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
       router.push("/verify");
     } catch (err) {
       const code = err instanceof ApiError ? err.code : "GENERIC";
-      setError(te.has(code) ? te(code) : te("GENERIC"));
+      const userActionableErrors = new Set([
+        "EMAIL_TAKEN",
+        "CONSENT_ART9_REQUIRED",
+        "VALIDATION_ERROR",
+      ]);
+      setError(
+        userActionableErrors.has(code) && te.has(code)
+          ? te(code)
+          : te("GENERIC"),
+      );
       setPending(false);
     }
   }

@@ -739,6 +739,9 @@
       "NO_PENDING_LOGIN": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
       "CONSENT_ART9_REQUIRED": "Die Einwilligung nach Art. 9 DSGVO ist erforderlich.",
       "VALIDATION_ERROR": "Bitte überprüfen Sie Ihre Eingaben.",
+      "DATABASE_SCHEMA_OUTDATED": "Die Registrierung ist nicht verfügbar, da das Datenbank-Update noch nicht angewendet wurde. Bitte kontaktieren Sie den Support.",
+      "DATABASE_UNAVAILABLE": "Die Datenbank ist vorübergehend nicht erreichbar. Bitte versuchen Sie es später erneut.",
+      "REGISTRATION_SERVICE_ERROR": "Die Registrierung ist unerwartet fehlgeschlagen. Bitte melden Sie dem Support den Zeitpunkt dieses Versuchs.",
       "GENERIC": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
     },
     "devCodeHint": "Entwicklungsmodus – Ihr Code: {code}",

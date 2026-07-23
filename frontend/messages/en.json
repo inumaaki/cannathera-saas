@@ -739,6 +739,9 @@
       "NO_PENDING_LOGIN": "Your session has expired. Please log in again.",
       "CONSENT_ART9_REQUIRED": "Consent under Art. 9 GDPR is required.",
       "VALIDATION_ERROR": "Please check your input.",
+      "DATABASE_SCHEMA_OUTDATED": "Registration is unavailable because the server database update has not been applied. Please contact support.",
+      "DATABASE_UNAVAILABLE": "The database is temporarily unavailable. Please try again shortly.",
+      "REGISTRATION_SERVICE_ERROR": "Registration failed unexpectedly. Please contact support with the time of this attempt.",
       "GENERIC": "Something went wrong. Please try again."
     },
     "devCodeHint": "Development mode – your code: {code}",

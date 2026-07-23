@@ -3,6 +3,7 @@ import {
   ConflictException,
   Injectable,
   Logger,
+  ServiceUnavailableException,
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
@@ -233,13 +234,31 @@ export class AuthService {
           `Registration database error ${error.code}: ${error.message}`,
           error.stack,
         );
+        if (error.code === 'P2002') {
+          throw new ConflictException('EMAIL_TAKEN');
+        }
+        if (error.code === 'P2021' || error.code === 'P2022') {
+          throw new ServiceUnavailableException('DATABASE_SCHEMA_OUTDATED');
+        }
+        if (error.code === 'P1001' || error.code === 'P1002') {
+          throw new ServiceUnavailableException('DATABASE_UNAVAILABLE');
+        }
+        throw new ServiceUnavailableException(
+          `REGISTRATION_DATABASE_ERROR_${error.code}`,
+        );
+      } else if (error instanceof Prisma.PrismaClientInitializationError) {
+        this.logger.error(
+          `Registration database connection failed: ${error.message}`,
+          error.stack,
+        );
+        throw new ServiceUnavailableException('DATABASE_UNAVAILABLE');
       } else {
         this.logger.error(
           `Registration failed: ${error instanceof Error ? error.message : String(error)}`,
           error instanceof Error ? error.stack : undefined,
         );
       }
-      throw error;
+      throw new ServiceUnavailableException('REGISTRATION_SERVICE_ERROR');
     }
   }
 

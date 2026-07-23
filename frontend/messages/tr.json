@@ -739,6 +739,9 @@
       "NO_PENDING_LOGIN": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.",
       "CONSENT_ART9_REQUIRED": "Madde 9 GDPR kapsamında onay gereklidir.",
       "VALIDATION_ERROR": "Lütfen girdinizi kontrol edin.",
+      "DATABASE_SCHEMA_OUTDATED": "Sunucu veritabanı güncellemesi uygulanmadığı için kayıt kullanılamıyor. Lütfen destek ile iletişime geçin.",
+      "DATABASE_UNAVAILABLE": "Veritabanına geçici olarak ulaşılamıyor. Lütfen kısa süre sonra tekrar deneyin.",
+      "REGISTRATION_SERVICE_ERROR": "Kayıt beklenmedik şekilde başarısız oldu. Lütfen bu denemenin saatini destek ekibine bildirin.",
       "GENERIC": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
     },
     "devCodeHint": "Geliştirme modu – kodunuz: {code}",
