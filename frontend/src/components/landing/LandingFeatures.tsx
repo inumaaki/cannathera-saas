@@ -3,36 +3,53 @@
 import { useTranslations } from "next-intl";
 
 export function LandingFeatures() {
-  const t = useTranslations("auth.signup.chooseRole");
+  const tr = useTranslations("auth.signup.chooseRole");
+  const t = useTranslations("landing.features");
 
   const features = [
     {
-      title: t("patient"),
-      desc: t("patientDesc") + " Securely record symptoms, dosages, and daily activity. Track adherence metrics in real-time.",
+      title: tr("patient"),
+      desc: tr("patientDesc") + " " + t("patientDescSuffix"),
       icon: "person",
       color: "bg-mint/20 text-pine-600 border-mint/30",
-      bullets: ["Structured 90-Day Plan", "Daily Dosage Logs", "Adherence Analytics"],
+      bullets: [
+        t("patientBullets.0"),
+        t("patientBullets.1"),
+        t("patientBullets.2"),
+      ],
     },
     {
-      title: t("doctor"),
-      desc: t("doctorDesc") + " Automated triage protocols monitor patient values. Generate structured PDF course reports with one click.",
+      title: tr("doctor"),
+      desc: tr("doctorDesc") + " " + t("doctorDescSuffix"),
       icon: "psychiatry",
       color: "bg-info/20 text-blue-600 border-info/30",
-      bullets: ["Automated Red-Flags", "Patient Roster Management", "Clinical PDF Exports"],
+      bullets: [
+        t("doctorBullets.0"),
+        t("doctorBullets.1"),
+        t("doctorBullets.2"),
+      ],
     },
     {
-      title: t("pharmacy"),
-      desc: t("pharmacyDesc") + " Log dispensations and manage stocks. Track patient reviews and monthly assessment targets.",
+      title: tr("pharmacy"),
+      desc: tr("pharmacyDesc") + " " + t("pharmacyDescSuffix"),
       icon: "medication",
       color: "bg-[#fdf3d7] text-gold border-yellow-200",
-      bullets: ["Inventory Tracking", "Compliance Reviews", "Billing Logs Audit"],
+      bullets: [
+        t("pharmacyBullets.0"),
+        t("pharmacyBullets.1"),
+        t("pharmacyBullets.2"),
+      ],
     },
     {
-      title: t("enterprise"),
-      desc: t("enterpriseDesc") + " Support platform scaling with secure integrations, telemetry API webhooks, and partner settings.",
+      title: tr("enterprise"),
+      desc: tr("enterpriseDesc") + " " + t("enterpriseDescSuffix"),
       icon: "business",
       color: "bg-purple-100 text-purple-700 border-purple-200",
-      bullets: ["Custom Tenant Branding", "Webhook & API access", "Comprehensive Security Policy"],
+      bullets: [
+        t("enterpriseBullets.0"),
+        t("enterpriseBullets.1"),
+        t("enterpriseBullets.2"),
+      ],
     },
   ];
 
@@ -41,13 +58,13 @@ export function LandingFeatures() {
       <div className="mx-auto max-w-7xl px-6">
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-pine-600">
-            Platform Capabilities
+            {t("tag")}
           </span>
           <h2 className="font-display text-3xl font-extrabold tracking-tight text-pine sm:text-4xl">
-            A Complete Ecosystem for Therapy Accompaniment
+            {t("title")}
           </h2>
           <p className="text-muted leading-relaxed">
-            Cannathera bridges the gap between clinicians, pharmacies, and patients by translating complex therapy regimes into structured, secure, data-driven progress workflows.
+            {t("subtitle")}
           </p>
         </div>
 

@@ -7,6 +7,7 @@ import { LocaleSwitcher } from "@/components/auth/LocaleSwitcher";
 
 export function LandingHeader() {
   const t = useTranslations("common");
+  const tl = useTranslations("landing.header");
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-hairline bg-white/80 backdrop-blur-md">
@@ -27,17 +28,20 @@ export function LandingHeader() {
 
         {/* Navigation links */}
         <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-muted">
+          <Link href="/" className="transition-colors hover:text-pine-600">
+            {tl("home")}
+          </Link>
           <a href="#features" className="transition-colors hover:text-pine-600">
-            Features
+            {tl("features")}
           </a>
           <a href="#trust" className="transition-colors hover:text-pine-600">
-            Security
+            {tl("security")}
           </a>
           <a href="#pricing" className="transition-colors hover:text-pine-600">
-            Pricing
+            {tl("pricing")}
           </a>
           <a href="#founder" className="transition-colors hover:text-pine-600">
-            Founder
+            {tl("founder")}
           </a>
         </nav>
 

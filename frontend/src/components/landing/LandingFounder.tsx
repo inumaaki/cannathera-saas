@@ -1,49 +1,86 @@
 "use client";
 
-import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 export function LandingFounder() {
+  const t = useTranslations("landing.founder");
+
   return (
     <section id="founder" className="min-h-screen flex flex-col justify-center py-16 bg-white border-t border-hairline">
       <div className="mx-auto max-w-7xl px-6 grid gap-12 lg:grid-cols-2 lg:items-center w-full">
-        {/* Left: Interactive clinical card representation or photo placeholder */}
-        <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-          <div className="relative rounded-2xl border border-hairline bg-surface p-6 shadow-xl">
+        {/* Left: Premium Clinical Card Representation */}
+        <div className="relative mx-auto w-full max-w-lg lg:max-w-none">
+          <div className="relative rounded-3xl bg-gradient-to-br from-[#003521] to-[#00140c] p-8 shadow-2xl border border-white/10 overflow-hidden">
+            {/* Background design elements */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(150,212,178,0.1),transparent)] pointer-events-none" />
+
             {/* Visual Badge/Mockup of Doctor-Patient Cooperation */}
-            <div className="flex items-center gap-4">
-              <span className="flex size-14 items-center justify-center rounded-xl bg-pine text-white">
+            <div className="flex items-center gap-5 relative z-10">
+              <span className="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-mint/10 border border-mint/20 text-mint-bright shadow-inner">
                 <span aria-hidden className="msym text-[28px]">
                   stethoscope
                 </span>
               </span>
               <div>
-                <p className="text-base font-bold text-pine">Dominique Larkin</p>
-                <p className="text-xs text-muted">Examinierter Intensivpfleger · Gründer & Inhaber</p>
+                <p className="text-xl font-bold font-display text-white tracking-tight">Dominique Larkin</p>
+                <p className="text-xs text-mint-bright font-semibold uppercase tracking-wider mt-0.5">{t("role")}</p>
               </div>
             </div>
 
             {/* Blockquote */}
-            <div className="relative mt-6 border-s-4 border-pine-600 bg-white px-4 py-3 rounded-r-lg">
-              <span className="absolute -top-3 -left-2 font-serif text-5xl text-pine-600/10 leading-none">“</span>
-              <p className="text-sm italic leading-relaxed text-ink-strong">
-                Die größte Schwachstelle im gesamten Versorgungssystem ist die fehlende strukturierte Begleitung zwischen den Arztterminen.
+            <div className="relative mt-8 bg-white/5 border-l-4 border-mint p-5 rounded-r-2xl relative z-10 backdrop-blur-sm">
+              <span className="absolute -top-4 -left-2 font-serif text-8xl text-mint-bright/10 leading-none pointer-events-none">“</span>
+              <p className="text-sm md:text-base italic leading-relaxed text-[#eaf7f1] relative z-10 font-medium">
+                {t("quote")}
               </p>
             </div>
 
             {/* Clinical Value comparison */}
-            <div className="mt-6 border-t border-hairline pt-6">
-              <div className="grid grid-cols-3 gap-2 text-center text-[10px] font-bold uppercase tracking-wider text-muted">
-                <div className="p-2 border border-hairline rounded-lg bg-white">
-                  <span className="block text-sm font-extrabold text-pine-600">Arzt</span>
-                  behandelt
+            <div className="mt-8 border-t border-white/10 pt-6 relative z-10">
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8cbda3]/60 mb-4 text-center">
+                Clinical Orchestration
+              </p>
+              <div className="flex items-center justify-between gap-2.5">
+                {/* Doctor */}
+                <div className="flex-1 p-3 border border-white/5 rounded-xl bg-white/5 text-center flex flex-col items-center gap-1.5 shadow-sm">
+                  <span aria-hidden className="msym text-[20px] text-mint-bright">
+                    medical_services
+                  </span>
+                  <span className="block text-xs font-bold text-white">{t("doctor")}</span>
+                  <span className="text-[10px] text-[#8cbda3] font-medium">{t("doctorAction")}</span>
                 </div>
-                <div className="p-2 border border-hairline rounded-lg bg-white">
-                  <span className="block text-sm font-extrabold text-pine-600">Apotheke</span>
-                  versorgt
+
+                {/* Arrow */}
+                <span aria-hidden className="msym text-[16px] text-mint/40 select-none">
+                  arrow_forward
+                </span>
+
+                {/* Cannathera */}
+                <div className="flex-1 p-3 border border-mint/20 rounded-xl bg-mint/10 text-center flex flex-col items-center gap-1.5 shadow-md relative">
+                  {/* Glowing live indicator */}
+                  <span className="absolute -top-1.5 -right-1 flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-mint opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-mint-bright"></span>
+                  </span>
+                  <span aria-hidden className="msym text-[20px] text-mint-bright">
+                    hub
+                  </span>
+                  <span className="block text-xs font-extrabold text-white">{t("platform")}</span>
+                  <span className="text-[10px] text-mint-bright font-bold uppercase tracking-wider">{t("platformAction")}</span>
                 </div>
-                <div className="p-2 border-2 border-pine bg-mint/10 rounded-lg">
-                  <span className="block text-sm font-extrabold text-pine">Cannathera</span>
-                  begleitet
+
+                {/* Arrow */}
+                <span aria-hidden className="msym text-[16px] text-mint/40 select-none">
+                  arrow_forward
+                </span>
+
+                {/* Pharmacy */}
+                <div className="flex-1 p-3 border border-white/5 rounded-xl bg-white/5 text-center flex flex-col items-center gap-1.5 shadow-sm">
+                  <span aria-hidden className="msym text-[20px] text-mint-bright">
+                    medication
+                  </span>
+                  <span className="block text-xs font-bold text-white">{t("pharmacy")}</span>
+                  <span className="text-[10px] text-[#8cbda3] font-medium">{t("pharmacyAction")}</span>
                 </div>
               </div>
             </div>
@@ -53,33 +90,75 @@ export function LandingFounder() {
         {/* Right: Copy details */}
         <div className="space-y-6">
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-pine-600">
-            Founder & Clinical Alignment
+            {t("tag")}
           </span>
           <h2 className="font-display text-3xl font-extrabold tracking-tight text-pine sm:text-4xl">
-            Clinically-Led Therapy Accompaniment
+            {t("title")}
           </h2>
-          <p className="text-muted leading-relaxed">
-            Cannathera is built from actual clinical ward experience, not market spec sheets. Dominique Larkin’s background as a registered intensive care nurse ensures that every question, warning indicator, and triage flow is aligned with patient safety and practical workflow optimization.
+          <p className="text-muted leading-relaxed text-sm">
+            {t("subtitle")}
           </p>
 
-          <div className="space-y-4 pt-2">
-            <h4 className="font-bold text-ink-strong">Our Philosophy</h4>
-            <p className="text-sm leading-relaxed text-muted">
-              We do not replace physicians or pharmacists; we provide the structure they need. Patients carry out their daily lives, pharmacies supply high-grade care, and physicians manage treatment decisions. Cannathera accompanies the path between them by structuring, documenting, and transparently mapping outcomes.
-            </p>
+          <div className="space-y-6 pt-2">
+            <div>
+              <h4 className="font-bold text-ink-strong text-base">{t("philosophy")}</h4>
+              <p className="text-sm leading-relaxed text-muted mt-2">
+                {t("philosophyDesc")}
+              </p>
+            </div>
 
-            <div className="flex flex-wrap gap-4 pt-2">
-              <div className="rounded-xl border border-hairline p-4 bg-surface max-w-xs flex-1">
-                <h5 className="font-bold text-ink-strong text-xs uppercase tracking-wide">Medical Focus</h5>
-                <p className="mt-1 text-xs text-muted leading-relaxed">
-                  Every check-in and tracking parameter is optimized to minimize clinician administrative load.
-                </p>
-              </div>
-              <div className="rounded-xl border border-hairline p-4 bg-surface max-w-xs flex-1">
-                <h5 className="font-bold text-ink-strong text-xs uppercase tracking-wide">Patient Safety</h5>
-                <p className="mt-1 text-xs text-muted leading-relaxed">
-                  Intelligent triage logs automatically flag warning indicators (such as pain NRS ≥ 8).
-                </p>
+            {/* Unfair Advantage / Clinical Edge Section */}
+            <div className="pt-4 border-t border-hairline">
+              <h4 className="font-bold text-ink-strong text-base">{t("unfairTitle")}</h4>
+              <p className="text-xs text-muted leading-relaxed mt-1">
+                {t("unfairSubtitle")}
+              </p>
+              
+              <div className="grid gap-4 mt-4 sm:grid-cols-3">
+                {/* Advantage 0 */}
+                <div className="rounded-2xl border border-hairline p-4 bg-surface flex flex-col gap-2.5 shadow-sm hover:shadow transition-shadow">
+                  <span className="flex size-9 items-center justify-center rounded-xl bg-pine/10 text-pine-600">
+                    <span aria-hidden className="msym text-[18px]">
+                      forum
+                    </span>
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-ink-strong text-xs">{t("unfair0Title")}</h5>
+                    <p className="mt-1 text-[11px] text-muted leading-relaxed">
+                      {t("unfair0Desc")}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Advantage 1 */}
+                <div className="rounded-2xl border border-hairline p-4 bg-surface flex flex-col gap-2.5 shadow-sm hover:shadow transition-shadow">
+                  <span className="flex size-9 items-center justify-center rounded-xl bg-pine/10 text-pine-600">
+                    <span aria-hidden className="msym text-[18px]">
+                      rule
+                    </span>
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-ink-strong text-xs">{t("unfair1Title")}</h5>
+                    <p className="mt-1 text-[11px] text-muted leading-relaxed">
+                      {t("unfair1Desc")}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Advantage 2 */}
+                <div className="rounded-2xl border border-hairline p-4 bg-surface flex flex-col gap-2.5 shadow-sm hover:shadow transition-shadow">
+                  <span className="flex size-9 items-center justify-center rounded-xl bg-pine/10 text-pine-600">
+                    <span aria-hidden className="msym text-[18px]">
+                      verified
+                    </span>
+                  </span>
+                  <div>
+                    <h5 className="font-bold text-ink-strong text-xs">{t("unfair2Title")}</h5>
+                    <p className="mt-1 text-[11px] text-muted leading-relaxed">
+                      {t("unfair2Desc")}
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

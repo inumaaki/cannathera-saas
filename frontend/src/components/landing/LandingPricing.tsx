@@ -1,19 +1,21 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
 type PricingTab = "patients" | "pharmacies" | "enterprise";
 
 export function LandingPricing() {
   const [activeTab, setActiveTab] = useState<PricingTab>("patients");
+  const t = useTranslations("landing.pricing");
 
   const optionals = [
-    { name: "Einzelner Monatsreport", desc: "Detaillierter Überblick über den aktuellen Therapieverlauf", price: "24,90 €" },
-    { name: "Erweiterter PDF-Bericht", desc: "Umfassender Bericht zur Dokumentation und Auswertung", price: "19,90 €" },
-    { name: "Verlaufsanalyse", desc: "Tiefgehende Analyse des Therapieverlaufs", price: "39,90 €" },
-    { name: "Dokumentationspaket", desc: "Strukturierte Auswertung und ausführlicher Monatsreport", price: "79,90 €" },
-    { name: "Unterstützung Kostenübernahme-Antrag", desc: "Aufbereitung relevanter Unterlagen für Ihren Antrag", price: "249,00 €" },
+    { name: t("optionalName0"), desc: t("optionalDesc0"), price: "24,90 €" },
+    { name: t("optionalName1"), desc: t("optionalDesc1"), price: "19,90 €" },
+    { name: t("optionalName2"), desc: t("optionalDesc2"), price: "39,90 €" },
+    { name: t("optionalName3"), desc: t("optionalDesc3"), price: "79,90 €" },
+    { name: t("optionalName4"), desc: t("optionalDesc4"), price: "249,00 €" },
   ];
 
   return (
@@ -21,13 +23,13 @@ export function LandingPricing() {
       <div className="mx-auto max-w-7xl px-6 w-full">
         <div className="text-center max-w-3xl mx-auto space-y-4">
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-pine-600">
-            Cooperation & Models
+            {t("tag")}
           </span>
           <h2 className="font-display text-3xl font-extrabold tracking-tight text-pine sm:text-4xl">
-            Flexible, Scalable & Transparent Pricing
+            {t("title")}
           </h2>
           <p className="text-muted leading-relaxed">
-            Choose the model that fits your operational scale. From self-paying patients looking for daily structure to national telemedicine platforms requiring custom API configurations.
+            {t("subtitle")}
           </p>
         </div>
 
@@ -44,9 +46,9 @@ export function LandingPricing() {
                     : "text-muted hover:text-ink-strong"
                 }`}
               >
-                {tab === "patients" && "Patients"}
-                {tab === "pharmacies" && "Pharmacies"}
-                {tab === "enterprise" && "Telemedicine / Enterprise"}
+                {tab === "patients" && t("patients")}
+                {tab === "pharmacies" && t("pharmacies")}
+                {tab === "enterprise" && t("enterprise")}
               </button>
             ))}
           </div>
@@ -59,23 +61,23 @@ export function LandingPricing() {
               {/* Patient Basic */}
               <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">CANNATHERA BASIC</h3>
-                  <p className="mt-2 text-sm text-muted">Essential therapy tracking and onboarding structure.</p>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("basic")}</h3>
+                  <p className="mt-2 text-sm text-muted">{t("basicDesc")}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    9,99 € <span className="text-sm font-semibold text-muted">/ Month</span>
+                    9,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      1x Monatsreview
+                      {t("bulletPatientBasic0")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Therapiedokumentation
+                      {t("bulletPatientBasic1")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Alltagsintegration
+                      {t("bulletPatientBasic2")}
                     </li>
                   </ul>
                 </div>
@@ -83,37 +85,37 @@ export function LandingPricing() {
                   href="/signup/patient"
                   className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
                 >
-                  Start Basic Plan
+                  {t("startBasic")}
                 </Link>
               </div>
 
               {/* Patient Plus */}
               <div className="relative rounded-2xl border-2 border-pine-600 bg-white p-8 shadow-xl flex flex-col justify-between">
                 <span className="absolute -top-3.5 right-6 rounded-full bg-pine-600 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
-                  Popular
+                  {t("popular")}
                 </span>
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">CANNATHERA PLUS</h3>
-                  <p className="mt-2 text-sm text-muted">Advanced symptom mapping and structured monthly reporting.</p>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("plus")}</h3>
+                  <p className="mt-2 text-sm text-muted">{t("plusDesc")}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    29,99 € <span className="text-sm font-semibold text-muted">/ Month</span>
+                    29,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      1x Monatsreview
+                      {t("bulletPatientPlus0")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Erweiterte Dokumentation
+                      {t("bulletPatientPlus1")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Detaillierte PDF-Berichte
+                      {t("bulletPatientPlus2")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Symptom Verlaufsanalysen
+                      {t("bulletPatientPlus3")}
                     </li>
                   </ul>
                 </div>
@@ -121,34 +123,34 @@ export function LandingPricing() {
                   href="/signup/patient"
                   className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
                 >
-                  Start Plus Plan
+                  {t("startPlus")}
                 </Link>
               </div>
 
               {/* Patient Premium */}
               <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">CANNATHERA PREMIUM</h3>
-                  <p className="mt-2 text-sm text-muted">Full-scope clinical accompaniment and prioritized review channels.</p>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("premium")}</h3>
+                  <p className="mt-2 text-sm text-muted">{t("premiumDesc")}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    49,99 € <span className="text-sm font-semibold text-muted">/ Month</span>
+                    49,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Vollständige Begleitung
+                      {t("bulletPatientPremium0")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Erweiterte Verlaufsgrafiken
+                      {t("bulletPatientPremium1")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Monatsreviews & PDF-Berichte
+                      {t("bulletPatientPremium2")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Priorisierter Support
+                      {t("bulletPatientPremium3")}
                     </li>
                   </ul>
                 </div>
@@ -156,7 +158,7 @@ export function LandingPricing() {
                   href="/signup/patient"
                   className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
                 >
-                  Start Premium Plan
+                  {t("startPremium")}
                 </Link>
               </div>
             </div>
@@ -167,23 +169,23 @@ export function LandingPricing() {
               {/* Flex */}
               <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">FLEX</h3>
-                  <p className="mt-2 text-sm text-muted">Digital entry for specialized cannabis dispensaries.</p>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("flex")}</h3>
+                  <p className="mt-2 text-sm text-muted">{t("flexDesc")}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    449 € <span className="text-sm font-semibold text-muted">netto / Month</span>
+                    449 € <span className="text-sm font-semibold text-muted">{t("netto")} / {t("month")}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      bis zu 50 Monatsreviews
+                      {t("bulletPharmacyFlex0")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Monatsreporting inklusive
+                      {t("bulletPharmacyFlex1")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Patientenbegleitung
+                      {t("bulletPharmacyFlex2")}
                     </li>
                   </ul>
                 </div>
@@ -191,33 +193,33 @@ export function LandingPricing() {
                   href="/signup/pharmacy"
                   className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
                 >
-                  Select Flex Pack
+                  {t("selectFlex")}
                 </Link>
               </div>
 
               {/* S Pack */}
               <div className="relative rounded-2xl border-2 border-pine-600 bg-white p-8 shadow-xl flex flex-col justify-between">
                 <span className="absolute -top-3.5 right-6 rounded-full bg-pine-600 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
-                  Growth
+                  {t("growth")}
                 </span>
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">FLASHBACK S</h3>
-                  <p className="mt-2 text-sm text-muted">Engineered for pharmacies scaling patient volume.</p>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("flashbackS")}</h3>
+                  <p className="mt-2 text-sm text-muted">{t("flashbackSDesc")}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    899 € <span className="text-sm font-semibold text-muted">netto / Month</span>
+                    899 € <span className="text-sm font-semibold text-muted">{t("netto")} / {t("month")}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      bis zu 150 Monatsreviews
+                      {t("bulletPharmacyS0")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Monatsreporting inklusive
+                      {t("bulletPharmacyS1")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Priorisierter Support
+                      {t("bulletPharmacyS2")}
                     </li>
                   </ul>
                 </div>
@@ -225,30 +227,30 @@ export function LandingPricing() {
                   href="/signup/pharmacy"
                   className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
                 >
-                  Select S Pack
+                  {t("selectS")}
                 </Link>
               </div>
 
               {/* M Pack */}
               <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">FLASHBACK M</h3>
-                  <p className="mt-2 text-sm text-muted">High-volume model for clinics & dispensary networks.</p>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("flashbackM")}</h3>
+                  <p className="mt-2 text-sm text-muted">{t("flashbackMDesc")}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    1.599 € <span className="text-sm font-semibold text-muted">netto / Month</span>
+                    1.599 € <span className="text-sm font-semibold text-muted">{t("netto")} / {t("month")}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      bis zu 350 Monatsreviews
+                      {t("bulletPharmacyM0")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Monatsreporting inklusive
+                      {t("bulletPharmacyM1")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Premium Support
+                      {t("bulletPharmacyM2")}
                     </li>
                   </ul>
                 </div>
@@ -256,7 +258,7 @@ export function LandingPricing() {
                   href="/signup/pharmacy"
                   className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
                 >
-                  Select M Pack
+                  {t("selectM")}
                 </Link>
               </div>
             </div>
@@ -264,36 +266,36 @@ export function LandingPricing() {
 
           {activeTab === "enterprise" && (
             <div className="mx-auto max-w-3xl rounded-2xl border border-hairline bg-white p-8 shadow-sm">
-              <h3 className="text-xl font-bold text-ink-strong text-center">Volume-Based Telemedicine Tiers</h3>
+              <h3 className="text-xl font-bold text-ink-strong text-center">{t("enterpriseTitle")}</h3>
               <p className="mt-2 text-sm text-muted text-center max-w-md mx-auto">
-                Skalierbare Enterprise-Lösungen für Telemedizin-Plattformen & Großkunden mit voller API-Konnektivität.
+                {t("enterpriseDesc")}
               </p>
 
               <div className="mt-8 overflow-hidden rounded-xl border border-hairline">
                 <table className="w-full text-sm text-left">
                   <thead className="bg-surface text-ink-strong uppercase tracking-wider text-xs font-bold border-b border-hairline">
                     <tr>
-                      <th className="px-6 py-4">Monatliches Volumen</th>
-                      <th className="px-6 py-4 text-right">Preis pro Review</th>
+                      <th className="px-6 py-4">{t("enterpriseVol")}</th>
+                      <th className="px-6 py-4 text-right">{t("enterprisePrice")}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-hairline">
                     <tr>
-                      <td className="px-6 py-4 font-semibold">1 – 500 Reviews</td>
-                      <td className="px-6 py-4 text-right font-bold text-pine-600">8,00 € netto</td>
+                      <td className="px-6 py-4 font-semibold">1 – 500 {t("reviews")}</td>
+                      <td className="px-6 py-4 text-right font-bold text-pine-600">8,00 € {t("netto")}</td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 font-semibold">501 – 1.500 Reviews</td>
-                      <td className="px-6 py-4 text-right font-bold text-pine-600">6,50 € netto</td>
+                      <td className="px-6 py-4 font-semibold">501 – 1.500 {t("reviews")}</td>
+                      <td className="px-6 py-4 text-right font-bold text-pine-600">6,50 € {t("netto")}</td>
                     </tr>
                     <tr className="bg-mint/10">
                       <td className="px-6 py-4 font-semibold flex items-center gap-2">
-                        ab 1.501 Reviews
+                        1.501+ {t("reviews")}
                         <span className="rounded-full bg-pine-600 px-2 py-0.5 text-[9px] font-bold uppercase text-white">
-                          Price Cap Limit
+                          {t("priceCapLimit")}
                         </span>
                       </td>
-                      <td className="px-6 py-4 text-right font-bold text-pine-600">5,00 € netto</td>
+                      <td className="px-6 py-4 text-right font-bold text-pine-600">5,00 € {t("netto")}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -302,25 +304,25 @@ export function LandingPricing() {
               <div className="mt-6 rounded-xl bg-[#eef2fe] border border-info/20 p-4 text-xs leading-relaxed text-info">
                 <p className="font-bold flex items-center gap-1">
                   <span aria-hidden className="msym text-[16px]">info</span>
-                  Enterprise Price Cap Guarantee:
+                  {t("enterpriseGuaranteeTitle")}
                 </p>
                 <p className="mt-1">
-                  Der Preis von 5,00 € netto pro Monatsreview stellt die finale Preisstufe dar. Unabhängig vom weiteren Anstieg (z. B. 10.000+ Reviews) erfolgt keine weitere Preisreduktion, was Partnern maximale Kalkulationssicherheit sichert.
+                  {t("enterpriseGuaranteeDesc")}
                 </p>
               </div>
 
               <div className="mt-6 flex flex-wrap gap-4 justify-center text-xs font-bold text-ink-strong uppercase tracking-wide">
-                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">api</span> API-Anbindung</span>
+                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">api</span> API</span>
                 <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">webhook</span> Webhooks</span>
                 <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">hub</span> Make.com/Zapier</span>
-                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">workspace_premium</span> Powered by Co-Branding</span>
+                <span className="flex items-center gap-1"><span className="msym text-[16px] text-pine-600 font-normal">workspace_premium</span> Co-Branding</span>
               </div>
               
               <a
                 href="mailto:info@cannathera.de?subject=Enterprise%20Integration%20Request"
                 className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine shadow-md"
               >
-                Request Enterprise Integration
+                {t("reqEnterprise")}
               </a>
             </div>
           )}
@@ -328,15 +330,15 @@ export function LandingPricing() {
 
         {/* Optional Services Table */}
         <div className="mt-16 mx-auto max-w-4xl">
-          <h3 className="font-display text-xl font-bold text-pine text-center">Optionale Einzelleistungen</h3>
-          <p className="mt-1.5 text-xs text-muted text-center">Umfassende Dokumentations- und Auswertungshilfen</p>
+          <h3 className="font-display text-xl font-bold text-pine text-center">{t("optionalsTitle")}</h3>
+          <p className="mt-1.5 text-xs text-muted text-center">{t("optionalsDesc")}</p>
           <div className="mt-6 overflow-hidden rounded-xl border border-hairline bg-white shadow-sm">
             <table className="w-full text-sm text-left">
               <thead className="bg-surface text-ink-strong uppercase tracking-wider text-xs font-bold border-b border-hairline">
                 <tr>
-                  <th className="px-6 py-4">Leistung</th>
-                  <th className="px-6 py-4">Beschreibung</th>
-                  <th className="px-6 py-4 text-right">Preis</th>
+                  <th className="px-6 py-4">{t("optionalsColName")}</th>
+                  <th className="px-6 py-4">{t("optionalsColDesc")}</th>
+                  <th className="px-6 py-4 text-right">{t("optionalsColPrice")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-hairline">
