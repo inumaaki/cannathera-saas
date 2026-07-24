@@ -6,9 +6,9 @@ export function SignupShell({ children }: Readonly<{ children: React.ReactNode }
   const t = useTranslations("auth.signup.hero");
 
   return (
-    <div className="min-h-dvh lg:grid lg:grid-cols-2">
+    <div className="min-h-dvh lg:grid lg:h-dvh lg:grid-cols-2 lg:overflow-hidden">
       {/* Left — deep green panel */}
-      <aside className="hidden lg:flex flex-col items-center justify-center gap-8 bg-pine px-12 py-8 text-center text-white">
+      <aside className="hidden h-dvh flex-col items-center justify-center gap-8 overflow-hidden bg-pine px-12 py-8 text-center text-white lg:flex">
         <span className="flex size-20 items-center justify-center rounded-full bg-white/10">
           <span aria-hidden className="msym text-[38px] text-white">
             psychiatry
@@ -57,8 +57,8 @@ export function SignupShell({ children }: Readonly<{ children: React.ReactNode }
       </aside>
 
       {/* Right — content */}
-      <main className="flex flex-col items-center justify-center bg-white px-6 py-6">
-        <div className="w-full max-w-md">
+      <main className="flex min-h-dvh flex-col items-center bg-white px-6 py-6 lg:h-dvh lg:min-h-0 lg:overflow-y-auto lg:overscroll-contain lg:[scrollbar-width:none] lg:[-ms-overflow-style:none] lg:[&::-webkit-scrollbar]:hidden">
+        <div className="my-auto w-full max-w-md">
           <BrandMark />
           {children}
         </div>

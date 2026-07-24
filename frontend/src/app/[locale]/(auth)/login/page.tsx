@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import { Link } from "@/i18n/navigation";
+import { BrandMark } from "@/components/auth/BrandMark";
 import { LocaleSwitcher } from "@/components/auth/LocaleSwitcher";
 import { LoginForm } from "./LoginForm";
 
@@ -17,9 +18,9 @@ export default function LoginPage({
   const tc = useTranslations("common");
 
   return (
-    <div className="min-h-dvh lg:grid lg:grid-cols-2">
+    <div className="min-h-dvh lg:grid lg:h-dvh lg:grid-cols-2 lg:overflow-hidden">
       {/* Left — hero (hidden on small screens) */}
-      <aside className="hidden lg:flex flex-col justify-between bg-brand-gradient p-10 text-white">
+      <aside className="hidden h-dvh flex-col justify-between overflow-hidden bg-brand-gradient p-10 text-white lg:flex">
         <Link href="/" className="inline-block w-fit">
           <Image
             src="/brand/logo-banner-transparent.png"
@@ -44,20 +45,11 @@ export default function LoginPage({
           <span>{t("hero.gdpr")}</span>
         </div>
       </aside>
- 
+
       {/* Right — form */}
-      <main className="flex flex-col items-center justify-center bg-white px-6 py-6">
-        <div className="w-full max-w-md">
-          <Link href="/" className="inline-block w-fit">
-            <Image
-              src="/brand/logo.png"
-              alt=""
-              width={52}
-              height={52}
-              className="rounded-full"
-              priority
-            />
-          </Link>
+      <main className="flex min-h-dvh flex-col items-center bg-white px-5 py-6 sm:px-6 lg:h-dvh lg:min-h-0 lg:overflow-y-auto lg:overscroll-contain lg:[scrollbar-width:none] lg:[-ms-overflow-style:none] lg:[&::-webkit-scrollbar]:hidden">
+        <div className="my-auto w-full max-w-md py-2">
+          <BrandMark size={52} />
           <h2 className="mt-5 font-display text-3xl font-bold text-pine">
             {t("login.title")}
           </h2>
@@ -75,12 +67,15 @@ export default function LoginPage({
 
           <p className="mt-5 text-center text-ink-strong">
             {t("login.noAccount")}{" "}
-            <Link href="/signup" className="font-bold text-pine-600 hover:underline">
+            <Link
+              href="/signup/patient"
+              className="font-bold text-pine-600 hover:underline"
+            >
               {t("login.createAccount")}
             </Link>
           </p>
 
-          <footer className="mt-8 flex items-center justify-center gap-2 text-sm text-muted">
+          <footer className="mt-8 flex flex-wrap items-center justify-center gap-x-2 gap-y-3 text-sm text-muted">
             <Link href="/imprint" className="hover:text-ink-strong">
               {tc("imprint")}
             </Link>
