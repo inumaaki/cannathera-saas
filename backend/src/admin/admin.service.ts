@@ -1,10 +1,20 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { OrgType, Role, SubscriptionTier } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import * as argon2 from 'argon2';
-import { createCipheriv, createDecipheriv, createHash, randomBytes } from 'crypto';
+import {
+  createCipheriv,
+  createDecipheriv,
+  createHash,
+  randomBytes,
+} from 'crypto';
 import * as nodemailer from 'nodemailer';
 import { lookup } from 'dns/promises';
+import { onboardingEmail } from '../shared/email-templates';
 
 @Injectable()
 export class AdminService {
@@ -55,7 +65,12 @@ export class AdminService {
     const partners = await this.prisma.organization.findMany({
       where: {
         type: {
-          in: [OrgType.PRACTICE, OrgType.PHARMACY, OrgType.ENTERPRISE, OrgType.CLINIC],
+          in: [
+            OrgType.PRACTICE,
+            OrgType.PHARMACY,
+            OrgType.ENTERPRISE,
+            OrgType.CLINIC,
+          ],
         },
       },
       include: {
@@ -166,8 +181,7 @@ export class AdminService {
       where: { id: membership.userId },
       data: {
         passwordHash: await argon2.hash(tempPassword),
-        temporaryPasswordEncrypted:
-          this.encryptTemporaryPassword(tempPassword),
+        temporaryPasswordEncrypted: this.encryptTemporaryPassword(tempPassword),
       },
     });
     await this.prisma.auditLog.create({
@@ -270,69 +284,56 @@ export class AdminService {
     });
 
     // Send onboarding email logic
-    if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+    if (
+      process.env.SMTP_HOST &&
+      process.env.SMTP_USER &&
+      process.env.SMTP_PASS
+    ) {
       const smtpHost = process.env.SMTP_HOST;
-      lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
-        const transporter = nodemailer.createTransport({
-          host: dnsResult.address,
-          port: Number(process.env.SMTP_PORT ?? 587),
-          secure: process.env.SMTP_SECURE === 'true',
-          auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-          },
-          tls: {
-            servername: smtpHost,
-          },
-        } as any);
-        const greetingName = user.firstName ? user.firstName : 'Partner';
-        transporter.sendMail({
-          from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
-          to: user.email,
-          subject: 'Welcome to Cannathera - Account Activated',
-          text: `Welcome to Cannathera!\n\nYour account has been onboarded.\nEmail: ${user.email}\nTemporary Password: ${tempPassword}\n\nPlease sign in at http://localhost:3000/en/login. You will be prompted to set a new strong password on your first login.`,
-          html: `
-            <div style="background-color: #f1f5f9; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; min-height: 100%;">
-              <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid #e2e8f0;">
-                <!-- Header -->
-                <div style="background: linear-gradient(135deg, #0d3a2e 0%, #164e43 100%); padding: 35px 30px; text-align: center;">
-                  <h1 style="color: #ffffff; margin: 0; font-size: 26px; font-weight: 700; letter-spacing: -0.02em; font-family: 'Outfit', sans-serif;">CANNATHERA</h1>
-                  <p style="color: #3cd3ad; margin: 5px 0 0 0; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Welcome Partner</p>
-                </div>
-                <!-- Body -->
-                <div style="padding: 40px 30px; line-height: 1.6; color: #334155;">
-                  <h2 style="color: #0d3a2e; margin-top: 0; font-size: 20px; font-weight: 700;">Hello ${greetingName},</h2>
-                  <p style="font-size: 15px; margin-bottom: 20px;">Your partner administrator account has been onboarded and activated successfully. Please find your login credentials below:</p>
-                  
-                  <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 20px; margin: 25px 0;">
-                    <p style="margin: 0 0 10px 0; font-size: 15px;"><strong>Email Address:</strong> <span style="color: #0d3a2e; font-family: monospace;">${user.email}</span></p>
-                    <p style="margin: 0; font-size: 15px;"><strong>Temporary Password:</strong> <span style="color: #0d3a2e; font-family: monospace; font-weight: bold; background: #e2e8f0; padding: 2px 6px; border-radius: 4px;">${tempPassword}</span></p>
-                  </div>
-
-                  <p style="font-size: 14px; color: #64748b; margin-top: 20px;"><em>Security Notice: For your security, you will be prompted to set a new strong password immediately upon your first sign-in.</em></p>
-
-                  <div style="text-align: center; margin: 35px 0 20px 0;">
-                    <a href="http://localhost:3000/en/login" style="background-color: #0d3a2e; color: #ffffff; text-decoration: none; padding: 14px 30px; font-size: 16px; font-weight: 600; border-radius: 8px; display: inline-block; box-shadow: 0 4px 6px rgba(13, 58, 46, 0.15); transition: background-color 0.2s;">Sign In to Account</a>
-                  </div>
-                </div>
-                <!-- Footer -->
-                <div style="background-color: #f8fafc; padding: 20px; text-align: center; font-size: 13px; color: #94a3b8; border-top: 1px solid #e2e8f0;">
-                  <p style="margin: 0;">&copy; 2026 Cannathera GmbH. All rights reserved.</p>
-                  <p style="margin: 5px 0 0 0;">This is an automated operational message. Please do not reply.</p>
-                </div>
-              </div>
-            </div>
-          `,
-        }).then(() => {
-          console.log(`Onboarding email sent to ${user.email}`);
-        }).catch((err) => {
-          console.error('Failed to send onboarding email:', err);
+      lookup(smtpHost, { family: 4 })
+        .then((dnsResult: any) => {
+          const transporter = nodemailer.createTransport({
+            host: dnsResult.address,
+            port: Number(process.env.SMTP_PORT ?? 587),
+            secure: process.env.SMTP_SECURE === 'true',
+            auth: {
+              user: process.env.SMTP_USER,
+              pass: process.env.SMTP_PASS,
+            },
+            tls: {
+              servername: smtpHost,
+            },
+          } as any);
+          const message = onboardingEmail({
+            firstName: user.firstName,
+            email: user.email,
+            temporaryPassword: tempPassword,
+          });
+          transporter
+            .sendMail({
+              from:
+                process.env.SMTP_FROM ??
+                '"Cannathera" <no-reply@cannathera.de>',
+              to: user.email,
+              ...message,
+            })
+            .then(() => {
+              console.log(`Onboarding email sent to ${user.email}`);
+            })
+            .catch((err) => {
+              console.error('Failed to send onboarding email:', err);
+            });
+        })
+        .catch((err: any) => {
+          console.error(
+            'Failed to resolve SMTP host to IPv4 for onboarding:',
+            err,
+          );
         });
-      }).catch((err: any) => {
-        console.error('Failed to resolve SMTP host to IPv4 for onboarding:', err);
-      });
     } else {
-      console.log(`[ONBOARDING MOCK EMAIL] Temporary credentials for ${user.email}: ${tempPassword}`);
+      console.log(
+        `[ONBOARDING MOCK EMAIL] Temporary credentials for ${user.email}: ${tempPassword}`,
+      );
     }
 
     return { orgId: org.id, userId: user.id, tempPassword };
@@ -393,7 +394,10 @@ export class AdminService {
     });
   }
 
-  async updatePricingPlan(id: string, dto: { monthlyPrice?: number; reviewCap?: number; isActive?: boolean }) {
+  async updatePricingPlan(
+    id: string,
+    dto: { monthlyPrice?: number; reviewCap?: number; isActive?: boolean },
+  ) {
     const plan = await this.prisma.pricingPlan.findUnique({ where: { id } });
     if (!plan) throw new NotFoundException('PRICING_PLAN_NOT_FOUND');
     return this.prisma.pricingPlan.update({

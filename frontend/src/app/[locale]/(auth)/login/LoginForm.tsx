@@ -45,7 +45,13 @@ export function LoginForm() {
         window.location.assign(res.home);
         return;
       }
-      if (res.devCode) sessionStorage.setItem("cannathera_dev_code", res.devCode);
+      sessionStorage.removeItem("cannathera_dev_code");
+      if (
+        process.env.NEXT_PUBLIC_EXPOSE_DEV_AUTH_CODES === "true" &&
+        res.devCode
+      ) {
+        sessionStorage.setItem("cannathera_dev_code", res.devCode);
+      }
       router.push("/verify");
     } catch (err) {
       const code = err instanceof ApiError ? err.code : "GENERIC";

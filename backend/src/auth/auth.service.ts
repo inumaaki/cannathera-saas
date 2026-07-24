@@ -14,6 +14,7 @@ import * as nodemailer from 'nodemailer';
 import { lookup } from 'dns/promises';
 import { PrismaService } from '../prisma/prisma.service';
 import { ROLE_PRESETS } from '../shared';
+import { twoFactorEmail } from '../shared/email-templates';
 import type {
   DoctorDataDto,
   EnterpriseDataDto,
@@ -24,6 +25,9 @@ import type {
 
 const CODE_TTL_MS = 10 * 60 * 1000; // 2FA code valid 10 minutes
 const CONSENT_VERSION = '2026-07-v1';
+const EXPOSE_DEV_AUTH_CODES =
+  process.env.NODE_ENV !== 'production' &&
+  process.env.EXPOSE_DEV_AUTH_CODES === 'true';
 
 // `ttlMin` carries the org's session policy so the guard can slide the window.
 export type SessionPayload = {
@@ -220,7 +224,7 @@ export class AuthService {
         return created;
       });
 
-      const devCode = await this.issueTwoFactorCode(user);
+      const devCode = await this.issueTwoFactorCode(user, true);
       return { user, preAuthToken: this.signPreAuth(user), devCode };
     } catch (error) {
       if (
@@ -449,7 +453,7 @@ export class AuthService {
     this.logger.log(`Password reset token for ${user.email}: ${token}`);
 
     return {
-      devToken: process.env.NODE_ENV === 'production' ? undefined : token,
+      devToken: EXPOSE_DEV_AUTH_CODES ? token : undefined,
     };
   }
 
@@ -559,7 +563,10 @@ export class AuthService {
     );
   }
 
-  private async issueTwoFactorCode(user: User): Promise<string | undefined> {
+  private async issueTwoFactorCode(
+    user: User,
+    isRegistration = false,
+  ): Promise<string | undefined> {
     const code = randomInt(0, 1_000_000).toString().padStart(6, '0');
     await this.prisma.twoFactorCode.create({
       data: {
@@ -592,15 +599,18 @@ export class AuthService {
               servername: smtpHost,
             },
           } as any);
+          const message = twoFactorEmail({
+            code,
+            firstName: user.firstName,
+            isRegistration,
+          });
           transporter
             .sendMail({
               from:
                 process.env.SMTP_FROM ??
                 '"Cannathera" <no-reply@cannathera.de>',
               to: user.email,
-              subject: 'Cannathera 2FA Code',
-              text: `Your 2FA verification code is: ${code}`,
-              html: `<p>Your 2FA verification code is: <strong>${code}</strong></p>`,
+              ...message,
             })
             .then(() => {
               this.logger.log(`2FA email sent to ${user.email}`);
@@ -618,7 +628,7 @@ export class AuthService {
         });
     }
 
-    return process.env.NODE_ENV === 'production' ? undefined : code;
+    return EXPOSE_DEV_AUTH_CODES ? code : undefined;
   }
 }
 

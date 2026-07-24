@@ -7,6 +7,9 @@ import { api, ApiError } from "@/lib/api";
 import { OtpInput } from "@/components/ui/OtpInput";
 import { PrimaryButton } from "@/components/ui/fields";
 
+const EXPOSE_DEV_AUTH_CODES =
+  process.env.NEXT_PUBLIC_EXPOSE_DEV_AUTH_CODES === "true";
+
 export function VerifyForm() {
   const t = useTranslations("auth.verify");
   const ta = useTranslations("auth");
@@ -19,7 +22,11 @@ export function VerifyForm() {
 
   // Dev-only convenience: backend returns the 2FA code outside production.
   useEffect(() => {
-    setDevCode(sessionStorage.getItem("cannathera_dev_code"));
+    if (EXPOSE_DEV_AUTH_CODES) {
+      setDevCode(sessionStorage.getItem("cannathera_dev_code"));
+    } else {
+      sessionStorage.removeItem("cannathera_dev_code");
+    }
   }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -51,7 +58,7 @@ export function VerifyForm() {
       const res = await api<{ sent: boolean; devCode?: string }>("/auth/resend", {
         method: "POST",
       });
-      if (res.devCode) {
+      if (EXPOSE_DEV_AUTH_CODES && res.devCode) {
         sessionStorage.setItem("cannathera_dev_code", res.devCode);
         setDevCode(res.devCode);
       }
@@ -63,7 +70,7 @@ export function VerifyForm() {
 
   return (
     <form onSubmit={handleSubmit} className="mt-6">
-      {devCode ? (
+      {EXPOSE_DEV_AUTH_CODES && devCode ? (
         <p className="mx-auto mb-4 max-w-md rounded-lg bg-mint/20 px-4 py-2 text-center text-sm text-pine">
           {ta("devCodeHint", { code: devCode })}
         </p>
