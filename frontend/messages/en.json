@@ -745,6 +745,20 @@
       "GENERIC": "Something went wrong. Please try again."
     },
     "devCodeHint": "Development mode – your code: {code}",
+    "pendingApproval": {
+      "eyebrow": "Registration received",
+      "title": "Thank you for choosing Cannathera",
+      "subtitle": "Your email has been verified successfully. Your account request is now ready for administrator review.",
+      "verifiedTitle": "Email verified",
+      "verifiedText": "Your email address and verification code have been confirmed.",
+      "reviewTitle": "Administrator review",
+      "reviewText": "Our team will review your account request before enabling platform access.",
+      "emailTitle": "Activation email",
+      "emailText": "We will email you as soon as your account has been approved and activated.",
+      "noticeTitle": "No further action is required",
+      "noticeText": "Please wait for the activation email before attempting to sign in.",
+      "backHome": "Return to homepage"
+    },
     "forgot": {
       "title": "Forgot password?",
       "subtitle": "Enter your email address. We will send you a link to reset your password.",

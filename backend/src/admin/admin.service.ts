@@ -14,11 +14,53 @@ import {
 } from 'crypto';
 import * as nodemailer from 'nodemailer';
 import { lookup } from 'dns/promises';
-import { onboardingEmail } from '../shared/email-templates';
+import {
+  accountActivatedEmail,
+  onboardingEmail,
+} from '../shared/email-templates';
 
 @Injectable()
 export class AdminService {
   constructor(private readonly prisma: PrismaService) {}
+
+  private async sendActivationEmail(user: {
+    email: string;
+    firstName: string | null;
+  }) {
+    if (
+      !process.env.SMTP_HOST ||
+      !process.env.SMTP_USER ||
+      !process.env.SMTP_PASS
+    ) {
+      console.log(
+        `[ACTIVATION MOCK EMAIL] Account activated for ${user.email}`,
+      );
+      return;
+    }
+
+    try {
+      const smtpHost = process.env.SMTP_HOST;
+      const dnsResult = await lookup(smtpHost, { family: 4 });
+      const transporter = nodemailer.createTransport({
+        host: dnsResult.address,
+        port: Number(process.env.SMTP_PORT ?? 587),
+        secure: process.env.SMTP_SECURE === 'true',
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASS,
+        },
+        tls: { servername: smtpHost },
+      });
+      await transporter.sendMail({
+        from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
+        to: user.email,
+        ...accountActivatedEmail({ firstName: user.firstName }),
+      });
+      console.log(`Activation email sent to ${user.email}`);
+    } catch (error) {
+      console.error(`Failed to send activation email to ${user.email}:`, error);
+    }
+  }
 
   private onboardingKey() {
     const secret =
@@ -157,10 +199,11 @@ export class AdminService {
 
     // Toggle memberships user active status
     for (const membership of org.memberships) {
-      await this.prisma.user.update({
+      const updatedUser = await this.prisma.user.update({
         where: { id: membership.userId },
         data: { isActive: newStatus },
       });
+      if (newStatus) void this.sendActivationEmail(updatedUser);
     }
 
     return { orgId, isActive: newStatus };
@@ -385,6 +428,7 @@ export class AdminService {
       where: { id: userId },
       data: { isActive: !user.isActive },
     });
+    if (updated.isActive) void this.sendActivationEmail(updated);
     return { userId: updated.id, isActive: updated.isActive };
   }
 

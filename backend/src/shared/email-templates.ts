@@ -138,3 +138,32 @@ export function onboardingEmail({
     }),
   };
 }
+
+export function accountActivatedEmail({
+  firstName,
+}: {
+  firstName?: string | null;
+}) {
+  const loginUrl = `${webOrigin}/en/login`;
+  const intro = `Hello${firstName?.trim() ? ` ${firstName.trim()}` : ''}, your Cannathera account has been reviewed and approved. You can now sign in and begin using the platform.`;
+  return {
+    subject: 'Your Cannathera account has been activated',
+    text: `Your Cannathera account is active\n\n${intro}\n\nSign in: ${loginUrl}\n\nIf you did not create this account, please contact Cannathera support.`,
+    html: emailFrame({
+      eyebrow: 'Account approved',
+      title: 'You are ready to get started',
+      intro,
+      content: `
+        <div style="margin:26px 0 0;padding:22px;border:1px solid #b9dfca;border-radius:14px;background:#eef8f2;text-align:center;">
+          <div style="display:inline-block;width:52px;height:52px;line-height:52px;border-radius:50%;background:#066c41;color:#ffffff;font-size:26px;font-weight:700;">✓</div>
+          <div style="margin-top:14px;color:#003521;font-size:16px;font-weight:700;">Account successfully activated</div>
+          <div style="margin-top:6px;color:#66736c;font-size:13px;line-height:1.6;">Your secure patient area is now available.</div>
+        </div>
+        <div style="margin-top:24px;text-align:center;">
+          <a href="${loginUrl}" style="display:inline-block;background:#066c41;color:#ffffff;text-decoration:none;border-radius:11px;padding:14px 28px;font-size:14px;font-weight:700;">Sign in to Cannathera</a>
+        </div>`,
+      footerNote:
+        'If you did not create this account or believe this approval was sent in error, please contact Cannathera support.',
+    }),
+  };
+}

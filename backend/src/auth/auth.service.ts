@@ -389,7 +389,22 @@ export class AuthService {
     const user = await this.prisma.user.findUniqueOrThrow({
       where: { id: payload.sub },
     });
-    if (!user.isActive) throw new UnauthorizedException('ACCOUNT_INACTIVE');
+    if (!user.isActive) {
+      await this.prisma.$transaction([
+        this.prisma.user.update({
+          where: { id: user.id },
+          data: { emailVerified: user.emailVerified ?? new Date() },
+        }),
+        this.prisma.auditLog.create({
+          data: {
+            userId: user.id,
+            action: 'EMAIL_VERIFIED_PENDING_ACTIVATION',
+            ipAddress: ip,
+          },
+        }),
+      ]);
+      return { user, pendingActivation: true as const };
+    }
 
     await this.prisma.auditLog.create({
       data: { userId: user.id, action: 'LOGIN_2FA_OK', ipAddress: ip },
@@ -404,6 +419,7 @@ export class AuthService {
 
     return {
       user,
+      pendingActivation: false as const,
       session,
       ttlMin: payload.remember ? REMEMBER_MIN : policy.sessionTimeoutMin,
     };

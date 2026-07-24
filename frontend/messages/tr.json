@@ -745,6 +745,20 @@
       "GENERIC": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
     },
     "devCodeHint": "Geliştirme modu – kodunuz: {code}",
+    "pendingApproval": {
+      "eyebrow": "Kayıt alındı",
+      "title": "Cannathera'yı seçtiğiniz için teşekkürler",
+      "subtitle": "E-posta adresiniz başarıyla doğrulandı. Hesap talebiniz şimdi yönetici incelemesine hazır.",
+      "verifiedTitle": "E-posta doğrulandı",
+      "verifiedText": "E-posta adresiniz ve doğrulama kodunuz onaylandı.",
+      "reviewTitle": "Yönetici incelemesi",
+      "reviewText": "Ekibimiz platform erişimini açmadan önce hesap talebinizi inceleyecek.",
+      "emailTitle": "Aktivasyon e-postası",
+      "emailText": "Hesabınız onaylanıp etkinleştirildiğinde sizi e-posta ile bilgilendireceğiz.",
+      "noticeTitle": "Başka bir işlem yapmanız gerekmiyor",
+      "noticeText": "Giriş yapmadan önce lütfen aktivasyon e-postasını bekleyin.",
+      "backHome": "Ana sayfaya dön"
+    },
     "forgot": {
       "title": "Şifrenizi mi unuttunuz?",
       "subtitle": "E-posta adresinizi girin. Size şifrenizi sıfırlamak için bir link göndereceğiz.",

@@ -745,6 +745,20 @@
       "GENERIC": "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut."
     },
     "devCodeHint": "Entwicklungsmodus – Ihr Code: {code}",
+    "pendingApproval": {
+      "eyebrow": "Registrierung eingegangen",
+      "title": "Vielen Dank, dass Sie Cannathera gewählt haben",
+      "subtitle": "Ihre E-Mail wurde erfolgreich bestätigt. Ihre Kontoanfrage wird nun durch einen Administrator geprüft.",
+      "verifiedTitle": "E-Mail bestätigt",
+      "verifiedText": "Ihre E-Mail-Adresse und der Bestätigungscode wurden erfolgreich geprüft.",
+      "reviewTitle": "Prüfung durch Administrator",
+      "reviewText": "Unser Team prüft Ihre Kontoanfrage, bevor der Plattformzugang freigeschaltet wird.",
+      "emailTitle": "Aktivierungs-E-Mail",
+      "emailText": "Sobald Ihr Konto genehmigt und aktiviert wurde, informieren wir Sie per E-Mail.",
+      "noticeTitle": "Keine weitere Aktion erforderlich",
+      "noticeText": "Bitte warten Sie auf die Aktivierungs-E-Mail, bevor Sie sich anmelden.",
+      "backHome": "Zurück zur Startseite"
+    },
     "forgot": {
       "title": "Passwort vergessen?",
       "subtitle": "Geben Sie Ihre E-Mail-Adresse ein. Wir senden Ihnen einen Link zum Zurücksetzen Ihres Passworts.",

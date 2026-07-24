@@ -93,7 +93,10 @@ export class AuthController {
     }
 
     res.cookie(PRE_AUTH_COOKIE, result.preAuthToken, preAuthCookieOpts);
-    return { requires2fa: true, ...(result.devCode ? { devCode: result.devCode } : {}) };
+    return {
+      requires2fa: true,
+      ...(result.devCode ? { devCode: result.devCode } : {}),
+    };
   }
 
   @Post('verify')
@@ -105,15 +108,35 @@ export class AuthController {
     @Ip() ip: string,
   ) {
     const preAuth = (req.cookies as Record<string, string>)[PRE_AUTH_COOKIE];
-    const { user, session, ttlMin } = await this.auth.verify(preAuth, dto.code, ip);
+    const result = await this.auth.verify(preAuth, dto.code, ip);
 
     res.clearCookie(PRE_AUTH_COOKIE, { path: '/' });
-    this.setSessionCookie(res, session, ttlMin);
+    if (result.pendingActivation) {
+      return {
+        pendingActivation: true,
+        user: {
+          id: result.user.id,
+          email: result.user.email,
+          role: result.user.role,
+          locale: result.user.locale,
+        },
+      };
+    }
+
+    this.setSessionCookie(res, result.session, result.ttlMin);
 
     return {
-      user: { id: user.id, email: user.email, role: user.role, locale: user.locale },
+      pendingActivation: false,
+      user: {
+        id: result.user.id,
+        email: result.user.email,
+        role: result.user.role,
+        locale: result.user.locale,
+      },
       // Temp-password accounts must set their own password first.
-      home: user.mustChangePassword ? '/set-password' : (ROLE_HOME[user.role] ?? '/'),
+      home: result.user.mustChangePassword
+        ? '/set-password'
+        : (ROLE_HOME[result.user.role] ?? '/'),
     };
   }
 
@@ -169,7 +192,11 @@ export class AuthController {
   @Post('logout')
   @HttpCode(200)
   logout(@Res({ passthrough: true }) res: Response) {
-    res.clearCookie(SESSION_COOKIE, { path: '/', sameSite: cookieSameSite, secure: isProd });
+    res.clearCookie(SESSION_COOKIE, {
+      path: '/',
+      sameSite: cookieSameSite,
+      secure: isProd,
+    });
     return { ok: true };
   }
 }

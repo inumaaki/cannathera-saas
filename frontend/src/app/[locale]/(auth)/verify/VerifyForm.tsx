@@ -36,14 +36,22 @@ export function VerifyForm() {
     setPending(true);
     setError(null);
     try {
-      const res = await api<{ user: { role: string }; home: string }>(
+      const res = await api<{
+        pendingActivation: boolean;
+        user: { role: string };
+        home?: string;
+      }>(
         "/auth/verify",
         { method: "POST", body: { code } },
       );
       sessionStorage.removeItem("cannathera_dev_code");
+      if (res.pendingActivation) {
+        window.location.assign(`/${locale}/pending-approval`);
+        return;
+      }
       // Hard navigation so server components render with the NEW session cookie
       // (client router.push can re-render with the stale cookie → wrong account).
-      window.location.assign(`/${locale}${res.home}`);
+      window.location.assign(`/${locale}${res.home ?? "/"}`);
       return;
     } catch (err) {
       const codeKey = err instanceof ApiError ? err.code : "GENERIC";
