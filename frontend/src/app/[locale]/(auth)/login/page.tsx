@@ -20,29 +20,39 @@ export default function LoginPage({
   return (
     <div className="min-h-dvh lg:grid lg:h-dvh lg:grid-cols-2 lg:overflow-hidden">
       {/* Left — hero (hidden on small screens) */}
-      <aside className="hidden h-dvh flex-col justify-between overflow-hidden bg-brand-gradient p-10 text-white lg:flex">
-        <Link href="/" className="inline-block w-fit">
-          <Image
-            src="/brand/logo-banner-transparent.png"
-            alt="Cannathera"
-            width={280}
-            height={80}
-            className="w-56 h-auto"
-            priority
-          />
-        </Link>
-        <div className="max-w-lg">
-          <h1 className="font-display text-4xl xl:text-5xl font-bold leading-tight whitespace-pre-line">
+      <aside
+        className="hidden h-dvh flex-col justify-between overflow-hidden lg:flex"
+        style={{
+          background: "linear-gradient(135deg, #0a2e1e 0%, #0f3d28 60%, #122f1f 100%)",
+        }}
+      >
+        {/* Brand image fills top area */}
+        <div className="relative flex-1 flex flex-col items-center justify-center px-10 pt-10 pb-0">
+          <Link href="/" className="inline-block w-fit mb-6">
+            <Image
+              src="/brand/logo-cannathera.jpeg"
+              alt="Cannathera"
+              width={380}
+              height={380}
+              className="w-64 xl:w-72 h-auto rounded-2xl shadow-2xl"
+              priority
+            />
+          </Link>
+        </div>
+
+        {/* Bottom text block */}
+        <div className="px-10 pb-10 text-white">
+          <h1 className="font-display text-3xl xl:text-4xl font-bold leading-tight whitespace-pre-line">
             {t("hero.title")}
           </h1>
-          <p className="mt-6 text-lg leading-relaxed text-white/90">
+          <p className="mt-4 text-base leading-relaxed text-white/80">
             {t("hero.subtitle")}
           </p>
-        </div>
-        <div className="flex items-center gap-4 text-sm font-semibold text-white/80">
-          <span>{t("hero.certified")}</span>
-          <span aria-hidden className="h-4 w-px bg-white/40" />
-          <span>{t("hero.gdpr")}</span>
+          <div className="mt-6 flex items-center gap-4 text-sm font-semibold text-white/60">
+            <span>{t("hero.certified")}</span>
+            <span aria-hidden className="h-4 w-px bg-white/30" />
+            <span>{t("hero.gdpr")}</span>
+          </div>
         </div>
       </aside>
 

@@ -5,6 +5,8 @@ import { Link } from "@/i18n/navigation";
 import { BrandMark } from "@/components/auth/BrandMark";
 import { AdminSidebarNav, type AdminSection } from "./AdminSidebarNav";
 
+import { LocaleSwitcher } from "@/components/auth/LocaleSwitcher";
+
 type AdminShellLabels = {
   systemControl: string;
   systemAdmin: string;
@@ -54,11 +56,14 @@ export function AdminShell({
         onNavigate={onNavigate}
       />
 
-      <div className="border-t border-hairline p-4">
-        <div className="truncate text-xs font-bold text-ink-strong">{userName}</div>
-        <div className="mt-0.5 text-[10px] uppercase tracking-wider text-muted">
-          {labels.systemAdmin}
+      <div className="border-t border-hairline p-4 flex items-center justify-between">
+        <div>
+          <div className="truncate text-xs font-bold text-ink-strong">{userName}</div>
+          <div className="mt-0.5 text-[10px] uppercase tracking-wider text-muted">
+            {labels.systemAdmin}
+          </div>
         </div>
+        <LocaleSwitcher direction="up" align="right" />
       </div>
     </>
   );
@@ -104,13 +109,16 @@ export function AdminShell({
               {labels.controlCenter}
             </h1>
           </div>
-          <Link
-            href="/login"
-            className="flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-2 text-xs font-bold text-muted hover:bg-surface hover:text-ink-strong"
-          >
-            <span aria-hidden className="msym text-[18px]">logout</span>
-            <span className="hidden sm:inline">{labels.exit}</span>
-          </Link>
+          <div className="flex items-center gap-4">
+            <LocaleSwitcher direction="down" align="right" />
+            <Link
+              href="/login"
+              className="flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-2 text-xs font-bold text-muted hover:bg-surface hover:text-ink-strong"
+            >
+              <span aria-hidden className="msym text-[18px]">logout</span>
+              <span className="hidden sm:inline">{labels.exit}</span>
+            </Link>
+          </div>
         </header>
         <div className="min-w-0 flex-1 p-3 sm:p-5 lg:p-8">{children}</div>
       </main>

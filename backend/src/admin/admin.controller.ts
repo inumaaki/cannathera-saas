@@ -93,4 +93,23 @@ export class AdminController {
   async togglePartner2FA(@Param('orgId') orgId: string) {
     return this.adminService.togglePartner2FA(orgId);
   }
+
+  // ── Partner Codes ────────────────────────────────────────────────────────────
+
+  @Get('partner-codes')
+  async listPartnerCodes() {
+    return this.adminService.listPartnerCodes();
+  }
+
+  @Post('partner-codes')
+  async createPartnerCode(
+    @Body() dto: { orgId: string; label?: string; maxUses?: number },
+  ) {
+    return this.adminService.createPartnerCode(dto);
+  }
+
+  @Patch('partner-codes/:id/toggle')
+  async togglePartnerCode(@Param('id') id: string) {
+    return this.adminService.togglePartnerCode(id);
+  }
 }

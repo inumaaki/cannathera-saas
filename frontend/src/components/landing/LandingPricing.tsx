@@ -11,9 +11,8 @@ export function LandingPricing() {
   const t = useTranslations("landing.pricing");
 
   const optionals = [
-    { name: t("optionalName0"), desc: t("optionalDesc0"), price: "24,90 €" },
     { name: t("optionalName1"), desc: t("optionalDesc1"), price: "19,90 €" },
-    { name: t("optionalName2"), desc: t("optionalDesc2"), price: "39,90 €" },
+    { name: t("optionalName0"), desc: t("optionalDesc0"), price: "24,90 €" },
     { name: t("optionalName3"), desc: t("optionalDesc3"), price: "79,90 €" },
     { name: t("optionalName4"), desc: t("optionalDesc4"), price: "249,00 €" },
   ];
@@ -98,7 +97,7 @@ export function LandingPricing() {
                   <h3 className="text-lg font-bold text-ink-strong">{t("plus")}</h3>
                   <p className="mt-2 text-sm text-muted">{t("plusDesc")}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    29,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
+                  39,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
@@ -133,7 +132,7 @@ export function LandingPricing() {
                   <h3 className="text-lg font-bold text-ink-strong">{t("premium")}</h3>
                   <p className="mt-2 text-sm text-muted">{t("premiumDesc")}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    49,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
+                  49,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">

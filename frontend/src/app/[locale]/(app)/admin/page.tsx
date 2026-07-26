@@ -81,7 +81,23 @@ type AuditLog = {
   } | null;
 };
 
-type AdminSection = "partners" | "users" | "plans" | "logs";
+type AdminSection = "partners" | "users" | "plans" | "logs" | "codes";
+
+type PartnerCode = {
+  id: string;
+  code: string;
+  label: string | null;
+  usageCount: number;
+  maxUses: number | null;
+  isActive: boolean;
+  createdAt: string;
+  expiresAt: string | null;
+  org: {
+    id: string;
+    name: string;
+    type: string;
+  };
+};
 
 type SelectOption = {
   value: string;
@@ -202,6 +218,13 @@ export default function AdminDashboardPage() {
   const [globalUsers, setGlobalUsers] = useState<GlobalUser[]>([]);
   const [plans, setPlans] = useState<PricingPlan[]>([]);
   const [logs, setLogs] = useState<AuditLog[]>([]);
+  const [partnerCodes, setPartnerCodes] = useState<PartnerCode[]>([]);
+  const [newCodeOrgId, setNewCodeOrgId] = useState("");
+  const [newCodeLabel, setNewCodeLabel] = useState("");
+  const [newCodeMaxUses, setNewCodeMaxUses] = useState("");
+  const [codesBusy, setCodesBusy] = useState(false);
+  const [codesError, setCodesError] = useState("");
+  const [copiedCodeId, setCopiedCodeId] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -244,6 +267,13 @@ export default function AdminDashboardPage() {
       } else if (activeTab === "logs") {
         const res = await fetch(`${API_URL}/admin/audit-logs`, { credentials: "include" });
         if (res.ok) setLogs(await res.json());
+      } else if (activeTab === "codes") {
+        const [codesRes, partnersRes] = await Promise.all([
+          fetch(`${API_URL}/admin/partner-codes`, { credentials: "include" }),
+          fetch(`${API_URL}/admin/partners`, { credentials: "include" }),
+        ]);
+        if (codesRes.ok) setPartnerCodes(await codesRes.json());
+        if (partnersRes.ok) setPartners(await partnersRes.json());
       }
     } catch (e) {
       console.error("Failed loading admin resources", e);
@@ -264,7 +294,8 @@ export default function AdminDashboardPage() {
         section === "partners" ||
         section === "users" ||
         section === "plans" ||
-        section === "logs"
+        section === "logs" ||
+        section === "codes"
       ) {
         setActiveTab(section);
       }
@@ -1096,7 +1127,222 @@ export default function AdminDashboardPage() {
         </div>
       )}
 
-      {/* Onboard Modal */}
+      {activeTab === "codes" && (
+        <div className="space-y-6">
+          {/* Generate New Code */}
+          <div className="rounded-2xl border border-hairline bg-white p-5 shadow-sm">
+            <h3 className="font-display text-lg font-bold text-pine">{t("codes.generateTitle")}</h3>
+            <p className="mt-0.5 text-xs text-muted">
+              {t("codes.generateSubtitle")}
+            </p>
+            <form
+              className="mt-5 grid gap-4 sm:grid-cols-2"
+              onSubmit={async (e) => {
+                e.preventDefault();
+                if (!newCodeOrgId) { setCodesError(t("codes.selectOrgError")); return; }
+                setCodesBusy(true);
+                setCodesError("");
+                try {
+                  const res = await fetch(`${API_URL}/admin/partner-codes`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify({
+                      orgId: newCodeOrgId,
+                      label: newCodeLabel || undefined,
+                      maxUses: newCodeMaxUses ? Number(newCodeMaxUses) : undefined,
+                    }),
+                  });
+                  if (res.ok) {
+                    const created: PartnerCode = await res.json();
+                    setPartnerCodes((prev) => [created, ...prev]);
+                    setNewCodeOrgId("");
+                    setNewCodeLabel("");
+                    setNewCodeMaxUses("");
+                  } else {
+                    const err = await res.json().catch(() => ({}));
+                    setCodesError(err?.message ?? t("serverError"));
+                  }
+                } catch {
+                  setCodesError(t("serverError"));
+                } finally {
+                  setCodesBusy(false);
+                }
+              }}
+            >
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-sage-950">
+                  {t("codes.orgLabel")}
+                </label>
+                <select
+                  required
+                  value={newCodeOrgId}
+                  onChange={(e) => setNewCodeOrgId(e.target.value)}
+                  className="mt-1.5 w-full rounded-xl border border-hairline bg-surface px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none"
+                >
+                  <option value="">{t("codes.selectOrgPlaceholder")}</option>
+                  {partners.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      {p.name} ({p.type})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-sage-950">
+                  {t("codes.labelField")}
+                </label>
+                <input
+                  type="text"
+                  value={newCodeLabel}
+                  onChange={(e) => setNewCodeLabel(e.target.value)}
+                  placeholder={t("codes.labelPlaceholder")}
+                  className="mt-1.5 w-full rounded-xl border border-hairline bg-surface px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-sage-950">
+                  {t("codes.maxUsesField")}
+                </label>
+                <input
+                  type="number"
+                  min={1}
+                  value={newCodeMaxUses}
+                  onChange={(e) => setNewCodeMaxUses(e.target.value)}
+                  placeholder={t("codes.maxUsesPlaceholder")}
+                  className="mt-1.5 w-full rounded-xl border border-hairline bg-surface px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none"
+                />
+              </div>
+
+              <div className="flex items-end">
+                {codesError && (
+                  <p className="mb-2 text-xs font-bold text-red-600">{codesError}</p>
+                )}
+                <button
+                  type="submit"
+                  disabled={codesBusy}
+                  className="flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-brand px-5 text-sm font-bold text-white hover:bg-pine disabled:opacity-60 transition-colors shadow-sm"
+                >
+                  <span aria-hidden className="msym text-[18px]">vpn_key</span>
+                  {codesBusy ? t("codes.generating") : t("codes.generateAction")}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Codes List */}
+          <div className="overflow-x-auto overscroll-x-contain rounded-2xl border border-hairline bg-white shadow-sm [scrollbar-width:thin]">
+            {loading ? (
+              <div className="flex items-center justify-center py-16 text-muted text-sm">
+                <span className="msym mr-2 text-[22px] animate-spin">progress_activity</span>
+                {t("codes.loading")}
+              </div>
+            ) : partnerCodes.length === 0 ? (
+              <div className="flex flex-col items-center justify-center gap-3 py-16 text-muted">
+                <span aria-hidden className="msym text-[40px]">vpn_key_off</span>
+                <p className="text-sm font-semibold">{t("codes.empty")}</p>
+              </div>
+            ) : (
+              <table className="w-full min-w-[680px] border-collapse text-sm">
+                <thead>
+                  <tr className="border-b border-hairline bg-surface">
+                    {[
+                      t("codes.colCode"),
+                      t("codes.colPartner"),
+                      t("codes.colLabel"),
+                      t("codes.colUses"),
+                      t("codes.colStatus"),
+                      t("codes.colCreated"),
+                      t("codes.colAction"),
+                    ].map((h) => (
+                      <th key={h} className="px-4 py-3 text-left text-[10px] font-bold uppercase tracking-wider text-muted">
+                        {h}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-hairline">
+                  {partnerCodes.map((code) => (
+                    <tr key={code.id} className="hover:bg-surface/50 transition-colors">
+                      <td className="px-4 py-3">
+                        <div className="flex items-center gap-2">
+                          <span className="font-mono text-sm font-bold text-pine tracking-wide">{code.code}</span>
+                          <button
+                            type="button"
+                            title="Kopieren"
+                            onClick={() => {
+                              void navigator.clipboard.writeText(code.code);
+                              setCopiedCodeId(code.id);
+                              setTimeout(() => setCopiedCodeId(null), 2000);
+                            }}
+                            className="flex size-7 items-center justify-center rounded-lg text-muted hover:bg-pine/10 hover:text-pine transition-colors"
+                          >
+                            <span aria-hidden className="msym text-[16px]">
+                              {copiedCodeId === code.id ? "check" : "content_copy"}
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className="font-semibold text-ink-strong">{code.org.name}</span>
+                        <span className="ml-1.5 text-[10px] text-muted">({code.org.type})</span>
+                      </td>
+                      <td className="px-4 py-3 text-muted">{code.label ?? "—"}</td>
+                      <td className="px-4 py-3 font-mono text-xs">
+                        {code.usageCount}{code.maxUses ? ` / ${code.maxUses}` : " / ∞"}
+                      </td>
+                      <td className="px-4 py-3">
+                        <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider ${
+                          code.isActive
+                            ? "bg-mint/20 text-pine"
+                            : "bg-red-50 text-red-700"
+                        }`}>
+                          <span aria-hidden className="msym text-[12px]">
+                            {code.isActive ? "check_circle" : "cancel"}
+                          </span>
+                          {code.isActive ? t("codes.statusActive") : t("codes.statusInactive")}
+                        </span>
+                      </td>
+                      <td className="px-4 py-3 text-xs text-muted">
+                        {new Date(code.createdAt).toLocaleDateString()}
+                      </td>
+                      <td className="px-4 py-3">
+                        <button
+                          type="button"
+                          onClick={async () => {
+                            try {
+                              const res = await fetch(`${API_URL}/admin/partner-codes/${code.id}/toggle`, {
+                                method: "PATCH",
+                                credentials: "include",
+                              });
+                              if (res.ok) {
+                                const updated = await res.json();
+                                setPartnerCodes((prev) =>
+                                  prev.map((c) => c.id === code.id ? { ...c, isActive: updated.isActive } : c)
+                                );
+                              }
+                            } catch { /* noop */ }
+                          }}
+                          className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+                            code.isActive
+                              ? "border border-red-200 text-red-600 hover:bg-red-50"
+                              : "border border-mint/30 text-pine hover:bg-mint/10"
+                          }`}
+                        >
+                          {code.isActive ? t("codes.actionDeactivate") : t("codes.actionActivate")}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </div>
+      )}
+
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-pine-900/40 p-2 backdrop-blur-md animate-fade-in sm:p-4">
           <div

@@ -219,9 +219,9 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
           />
           {role === "patient" && (
             <TextField
-              label="Invitation Code (optional)"
+              label="Partner-Code (optional)"
               name="inviteCode"
-              placeholder="e.g. CANNATHERA2026"
+              placeholder="z. B. DRMUELLER-A3F2B1 (von Ihrer Arztpraxis oder Apotheke)"
             />
           )}
           <CheckboxField name="terms" required>

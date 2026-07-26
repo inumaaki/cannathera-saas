@@ -33,18 +33,18 @@ export function LandingHeader() {
           <Link href="/" className="px-4 py-1.5 rounded-full text-[#4a5e54] hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
             {tl("home")}
           </Link>
-          <a href="#features" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
+          <Link href="/features" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
             {tl("features")}
-          </a>
-          <a href="#trust" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
+          </Link>
+          <Link href="/security" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
             {tl("security")}
-          </a>
-          <a href="#pricing" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
+          </Link>
+          <Link href="/pricing" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
             {tl("pricing")}
-          </a>
-          <a href="#founder" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
+          </Link>
+          <Link href="/founder" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
             {tl("founder")}
-          </a>
+          </Link>
         </nav>
 
         {/* Right CTAs */}
@@ -91,10 +91,10 @@ export function LandingHeader() {
           >
             <nav className="grid gap-1 text-sm font-bold text-ink-strong">
               <Link href="/" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("home")}</Link>
-              <a href="#features" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("features")}</a>
-              <a href="#trust" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("security")}</a>
-              <a href="#pricing" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("pricing")}</a>
-              <a href="#founder" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("founder")}</a>
+              <Link href="/features" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("features")}</Link>
+              <Link href="/security" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("security")}</Link>
+              <Link href="/pricing" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("pricing")}</Link>
+              <Link href="/founder" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("founder")}</Link>
             </nav>
             <div className="mt-2 flex items-center justify-between rounded-xl border border-hairline bg-surface px-4 py-3">
               <span className="flex items-center gap-2 text-sm font-bold text-ink-strong">

@@ -74,6 +74,26 @@ export class AuthService {
       const role = ROLE_MAP[dto.role];
 
       const user = await this.prisma.$transaction(async (tx) => {
+        // Resolve partner code before creating user
+        let partnerCodeRecord: { id: string; orgId: string; usageCount: number; maxUses: number | null } | null = null;
+        if (dto.inviteCode && dto.role === 'patient') {
+          const codeNorm = dto.inviteCode.trim().toUpperCase();
+          if (codeNorm !== 'CANNATHERA2026') {
+            const found = await tx.partnerCode.findFirst({
+              where: {
+                code: codeNorm,
+                isActive: true,
+                OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
+              },
+              select: { id: true, orgId: true, usageCount: true, maxUses: true },
+            }).catch(() => null);
+            // Validate maxUses in application code
+            if (found && (found.maxUses === null || found.usageCount < found.maxUses)) {
+              partnerCodeRecord = found;
+            }
+          }
+        }
+
         const created = await tx.user.create({
           data: {
             email: dto.email.toLowerCase(),
@@ -84,7 +104,8 @@ export class AuthService {
             locale: dto.locale ?? Locale.de,
             isActive:
               role === Role.PATIENT &&
-              dto.inviteCode?.trim().toUpperCase() === 'CANNATHERA2026',
+              (dto.inviteCode?.trim().toUpperCase() === 'CANNATHERA2026' ||
+                partnerCodeRecord !== null),
           },
         });
 
@@ -100,6 +121,10 @@ export class AuthService {
                 userId: created.id,
                 dateOfBirth: new Date(data.dateOfBirth),
                 therapyStart: new Date(),
+                // Link to partner's org if a valid code was supplied
+                ...(partnerCodeRecord
+                  ? { practiceOrgId: partnerCodeRecord.orgId }
+                  : {}),
               },
             });
             if (data.preferredLanguage) {
@@ -124,6 +149,13 @@ export class AuthService {
                   version: CONSENT_VERSION,
                   ipAddress: ip,
                 },
+              });
+            }
+            // Increment usage count on the partner code
+            if (partnerCodeRecord) {
+              await tx.partnerCode.update({
+                where: { id: partnerCodeRecord.id },
+                data: { usageCount: { increment: 1 } },
               });
             }
             break;

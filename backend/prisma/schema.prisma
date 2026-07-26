@@ -139,6 +139,7 @@ model Organization {
   webhooks         WebhookEndpoint[]
   invoices         Invoice[]
   settings         OrgSettings?
+  partnerCodes     PartnerCode[]
 
   @@index([type])
   @@index([parentOrgId])
@@ -161,6 +162,24 @@ model Membership {
 
   @@unique([userId, orgId])
   @@index([orgId])
+}
+
+// Patient-facing referral/partner code that links a new patient registration to an org.
+model PartnerCode {
+  id         String    @id @default(cuid())
+  orgId      String
+  code       String    @unique // e.g. "DR-MUELLER-2026" or random 8-char
+  label      String?   // friendly description shown in admin
+  usageCount Int       @default(0)
+  maxUses    Int?      // null = unlimited
+  isActive   Boolean   @default(true)
+  expiresAt  DateTime?
+  createdAt  DateTime  @default(now())
+
+  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+
+  @@index([orgId])
+  @@index([code])
 }
 
 model PatientProfile {

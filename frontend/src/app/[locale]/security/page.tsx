@@ -1,10 +1,10 @@
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
 import { LandingHeader } from "@/components/landing/LandingHeader";
-import { LandingHero } from "@/components/landing/LandingHero";
+import { LandingTrust } from "@/components/landing/LandingTrust";
 import { LandingFooter } from "@/components/landing/LandingFooter";
 
-export default function HomePage({
+export default function SecurityPage({
   params,
 }: Readonly<{ params: Promise<{ locale: string }> }>) {
   const { locale } = use(params);
@@ -13,7 +13,7 @@ export default function HomePage({
   return (
     <div className="flex min-h-screen max-w-full flex-col overflow-x-clip bg-white">
       <LandingHeader />
-      <LandingHero />
+      <LandingTrust />
       <LandingFooter />
     </div>
   );

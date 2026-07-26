@@ -2,10 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-export type AdminSection = "partners" | "users" | "plans" | "logs";
+export type AdminSection = "partners" | "users" | "plans" | "logs" | "codes";
 
 const SECTIONS: Array<{ id: AdminSection; icon: string }> = [
   { id: "partners", icon: "corporate_fare" },
+  { id: "codes", icon: "vpn_key" },
   { id: "users", icon: "people" },
   { id: "plans", icon: "payments" },
   { id: "logs", icon: "history_toggle_off" },

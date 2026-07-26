@@ -462,4 +462,62 @@ export class AdminService {
     });
     return { orgId, mandatory2fa: updated.mandatory2fa };
   }
+
+  // ── Partner Codes ──────────────────────────────────────────────────────────
+
+  async listPartnerCodes() {
+    return this.prisma.partnerCode.findMany({
+      orderBy: { createdAt: 'desc' },
+      include: {
+        org: {
+          select: { id: true, name: true, type: true },
+        },
+      },
+    });
+  }
+
+  async createPartnerCode(dto: {
+    orgId: string;
+    label?: string;
+    maxUses?: number;
+    expiresAt?: Date;
+  }) {
+    const org = await this.prisma.organization.findUnique({
+      where: { id: dto.orgId },
+    });
+    if (!org) throw new NotFoundException('ORGANIZATION_NOT_FOUND');
+
+    // Generate a unique, short, human-readable code
+    const prefix = org.name
+      .toUpperCase()
+      .replace(/[^A-Z0-9]/g, '')
+      .slice(0, 6);
+    const suffix = randomBytes(3).toString('hex').toUpperCase();
+    const code = `${prefix}-${suffix}`;
+
+    return this.prisma.partnerCode.create({
+      data: {
+        orgId: dto.orgId,
+        code,
+        label: dto.label,
+        maxUses: dto.maxUses,
+        expiresAt: dto.expiresAt,
+      },
+      include: {
+        org: {
+          select: { id: true, name: true, type: true },
+        },
+      },
+    });
+  }
+
+  async togglePartnerCode(id: string) {
+    const code = await this.prisma.partnerCode.findUnique({ where: { id } });
+    if (!code) throw new NotFoundException('PARTNER_CODE_NOT_FOUND');
+    const updated = await this.prisma.partnerCode.update({
+      where: { id },
+      data: { isActive: !code.isActive },
+    });
+    return { id: updated.id, isActive: updated.isActive };
+  }
 }

@@ -32,6 +32,7 @@ export default async function AdminLayout({
         adminSections: t("adminSections"),
         sections: {
           partners: t("partners"),
+          codes: t("partnerCodes"),
           users: t("usersRegistry"),
           plans: t("pricingPlans"),
           logs: t("auditEventLogs"),

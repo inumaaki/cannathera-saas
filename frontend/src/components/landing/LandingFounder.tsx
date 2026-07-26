@@ -15,12 +15,13 @@ export function LandingFounder() {
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(150,212,178,0.1),transparent)] pointer-events-none" />
 
             {/* Visual Badge/Mockup of Doctor-Patient Cooperation */}
-            <div className="relative z-10 flex items-center gap-3 sm:gap-5">
-              <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-mint/10 border border-mint/20 text-mint-bright shadow-inner sm:size-14">
-                <span aria-hidden className="msym text-[28px]">
-                  stethoscope
-                </span>
-              </span>
+            <div className="relative z-10 flex items-center gap-4 sm:gap-5">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/brand/logo.png"
+                alt="Cannathera"
+                className="size-14 shrink-0 rounded-2xl shadow-lg border border-white/10"
+              />
               <div className="min-w-0">
                 <p className="font-display text-lg font-bold tracking-tight text-white sm:text-xl">Dominique Larkin</p>
                 <p className="text-xs text-mint-bright font-semibold uppercase tracking-wider mt-0.5">{t("role")}</p>
