@@ -13,7 +13,7 @@ export function LandingHeader() {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-hairline bg-white/75 backdrop-blur-md transition-all duration-300">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-3 px-3 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-2 px-3 sm:px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group transition-transform duration-300 active:scale-[0.97]">
           <Image
@@ -29,23 +29,36 @@ export function LandingHeader() {
         </Link>
 
         {/* Navigation links */}
-        <nav className="hidden xl:flex items-center gap-2 text-sm font-semibold text-muted bg-[#f5f8f6]/50 p-1 rounded-full border border-hairline/45">
-          <Link href="/" className="px-4 py-1.5 rounded-full text-[#4a5e54] hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
-            {tl("home")}
-          </Link>
-          <Link href="/features" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
-            {tl("features")}
-          </Link>
-          <Link href="/security" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
-            {tl("security")}
-          </Link>
-          <Link href="/pricing" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
-            {tl("pricing")}
-          </Link>
-          <Link href="/founder" className="px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)]">
-            {tl("founder")}
-          </Link>
-        </nav>
+        <div className="hidden lg:flex flex-1 min-w-0 mx-1 items-center justify-end xl:justify-center relative">
+          <div className="w-max max-w-full overflow-hidden rounded-full border border-hairline/45 bg-[#f5f8f6]/50">
+            <nav className="flex items-center gap-0.5 xl:gap-1 text-[13px] xl:text-sm font-semibold text-muted p-1 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              <Link href="/" className="px-2.5 xl:px-4 py-1.5 rounded-full text-[#4a5e54] hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
+                {tl("home")}
+              </Link>
+              <Link href="/features" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
+                {tl("features")}
+              </Link>
+              <Link href="/physicians" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
+                {tl("physicians")}
+              </Link>
+              <Link href="/pharmacies" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
+                {tl("pharmacies")}
+              </Link>
+              <Link href="/telemedicine" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
+                {tl("telemedicine")}
+              </Link>
+              <Link href="/pricing" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
+                {tl("pricing")}
+              </Link>
+              <Link href="/founder" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
+                {tl("founder")}
+              </Link>
+              <Link href="/faq" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
+                {tl("faq")}
+              </Link>
+            </nav>
+          </div>
+        </div>
 
         {/* Right CTAs */}
         <div className="hidden items-center gap-2 lg:flex xl:gap-3">
@@ -92,9 +105,12 @@ export function LandingHeader() {
             <nav className="grid gap-1 text-sm font-bold text-ink-strong">
               <Link href="/" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("home")}</Link>
               <Link href="/features" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("features")}</Link>
-              <Link href="/security" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("security")}</Link>
+              <Link href="/physicians" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("physicians")}</Link>
+              <Link href="/pharmacies" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("pharmacies")}</Link>
+              <Link href="/telemedicine" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("telemedicine")}</Link>
               <Link href="/pricing" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("pricing")}</Link>
               <Link href="/founder" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("founder")}</Link>
+              <Link href="/faq" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("faq")}</Link>
             </nav>
             <div className="mt-2 flex items-center justify-between rounded-xl border border-hairline bg-surface px-4 py-3">
               <span className="flex items-center gap-2 text-sm font-bold text-ink-strong">

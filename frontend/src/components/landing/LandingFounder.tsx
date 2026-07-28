@@ -101,11 +101,32 @@ export function LandingFounder() {
           </p>
 
           <div className="space-y-6 pt-2">
-            <div>
-              <h4 className="font-bold text-ink-strong text-base">{t("philosophy")}</h4>
-              <p className="text-sm leading-relaxed text-muted mt-2">
-                {t("philosophyDesc")}
-              </p>
+            <div className="space-y-6">
+              <div>
+                <h4 className="font-bold text-ink-strong text-base">{t("philosophy")}</h4>
+                <div className="space-y-3 mt-2">
+                  <p className="text-sm leading-relaxed text-muted">
+                    {t("philosophy_text_1")}
+                  </p>
+                  <p className="text-sm leading-relaxed text-muted">
+                    {t("philosophy_text_2")}
+                  </p>
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-ink-strong text-base">{t("section1_title")}</h4>
+                <p className="text-sm leading-relaxed text-muted mt-2">
+                  {t("section1_text")}
+                </p>
+              </div>
+
+              <div>
+                <h4 className="font-bold text-ink-strong text-base">{t("section2_title")}</h4>
+                <p className="text-sm leading-relaxed text-muted mt-2">
+                  {t("section2_text")}
+                </p>
+              </div>
             </div>
 
             {/* Unfair Advantage / Clinical Edge Section */}
@@ -114,7 +135,7 @@ export function LandingFounder() {
               <p className="text-xs text-muted leading-relaxed mt-1">
                 {t("unfairSubtitle")}
               </p>
-              
+
               <div className="grid gap-4 mt-4 sm:grid-cols-3">
                 {/* Advantage 0 */}
                 <div className="rounded-2xl border border-hairline p-4 bg-surface flex flex-col gap-2.5 shadow-sm hover:shadow transition-shadow">

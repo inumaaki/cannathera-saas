@@ -64,6 +64,16 @@ export function LandingFooter() {
                   {t("terms")}
                 </Link>
               </li>
+              <li>
+                <Link href="/cancellation" className="hover:text-pine-600 transition-colors">
+                  {t("cancellation")}
+                </Link>
+              </li>
+              <li>
+                <Link href="/disclaimer" className="hover:text-pine-600 transition-colors">
+                  {t("disclaimer")}
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -100,6 +110,14 @@ export function LandingFooter() {
             <span>·</span>
             <Link href="/terms" className="hover:underline">
               {t("terms")}
+            </Link>
+            <span>·</span>
+            <Link href="/cancellation" className="hover:underline">
+              {t("cancellation")}
+            </Link>
+            <span>·</span>
+            <Link href="/disclaimer" className="hover:underline">
+              {t("disclaimer")}
             </Link>
           </div>
         </div>

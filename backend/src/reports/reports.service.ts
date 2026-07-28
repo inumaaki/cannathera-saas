@@ -216,10 +216,12 @@ export class ReportsService {
     const doctorQuestions = typeof answerOf('doctorQuestions') === 'string' ? (answerOf('doctorQuestions') as string) : null;
     const strainUsedText = typeof answerOf('strainUsed') === 'string' ? (answerOf('strainUsed') as string) : null;
     const sideEffects = Array.isArray(answerOf('sideEffects')) ? (answerOf('sideEffects') as string[]) : [];
-    const satisfaction = typeof answerOf('satisfaction') === 'string' ? (answerOf('satisfaction') as string) : null;
+    const satisfactionVal = answerOf('satisfaction');
+    const satisfaction = typeof satisfactionVal === 'number' ? satisfactionVal : (typeof satisfactionVal === 'string' ? parseInt(satisfactionVal, 10) : null);
     const goalsReached = typeof answerOf('goalsReached') === 'string' ? (answerOf('goalsReached') as string) : null;
     const notes = typeof answerOf('notes') === 'string' ? (answerOf('notes') as string) : null;
-    const prep = typeof answerOf('doctorQuestions') === 'string' ? (answerOf('doctorQuestions') as string) : null;
+    const prepVal = answerOf('doctorQuestions');
+    const prep: string[] = typeof prepVal === 'string' && prepVal.trim() !== '' ? [prepVal] : [];
     // ---- Comprehensive Clinical Summary (Option 2 Engine) --------------------
     const summaryParts: string[] = [];
 

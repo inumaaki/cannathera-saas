@@ -23,7 +23,9 @@
       "reconnecting": "Reconnecting …",
       "open": "Open",
       "dismiss": "Dismiss"
-    }
+    },
+    "cancellation": "Cancellation policy for business bookings",
+    "disclaimer": "Medical Disclaimer"
   },
   "terms": {
     "title": "Terms & Conditions",
@@ -1755,13 +1757,18 @@
       "language": "Language",
       "login": "Log in",
       "signup": "Sign up",
-      "logoAlt": "Cannathera logo"
+      "logoAlt": "Cannathera logo",
+      "forPractices": "For Practices / Doctors & Pharmacies",
+      "faq": "FAQ / Help",
+      "physicians": "For Physicians",
+      "pharmacies": "For Pharmacies",
+      "telemedicine": "For Telemedicine"
     },
     "hero": {
       "certified": "Certified Clinical Software",
       "title": "Your Therapy.\nMeticulously Structured.",
-      "subtitle": "Join thousands of patients who have optimized their therapeutic progress through our clinically-led 90-day adaptive guidance platform. Complete daily assessments, view physiological timelines, and stay connected with your clinical team.",
-      "ctaStart": "Start Free 90-Day Plan",
+      "subtitle": "Join thousands of patients who are optimizing their therapy progress with our clinically guided, adaptive, and ongoing therapy support. Complete daily assessments, view physiological timelines, and stay connected with your clinical team.",
+      "ctaStart": "Start your therapy support",
       "ctaPortal": "Access Portal",
       "gdpr": "GDPR Compliant",
       "encrypted": "AES-256 Encrypted",
@@ -1785,7 +1792,7 @@
       "title": "A Complete Ecosystem for Therapy Accompaniment",
       "subtitle": "Cannathera bridges the gap between clinicians, pharmacies, and patients by translating complex therapy regimes into structured, secure, data-driven progress workflows.",
       "patientBullets": [
-        "Structured 90-Day Plan",
+        "Ongoing documentation",
         "Daily Dosage Logs",
         "Adherence Analytics"
       ],
@@ -1935,7 +1942,13 @@
       "unfair1Title": "Bureaucracy Elimination",
       "unfair1Desc": "Targeted avoidance of administrative hurdles that burden physicians in their daily work and cost valuable time.",
       "unfair2Title": "Clinical Risk Management",
-      "unfair2Desc": "Triage logic and questionnaires are based on genuine nursing and patient experience, not market speculation."
+      "unfair2Desc": "Triage logic and questionnaires are based on genuine nursing and patient experience, not market speculation.",
+      "philosophy_text_1": "We do not replace doctors or pharmacists – we create the precise clinical structure that significantly reduces their workload in their daily practice and provides close support to patients. Successful cannabis therapy is not a rigid 90-day sprint, but a continuous, long-term journey that requires maximum data security and complete transparency. While patients manage their treatment independently in everyday life, pharmacies ensure safe supply and dosage determination, and physicians make medical decisions, Cannathera closes the potentially dangerous gaps between doctor's visits.",
+      "philosophy_text_2": "Through sound, practical risk management, validated triage logic, and fully GDPR-compliant, AES-256-encrypted documentation, we ensure that neither doctors nor pharmacies have blind spots. The result is a new dimension of therapy safety: All progress data, pain scales, and tolerability information are available completely, in a structured format, and at a medical level – for maximum treatment quality from day one and throughout the entire, ongoing course of therapy.",
+      "section1_title": "From practice – for practice",
+      "section1_text": "As a certified geriatric nurse with years of experience in outpatient intensive care, I have seen firsthand and in my daily work where conventional documentation fails: A chaotic mess of paperwork, unstructured patient notes, and missing data between quarters jeopardize the success of therapy. Cannathera wasn't developed on the drawing board or out of purely economic interest, but as a direct response to the real problems on the ground. We give doctors and pharmacists back the reliability they need to safely care for their patients.",
+      "section2_title": "A Closed Loop for Maximum Security",
+      "section2_text": "Cannabis therapy only works through the collaborative efforts of the prescribing physician, the dispensing pharmacy, and the patient in their daily life. Where interface issues and information gaps previously hampered the process, Cannathera connects all involved parties via a secure, data protection-compliant architecture. No anonymous algorithms, but clinically sound logic that puts people first."
     },
     "footer": {
       "description": "Structured clinical therapy accompaniment connecting patients, practitioners, and pharmacies securely.",
@@ -1949,5 +1962,90 @@
       "ceClass": "CE Medical Device Class I",
       "copyright": "© 2026 Cannathera. All rights reserved."
     }
+  },
+  "cancellation": {
+    "title": "Cancellation Policy",
+    "lastUpdated": "Last Updated: July 2026",
+    "text": "Consumers have a statutory right of withdrawal..."
+  },
+  "disclaimer": {
+    "title": "Medical Disclaimer",
+    "lastUpdated": "Last Updated: July 2026",
+    "text": "Cannathera is a software platform to support therapy. It does not replace the professional advice of a doctor or pharmacist."
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Find answers to common questions about the Cannathera platform for patients, doctors, and pharmacies.",
+    "questions": [
+      {
+        "question": "What is Cannathera?",
+        "answer": "Cannathera is a comprehensive software platform designed specifically to support and track medical cannabis therapies. We connect patients, doctors, and pharmacies to ensure seamless, data-driven treatment plans."
+      },
+      {
+        "question": "How do I join as a patient?",
+        "answer": "Patients typically join Cannathera by receiving an invitation link from their treating physician or an integrated pharmacy. You can also sign up directly and connect with your clinic later."
+      },
+      {
+        "question": "Is my health data secure?",
+        "answer": "Absolutely. We employ state-of-the-art encryption and strictly adhere to GDPR compliance standards. Your medical data is hosted securely in Germany and is never shared without your explicit consent."
+      },
+      {
+        "question": "What features are available for medical practices?",
+        "answer": "For doctors and clinics, Cannathera offers a premium portal to monitor patient progress, manage electronic prescriptions (e-prescriptions), review daily symptom logs (Active Accompaniment), and securely exchange documents."
+      },
+      {
+        "question": "Do you support pharmacies?",
+        "answer": "Yes, our pharmacy portal allows seamless integration for prescription fulfillment, inventory tracking, and direct communication with both patients and prescribing clinics."
+      },
+      {
+        "question": "What is Active Accompaniment?",
+        "answer": "Active Accompaniment (Aktive Begleitung) is our signature feature that prompts patients to log their daily symptoms and medication effects. This real-time data helps doctors fine-tune dosages precisely."
+      }
+    ]
+  },
+  "physicians": {
+    "title": "For Physicians",
+    "subtitle": "Relieving the burden on physicians through structured, continuous, and long-term therapy monitoring.",
+    "benefits_title": "Benefits for therapy safety",
+    "benefits_text": "Complete, physician- and practice-oriented progress data instead of unstructured patient notes. Track symptom progression, pain scales, and tolerability in real time.",
+    "compliance_title": "GDPR & Medical Certified",
+    "compliance_text": "Fully GDPR compliant, AES-256 encrypted, and certified as a Class I Medical Device.",
+    "cta": "Request practice access",
+    "hero_title": "Structured progress data, absolute therapy safety, and noticeable relief in everyday practice",
+    "hero_intro": "As physicians in private practice, pain therapists, and prescribing specialists, you bear medical responsibility for the treatment of your patients. Especially with cannabinoid therapies, close monitoring and continuous adjustments are crucial for therapeutic success. However, everyday practice is characterized by a lack of time, unstructured patient notes on scraps of paper or in emails, and a lack of valid measurements between quarterly appointments. Cannathera closes this dangerous information gap and provides you with the precise, clinically structured data basis you need for efficient and safe prescribing.",
+    "f1_title": "Complete and physician-friendly progress reports",
+    "f1_text": "No more messy notes. With just one click, you receive structured PDF reports that depict the precise course of symptoms, validated pain scales, and everyday tolerability.",
+    "f2_title": "Automated triage logic & real-time alerts",
+    "f2_text": "Our system monitors defined thresholds in the background. In the event of unexpected side effects or deviations from the prescribed therapy, our validated triage logic kicks in, ensuring you are alerted promptly and in compliance with legal requirements.",
+    "f3_title": "Maximum data security & compliance",
+    "f3_text": "The platform meets the strictest legal requirements. It operates in full GDPR compliance, uses secure AES-256 encryption, and is based on its status as a certified Class I medical device.",
+    "f4_title": "Focus on what matters",
+    "f4_text": "We do not replace medical diagnosis or treatment decisions. Instead, we create the organizational structure that relieves you of administrative burdens and allows you to fully concentrate on patient care."
+  },
+  "pharmacies": {
+    "title": "For Pharmacies",
+    "subtitle": "Targeting pharmacies that supply and care for cannabis patients.",
+    "benefits_title": "Added Value for Pharmacies",
+    "benefits_text": "Transparency in strain selection, support for patients in determining the correct dosage, and documentation of side effects as part of ongoing monitoring.",
+    "workflow_title": "Streamlined Communication",
+    "workflow_text": "The platform supports seamless communication and streamlined processes between patients, prescribing physicians, and dispensing pharmacies with certified consultation integration.",
+    "cta": "Start a pharmacy partnership",
+    "val_title": "Added value for pharmacies",
+    "val_text": "Transparency in strain selection, support for patients in determining the correct dosage, and documentation of side effects as part of ongoing support.",
+    "comm_title": "Streamlined process & Communication",
+    "comm_text": "How the platform supports communication and a streamlined process between the patient, prescribing practice, and dispensing pharmacy.",
+    "qual_title": "Professional qualifications",
+    "qual_text": "Information on professional qualifications (practical background and certified consultation) and how pharmacies can be involved as partners or points of contact."
+  },
+  "telemedicine": {
+    "title": "For Telemedicine Providers",
+    "subtitle": "Integration of digital, ongoing therapy support into fully digital treatment processes and remote consultations.",
+    "benefits_title": "Interface and Documentation Advantages",
+    "benefits_text": "Seamless digital follow-up and monitoring of patients. Legally compliant and structured remote recording of all therapy-relevant threshold values, triage procedures, and questionnaires.",
+    "cta": "Request telemedicine integration",
+    "api_title": "Automated Data Exchange",
+    "api_text": "Information about our API interfaces for fully automated data exchange across your entire platform.",
+    "integration_title": "Seamless Integration",
+    "integration_text": "Connect your infrastructure in days, not months, with our well-documented REST APIs."
   }
 }

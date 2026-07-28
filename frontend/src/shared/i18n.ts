@@ -1,13 +1,13 @@
 // Single source of truth for supported locales.
 // German is the DEFAULT and the pilot language; the rest are translation-ready.
 
-export const LOCALES = ["de", "en", "tr", "bg", "ar"] as const;
+export const LOCALES = ["de", "en", "tr", "bg", "ar", "uk", "ary", "ru", "pl", "ro"] as const;
 export type Locale = (typeof LOCALES)[number];
 
 export const DEFAULT_LOCALE: Locale = "de";
 
 // Right-to-left locales — layout must flip via logical CSS properties.
-export const RTL_LOCALES: readonly Locale[] = ["ar"];
+export const RTL_LOCALES: readonly Locale[] = ["ar", "ary"];
 
 export function isRtl(locale: Locale): boolean {
   return RTL_LOCALES.includes(locale);
@@ -24,4 +24,9 @@ export const LOCALE_LABELS: Record<Locale, string> = {
   tr: "Türkçe",
   bg: "Български",
   ar: "العربية",
+  uk: "Українська",
+  ary: "العربية (المغربية)",
+  ru: "Русский",
+  pl: "Polski",
+  ro: "Română",
 };

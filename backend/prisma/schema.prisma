@@ -36,6 +36,11 @@ enum Locale {
   tr
   bg
   ar
+  uk
+  ary
+  ru
+  pl
+  ro
 }
 
 enum QuestionType {

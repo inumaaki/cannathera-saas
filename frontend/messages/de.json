@@ -23,7 +23,9 @@
       "reconnecting": "Verbindung wird wiederhergestellt …",
       "open": "Öffnen",
       "dismiss": "Schließen"
-    }
+    },
+    "cancellation": "Widerrufsbelehrung für Geschäftskunden",
+    "disclaimer": "Medizinischer Haftungsausschluss"
   },
   "home": {
     "title": "Willkommen bei Cannathera",
@@ -1755,13 +1757,18 @@
       "language": "Sprache",
       "login": "Anmelden",
       "signup": "Registrieren",
-      "logoAlt": "Cannathera-Logo"
+      "logoAlt": "Cannathera-Logo",
+      "forPractices": "Für Praxen / Ärzte & Apotheken",
+      "faq": "FAQ / Hilfe",
+      "physicians": "Für Ärzte",
+      "pharmacies": "Für Apotheken",
+      "telemedicine": "Für Telemedizin"
     },
     "hero": {
       "certified": "ZERTIFIZIERTE MEDIZINPRODUKTEPLATTFORM",
       "title": "Ihre Therapie.\nSorgfältig strukturiert.",
-      "subtitle": "Schließen Sie sich tausenden Patient:innen an, die ihren Therapieverlauf über unsere klinisch geführte, adaptive 90-Tage-Begleitung optimiert haben. Dokumentieren Sie Ihre täglichen Werte, behalten Sie den Verlauf im Blick und bleiben Sie mit Ihrer Praxis in Verbindung.",
-      "ctaStart": "Starten Sie Ihren 90-Tage-Plan",
+      "subtitle": "Schließen Sie sich Tausenden von Patienten an, die ihren Therapieverlauf mit unserer klinisch geführten, adaptiven und kontinuierlichen Therapiebegleitung optimieren. Führen Sie tägliche Bewertungen durch, sehen Sie physiologische Zeitverläufe und bleiben Sie mit Ihrem klinischen Team verbunden.",
+      "ctaStart": "Therapiebegleitung starten",
       "ctaPortal": "Zum Portal",
       "gdpr": "DSGVO-KONFORM",
       "encrypted": "AES-256 VERSCHLÜSSELT",
@@ -1785,7 +1792,7 @@
       "title": "Ein ganzheitliches System für die Therapiebegleitung",
       "subtitle": "Cannathera verbindet Praxen, Apotheken und Patient:innen, indem es komplexe Behandlungsabläufe in strukturierte, sichere und datenbasierte Prozesse übersetzt.",
       "patientBullets": [
-        "Strukturierter 90-Tage-Plan",
+        "Kontinuierliche Dokumentation",
         "Tägliche Dosis-Dokumentation",
         "Verlaufs-Analysen"
       ],
@@ -1935,7 +1942,13 @@
       "unfair1Title": "Bürokratie-Eliminierung",
       "unfair1Desc": "Gezielte Vermeidung administrativer Hürden, die Ärzte im Alltag belasten und wertvolle Zeit kosten.",
       "unfair2Title": "Klinisches Risikomanagement",
-      "unfair2Desc": "Triage-Logik und Fragebögen basieren auf echter Pflege- und Patientenerfahrung, nicht auf Marktspekulationen."
+      "unfair2Desc": "Triage-Logik und Fragebögen basieren auf echter Pflege- und Patientenerfahrung, nicht auf Marktspekulationen.",
+      "philosophy_text_1": "Wir ersetzen keine Ärzte oder Apotheker – wir schaffen die präzise klinische Struktur, die sie im Praxisalltag spürbar entlastet und Patienten engmaschig begleitet. Eine erfolgreiche Cannabistherapie ist kein starrer 90-Tage-Sprint, sondern ein kontinuierlicher, langfristiger Weg, der höchste Datensicherheit und lückenlose Transparenz erfordert. Während Patienten im Alltag ihre Behandlung eigenverantwortlich steuern, Apotheken die sichere Versorgung und Dosisfindung gewährleisten und Ärzte die medizinischen Entscheidungen treffen, schließt Cannathera die potenziell gefährlichen Lücken zwischen den Arztbesuchen.",
+      "philosophy_text_2": "Durch fundiertes, praxisnahes Risikomanagement, validierte Triage-Logik und vollständig DSGVO-konforme, AES-256-verschlüsselte Dokumentation stellen wir sicher, dass weder Ärzte noch Apotheken im Blindflug agieren. Das Ergebnis ist eine neue Dimension der Therapiesicherheit: Alle Verlaufsdaten, Schmerzskalen und Verträglichkeitsinformationen liegen lückenlos, strukturiert und auf medizinischem Niveau vor – für maximale Behandlungsqualität vom ersten Tag an und über den gesamten, kontinuierlichen Therapieverlauf hinweg.",
+      "section1_title": "Aus der Praxis – für die Praxis",
+      "section1_text": "Als examinierte Altenpflegerin mit jahrelanger Erfahrung in der außerklinischen Intensivpflege habe ich am eigenen Leib und im täglichen Einsatz gesehen, wo herkömmliche Dokumentation scheitert: Zettelwirtschaft, unstrukturierte Patientennotizen und fehlende Daten zwischen den Quartalen gefährden den Therapieerfolg. Cannathera ist nicht am Reißbrett oder aus rein wirtschaftlichem Interesse entstanden, sondern als direkte Antwort auf die echten Probleme an der Basis. Wir geben Ärzten und Apothekern die Verlässlichkeit zurück, die sie für eine sichere Begleitung ihrer Patienten brauchen.",
+      "section2_title": "Ein geschlossener Kreislauf für maximale Sicherheit",
+      "section2_text": "Cannabistherapie funktioniert nur im Zusammenspiel zwischen verordnendem Arzt, abgebender Apotheke und dem Patienten im Alltag. Wo bisher Schnittstellenprobleme und Informationslücken den Ablauf hemmten, vernetzt Cannathera alle Beteiligten über eine sichere, datenschutzkonforme Architektur. Keine anonymen Algorithmen, sondern klinisch fundierte Logik, bei der der Mensch im Mittelpunkt steht."
     },
     "footer": {
       "description": "Strukturierte klinische Therapiebegleitung, die Patient:innen, Behandelnde und Apotheken sicher verbindet.",
@@ -1949,5 +1962,90 @@
       "ceClass": "CE-Medizinprodukt Klasse I",
       "copyright": "© 2026 Cannathera. Alle Rechte vorbehalten."
     }
+  },
+  "cancellation": {
+    "title": "Widerrufsbelehrung",
+    "lastUpdated": "Zuletzt aktualisiert: Juli 2026",
+    "text": "Verbraucher haben ein gesetzliches Widerrufsrecht..."
+  },
+  "disclaimer": {
+    "title": "Medizinischer Haftungsausschluss",
+    "lastUpdated": "Zuletzt aktualisiert: Juli 2026",
+    "text": "Cannathera ist eine Softwareplattform zur Begleitung der Therapie. Sie ersetzt nicht den fachlichen Rat eines Arztes oder Apothekers."
+  },
+  "faq": {
+    "title": "Häufig gestellte Fragen",
+    "subtitle": "Finden Sie Antworten auf häufige Fragen zur Cannathera-Plattform für Patienten, Ärzte und Apotheken.",
+    "questions": [
+      {
+        "question": "Was ist Cannathera?",
+        "answer": "Cannathera ist eine umfassende Softwareplattform, die speziell zur Unterstützung und Verfolgung medizinischer Cannabis-Therapien entwickelt wurde. Wir verbinden Patienten, Ärzte und Apotheken, um nahtlose, datengesteuerte Behandlungspläne zu gewährleisten."
+      },
+      {
+        "question": "Wie melde ich mich als Patient an?",
+        "answer": "Patienten treten Cannathera in der Regel bei, indem sie einen Einladungslink von ihrem behandelnden Arzt oder einer integrierten Apotheke erhalten. Sie können sich auch direkt registrieren und später mit Ihrer Klinik verbinden."
+      },
+      {
+        "question": "Sind meine Gesundheitsdaten sicher?",
+        "answer": "Absolut. Wir setzen modernste Verschlüsselung ein und halten uns strikt an die DSGVO-Richtlinien. Ihre medizinischen Daten werden sicher in Deutschland gehostet und niemals ohne Ihre ausdrückliche Zustimmung weitergegeben."
+      },
+      {
+        "question": "Welche Funktionen stehen für Arztpraxen zur Verfügung?",
+        "answer": "Für Ärzte und Kliniken bietet Cannathera ein Premium-Portal zur Überwachung des Behandlungsfortschritts, Verwaltung von E-Rezepten, Überprüfung täglicher Symptomprotokolle (Aktive Begleitung) und zum sicheren Dokumentenaustausch."
+      },
+      {
+        "question": "Unterstützen Sie auch Apotheken?",
+        "answer": "Ja, unser Apotheken-Portal ermöglicht eine nahtlose Integration zur Rezeptabwicklung, Bestandsverfolgung und direkten Kommunikation mit Patienten und verschreibenden Kliniken."
+      },
+      {
+        "question": "Was ist die Aktive Begleitung?",
+        "answer": "Die Aktive Begleitung ist unsere Hauptfunktion, die Patienten dazu auffordert, täglich ihre Symptome und die Wirkung der Medikamente zu protokollieren. Diese Echtzeitdaten helfen Ärzten, Dosierungen präzise abzustimmen."
+      }
+    ]
+  },
+  "physicians": {
+    "title": "Für Ärzte",
+    "subtitle": "Entlastung von Ärzten durch strukturierte, kontinuierliche und langfristige Therapieüberwachung.",
+    "benefits_title": "Vorteile für die Therapiesicherheit",
+    "benefits_text": "Vollständige, arzt- und praxisorientierte Verlaufsdaten statt unstrukturierter Patientennotizen. Verfolgen Sie den Symptomverlauf, Schmerzskalen und Verträglichkeit in Echtzeit.",
+    "compliance_title": "DSGVO & Medizinisch zertifiziert",
+    "compliance_text": "Vollständig DSGVO-konform, AES-256 verschlüsselt und als Medizinprodukt (Klasse I) zertifiziert.",
+    "cta": "Praxiszugang anfordern",
+    "hero_title": "Strukturierte Verlaufsdaten, absolute Therapiesicherheit und spürbare Entlastung im Praxisalltag",
+    "hero_intro": "Als niedergelassene Ärzte, Schmerztherapeuten und verordnende Spezialisten tragen Sie die medizinische Verantwortung für die Behandlung Ihrer Patienten. Gerade bei Cannabinoid-Therapien sind ein engmaschiges Monitoring und kontinuierliche Anpassungen entscheidend für den Therapieerfolg. Der Praxisalltag ist jedoch geprägt von Zeitmangel, unstrukturierten Patientennotizen auf Zetteln oder in E-Mails sowie fehlenden validen Messwerten zwischen den Quartalsterminen. Cannathera schließt diese gefährliche Informationslücke und liefert Ihnen genau die präzise, klinisch strukturierte Datengrundlage, die Sie für eine effiziente und sichere Verordnung benötigen.",
+    "f1_title": "Lückenlose und arztgerechte Verlaufsberichte",
+    "f1_text": "Schluss mit der Zettelwirtschaft. Mit nur einem Klick erhalten Sie strukturierte PDF-Berichte, die den präzisen Symptomverlauf, validierte Schmerzskalen und die Alltagsverträglichkeit abbilden.",
+    "f2_title": "Automatisierte Triage-Logik & Echtzeit-Warnungen",
+    "f2_text": "Unser System überwacht definierte Schwellenwerte im Hintergrund. Bei unerwarteten Nebenwirkungen oder Abweichungen von der verordneten Therapie greift unsere validierte Triage-Logik und stellt sicher, dass Sie rechtzeitig und rechtssicher alarmiert werden.",
+    "f3_title": "Höchste Datensicherheit & Compliance",
+    "f3_text": "Die Plattform erfüllt höchste gesetzliche Anforderungen. Sie arbeitet vollständig DSGVO-konform, nutzt eine sichere AES-256-Verschlüsselung und basiert auf dem Status als zertifiziertes Medizinprodukt der Klasse I.",
+    "f4_title": "Fokus auf das Wesentliche",
+    "f4_text": "Wir ersetzen keine medizinische Diagnose oder Behandlungsentscheidung. Vielmehr schaffen wir die organisatorische Struktur, die Sie von administrativen Hürden befreit und Ihnen ermöglicht, sich voll und ganz auf die Patientenbetreuung zu konzentrieren."
+  },
+  "pharmacies": {
+    "title": "Für Apotheken",
+    "subtitle": "Für Apotheken, die Cannabispatienten versorgen und betreuen.",
+    "benefits_title": "Mehrwert für Apotheken",
+    "benefits_text": "Transparenz bei der Sortenwahl, Unterstützung der Patienten bei der Bestimmung der richtigen Dosierung und Dokumentation von Nebenwirkungen im Rahmen des fortlaufenden Monitorings.",
+    "workflow_title": "Optimierte Kommunikation",
+    "workflow_text": "Die Plattform unterstützt die nahtlose Kommunikation und optimiert die Prozesse zwischen Patienten, verschreibenden Ärzten und abgebenden Apotheken mit Integration zertifizierter Beratung.",
+    "cta": "Apotheken-Partnerschaft starten",
+    "val_title": "Mehrwert für Apotheken",
+    "val_text": "Transparenz bei der Sortenauswahl, Unterstützung der Patienten bei der Findung der richtigen Dosierung und Dokumentation von Nebenwirkungen im Rahmen der kontinuierlichen Begleitung.",
+    "comm_title": "Geführter Prozess & Kommunikation",
+    "comm_text": "Wie die Plattform die Kommunikation und einen reibungslosen Ablauf zwischen Patient, verordnender Praxis und abgebender Apotheke unterstützt.",
+    "qual_title": "Fachliche Qualifikationen",
+    "qual_text": "Informationen zu fachlichen Qualifikationen (praktischer Hintergrund und zertifizierte Beratung) und wie sich Apotheken als Partner oder Ansprechpartner einbringen können."
+  },
+  "telemedicine": {
+    "title": "Für Telemedizin-Anbieter",
+    "subtitle": "Integration der digitalen, kontinuierlichen Therapiebegleitung in volldigitale Behandlungsprozesse und Fernkonsultationen.",
+    "benefits_title": "Schnittstellen- und Dokumentationsvorteile",
+    "benefits_text": "Nahtlose digitale Nachsorge und Überwachung der Patienten. Rechtssichere und strukturierte Fernerfassung aller therapierelevanten Schwellenwerte, Triage-Verfahren und Fragebögen.",
+    "cta": "Telemedizin-Integration anfragen",
+    "api_title": "Automated Data Exchange",
+    "api_text": "Information about our API interfaces for fully automated data exchange across your entire platform.",
+    "integration_title": "Seamless Integration",
+    "integration_text": "Connect your infrastructure in days, not months, with our well-documented REST APIs."
   }
 }
