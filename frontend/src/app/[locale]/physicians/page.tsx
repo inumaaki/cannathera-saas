@@ -2,6 +2,8 @@ import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
+import { LandingHeader } from "@/components/landing/LandingHeader";
+import { LandingFooter } from "@/components/landing/LandingFooter";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -22,25 +24,26 @@ function PhysiciansContent() {
   const t = useTranslations("physicians");
 
   return (
-    <div className="bg-white min-h-dvh relative selection:bg-mint selection:text-white">
+    <div className="flex min-h-screen max-w-full flex-col overflow-x-clip bg-white">
+      <LandingHeader />
       
       {/* 1. HERO SECTION (Dark Pine) */}
-      <section className="relative bg-[#001c10] text-white min-h-screen flex flex-col px-6 lg:px-8 border-b-4 border-mint overflow-hidden">
+      <section className="relative bg-[#001c10] text-white min-h-[calc(100vh-4rem)] flex flex-col px-6 lg:px-8 border-b-4 border-mint overflow-hidden">
         <div className="absolute inset-0 bg-[url('/brand/grid-pattern.svg')] opacity-[0.03] pointer-events-none" style={{ backgroundSize: '40px 40px' }} />
         <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[radial-gradient(circle_at_center,rgba(150,212,178,0.08),transparent_60%)] pointer-events-none translate-x-1/3 -translate-y-1/3" />
         
-        <div className="mx-auto max-w-7xl w-full relative z-10 my-auto py-12 lg:py-16">
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-10 items-center">
+        <div className="mx-auto max-w-7xl w-full relative z-10 my-auto py-8 lg:py-10">
+          <div className="grid lg:grid-cols-2 gap-8 items-center">
             {/* Copy */}
             <div className="max-w-2xl flex flex-col justify-center">
               <div className="mb-4 inline-flex self-start items-center gap-2 px-3 py-1.5 text-xs font-bold uppercase tracking-widest text-mint-bright bg-mint-bright/10 rounded-full border border-mint-bright/20">
                 <span className="msym text-base">medical_services</span>
                 {t("title")}
               </div>
-              <h1 className="text-4xl font-display font-extrabold tracking-tight sm:text-5xl lg:text-[2.75rem] leading-[1.1]">
+              <h1 className="text-3xl font-display font-extrabold tracking-tight sm:text-4xl lg:text-[2.5rem] leading-[1.1]">
                 {t("hero_title")}
               </h1>
-              <p className="mt-3 text-base sm:text-lg leading-relaxed text-white/90 font-medium">
+              <p className="mt-3 text-sm sm:text-base leading-relaxed text-white/90 font-medium">
                 {t("hero_intro")}
               </p>
               <div className="mt-6 flex flex-col sm:flex-row gap-4">
@@ -84,9 +87,9 @@ function PhysiciansContent() {
                 
                 <div className="bg-white/5 rounded-xl border border-white/5 p-4 flex flex-col gap-3">
                   <div className="text-sm font-bold text-white/80 mb-2">Recent Monitoring</div>
-                  
+                  <div className="space-y-2">
                   {/* Row 1 */}
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/5">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-mint/20 text-mint flex items-center justify-center"><span className="msym text-sm">person</span></div>
                       <div>
@@ -98,7 +101,7 @@ function PhysiciansContent() {
                   </div>
 
                   {/* Row 2 */}
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-red-500/10 border border-red-500/20">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center"><span className="msym text-sm">monitor_heart</span></div>
                       <div>
@@ -110,7 +113,7 @@ function PhysiciansContent() {
                   </div>
 
                   {/* Row 3 */}
-                  <div className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/5">
+                  <div className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/5">
                     <div className="flex items-center gap-3">
                       <div className="w-8 h-8 rounded-full bg-white/10 text-white/50 flex items-center justify-center"><span className="msym text-sm">person</span></div>
                       <div>
@@ -124,6 +127,7 @@ function PhysiciansContent() {
                   {/* Removed Row 4 to save space */}
                 </div>
               </div>
+            </div>
             </div>
 
           </div>
@@ -172,6 +176,7 @@ function PhysiciansContent() {
         </div>
       </section>
 
+      <LandingFooter />
     </div>
   );
 }
