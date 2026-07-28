@@ -185,19 +185,25 @@ export function QuickLogSheet({
           })}
         </div>
 
-        {/* Strain */}
+        {/* Strain / Consumption Type — Open Free Text Field */}
         <p className="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-ink-strong">
           {t("strain")}
         </p>
-        <select
-          value={strain}
-          onChange={(e) => setStrain(e.target.value)}
-          className="mt-2 h-12 w-full rounded-lg border border-hairline bg-white px-4 text-base text-ink-strong outline-none focus:border-pine-600"
-        >
-          {STRAINS.map((s) => (
-            <option key={s}>{s}</option>
-          ))}
-        </select>
+        <div className="relative mt-2">
+          <input
+            type="text"
+            list="strain-suggestions"
+            value={strain}
+            onChange={(e) => setStrain(e.target.value)}
+            placeholder={locale === "de" ? "z. B. Bedrocan, Pedanios 22/1, Cannamedical..." : "e.g. Bedrocan, Pedanios 22/1..."}
+            className="h-12 w-full rounded-lg border border-hairline bg-white px-4 text-base text-ink-strong outline-none focus:border-pine-600 focus:ring-2 focus:ring-pine-600/20"
+          />
+          <datalist id="strain-suggestions">
+            {STRAINS.map((s) => (
+              <option key={s} value={s} />
+            ))}
+          </datalist>
+        </div>
 
         {/* Sliders (Vitals & Sentiment) */}
         <p className="mt-6 text-xs font-semibold uppercase tracking-[0.12em] text-sage-900">

@@ -24,6 +24,22 @@
       "dismiss": "Kapat"
     }
   },
+  "terms": {
+    "title": "Şartlar ve Koşullar (AGB)",
+    "lastUpdated": "Son Güncelleme: Ağustos 2026",
+    "s1Title": "1. Kapsam ve Taraflar",
+    "s1Text": "Bu Şartlar ve Koşullar, Cannathera GmbH tarafından işletilen SaaS platformu Cannathera'nın kullanımı için geçerlidir.",
+    "s2Title": "2. Hizmet Tanımı ve Tıbbi Sorumluluk Reddi",
+    "s2Text": "Cannathera, esrar terapisinin yapılandırılmış desteği için dijital bir altyapı sağlar. Cannathera'nın kendisi tıbbi hizmet sağlamaz.",
+    "s3Title": "3. Kayıt ve Hesap Güvenliği",
+    "s3Text": "Platformu kullanmak için kayıt olmak gereklidir. Kullanıcı doğru bilgi vermek ve erişim verilerini gizli tutmakla yükümlüdür.",
+    "s4Title": "4. Paketler ve Ödeme Koşulları",
+    "s4Text": "Ücretli hizmetler ve Kurumsal planlar, mevcut fiyat listelerine ve yasal KDV'ye göre faturalandırılır.",
+    "s5Title": "5. Gizlilik ve Veri Güvenliği",
+    "s5Text": "Sağlık verilerinizin korunması (GDPR Madde 9), AB'deki uçtan uca şifrelenmiş sunucular aracılığıyla sağlanır.",
+    "s6Title": "6. Sorumluluk ve Yargı Yetkisi",
+    "s6Text": "Almanya Federal Cumhuriyeti yasaları geçerlidir."
+  },
   "home": {
     "title": "Cannathera'ya Hoş Geldiniz",
     "subtitle": "Doktor randevuları arasında yapılandırılmış terapi desteği."
@@ -1847,8 +1863,9 @@
       "startPremium": "Premium Planı Başlat",
       "selectFlex": "Flex Paketi Seç",
       "selectS": "S Paketi Seç",
-      "selectM": "M Paketi Seç",
-      "reqEnterprise": "Kurumsal Entegrasyon Talebi",
+      "selectM": "M Paket seç",
+      "flashbackMEnterpriseNote": "350'den fazla inceleme için kademeli Kurumsal tarifelerimiz geçerlidir.",
+      "reqEnterprise": "Enterprise Entegrasyon Talebi",
       "tag": "İş Birliği ve Modeller",
       "title": "Esnek, Ölçeklenebilir ve Şeffaf Fiyatlandırma",
       "subtitle": "Operasyonel ölçeğinize uygun modeli seçin. Günlük yapılandırma arayan hastalardan, özel API entegrasyonu gerektiren teletıp platformlarına kadar.",

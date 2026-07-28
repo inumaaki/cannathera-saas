@@ -6,22 +6,28 @@ export function SignupShell({ children }: Readonly<{ children: React.ReactNode }
   const t = useTranslations("auth.signup.hero");
 
   return (
-    <div className="min-h-dvh lg:grid lg:h-dvh lg:grid-cols-2 lg:overflow-hidden">
+    <div className="min-h-dvh lg:grid lg:h-dvh lg:grid-cols-2 lg:overflow-hidden bg-white">
       {/* Left — deep green panel */}
-      <aside className="hidden h-dvh flex-col items-center justify-center gap-8 overflow-hidden bg-pine px-12 py-8 text-center text-white lg:flex">
-        <span className="flex size-20 items-center justify-center rounded-full bg-white/10">
-          <span aria-hidden className="msym text-[38px] text-white">
-            psychiatry
-          </span>
-        </span>
+      <aside className="relative hidden h-dvh flex-col items-center justify-center gap-8 overflow-hidden bg-[#051a11] px-12 py-8 text-center text-white lg:flex">
+        {/* Dynamic background lighting */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[500px] rounded-full bg-emerald-500/10 blur-[130px] pointer-events-none" />
 
-        <div className="max-w-md">
-          <h1 className="font-display text-3xl font-bold leading-snug">{t("title")}</h1>
-          <p className="mt-4 leading-relaxed text-white/75">{t("subtitle")}</p>
+        <div className="relative flex size-24 items-center justify-center rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.4)]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/brand/logo-transparent.png"
+            alt="Cannathera"
+            className="size-full object-contain drop-shadow-[0_8px_16px_rgba(0,0,0,0.4)]"
+          />
         </div>
 
-        {/* Gauge with orange needle (clinical integrity dial) */}
-        <figure className="flex flex-col items-center gap-4">
+        <div className="max-w-md space-y-3 z-10">
+          <h1 className="font-display text-3xl font-bold leading-snug">{t("title")}</h1>
+          <p className="leading-relaxed text-emerald-100/70">{t("subtitle")}</p>
+        </div>
+
+        {/* Clinical Integrity Dial */}
+        <figure className="relative z-10 flex flex-col items-center gap-4 border-t border-white/10 pt-6">
           <svg width="128" height="128" viewBox="0 0 160 160" aria-hidden>
             <circle
               cx="80"
@@ -34,7 +40,7 @@ export function SignupShell({ children }: Readonly<{ children: React.ReactNode }
             <path
               d="M 30.3 30.3 A 70 70 0 0 1 129.7 30.3"
               fill="none"
-              stroke="#9ef5be"
+              stroke="#34d399"
               strokeWidth="3"
               strokeLinecap="round"
               opacity="0.7"
@@ -50,7 +56,7 @@ export function SignupShell({ children }: Readonly<{ children: React.ReactNode }
             />
             <circle cx="80" cy="80" r="8" fill="#ffffff" />
           </svg>
-          <figcaption className="text-sm font-bold uppercase tracking-[0.25em] text-mint-bright">
+          <figcaption className="text-xs font-bold uppercase tracking-[0.25em] text-emerald-400">
             {t("integrity")}
           </figcaption>
         </figure>

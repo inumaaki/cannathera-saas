@@ -50,17 +50,17 @@
   --color-ink: var(--color-text);
   --color-hairline: var(--color-line);
 
-  /* Figma UI palette (auth screens 3.1-3.3) */
-  --color-pine: #003521; /* deep panel green */
-  --color-pine-600: #066c41; /* primary button green */
-  --color-ink-strong: #121c2a; /* display headings */
-  --color-muted: #6b7280; /* secondary text */
-  --color-sage: #707973; /* muted sage text */
-  --color-sage-900: #404943;
-  --color-mint: #96d4b2; /* light green tint */
-  --color-mint-bright: #9ef5be; /* on-dark accent text */
-  --color-gold: #ca8a04; /* badge icons */
-  --color-info: #2563eb;
+  /* Figma UI palette mapped strictly to client brand colors */
+  --color-pine: #0b4d34; /* Dark Green (Main Brand Color) */
+  --color-pine-600: #1f7a4d; /* Medium Green (Secondary UI / Button Hover) */
+  --color-ink-strong: #1f2937; /* Dark Gray (Display headings) */
+  --color-muted: #1f2937; /* Dark Gray (Body text - using same as brand text) */
+  --color-sage: #1f7a4d; /* Medium Green (for accents where sage was used) */
+  --color-sage-900: #0b4d34; /* Dark Green (for dark text accents) */
+  --color-mint: #d9d9d9; /* Light Gray (Lines/Boxes) */
+  --color-mint-bright: #f8f8f6; /* Off-white (Backgrounds) */
+  --color-gold: #f97316; /* Orange (Accent/CTA) */
+  --color-info: #1f7a4d; /* Medium Green */
 
   /* Figma typography */
   --font-sans:

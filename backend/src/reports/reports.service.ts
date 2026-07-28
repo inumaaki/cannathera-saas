@@ -208,51 +208,107 @@ export class ReportsService {
       }
       return raw;
     };
-    const sideEffectsRaw = answerOf('sideEffects');
-    const sideEffects = Array.isArray(sideEffectsRaw)
-      ? (sideEffectsRaw as string[]).filter((s) => s.toLowerCase() !== 'keine')
-      : [];
-    const satisfaction = typeof answerOf('satisfaction') === 'number'
-      ? (answerOf('satisfaction') as number)
-      : null;
-    const goalsReached =
-      typeof answerOf('goalsReached') === 'string' ? (answerOf('goalsReached') as string) : null;
+    const painDesc = typeof answerOf('painDescription') === 'string' ? (answerOf('painDescription') as string) : null;
+    const sleepDetails = typeof answerOf('sleepQualityDetails') === 'string' ? (answerOf('sleepQualityDetails') as string) : null;
+    const sideEffectsDetails = typeof answerOf('sideEffectsDetails') === 'string' ? (answerOf('sideEffectsDetails') as string) : null;
+    const improvementsDetail = typeof answerOf('improvementsDetail') === 'string' ? (answerOf('improvementsDetail') as string) : null;
+    const unresolvedIssues = typeof answerOf('unresolvedIssues') === 'string' ? (answerOf('unresolvedIssues') as string) : null;
+    const doctorQuestions = typeof answerOf('doctorQuestions') === 'string' ? (answerOf('doctorQuestions') as string) : null;
+    const strainUsedText = typeof answerOf('strainUsed') === 'string' ? (answerOf('strainUsed') as string) : null;
+    const sideEffects = Array.isArray(answerOf('sideEffects')) ? (answerOf('sideEffects') as string[]) : [];
+    const satisfaction = typeof answerOf('satisfaction') === 'string' ? (answerOf('satisfaction') as string) : null;
+    const goalsReached = typeof answerOf('goalsReached') === 'string' ? (answerOf('goalsReached') as string) : null;
     const notes = typeof answerOf('notes') === 'string' ? (answerOf('notes') as string) : null;
+    const prep = typeof answerOf('doctorQuestions') === 'string' ? (answerOf('doctorQuestions') as string) : null;
+    // ---- Comprehensive Clinical Summary (Option 2 Engine) --------------------
+    const summaryParts: string[] = [];
 
-    // ---- Prep for next appointment (client PDF section 8) --------------------
-    const prep: string[] = [];
-    const pain = metrics.find((m) => m.key === 'pain');
-    const sleep = metrics.find((m) => m.key === 'sleep');
-    if (pain?.end != null && pain.end >= 6) {
-      prep.push('Aktuelle Dosierung überprüfen — Schmerzniveau weiterhin erhöht.');
+    if (logs.length === 0 && !review) {
+      summaryParts.push('Für diesen Zeitraum liegen noch keine strukturierten Tageseinträge oder Monatsreviews vor.');
     } else {
-      prep.push('Aktuelle Dosierung beibehalten oder leicht anpassen?');
-    }
-    if (sleep?.changePct != null && sleep.changePct < 0) {
-      prep.push('Schlafentwicklung besprechen — Werte rückläufig.');
-    } else {
-      prep.push('Weiterbeobachtung der Schlaf- und Schmerzentwicklung.');
-    }
-    if (strains.length > 1) prep.push('Prüfung, ob eine Sortenanpassung sinnvoll ist.');
-    if (sideEffects.length) {
-      prep.push(`Nebenwirkungen besprechen: ${sideEffects.join(', ')}.`);
-    }
-    prep.push('Langfristige Zielsetzung und weiterer Therapieplan.');
+      const pain = metrics.find((m) => m.key === 'pain');
+      const sleep = metrics.find((m) => m.key === 'sleep');
+      const qol = metrics.find((m) => m.key === 'qol');
 
-    // ---- Summary ------------------------------------------------------------
-    const improved = metrics.filter(
-      (m) =>
-        m.changePct != null &&
-        (m.betterWhenDown ? m.changePct < 0 : m.changePct > 0),
-    ).length;
-    const summary =
-      logs.length === 0
-        ? 'Für diesen Zeitraum liegen keine Tageseinträge vor.'
-        : `Der dokumentierte Therapieverlauf zeigt in ${improved} von ${metrics.length} Bereichen eine positive Entwicklung. ` +
-          `Die Therapietreue liegt bei ${adherence.pct} %. ` +
-          (sideEffects.length
-            ? `Berichtete Nebenwirkungen: ${sideEffects.join(', ')}.`
-            : 'Die Therapie wird gut vertragen.');
+      // 1. Overall Trend & Adherence
+      const improvedCount = metrics.filter(
+        (m) => m.changePct != null && (m.betterWhenDown ? m.changePct < 0 : m.changePct > 0),
+      ).length;
+
+      let overview = `Der dokumentierte Therapieverlauf im Betrachtungszeitraum zeigt eine Therapietreue von ${adherence.pct} % (${adherence.loggedDays} von ${adherence.totalDays} Tagen). `;
+      if (improvedCount >= 3) {
+        overview += `In ${improvedCount} von ${metrics.length} Kernbereichen zeigt sich eine deutliche positive Tendenz.`;
+      } else if (improvedCount >= 1) {
+        overview += `In ${improvedCount} von ${metrics.length} Bereichen zeichnen sich erste Verbesserungen ab.`;
+      } else {
+        overview += `Der Symptomverlauf zeigt im aktuellen Zeitraum ein stabilisierendes Niveau ohne nennenswerte Verschlechterung.`;
+      }
+      summaryParts.push(overview);
+
+      // 2. Symptom & Pain Analysis
+      if (pain?.start != null && pain?.end != null) {
+        let painText = `Schmerzentwicklung: Der NRS-Durchschnittswert veränderte sich von ${pain.start}/10 auf ${pain.end}/10. `;
+        if (painDesc) {
+          painText += `Patienten-Bemerkung zum Schmerzverlauf: „${painDesc}“. `;
+        }
+        summaryParts.push(painText.trim());
+      }
+
+      // 3. Sleep & QoL
+      if (sleep?.end != null || qol?.end != null) {
+        let sleepQolText = '';
+        if (sleep?.end != null) {
+          sleepQolText += `Schlafqualität liegt im Schnitt bei ${sleep.end}/10. `;
+        }
+        if (sleepDetails) {
+          sleepQolText += `Schlaf-Details: „${sleepDetails}“. `;
+        }
+        if (qol?.end != null) {
+          sleepQolText += `Die allgemeine Lebensqualität wird mit ${qol.end}/10 bewertet. `;
+        }
+        summaryParts.push(sleepQolText.trim());
+      }
+
+      // 4. Strains & Dosage
+      if (strainUsedText || strains.length > 0) {
+        const strainList = strainUsedText ? strainUsedText : strains.map((s) => s.name).join(', ');
+        let dosageText = `Eingesetzte Sorten/Präparate: ${strainList}. `;
+        if (avgDailyG != null) {
+          dosageText += `Durchschnittliche Tagesdosis: ${avgDailyG.toFixed(2)} g (Gesamtmenge: ${totalG.toFixed(2)} g). `;
+        }
+        summaryParts.push(dosageText.trim());
+      }
+
+      // 5. Patient Improvements & Unresolved Issues
+      if (improvementsDetail || unresolvedIssues) {
+        let feedbackText = '';
+        if (improvementsDetail) {
+          feedbackText += `Hauptsächliche Verbesserungen laut Patient:in: „${improvementsDetail}“. `;
+        }
+        if (unresolvedIssues) {
+          feedbackText += `Weiterhin bestehende Beschwerden: „${unresolvedIssues}“. `;
+        }
+        summaryParts.push(feedbackText.trim());
+      }
+
+      // 6. Tolerability & Side Effects
+      if (sideEffects.length > 0) {
+        let seText = `Berichtete Nebenwirkungen: ${sideEffects.join(', ')}. `;
+        if (sideEffectsDetails) {
+          seText += `Details zur Verträglichkeit: „${sideEffectsDetails}“. `;
+        }
+        summaryParts.push(seText.trim());
+      } else {
+        summaryParts.push('Die Therapie wird bisher gut vertragen, es wurden keine beeinträchtigenden Nebenwirkungen gemeldet.');
+      }
+
+      // 7. Doctor Questions
+      if (doctorQuestions) {
+        summaryParts.push(`Anliegen für das nächste Arztgespräch: „${doctorQuestions}“.`);
+      }
+    }
+
+    const summary = summaryParts.join('\n\n');
 
     const branding = (profile.org?.branding ?? null) as { logoUrl?: string } | null;
     const therapyDay = Math.max(

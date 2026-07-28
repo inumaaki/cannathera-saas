@@ -59,6 +59,11 @@ export function LandingFooter() {
                   {t("privacy")}
                 </Link>
               </li>
+              <li>
+                <Link href="/terms" className="hover:text-pine-600 transition-colors">
+                  {t("terms")}
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -91,6 +96,10 @@ export function LandingFooter() {
             <span>·</span>
             <Link href="/privacy" className="hover:underline">
               {t("privacy")}
+            </Link>
+            <span>·</span>
+            <Link href="/terms" className="hover:underline">
+              {t("terms")}
             </Link>
           </div>
         </div>

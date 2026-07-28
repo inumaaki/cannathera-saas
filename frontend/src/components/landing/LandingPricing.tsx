@@ -56,111 +56,152 @@ export function LandingPricing() {
         {/* Pricing Cards */}
         <div className="mt-12">
           {activeTab === "patients" && (
-            <div className="grid gap-8 md:grid-cols-3">
-              {/* Patient Basic */}
-              <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-bold text-ink-strong">{t("basic")}</h3>
-                  <p className="mt-2 text-sm text-muted">{t("basicDesc")}</p>
-                  <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    9,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
-                  </p>
-                  <ul className="mt-6 space-y-3 text-sm text-ink-strong">
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientBasic0")}
-                    </li>
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientBasic1")}
-                    </li>
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientBasic2")}
-                    </li>
-                  </ul>
+            <>
+              <div className="grid gap-8 md:grid-cols-3">
+                {/* Patient Basic */}
+                <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-ink-strong">{t("basic")}</h3>
+                    <p className="mt-2 text-sm text-muted">{t("basicDesc")}</p>
+                    <p className="mt-6 font-display text-4xl font-extrabold text-pine">
+                      9,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
+                    </p>
+                    <ul className="mt-6 space-y-3 text-sm text-ink-strong">
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientBasic0")}
+                      </li>
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientBasic1")}
+                      </li>
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientBasic2")}
+                      </li>
+                    </ul>
+                  </div>
+                  <Link
+                    href="/signup/patient"
+                    className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                  >
+                    {t("startBasic")}
+                  </Link>
                 </div>
-                <Link
-                  href="/signup/patient"
-                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
-                >
-                  {t("startBasic")}
-                </Link>
+
+                {/* Patient Plus */}
+                <div className="relative rounded-2xl border-2 border-pine-600 bg-white p-8 shadow-xl flex flex-col justify-between">
+                  <span className="absolute -top-3.5 right-6 rounded-full bg-pine-600 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
+                    {t("popular")}
+                  </span>
+                  <div>
+                    <h3 className="text-lg font-bold text-ink-strong">{t("plus")}</h3>
+                    <p className="mt-2 text-sm text-muted">{t("plusDesc")}</p>
+                    <p className="mt-6 font-display text-4xl font-extrabold text-pine">
+                      39,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
+                    </p>
+                    <ul className="mt-6 space-y-3 text-sm text-ink-strong">
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientPlus0")}
+                      </li>
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientPlus1")}
+                      </li>
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientPlus2")}
+                      </li>
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientPlus3")}
+                      </li>
+                    </ul>
+                  </div>
+                  <Link
+                    href="/signup/patient"
+                    className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                  >
+                    {t("startPlus")}
+                  </Link>
+                </div>
+
+                {/* Patient Premium */}
+                <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-lg font-bold text-ink-strong">{t("premium")}</h3>
+                    <p className="mt-2 text-sm text-muted">{t("premiumDesc")}</p>
+                    <p className="mt-6 font-display text-4xl font-extrabold text-pine">
+                      49,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
+                    </p>
+                    <ul className="mt-6 space-y-3 text-sm text-ink-strong">
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientPremium0")}
+                      </li>
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientPremium1")}
+                      </li>
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientPremium2")}
+                      </li>
+                      <li className="flex gap-2.5 items-center font-semibold">
+                        <span className="msym text-[18px] text-pine-600">check_circle</span>
+                        {t("bulletPatientPremium3")}
+                      </li>
+                    </ul>
+                  </div>
+                  <Link
+                    href="/signup/patient"
+                    className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                  >
+                    {t("startPremium")}
+                  </Link>
+                </div>
               </div>
 
-              {/* Patient Plus */}
-              <div className="relative rounded-2xl border-2 border-pine-600 bg-white p-8 shadow-xl flex flex-col justify-between">
-                <span className="absolute -top-3.5 right-6 rounded-full bg-pine-600 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
-                  {t("popular")}
-                </span>
-                <div>
-                  <h3 className="text-lg font-bold text-ink-strong">{t("plus")}</h3>
-                  <p className="mt-2 text-sm text-muted">{t("plusDesc")}</p>
-                  <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                  39,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
-                  </p>
-                  <ul className="mt-6 space-y-3 text-sm text-ink-strong">
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientPlus0")}
-                    </li>
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientPlus1")}
-                    </li>
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientPlus2")}
-                    </li>
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientPlus3")}
-                    </li>
-                  </ul>
+              {/* Optional Services Table (ONLY visible for Patients tab) */}
+              <div className="mt-16 mx-auto max-w-4xl">
+                <h3 className="font-display text-xl font-bold text-pine text-center">{t("optionalsTitle")}</h3>
+                <p className="mt-1.5 text-xs text-muted text-center">{t("optionalsDesc")}</p>
+                <div className="mt-6 overflow-hidden rounded-xl border border-hairline bg-white shadow-sm">
+                  <div className="divide-y divide-hairline md:hidden">
+                    {optionals.map((opt, i) => (
+                      <article key={i} className="p-4">
+                        <div className="flex items-start justify-between gap-3">
+                          <h4 className="min-w-0 font-bold text-ink-strong">{opt.name}</h4>
+                          <span className="shrink-0 rounded-full bg-mint/25 px-2.5 py-1 text-xs font-bold text-pine-600">
+                            {opt.price}
+                          </span>
+                        </div>
+                        <p className="mt-2 text-xs leading-relaxed text-muted">{opt.desc}</p>
+                      </article>
+                    ))}
+                  </div>
+                  <table className="hidden w-full text-start text-sm md:table">
+                    <thead className="bg-surface text-ink-strong uppercase tracking-wider text-xs font-bold border-b border-hairline">
+                      <tr>
+                        <th className="px-6 py-4">{t("optionalsColName")}</th>
+                        <th className="px-6 py-4">{t("optionalsColDesc")}</th>
+                        <th className="px-6 py-4 text-right">{t("optionalsColPrice")}</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-hairline">
+                      {optionals.map((opt, i) => (
+                        <tr key={i} className="hover:bg-surface/50">
+                          <td className="px-6 py-4 font-bold text-ink-strong">{opt.name}</td>
+                          <td className="px-6 py-4 text-xs text-muted leading-relaxed">{opt.desc}</td>
+                          <td className="px-6 py-4 text-right font-bold text-pine-600 whitespace-nowrap">{opt.price}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
-                <Link
-                  href="/signup/patient"
-                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
-                >
-                  {t("startPlus")}
-                </Link>
               </div>
-
-              {/* Patient Premium */}
-              <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-bold text-ink-strong">{t("premium")}</h3>
-                  <p className="mt-2 text-sm text-muted">{t("premiumDesc")}</p>
-                  <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                  49,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
-                  </p>
-                  <ul className="mt-6 space-y-3 text-sm text-ink-strong">
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientPremium0")}
-                    </li>
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientPremium1")}
-                    </li>
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientPremium2")}
-                    </li>
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPatientPremium3")}
-                    </li>
-                  </ul>
-                </div>
-                <Link
-                  href="/signup/patient"
-                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
-                >
-                  {t("startPremium")}
-                </Link>
-              </div>
-            </div>
+            </>
           )}
 
           {activeTab === "pharmacies" && (
@@ -253,12 +294,22 @@ export function LandingPricing() {
                     </li>
                   </ul>
                 </div>
-                <Link
-                  href="/signup/pharmacy"
-                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
-                >
-                  {t("selectM")}
-                </Link>
+                <div>
+                  <Link
+                    href="/signup/pharmacy"
+                    className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                  >
+                    {t("selectM")}
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab("enterprise")}
+                    className="mt-4 flex items-center justify-center gap-1 w-full text-center text-xs font-semibold text-pine-600 hover:text-pine hover:underline transition-colors cursor-pointer"
+                  >
+                    <span>{t("flashbackMEnterpriseNote")}</span>
+                    <span aria-hidden className="msym text-[14px]">arrow_forward</span>
+                  </button>
+                </div>
               </div>
             </div>
           )}
@@ -345,45 +396,6 @@ export function LandingPricing() {
               </a>
             </div>
           )}
-        </div>
-
-        {/* Optional Services Table */}
-        <div className="mt-16 mx-auto max-w-4xl">
-          <h3 className="font-display text-xl font-bold text-pine text-center">{t("optionalsTitle")}</h3>
-          <p className="mt-1.5 text-xs text-muted text-center">{t("optionalsDesc")}</p>
-          <div className="mt-6 overflow-hidden rounded-xl border border-hairline bg-white shadow-sm">
-            <div className="divide-y divide-hairline md:hidden">
-              {optionals.map((opt, i) => (
-                <article key={i} className="p-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <h4 className="min-w-0 font-bold text-ink-strong">{opt.name}</h4>
-                    <span className="shrink-0 rounded-full bg-mint/25 px-2.5 py-1 text-xs font-bold text-pine-600">
-                      {opt.price}
-                    </span>
-                  </div>
-                  <p className="mt-2 text-xs leading-relaxed text-muted">{opt.desc}</p>
-                </article>
-              ))}
-            </div>
-            <table className="hidden w-full text-start text-sm md:table">
-              <thead className="bg-surface text-ink-strong uppercase tracking-wider text-xs font-bold border-b border-hairline">
-                <tr>
-                  <th className="px-6 py-4">{t("optionalsColName")}</th>
-                  <th className="px-6 py-4">{t("optionalsColDesc")}</th>
-                  <th className="px-6 py-4 text-right">{t("optionalsColPrice")}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-hairline">
-                {optionals.map((opt, i) => (
-                  <tr key={i} className="hover:bg-surface/50">
-                    <td className="px-6 py-4 font-bold text-ink-strong">{opt.name}</td>
-                    <td className="px-6 py-4 text-xs text-muted leading-relaxed">{opt.desc}</td>
-                    <td className="px-6 py-4 text-right font-bold text-pine-600 whitespace-nowrap">{opt.price}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
         </div>
       </div>
     </section>

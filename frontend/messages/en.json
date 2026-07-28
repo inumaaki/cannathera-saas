@@ -16,13 +16,30 @@
     "back": "Back",
     "continue": "Continue",
     "imprint": "Imprint",
-    "privacy": "Privacy",
+    "privacy": "Privacy Policy",
+    "terms": "Terms & Conditions (AGB)",
     "live": {
       "connected": "Live connection active",
       "reconnecting": "Reconnecting …",
       "open": "Open",
       "dismiss": "Dismiss"
     }
+  },
+  "terms": {
+    "title": "Terms & Conditions",
+    "lastUpdated": "Last Updated: August 2026",
+    "s1Title": "1. Scope and Contracting Parties",
+    "s1Text": "These Terms and Conditions apply to the use of the SaaS platform Cannathera, operated by Cannathera GmbH. They govern the contractual relationship between Cannathera GmbH and all users.",
+    "s2Title": "2. Service Description & Medical Disclaimer",
+    "s2Text": "Cannathera provides a digital infrastructure for structured support of cannabis therapy. Cannathera itself does not provide medical or pharmaceutical services.",
+    "s3Title": "3. Registration & Account Security",
+    "s3Text": "Registration is required to use the platform. The user is obliged to provide truthful information and keep access data confidential.",
+    "s4Title": "4. Packages & Payment Terms",
+    "s4Text": "Paid services and Enterprise plans are billed according to the current price lists plus statutory VAT.",
+    "s5Title": "5. Privacy & Data Security",
+    "s5Text": "The protection of your health data (Art. 9 GDPR) is ensured via end-to-end encrypted servers in the EU.",
+    "s6Title": "6. Liability & Jurisdiction",
+    "s6Text": "The laws of the Federal Republic of Germany apply."
   },
   "home": {
     "title": "Welcome to Cannathera",
@@ -1848,6 +1865,7 @@
       "selectFlex": "Select Flex Pack",
       "selectS": "Select S Pack",
       "selectM": "Select M Pack",
+      "flashbackMEnterpriseNote": "Our volume-based Enterprise rates apply for over 350 reviews.",
       "reqEnterprise": "Request Enterprise Integration",
       "tag": "Cooperation & Models",
       "title": "Flexible, Scalable & Transparent Pricing",

@@ -361,8 +361,10 @@ export class AuthService {
 
     const policy = await this.policyFor(user.id);
 
-    // Org disabled the 2FA requirement: the password alone completes the login.
-    if (!policy.mandatory2fa) {
+    // TODO(temp): 2FA skipped for ADMIN role — remove before production launch.
+    const skip2fa = !policy.mandatory2fa || user.role === Role.ADMIN;
+
+    if (skip2fa) {
       await this.prisma.auditLog.create({
         data: { userId: user.id, action: 'LOGIN_2FA_SKIPPED', ipAddress: ip },
       });

@@ -17,6 +17,7 @@
     "continue": "Weiter",
     "imprint": "Impressum",
     "privacy": "Datenschutz",
+    "terms": "AGB (Nutzungsbedingungen)",
     "live": {
       "connected": "Live-Verbindung aktiv",
       "reconnecting": "Verbindung wird wiederhergestellt …",
@@ -27,6 +28,22 @@
   "home": {
     "title": "Willkommen bei Cannathera",
     "subtitle": "Strukturierte Therapiebegleitung zwischen den Arztterminen."
+  },
+  "terms": {
+    "title": "Allgemeine Geschäftsbedingungen (AGB)",
+    "lastUpdated": "Stand: August 2026",
+    "s1Title": "1. Geltungsbereich und Vertragspartner",
+    "s1Text": "Diese Allgemeinen Geschäftsbedingungen (AGB) gelten für die Nutzung der SaaS-Plattform Cannathera, betrieben von der Cannathera GmbH. Sie regeln das Vertragsverhältnis zwischen der Cannathera GmbH und allen Nutzern.",
+    "s2Title": "2. Leistungsbeschreibung & Medizinischer Disclaimer",
+    "s2Text": "Cannathera stellt eine digitale Infrastruktur zur strukturierten Begleitung einer Cannabis-Therapie bereit. Cannathera erbringt selbst keine medizinischen oder pharmazeutischen Leistungen.",
+    "s3Title": "3. Registrierung & Kontosicherheit",
+    "s3Text": "Zur Nutzung der Plattform ist eine Registrierung erforderlich. Der Nutzer ist verpflichtet, wahrheitsgemäße Angaben zu machen und Zugangsdaten vertraulich zu behandeln.",
+    "s4Title": "4. Pakete & Zahlungsbedingungen",
+    "s4Text": "Kostenpflichtige Leistungen und Enterprise-Tarife werden gemäß den aktuellen Preislisten zzgl. gesetzlicher USt. abgerechnet.",
+    "s5Title": "5. Datenschutz & Datensicherheit",
+    "s5Text": "Der Schutz Ihrer Gesundheitsdaten (Art. 9 DSGVO) erfolgt über Ende-zu-Ende verschlüsselte Server in der EU.",
+    "s6Title": "6. Haftung & Gerichtstand",
+    "s6Text": "Es gilt das Recht der Bundesrepublik Deutschland."
   },
   "patient": {
     "nav": {
@@ -1848,6 +1865,7 @@
       "selectFlex": "Flex Paket wählen",
       "selectS": "S Paket wählen",
       "selectM": "M Paket wählen",
+      "flashbackMEnterpriseNote": "Ab 350 Reviews greifen unsere gestaffelten Enterprise-Konditionen.",
       "reqEnterprise": "Enterprise-Anbindung anfragen",
       "tag": "Kooperation & Modelle",
       "title": "Flexible, skalierbare & transparente Preise",
