@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { use } from "react";
-import { Link } from "@/i18n/navigation";
 import { BrandMark } from "@/components/auth/BrandMark";
+import { BackButton } from "@/components/ui/BackButton";
 
 /* Impressum (§ 5 TMG/DDG). Placeholders in brackets get final data before launch. */
 export default function ImprintPage({
@@ -12,7 +12,6 @@ export default function ImprintPage({
   setRequestLocale(locale);
 
   const t = useTranslations("legal.imprint");
-  const tc = useTranslations("common");
 
   const sections: Array<[string, string]> = [
     [t("providerHeading"), t("provider")],
@@ -24,6 +23,9 @@ export default function ImprintPage({
   return (
     <div className="min-h-dvh bg-surface px-6 py-10">
       <div className="cw-watermark mx-auto max-w-3xl rounded-xl border border-hairline bg-white px-8 py-10">
+        <div className="mb-6">
+          <BackButton />
+        </div>
         <BrandMark />
         <h1 className="mt-8 font-display text-3xl font-bold text-ink-strong">
           {t("title")}
@@ -40,11 +42,7 @@ export default function ImprintPage({
           {t("notice")}
         </p>
 
-        <p className="mt-8">
-          <Link href="/login" className="font-bold text-pine-600 hover:underline">
-            ← {tc("login")}
-          </Link>
-        </p>
+
       </div>
     </div>
   );
