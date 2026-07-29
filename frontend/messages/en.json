@@ -2025,17 +2025,17 @@
   "pharmacies": {
     "title": "For Pharmacies",
     "subtitle": "Targeting pharmacies that supply and care for cannabis patients.",
-    "benefits_title": "Added Value for Pharmacies",
-    "benefits_text": "Transparency in strain selection, support for patients in determining the correct dosage, and documentation of side effects as part of ongoing monitoring.",
-    "workflow_title": "Streamlined Communication",
-    "workflow_text": "The platform supports seamless communication and streamlined processes between patients, prescribing physicians, and dispensing pharmacies with certified consultation integration.",
     "cta": "Start a pharmacy partnership",
-    "val_title": "Added value for pharmacies",
-    "val_text": "Transparency in strain selection, support for patients in determining the correct dosage, and documentation of side effects as part of ongoing support.",
-    "comm_title": "Streamlined process & Communication",
-    "comm_text": "How the platform supports communication and a streamlined process between the patient, prescribing practice, and dispensing pharmacy.",
-    "qual_title": "Professional qualifications",
-    "qual_text": "Information on professional qualifications (practical background and certified consultation) and how pharmacies can be involved as partners or points of contact."
+    "hero_title": "Transparency in strain selection, support in determining the dosage, and legally compliant processes",
+    "hero_intro": "Pharmacies make an indispensable and highly sensitive contribution to the care of cannabis patients. The challenge begins with the initial prescription, extends to the individual, nuanced determination of the dosage, and requires ongoing support in daily practice. A smooth process often fails due to communication barriers between the patient, the prescribing practice, and the dispensing pharmacy. Cannathera connects all parties involved via a closed, digital platform to a secure ecosystem.",
+    "f1_title": "Support in Dosage Finding & Product Selection",
+    "f1_text": "Track documented tolerances, feedback loops, and therapy reports to provide pharmacy customers with well-founded and transparent support.",
+    "f2_title": "Streamlined Processes & Seamless Inventory Management",
+    "f2_text": "Record dispensing, inventory, and side effects in a standardized, secure process that significantly simplifies interdisciplinary collaboration.",
+    "f3_title": "Expertise at the Level",
+    "f3_text": "Our system was developed based on real-world practical experience. It takes into account the high standards of professional qualifications, certified consultation, and legally compliant documentation requirements.",
+    "f4_title": "A Strong, Three-Way Partnership",
+    "f4_text": "Position your pharmacy as a modern, digitally networked point of contact that relieves the burden on medical practices through seamless data transfer and offers patients the highest level of care security."
   },
   "telemedicine": {
     "title": "For Telemedicine Providers",

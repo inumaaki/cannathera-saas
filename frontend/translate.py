@@ -1,0 +1,78 @@
+import json
+import os
+from deep_translator import GoogleTranslator
+import time
+
+msg_dir = r"d:\Github\cannathera-saas\frontend\messages"
+en_path = os.path.join(msg_dir, "en.json")
+
+with open(en_path, "r", encoding="utf-8") as f:
+    en_data = json.load(f)
+
+lang_map = {
+    "ar": "ar",
+    "ary": "ar",
+    "bg": "bg",
+    "de": "de",
+    "pl": "pl",
+    "ro": "ro",
+    "ru": "ru",
+    "tr": "tr",
+    "uk": "uk"
+}
+
+def translate_value(val, lang_code):
+    if isinstance(val, str):
+        try:
+            return GoogleTranslator(source='en', target=lang_code).translate(val)
+        except Exception as e:
+            print(f"Error translating: {e}")
+            return val
+    elif isinstance(val, list):
+        return [translate_value(v, lang_code) for v in val]
+    elif isinstance(val, dict):
+        return {k: translate_value(v, lang_code) for k, v in val.items()}
+    return val
+
+def sync_keys(source, target, lang_code, path=""):
+    updated = False
+    for key, value in source.items():
+        curr_path = f"{path}.{key}" if path else key
+        if key not in target:
+            print(f"[{lang_code}] Missing key: {curr_path}. Translating...")
+            target[key] = translate_value(value, lang_code)
+            updated = True
+        elif isinstance(value, dict) and isinstance(target[key], dict):
+            if sync_keys(value, target[key], lang_code, curr_path):
+                updated = True
+        elif isinstance(value, list) and isinstance(target[key], list):
+            # Just force update for 'faq' or 'landing' if missing or changed length
+            if len(value) != len(target[key]):
+                print(f"[{lang_code}] Array length mismatch: {curr_path}. Translating...")
+                target[key] = translate_value(value, lang_code)
+                updated = True
+            elif curr_path.startswith("landing.features."):
+                # Force translate features bullets to ensure they are updated
+                print(f"[{lang_code}] Forcing update of: {curr_path}")
+                target[key] = translate_value(value, lang_code)
+                updated = True
+    return updated
+
+files = [f for f in os.listdir(msg_dir) if f.endswith(".json") and f != "en.json"]
+for file in files:
+    lang = file.replace(".json", "")
+    target_code = lang_map.get(lang, "en")
+    if target_code == "en":
+        continue
+    
+    file_path = os.path.join(msg_dir, file)
+    with open(file_path, "r", encoding="utf-8") as f:
+        target_data = json.load(f)
+    
+    print(f"\n--- Synchronizing {file} ---")
+    if sync_keys(en_data, target_data, target_code):
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(target_data, f, ensure_ascii=False, indent=2)
+        print(f"Saved {file}")
+    else:
+        print(f"No missing keys in {file}")

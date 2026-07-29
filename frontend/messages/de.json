@@ -1792,24 +1792,24 @@
       "title": "Ein ganzheitliches System für die Therapiebegleitung",
       "subtitle": "Cannathera verbindet Praxen, Apotheken und Patient:innen, indem es komplexe Behandlungsabläufe in strukturierte, sichere und datenbasierte Prozesse übersetzt.",
       "patientBullets": [
-        "Kontinuierliche Dokumentation",
-        "Tägliche Dosis-Dokumentation",
-        "Verlaufs-Analysen"
+        "Laufende Dokumentation",
+        "Tägliche Dosierungsprotokolle",
+        "Adhärenzanalyse"
       ],
       "doctorBullets": [
-        "Automatische Triage & Warnungen",
-        "Patientenübersicht",
+        "Automatisierte Warnsignale",
+        "Verwaltung von Patientenlisten",
         "Klinische PDF-Exporte"
       ],
       "pharmacyBullets": [
-        "Bestandsverwaltung & Abgaben",
-        "Compliance-Reviews",
-        "Audit-Protokolle"
+        "Bestandsverfolgung",
+        "Compliance-Überprüfungen",
+        "Prüfung der Abrechnungsprotokolle"
       ],
       "enterpriseBullets": [
-        "Eigenes Praxis-Branding",
-        "API- & Webhook-Zugang",
-        "Umfassende Sicherheits-Policies"
+        "Individuelles Mieter-Branding",
+        "Webhook- und API-Zugriff",
+        "Umfassende Sicherheitsrichtlinie"
       ],
       "patientDescSuffix": "Dokumentieren Sie Symptome, Dosierungen und Aktivitäten. Verfolgen Sie die Therapietreue in Echtzeit.",
       "doctorDescSuffix": "Automatisierte Triage-Protokolle überwachen die Werte. Erstellen Sie strukturierte PDF-Verlaufsberichte mit einem Klick.",
@@ -2025,17 +2025,17 @@
   "pharmacies": {
     "title": "Für Apotheken",
     "subtitle": "Für Apotheken, die Cannabispatienten versorgen und betreuen.",
-    "benefits_title": "Mehrwert für Apotheken",
-    "benefits_text": "Transparenz bei der Sortenwahl, Unterstützung der Patienten bei der Bestimmung der richtigen Dosierung und Dokumentation von Nebenwirkungen im Rahmen des fortlaufenden Monitorings.",
-    "workflow_title": "Optimierte Kommunikation",
-    "workflow_text": "Die Plattform unterstützt die nahtlose Kommunikation und optimiert die Prozesse zwischen Patienten, verschreibenden Ärzten und abgebenden Apotheken mit Integration zertifizierter Beratung.",
     "cta": "Apotheken-Partnerschaft starten",
-    "val_title": "Mehrwert für Apotheken",
-    "val_text": "Transparenz bei der Sortenauswahl, Unterstützung der Patienten bei der Findung der richtigen Dosierung und Dokumentation von Nebenwirkungen im Rahmen der kontinuierlichen Begleitung.",
-    "comm_title": "Geführter Prozess & Kommunikation",
-    "comm_text": "Wie die Plattform die Kommunikation und einen reibungslosen Ablauf zwischen Patient, verordnender Praxis und abgebender Apotheke unterstützt.",
-    "qual_title": "Fachliche Qualifikationen",
-    "qual_text": "Informationen zu fachlichen Qualifikationen (praktischer Hintergrund und zertifizierte Beratung) und wie sich Apotheken als Partner oder Ansprechpartner einbringen können."
+    "hero_title": "Transparenz bei der Sortenwahl, Unterstützung bei der Dosisfindung und rechtssichere Prozesse",
+    "hero_intro": "Apotheken leisten einen unverzichtbaren und hochsensiblen Beitrag zur Versorgung von Cannabis-Patienten. Die Herausforderung beginnt bei der Erstverordnung, erstreckt sich über die individuelle, nuancierte Dosisfindung und erfordert eine kontinuierliche Begleitung im Praxisalltag. Ein reibungsloser Ablauf scheitert oft an Kommunikationsbarrieren zwischen Patient, verordnender Praxis und abgebender Apotheke. Cannathera verbindet alle Beteiligten über eine geschlossene, digitale Plattform zu einem sicheren Ökosystem.",
+    "f1_title": "Unterstützung bei Dosisfindung & Produktauswahl",
+    "f1_text": "Verfolgen Sie dokumentierte Verträglichkeiten, Feedback-Schleifen und Therapieberichte, um Apothekenkunden fundiert und transparent zu unterstützen.",
+    "f2_title": "Gestlättete Prozesse & Nahtlose Bestandsverwaltung",
+    "f2_text": "Erfassen Sie Abgaben, Bestände und Nebenwirkungen in einem standardisierten, sicheren Prozess, der die interdisziplinäre Zusammenarbeit deutlich vereinfacht.",
+    "f3_title": "Expertise auf Augenhöhe",
+    "f3_text": "Unser System wurde auf Basis echter praktischer Erfahrungen entwickelt. Es berücksichtigt die hohen Standards beruflicher Qualifikationen, zertifizierter Beratung und rechtssicherer Dokumentationspflichten.",
+    "f4_title": "Eine starke Dreieckspartnerschaft",
+    "f4_text": "Positionieren Sie Ihre Apotheke als modernen, digital vernetzten Ansprechpartner, der Arztpraxen durch nahtlosen Datentransfer entlastet und Patienten ein Höchstmaß an Versorgungssicherheit bietet."
   },
   "telemedicine": {
     "title": "Für Telemedizin-Anbieter",

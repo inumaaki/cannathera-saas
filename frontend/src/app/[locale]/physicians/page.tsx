@@ -134,10 +134,10 @@ function PhysiciansContent() {
         </div>
       </section>
 
-      {/* 2. CORE FEATURES (3 Equal Cards) */}
+      {/* 2. CORE FEATURES (4 Cards) */}
       <section className="py-16 lg:py-24 bg-[#fbfcfc] text-black px-6 lg:px-8">
         <div className="mx-auto max-w-7xl w-full">
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             
             {/* Card 1 */}
             <div className="bg-white rounded-3xl border border-hairline p-8 shadow-sm flex flex-col hover:shadow-lg transition-all duration-300">
@@ -172,6 +172,16 @@ function PhysiciansContent() {
               </p>
             </div>
 
+            {/* Card 4 */}
+            <div className="bg-white rounded-3xl border border-hairline p-8 shadow-sm flex flex-col hover:shadow-lg transition-all duration-300">
+              <div className="w-14 h-14 flex items-center justify-center rounded-2xl bg-pine/5 text-pine mb-6 border border-pine/10">
+                <span className="msym text-2xl">focus</span>
+              </div>
+              <h3 className="text-xl font-display font-extrabold mb-4 text-black">{t("f4_title")}</h3>
+              <p className="text-base text-black/70 leading-relaxed">
+                {t("f4_text")}
+              </p>
+            </div>
           </div>
         </div>
       </section>

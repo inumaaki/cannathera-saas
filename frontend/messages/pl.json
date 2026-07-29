@@ -23,7 +23,9 @@
       "reconnecting": "Ponowne łączenie …",
       "open": "Otwórz",
       "dismiss": "Zamknij"
-    }
+    },
+    "cancellation": "Zasady anulowania rezerwacji biznesowych",
+    "disclaimer": "Zastrzeżenie medyczne"
   },
   "terms": {
     "title": "Regulamin",
@@ -1755,7 +1757,12 @@
       "language": "Język",
       "login": "Zaloguj się",
       "signup": "Zarejestruj się",
-      "logoAlt": "Logo Cannathera"
+      "logoAlt": "Logo Cannathera",
+      "forPractices": "Dla praktyk / lekarzy i aptek",
+      "faq": "Często zadawane pytania / Pomoc",
+      "physicians": "Dla lekarzy",
+      "pharmacies": "Dla aptek",
+      "telemedicine": "Dla telemedycyny"
     },
     "hero": {
       "certified": "Certyfikowane oprogramowanie kliniczne",
@@ -1935,7 +1942,13 @@
       "unfair1Title": "Eliminacja biurokracji",
       "unfair1Desc": "Celowe unikanie przeszkód administracyjnych, które obciążają lekarzy w ich codziennej pracy i kosztują cenny czas.",
       "unfair2Title": "Zarządzanie ryzykiem klinicznym",
-      "unfair2Desc": "Logika triage i kwestionariusze opierają się na prawdziwych doświadczeniach pielęgniarskich i pacjentów, a nie na spekulacjach rynkowych."
+      "unfair2Desc": "Logika triage i kwestionariusze opierają się na prawdziwych doświadczeniach pielęgniarskich i pacjentów, a nie na spekulacjach rynkowych.",
+      "philosophy_text_1": "Nie zastępujemy lekarzy ani farmaceutów – tworzymy precyzyjną strukturę kliniczną, która znacząco odciąża ich pracę w codziennej praktyce i zapewnia bliskie wsparcie pacjentom. Skuteczna terapia konopiami indyjskimi to nie sztywny 90-dniowy sprint, ale ciągła, długoterminowa podróż, która wymaga maksymalnego bezpieczeństwa danych i całkowitej przejrzystości. Podczas gdy pacjenci na co dzień samodzielnie radzą sobie z leczeniem, apteki zapewniają bezpieczną podaż i ustalanie dawek, a lekarze podejmują decyzje medyczne, Cannathera wypełnia potencjalnie niebezpieczne luki pomiędzy wizytami lekarskimi.",
+      "philosophy_text_2": "Dzięki rozsądnemu, praktycznemu zarządzaniu ryzykiem, sprawdzonej logice segregacji pacjentów oraz dokumentacji w pełni zgodnej z RODO i zaszyfrowanej AES-256, zapewniamy, że ani lekarze, ani apteki nie mają martwych punktów. Rezultatem jest nowy wymiar bezpieczeństwa terapii: wszystkie dane dotyczące postępu, skale bólu i informacje o tolerancji są dostępne w całości, w ustrukturyzowanym formacie i na poziomie medycznym – dla maksymalnej jakości leczenia od pierwszego dnia i przez cały, trwający cykl terapii.",
+      "section1_title": "Z praktyki – dla praktyki",
+      "section1_text": "Jako certyfikowana pielęgniarka geriatryczna z wieloletnim doświadczeniem w ambulatoryjnej intensywnej terapii widziałam na własne oczy i w swojej codziennej pracy, gdzie zawodzi konwencjonalna dokumentacja: chaotyczny bałagan w dokumentacji, nieuporządkowane notatki pacjenta i brakujące dane pomiędzy kwartałami zagrażają powodzeniu terapii. Cannathera nie powstała na desce kreślarskiej ani w celach czysto ekonomicznych, ale jako bezpośrednia odpowiedź na realne problemy w terenie. Przywracamy lekarzom i farmaceutom niezawodność, której potrzebują, aby bezpiecznie opiekować się swoimi pacjentami.",
+      "section2_title": "Zamknięta pętla zapewniająca maksymalne bezpieczeństwo",
+      "section2_text": "Terapia konopiami indyjskimi działa wyłącznie dzięki wspólnym wysiłkom lekarza przepisującego, apteki wydającej leki i pacjenta w codziennym życiu. Tam, gdzie problemy z interfejsem i luki informacyjne wcześniej utrudniały proces, Cannathera łączy wszystkie zaangażowane strony za pośrednictwem bezpiecznej architektury zgodnej z ochroną danych. Żadnych anonimowych algorytmów, ale klinicznie uzasadniona logika, która stawia ludzi na pierwszym miejscu."
     },
     "footer": {
       "description": "Strukturalne wsparcie terapii klinicznej łączące pacjentów, praktyków i apteki w bezpieczny sposób.",
@@ -1949,5 +1962,90 @@
       "ceClass": "Wyroby medyczne CE klasy I",
       "copyright": "© 2026 Cannathera. Wszelkie prawa zastrzeżone."
     }
+  },
+  "cancellation": {
+    "title": "Zasady anulowania",
+    "lastUpdated": "Ostatnia aktualizacja: lipiec 2026 r",
+    "text": "Konsumenci mają ustawowe prawo do odstąpienia od umowy..."
+  },
+  "disclaimer": {
+    "title": "Zastrzeżenie medyczne",
+    "lastUpdated": "Ostatnia aktualizacja: lipiec 2026 r",
+    "text": "Cannathera to platforma oprogramowania wspierająca terapię. Nie zastępuje profesjonalnej porady lekarza lub farmaceuty."
+  },
+  "faq": {
+    "title": "Często zadawane pytania",
+    "subtitle": "Znajdź odpowiedzi na często zadawane pytania dotyczące platformy Cannathera skierowane do pacjentów, lekarzy i aptek.",
+    "questions": [
+      {
+        "question": "Co to jest Cannathera?",
+        "answer": "Cannathera to kompleksowa platforma oprogramowania zaprojektowana specjalnie do wspierania i śledzenia medycznych terapii konopiami indyjskimi. Łączymy pacjentów, lekarzy i apteki, aby zapewnić płynne plany leczenia oparte na danych."
+      },
+      {
+        "question": "Jak dołączyć jako pacjent?",
+        "answer": "Pacjenci zazwyczaj dołączają do Cannathera poprzez otrzymanie linku z zaproszeniem od lekarza prowadzącego lub zintegrowanej apteki. Możesz także zarejestrować się bezpośrednio i połączyć się ze swoją kliniką później."
+      },
+      {
+        "question": "Czy moje dane dotyczące zdrowia są bezpieczne?",
+        "answer": "Absolutnie. Stosujemy najnowocześniejsze szyfrowanie i ściśle przestrzegamy standardów zgodności z RODO. Twoje dane medyczne są bezpiecznie przechowywane w Niemczech i nigdy nie są udostępniane bez Twojej wyraźnej zgody."
+      },
+      {
+        "question": "Jakie funkcje są dostępne dla praktyk lekarskich?",
+        "answer": "Dla lekarzy i klinik Cannathera oferuje portal premium umożliwiający monitorowanie postępów pacjentów, zarządzanie receptami elektronicznymi (e-receptami), przeglądanie codziennych dzienników objawów (Aktywne towarzyszenie) i bezpieczną wymianę dokumentów."
+      },
+      {
+        "question": "Czy wspierasz apteki?",
+        "answer": "Tak, nasz portal apteczny umożliwia bezproblemową integrację w zakresie realizacji recept, śledzenia zapasów i bezpośredniej komunikacji zarówno z pacjentami, jak i klinikami wystawiającymi recepty."
+      },
+      {
+        "question": "Co to jest aktywny akompaniament?",
+        "answer": "Aktywne towarzyszenie (Aktive Begleitung) to nasza charakterystyczna funkcja, która zachęca pacjentów do rejestrowania codziennych objawów i skutków leków. Dane uzyskiwane w czasie rzeczywistym pomagają lekarzom precyzyjnie dostosować dawkowanie."
+      }
+    ]
+  },
+  "physicians": {
+    "title": "Dla lekarzy",
+    "subtitle": "Odciążenie lekarzy poprzez ustrukturyzowane, ciągłe i długoterminowe monitorowanie terapii.",
+    "benefits_title": "Korzyści dla bezpieczeństwa terapii",
+    "benefits_text": "Kompletne, zorientowane na lekarza i praktykę dane dotyczące postępów zamiast nieustrukturyzowanych notatek pacjenta. Śledź postęp objawów, skalę bólu i tolerancję w czasie rzeczywistym.",
+    "compliance_title": "Certyfikat RODO i certyfikat medyczny",
+    "compliance_text": "W pełni zgodny z RODO, szyfrowany AES-256 i certyfikowany jako wyrób medyczny klasy I.",
+    "cta": "Poproś o dostęp do ćwiczeń",
+    "hero_title": "Uporządkowane dane dotyczące postępu, absolutne bezpieczeństwo terapii i zauważalna ulga w codziennej praktyce",
+    "hero_intro": "Jako lekarze prowadzący prywatną praktykę, terapeuci bólu i specjaliści przepisując leki, ponosicie Państwo odpowiedzialność medyczną za leczenie swoich pacjentów. Szczególnie w przypadku terapii kannabinoidowych ścisłe monitorowanie i ciągłe dostosowywanie mają kluczowe znaczenie dla powodzenia terapeutycznego. Jednak codzienną praktykę charakteryzuje brak czasu, nieuporządkowane notatki pacjenta na skrawkach papieru lub w wiadomościach e-mail oraz brak ważnych pomiarów pomiędzy wizytami kwartalnymi. Cannathera wypełnia tę niebezpieczną lukę informacyjną i zapewnia precyzyjną, klinicznie ustrukturyzowaną bazę danych niezbędną do skutecznego i bezpiecznego przepisywania leków.",
+    "f1_title": "Kompletne i przyjazne dla lekarza raporty z postępów",
+    "f1_text": "Nigdy więcej niechlujnych notatek. Za pomocą jednego kliknięcia otrzymasz uporządkowane raporty w formacie PDF, które przedstawiają dokładny przebieg objawów, potwierdzoną skalę bólu i codzienną tolerancję.",
+    "f2_title": "Zautomatyzowana logika segregacji i alerty w czasie rzeczywistym",
+    "f2_text": "Nasz system monitoruje w tle zdefiniowane progi. W przypadku nieoczekiwanych skutków ubocznych lub odstępstw od przepisanej terapii uruchamia się nasza sprawdzona logika segregacji, która zapewnia natychmiastowe powiadomienie i zgodność z wymogami prawnymi.",
+    "f3_title": "Maksymalne bezpieczeństwo danych i zgodność",
+    "f3_text": "Platforma spełnia najsurowsze wymagania prawne. Działa w pełnej zgodności z RODO, wykorzystuje bezpieczne szyfrowanie AES-256 i opiera się na statusie certyfikowanego urządzenia medycznego klasy I.",
+    "f4_title": "Skup się na tym, co ważne",
+    "f4_text": "Nie zastępujemy diagnozy lekarskiej ani decyzji dotyczących leczenia. Zamiast tego tworzymy strukturę organizacyjną, która odciąża Cię od obciążeń administracyjnych i pozwala w pełni skoncentrować się na opiece nad pacjentem."
+  },
+  "pharmacies": {
+    "title": "Dla aptek",
+    "subtitle": "Kierowanie reklam na apteki, które zaopatrują pacjentów cierpiących na konopie indyjskie i opiekują się nimi.",
+    "cta": "Rozpocznij współpracę z aptekami",
+    "hero_title": "Przejrzystość w doborze szczepów, wsparcie w ustaleniu dawkowania i procesy zgodne z prawem",
+    "hero_intro": "Apteki wnoszą niezastąpiony i bardzo wrażliwy wkład w opiekę nad pacjentami chorymi na konopie indyjskie. Wyzwanie zaczyna się od początkowej recepty, rozciąga się na indywidualne, zróżnicowane określenie dawki i wymaga ciągłego wsparcia w codziennej praktyce. Sprawny proces często kończy się niepowodzeniem ze względu na bariery komunikacyjne między pacjentem, praktyką przepisywania leków i apteką wydającą leki. Cannathera łączy wszystkie zaangażowane strony za pośrednictwem zamkniętej platformy cyfrowej z bezpiecznym ekosystemem.",
+    "f1_title": "Wsparcie w ustaleniu dawki i wyborze produktu",
+    "f1_text": "Śledź udokumentowane tolerancje, pętle informacji zwrotnych i raporty terapii, aby zapewnić klientom apteki uzasadnione i przejrzyste wsparcie.",
+    "f2_title": "Usprawnione procesy i bezproblemowe zarządzanie zapasami",
+    "f2_text": "Rejestruj wydawanie, inwentaryzację i skutki uboczne w ramach ustandaryzowanego, bezpiecznego procesu, który znacznie upraszcza współpracę interdyscyplinarną.",
+    "f3_title": "Fachowość na poziomie",
+    "f3_text": "Nasz system powstał w oparciu o praktyczne doświadczenia z realnego świata. Uwzględnia wysokie standardy kwalifikacji zawodowych, certyfikowane konsultacje i zgodne z prawem wymogi dokumentacyjne.",
+    "f4_title": "Silne, trójstronne partnerstwo",
+    "f4_text": "Pozycjonuj swoją aptekę jako nowoczesny, połączony cyfrowo punkt kontaktowy, który odciąża praktyki lekarskie poprzez płynny transfer danych i zapewnia pacjentom najwyższy poziom bezpieczeństwa opieki."
+  },
+  "telemedicine": {
+    "title": "Dla dostawców telemedycyny",
+    "subtitle": "Integracja cyfrowego, bieżącego wsparcia terapeutycznego z w pełni cyfrowymi procesami leczenia i zdalnymi konsultacjami.",
+    "benefits_title": "Zalety interfejsu i dokumentacji",
+    "benefits_text": "Bezproblemowa cyfrowa obserwacja i monitorowanie pacjentów. Zgodne z prawem i zorganizowane zdalne rejestrowanie wszystkich wartości progowych istotnych dla terapii, procedur selekcji i kwestionariuszy.",
+    "cta": "Poproś o integrację telemedyczną",
+    "api_title": "Zautomatyzowana wymiana danych",
+    "api_text": "Informacje o naszych interfejsach API umożliwiających w pełni zautomatyzowaną wymianę danych na całej platformie.",
+    "integration_title": "Bezproblemowa integracja",
+    "integration_text": "Połącz swoją infrastrukturę w ciągu kilku dni, a nie miesięcy, dzięki naszym dobrze udokumentowanym interfejsom API REST."
   }
 }

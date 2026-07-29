@@ -22,7 +22,10 @@
       "reconnecting": "Yeniden bağlanıyor …",
       "open": "Aç",
       "dismiss": "Kapat"
-    }
+    },
+    "terms": "Şartlar ve Koşullar (AGB)",
+    "cancellation": "Ticari rezervasyonlar için iptal politikası",
+    "disclaimer": "Tıbbi Sorumluluk Reddi"
   },
   "terms": {
     "title": "Şartlar ve Koşullar (AGB)",
@@ -1754,7 +1757,12 @@
       "language": "Dil",
       "login": "Giriş Yap",
       "signup": "Kayıt Ol",
-      "logoAlt": "Cannathera logosu"
+      "logoAlt": "Cannathera logosu",
+      "forPractices": "Muayenehaneler / Doktorlar ve Eczaneler için",
+      "faq": "SSS / Yardım",
+      "physicians": "Hekimler için",
+      "pharmacies": "Eczaneler için",
+      "telemedicine": "Teletıp için"
     },
     "hero": {
       "certified": "SERTİFİKALI KLİNİK YAZILIM",
@@ -1784,23 +1792,23 @@
       "title": "Tedavi Refakati İçin Bütünsel Bir Ekosistem",
       "subtitle": "Cannathera, karmaşık tedavi rejimlerini yapılandırılmış, güvenli ve veri odaklı süreçlere dönüştürerek hekimler, eczaneler ve hastalar arasındaki köprüyü kurar.",
       "patientBullets": [
-        "Yapılandırılmış 90 Günlük Plan",
+        "Devam eden belgeler",
         "Günlük Dozaj Kayıtları",
-        "Uyum Analizleri"
+        "Bağlılık Analizi"
       ],
       "doctorBullets": [
-        "Otomatik Triage ve Uyarılar",
-        "Hasta Listesi Yönetimi",
-        "Klinik PDF Dışa Aktarımları"
+        "Otomatik Kırmızı Bayraklar",
+        "Hasta Kadrosu Yönetimi",
+        "Klinik PDF Dışa Aktarmaları"
       ],
       "pharmacyBullets": [
         "Envanter Takibi",
-        "Uyum Değerlendirmeleri",
-        "Denetim Kayıtları"
+        "Uyumluluk İncelemeleri",
+        "Faturalandırma Günlükleri Denetimi"
       ],
       "enterpriseBullets": [
-        "Özel Kurumsal Markalama",
-        "API ve Webhook Erişimi",
+        "Özel Kiracı Markalaması",
+        "Web kancası ve API erişimi",
         "Kapsamlı Güvenlik Politikası"
       ],
       "patientDescSuffix": "Semptomları, dozajları ve günlük aktiviteleri güvenle kaydedin. Uyum metriklerini gerçek zamanlı izleyin.",
@@ -1934,7 +1942,13 @@
       "unfair1Title": "Sıfır Bürokratik Yük",
       "unfair1Desc": "Doktorların günlük hayatta nefret ettiği gereksiz evrak işlerini ortadan kaldırmak için tasarlanmıştır.",
       "unfair2Title": "Pratik Risk Yönetimi",
-      "unfair2Desc": "Triyaj mantığı ve kontrol listeleri, pazar araştırma raporlarından değil, aktif yoğun bakım ünitesi deneyiminden yola çıkılarak geliştirilmiştir."
+      "unfair2Desc": "Triyaj mantığı ve kontrol listeleri, pazar araştırma raporlarından değil, aktif yoğun bakım ünitesi deneyiminden yola çıkılarak geliştirilmiştir.",
+      "philosophy_text_1": "Doktorların veya eczacıların yerini almıyoruz; günlük uygulamalarında iş yükünü önemli ölçüde azaltan ve hastalara yakın destek sağlayan hassas klinik yapıyı yaratıyoruz. Başarılı esrar terapisi, 90 günlük katı bir koşu değil, maksimum veri güvenliği ve tam şeffaflık gerektiren sürekli, uzun vadeli bir yolculuktur. Hastalar günlük yaşamda tedavilerini bağımsız olarak yönetirken, eczaneler güvenli tedarik ve dozaj belirleme sağlarken ve doktorlar tıbbi kararlar alırken, Cannathera doktor ziyaretleri arasındaki potansiyel olarak tehlikeli boşlukları kapatır.",
+      "philosophy_text_2": "Sağlam, pratik risk yönetimi, doğrulanmış önceliklendirme mantığı ve tamamen GDPR uyumlu, AES-256 şifreli belgeler sayesinde ne doktorların ne de eczanelerin kör noktalarının olmamasını sağlıyoruz. Sonuç, terapi güvenliğinde yeni bir boyuttur: İlk günden itibaren ve devam eden terapi sürecinin tamamı boyunca maksimum tedavi kalitesi için tüm ilerleme verileri, ağrı ölçekleri ve tolere edilebilirlik bilgileri, yapılandırılmış bir formatta ve tıbbi düzeyde eksiksiz olarak mevcuttur.",
+      "section1_title": "Pratikten – pratik için",
+      "section1_text": "Ayakta yoğun bakım alanında uzun yıllara dayanan deneyime sahip, sertifikalı bir geriatri hemşiresi olarak, geleneksel dokümantasyonun başarısız olduğu durumları ilk elden ve günlük çalışmalarımda gördüm: Kaotik bir evrak karmaşası, yapılandırılmamış hasta notları ve üç aylık dönemler arasındaki eksik veriler tedavinin başarısını tehlikeye atıyor. Cannathera, çizim tahtasında veya tamamen ekonomik çıkarlar nedeniyle değil, sahadaki gerçek sorunlara doğrudan bir yanıt olarak geliştirildi. Doktorlara ve eczacılara, hastalarıyla güvenli bir şekilde ilgilenmek için ihtiyaç duydukları güvenilirliği geri veriyoruz.",
+      "section2_title": "Maksimum Güvenlik için Kapalı Döngü",
+      "section2_text": "Esrar terapisi yalnızca reçeteyi yazan doktorun, ilacı veren eczanenin ve hastanın günlük yaşamlarındaki ortak çabalarıyla çalışır. Arayüz sorunları ve bilgi boşluklarının daha önce süreci engellediği durumlarda Cannathera, ilgili tüm tarafları güvenli, veri korumayla uyumlu bir mimari aracılığıyla birbirine bağlıyor. Anonim algoritmalar yok, ancak insanları ilk sıraya koyan klinik açıdan sağlam bir mantık var."
     },
     "footer": {
       "description": "Hastaları, sağlık uzmanlarını ve eczaneleri güvenle buluşturan yapılandırılmış klinik tedavi refakati.",
@@ -1948,5 +1962,90 @@
       "ceClass": "CE Sınıf I Tıbbi Cihaz",
       "copyright": "© 2026 Cannathera. Tüm hakları saklıdır."
     }
+  },
+  "cancellation": {
+    "title": "İptal Politikası",
+    "lastUpdated": "Son Güncelleme: Temmuz 2026",
+    "text": "Tüketicinin yasal cayma hakkı var..."
+  },
+  "disclaimer": {
+    "title": "Tıbbi Sorumluluk Reddi",
+    "lastUpdated": "Son Güncelleme: Temmuz 2026",
+    "text": "Cannathera terapiyi destekleyen bir yazılım platformudur. Bir doktor veya eczacının profesyonel tavsiyesinin yerine geçmez."
+  },
+  "faq": {
+    "title": "Sıkça Sorulan Sorular",
+    "subtitle": "Hastalar, doktorlar ve eczaneler için Cannathera platformuyla ilgili sık sorulan soruların yanıtlarını bulun.",
+    "questions": [
+      {
+        "question": "Cannathera nedir?",
+        "answer": "Cannathera, tıbbi esrar tedavilerini desteklemek ve takip etmek için özel olarak tasarlanmış kapsamlı bir yazılım platformudur. Sorunsuz, veriye dayalı tedavi planları sağlamak için hastaları, doktorları ve eczaneleri birbirine bağlıyoruz."
+      },
+      {
+        "question": "Hasta olarak nasıl katılabilirim?",
+        "answer": "Hastalar genellikle Cannathera'ya tedavilerini yürüten doktordan veya entegre eczaneden bir davet bağlantısı alarak katılırlar. Ayrıca doğrudan kaydolabilir ve daha sonra kliniğinizle bağlantı kurabilirsiniz."
+      },
+      {
+        "question": "Sağlık verilerim güvende mi?",
+        "answer": "Kesinlikle. En son teknolojiye sahip şifreleme kullanıyoruz ve GDPR uyumluluk standartlarına sıkı sıkıya uyuyoruz. Tıbbi verileriniz Almanya'da güvenli bir şekilde barındırılır ve açık rızanız olmadan asla paylaşılmaz."
+      },
+      {
+        "question": "Tıbbi uygulamalar için hangi özellikler mevcuttur?",
+        "answer": "Doktorlar ve klinikler için Cannathera, hastaların ilerlemesini izlemek, elektronik reçeteleri (e-reçeteler) yönetmek, günlük semptom kayıtlarını incelemek (Aktif Eşlik) ve güvenli bir şekilde belge alışverişi yapmak için premium bir portal sunar."
+      },
+      {
+        "question": "Eczaneleri destekliyor musunuz?",
+        "answer": "Evet, eczane portalımız reçetelerin yerine getirilmesi, envanter takibi ve hem hastalarla hem de reçete yazan kliniklerle doğrudan iletişim için kusursuz entegrasyona olanak tanır."
+      },
+      {
+        "question": "Aktif Eşlik Nedir?",
+        "answer": "Aktif Eşlik (Aktive Begleitung), hastaların günlük semptomlarını ve ilaç etkilerini kaydetmelerini sağlayan imza özelliğimizdir. Bu gerçek zamanlı veriler, doktorların dozajları hassas şekilde ayarlamasına yardımcı olur."
+      }
+    ]
+  },
+  "physicians": {
+    "title": "Hekimler için",
+    "subtitle": "Yapılandırılmış, sürekli ve uzun vadeli tedavi izleme yoluyla hekimlerin üzerindeki yük hafifletiliyor.",
+    "benefits_title": "Terapi güvenliği açısından faydalar",
+    "benefits_text": "Yapılandırılmamış hasta notları yerine eksiksiz, hekim ve pratiğe yönelik ilerleme verileri. Semptom ilerlemesini, ağrı ölçeklerini ve tolere edilebilirliği gerçek zamanlı olarak izleyin.",
+    "compliance_title": "GDPR ve Tıbbi Sertifikalı",
+    "compliance_text": "Tamamen GDPR uyumlu, AES-256 şifreli ve Sınıf I Tıbbi Cihaz sertifikasına sahip.",
+    "cta": "Uygulama erişimi talep edin",
+    "hero_title": "Yapılandırılmış ilerleme verileri, mutlak terapi güvenliği ve günlük uygulamalarda gözle görülür rahatlama",
+    "hero_intro": "Özel muayenehanedeki doktorlar, ağrı terapistleri ve reçete yazan uzmanlar olarak hastalarınızın tedavisinin tıbbi sorumluluğunu taşıyorsunuz. Özellikle kannabinoid tedavilerinde yakın takip ve sürekli ayarlamalar terapötik başarı için çok önemlidir. Bununla birlikte, günlük uygulamalarda zaman eksikliği, kağıt parçaları veya e-postalardaki yapılandırılmamış hasta notları ve üç aylık randevular arasında geçerli ölçümlerin bulunmaması ile karakterize edilmektedir. Cannathera bu tehlikeli bilgi açığını kapatır ve size etkili ve güvenli reçete yazma için ihtiyaç duyduğunuz kesin, klinik olarak yapılandırılmış veri tabanını sağlar.",
+    "f1_title": "Eksiksiz ve doktor dostu ilerleme raporları",
+    "f1_text": "Artık dağınık notlara gerek yok. Tek bir tıklamayla semptomların kesin seyrini, doğrulanmış ağrı ölçeklerini ve günlük tolere edilebilirliği gösteren yapılandırılmış PDF raporları alırsınız.",
+    "f2_title": "Otomatik triyaj mantığı ve gerçek zamanlı uyarılar",
+    "f2_text": "Sistemimiz arka planda tanımlı eşikleri izler. Beklenmeyen yan etkiler veya reçete edilen tedaviden sapmalar durumunda, doğrulanmış triyaj mantığımız devreye girerek, derhal ve yasal gerekliliklere uygun olarak uyarılmanızı sağlar.",
+    "f3_title": "Maksimum veri güvenliği ve uyumluluk",
+    "f3_text": "Platform en katı yasal gereklilikleri karşılamaktadır. Tam GDPR uyumluluğuyla çalışır, güvenli AES-256 şifrelemesi kullanır ve sertifikalı Sınıf I tıbbi cihaz statüsüne dayanır.",
+    "f4_title": "Önemli olana odaklanın",
+    "f4_text": "Tıbbi teşhis veya tedavi kararlarının yerini almayız. Bunun yerine sizi idari yüklerden kurtaracak ve tamamen hasta bakımına konsantre olmanızı sağlayacak organizasyon yapısını oluşturuyoruz."
+  },
+  "pharmacies": {
+    "title": "Eczaneler için",
+    "subtitle": "Esrar hastalarına ürün tedarik eden ve bakım sağlayan eczaneler hedefleniyor.",
+    "cta": "Eczane ortaklığı başlatın",
+    "hero_title": "Suş seçiminde şeffaflık, dozaj belirlemede destek ve yasal uyumlu süreçler",
+    "hero_intro": "Eczaneler esrar hastalarının bakımına vazgeçilmez ve son derece hassas bir katkı sağlıyor. Zorluk, ilk reçeteyle başlar, dozajın bireysel, incelikli belirlenmesine kadar uzanır ve günlük uygulamada sürekli destek gerektirir. Hasta, reçete yazan uygulama ve eczane arasındaki iletişim engelleri nedeniyle sorunsuz bir süreç sıklıkla başarısız olur. Cannathera, ilgili tüm tarafları kapalı, dijital bir platform aracılığıyla güvenli bir ekosisteme bağlar.",
+    "f1_title": "Dozaj Bulma & Ürün Seçiminde Destek",
+    "f1_text": "Eczane müşterilerine sağlam temelli ve şeffaf destek sağlamak için belgelenmiş toleransları, geri bildirim döngülerini ve tedavi raporlarını izleyin.",
+    "f2_title": "Kolaylaştırılmış Süreçler ve Kusursuz Envanter Yönetimi",
+    "f2_text": "Disiplinlerarası işbirliğini önemli ölçüde kolaylaştıran standartlaştırılmış, güvenli bir süreçte dağıtım, envanter ve yan etkileri kaydedin.",
+    "f3_title": "Düzeyde Uzmanlık",
+    "f3_text": "Sistemimiz gerçek dünyadaki pratik deneyimlere dayanarak geliştirildi. Mesleki yeterliliklerin yüksek standartlarını, sertifikalı danışmanlığı ve yasal olarak uyumlu belgelendirme gerekliliklerini dikkate alır.",
+    "f4_title": "Güçlü, Üç Yollu Bir Ortaklık",
+    "f4_text": "Eczanenizi, kesintisiz veri aktarımı yoluyla tıbbi uygulamaların yükünü hafifleten ve hastalara en yüksek düzeyde bakım güvenliği sunan, modern, dijital olarak ağ bağlantılı bir iletişim noktası olarak konumlandırın."
+  },
+  "telemedicine": {
+    "title": "Teletıp Sağlayıcıları İçin",
+    "subtitle": "Dijital, sürekli terapi desteğinin tamamen dijital tedavi süreçlerine ve uzaktan konsültasyonlara entegrasyonu.",
+    "benefits_title": "Arayüz ve Dokümantasyon Avantajları",
+    "benefits_text": "Hastaların kesintisiz dijital takibi ve izlenmesi. Tedaviyle ilgili tüm eşik değerlerinin, triyaj prosedürlerinin ve anketlerin yasal olarak uyumlu ve yapılandırılmış uzaktan kaydı.",
+    "cta": "Teletıp entegrasyonu talep edin",
+    "api_title": "Otomatik Veri Alışverişi",
+    "api_text": "Platformunuzun tamamında tam otomatik veri alışverişi için API arayüzlerimiz hakkında bilgiler.",
+    "integration_title": "Sorunsuz Entegrasyon",
+    "integration_text": "İyi belgelenmiş REST API'lerimizle altyapınızı aylar değil günler içinde bağlayın."
   }
 }

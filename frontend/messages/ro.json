@@ -23,7 +23,9 @@
       "reconnecting": "Reconectare …",
       "open": "Deschis",
       "dismiss": "Închide"
-    }
+    },
+    "cancellation": "Politica de anulare pentru rezervări de afaceri",
+    "disclaimer": "Disclaimer medical"
   },
   "terms": {
     "title": "Termeni și Condiții",
@@ -1755,7 +1757,12 @@
       "language": "Limbă",
       "login": "Conectați-vă",
       "signup": "Înregistrează-te",
-      "logoAlt": "Logo Cannathera"
+      "logoAlt": "Logo Cannathera",
+      "forPractices": "Pentru cabinete / Medici și farmacii",
+      "faq": "Întrebări frecvente / Ajutor",
+      "physicians": "Pentru Medici",
+      "pharmacies": "Pentru farmacii",
+      "telemedicine": "Pentru telemedicina"
     },
     "hero": {
       "certified": "Software Clinic Certificat",
@@ -1935,7 +1942,13 @@
       "unfair1Title": "Eliminarea Birocrației",
       "unfair1Desc": "Evitare țintită a obstacolelor administrative care încarcă medicii în munca lor zilnică și consumă timp valoros.",
       "unfair2Title": "Managementul Riscului Clinic",
-      "unfair2Desc": "Logica triarii și chestionarele se bazează pe experiența reală de nursing și pacient, nu pe speculații de piață."
+      "unfair2Desc": "Logica triarii și chestionarele se bazează pe experiența reală de nursing și pacient, nu pe speculații de piață.",
+      "philosophy_text_1": "Nu înlocuim medicii sau farmaciștii – creăm structura clinică precisă care le reduce semnificativ volumul de muncă în practica lor zilnică și oferă un sprijin apropiat pacienților. Terapia de succes cu canabis nu este un sprint rigid de 90 de zile, ci o călătorie continuă, pe termen lung, care necesită securitate maximă a datelor și transparență completă. În timp ce pacienții își gestionează tratamentul în mod independent în viața de zi cu zi, farmaciile asigură aprovizionarea în siguranță și determinarea dozelor, iar medicii iau decizii medicale, Cannathera închide decalajele potențial periculoase dintre vizitele la medic.",
+      "philosophy_text_2": "Prin managementul practic și solid al riscurilor, logica de triaj validată și documentația criptată AES-256, compatibilă cu GDPR, ne asigurăm că nici medicii, nici farmaciile nu au puncte moarte. Rezultatul este o nouă dimensiune a siguranței terapiei: toate datele de progres, scalele de durere și informațiile de tolerabilitate sunt disponibile complet, într-un format structurat și la nivel medical - pentru o calitate maximă a tratamentului din prima zi și pe parcursul întregului curs de terapie în curs.",
+      "section1_title": "Din practică – pentru practică",
+      "section1_text": "În calitate de asistent medical de geriatrie certificat, cu ani de experiență în terapie intensivă ambulatorie, am văzut direct și în munca mea de zi cu zi unde documentația convențională eșuează: un haos haotic de documente, notițe nestructurate ale pacientului și datele lipsă între trimestre periclitează succesul terapiei. Cannathera nu a fost dezvoltată pe planșa de desen sau din interes pur economic, ci ca răspuns direct la problemele reale de pe teren. Oferim medicilor și farmaciștilor încrederea de care au nevoie pentru a-și îngriji în siguranță pacienții.",
+      "section2_title": "O buclă închisă pentru securitate maximă",
+      "section2_text": "Terapia cu canabis funcționează doar prin eforturile de colaborare ale medicului care prescrie, farmaciei care eliberează și pacientului în viața lor de zi cu zi. Acolo unde problemele de interfață și lacunele de informații au împiedicat anterior procesul, Cannathera conectează toate părțile implicate printr-o arhitectură sigură, conformă cu protecția datelor. Fără algoritmi anonimi, ci o logică solidă din punct de vedere clinic care pune oamenii pe primul loc."
     },
     "footer": {
       "description": "Însoțire terapeutică clinică structurată care conectează pacienții, practicienii și farmaciile în mod sigur.",
@@ -1949,5 +1962,90 @@
       "ceClass": "Dispozitiv Medical CE Clasa I",
       "copyright": "© 2026 Cannathera. Toate drepturile rezervate."
     }
+  },
+  "cancellation": {
+    "title": "Politica de anulare",
+    "lastUpdated": "Ultima actualizare: iulie 2026",
+    "text": "Consumatorii au dreptul legal de retragere..."
+  },
+  "disclaimer": {
+    "title": "Disclaimer medical",
+    "lastUpdated": "Ultima actualizare: iulie 2026",
+    "text": "Cannathera este o platformă software pentru sprijinirea terapiei. Nu înlocuiește sfatul profesional al unui medic sau farmacist."
+  },
+  "faq": {
+    "title": "Întrebări frecvente",
+    "subtitle": "Găsiți răspunsuri la întrebările frecvente despre platforma Cannathera pentru pacienți, medici și farmacii.",
+    "questions": [
+      {
+        "question": "Ce este Cannathera?",
+        "answer": "Cannathera este o platformă software cuprinzătoare concepută special pentru a sprijini și a urmări terapiile medicale cu canabis. Conectăm pacienți, medici și farmacii pentru a asigura planuri de tratament fără întreruperi, bazate pe date."
+      },
+      {
+        "question": "Cum mă alătur ca pacient?",
+        "answer": "Pacienții se alătură de obicei la Cannathera primind un link de invitație de la medicul curant sau de la o farmacie integrată. De asemenea, vă puteți înscrie direct și vă puteți conecta ulterior cu clinica dvs."
+      },
+      {
+        "question": "Datele mele de sănătate sunt în siguranță?",
+        "answer": "Absolut. Folosim criptare de ultimă generație și respectăm cu strictețe standardele de conformitate GDPR. Datele dumneavoastră medicale sunt găzduite în siguranță în Germania și nu sunt niciodată partajate fără consimțământul dumneavoastră explicit."
+      },
+      {
+        "question": "Ce caracteristici sunt disponibile pentru cabinetele medicale?",
+        "answer": "Pentru medici și clinici, Cannathera oferă un portal premium pentru a monitoriza progresul pacientului, a gestiona rețetele electronice (e-prescripții), a revizui jurnalele zilnice de simptome (Active Accompaniment) și pentru a schimba documente în siguranță."
+      },
+      {
+        "question": "Susțineți farmaciile?",
+        "answer": "Da, portalul nostru de farmacii permite o integrare perfectă pentru onorarea prescripțiilor, urmărirea inventarului și comunicarea directă atât cu pacienții, cât și cu clinicile care prescriu."
+      },
+      {
+        "question": "Ce este acompaniamentul activ?",
+        "answer": "Acompaniamentul activ (Aktive Begleitung) este caracteristica noastră semnătură care îi determină pe pacienți să își înregistreze simptomele zilnice și efectele medicamentelor. Aceste date în timp real îi ajută pe medici să ajusteze cu precizie dozele."
+      }
+    ]
+  },
+  "physicians": {
+    "title": "Pentru Medici",
+    "subtitle": "Eliberarea sarcinii asupra medicilor printr-o monitorizare structurată, continuă și pe termen lung a terapiei.",
+    "benefits_title": "Beneficii pentru siguranța terapiei",
+    "benefits_text": "Date complete, orientate către medic și practică, în loc de note nestructurate ale pacientului. Urmăriți progresia simptomelor, scalele durerii și tolerabilitatea în timp real.",
+    "compliance_title": "GDPR și certificat medical",
+    "compliance_text": "Complet în conformitate cu GDPR, criptat AES-256 și certificat ca dispozitiv medical de clasa I.",
+    "cta": "Solicitați acces la practică",
+    "hero_title": "Date de progres structurate, siguranță absolută a terapiei și ușurare vizibilă în practica de zi cu zi",
+    "hero_intro": "În calitate de medici în practică privată, terapeuți pentru durere și specialiști în prescripție, aveți responsabilitatea medicală pentru tratamentul pacienților dumneavoastră. În special în cazul terapiilor cu canabinoizi, monitorizarea atentă și ajustările continue sunt cruciale pentru succesul terapeutic. Cu toate acestea, practica de zi cu zi se caracterizează prin lipsă de timp, note nestructurate ale pacientului pe bucăți de hârtie sau în e-mailuri și lipsa măsurătorilor valide între programările trimestriale. Cannathera închide această lacună periculoasă de informații și vă oferă baza de date precisă, structurată clinic de care aveți nevoie pentru o prescriere eficientă și sigură.",
+    "f1_title": "Rapoarte complete și prietenoase pentru medic",
+    "f1_text": "Gata cu notele dezordonate. Cu doar un clic, primiți rapoarte PDF structurate care descriu cursul precis al simptomelor, scalele validate ale durerii și tolerabilitatea zilnică.",
+    "f2_title": "Logica de triaj automată și alerte în timp real",
+    "f2_text": "Sistemul nostru monitorizează pragurile definite în fundal. În cazul unor efecte secundare neașteptate sau abateri de la terapia prescrisă, logica noastră validată de triaj intră în vigoare, asigurându-vă că sunteți alertat prompt și în conformitate cu cerințele legale.",
+    "f3_title": "Securitate maximă a datelor și conformitate",
+    "f3_text": "Platforma îndeplinește cele mai stricte cerințe legale. Funcționează în deplină conformitate cu GDPR, utilizează criptarea securizată AES-256 și se bazează pe statutul său de dispozitiv medical de clasa I certificat.",
+    "f4_title": "Concentrează-te pe ceea ce contează",
+    "f4_text": "Nu înlocuim diagnosticul medical sau deciziile de tratament. În schimb, creăm structura organizatorică care vă scutește de sarcinile administrative și vă permite să vă concentrați pe deplin asupra îngrijirii pacienților."
+  },
+  "pharmacies": {
+    "title": "Pentru farmacii",
+    "subtitle": "Vizează farmaciile care furnizează și îngrijesc pacienții cu canabis.",
+    "cta": "Începeți un parteneriat cu o farmacie",
+    "hero_title": "Transparență în selecția tulpinilor, sprijin în determinarea dozei și procese conforme cu legea",
+    "hero_intro": "Farmaciile aduc o contribuție indispensabilă și extrem de sensibilă la îngrijirea pacienților cu canabis. Provocarea începe cu prescripția inițială, se extinde la determinarea individuală, nuanțată a dozei și necesită sprijin continuu în practica zilnică. Un proces fără probleme deseori eșuează din cauza barierelor de comunicare dintre pacient, practica de prescriere și farmacia de eliberare. Cannathera conectează toate părțile implicate printr-o platformă digitală închisă la un ecosistem securizat.",
+    "f1_title": "Asistență în găsirea dozelor și selectarea produsului",
+    "f1_text": "Urmăriți toleranțele documentate, buclele de feedback și rapoartele de terapie pentru a oferi clienților farmaciilor un suport bine întemeiat și transparent.",
+    "f2_title": "Procese optimizate și gestionarea fără întreruperi a inventarului",
+    "f2_text": "Înregistrați distribuirea, inventarul și efectele secundare într-un proces standardizat și sigur, care simplifică semnificativ colaborarea interdisciplinară.",
+    "f3_title": "Expertiza la Nivel",
+    "f3_text": "Sistemul nostru a fost dezvoltat pe baza experienței practice din lumea reală. Ia în considerare standardele înalte de calificări profesionale, consultarea certificată și cerințele de documentare conforme din punct de vedere legal.",
+    "f4_title": "Un parteneriat puternic, în trei",
+    "f4_text": "Poziționați-vă farmacia ca un punct de contact modern, în rețea digitală, care ușurează povara practicilor medicale prin transferul de date fără întreruperi și oferă pacienților cel mai înalt nivel de securitate a îngrijirii."
+  },
+  "telemedicine": {
+    "title": "Pentru furnizorii de telemedicină",
+    "subtitle": "Integrarea suportului de terapie digital în curs de desfășurare în procesele de tratament complet digitale și consultațiile de la distanță.",
+    "benefits_title": "Avantajele interfeței și documentației",
+    "benefits_text": "Urmărire digitală fără probleme și monitorizare a pacienților. Înregistrarea de la distanță conformă legal și structurată a tuturor valorilor de prag, procedurile de triaj și chestionarele relevante pentru terapie.",
+    "cta": "Solicitați integrarea telemedicinei",
+    "api_title": "Schimb automat de date",
+    "api_text": "Informații despre interfețele noastre API pentru schimbul de date complet automatizat pe întreaga platformă.",
+    "integration_title": "Integrare perfectă",
+    "integration_text": "Conectați-vă infrastructura în zile, nu în luni, cu API-urile noastre REST bine documentate."
   }
 }
