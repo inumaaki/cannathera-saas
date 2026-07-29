@@ -45,7 +45,11 @@
     "s5Title": "5. Datenschutz & Datensicherheit",
     "s5Text": "Der Schutz Ihrer Gesundheitsdaten (Art. 9 DSGVO) erfolgt über Ende-zu-Ende verschlüsselte Server in der EU.",
     "s6Title": "6. Haftung & Gerichtstand",
-    "s6Text": "Es gilt das Recht der Bundesrepublik Deutschland."
+    "s6Text": "Es gilt das Recht der Bundesrepublik Deutschland.",
+    "s7Title": "Abschnitt 7 Laufzeit und Kündigung",
+    "s7Text": "(1) Die Vertragslaufzeit richtet sich nach dem jeweiligen Einzelvertrag bzw. der gewählten Abonnementstufe.\n(2) Sofern nichts anderes vereinbart ist, verlängert sich der Vertrag automatisch um die Dauer der jeweiligen Laufzeit, sofern er nicht von einer der Parteien mit einer Frist von vier Wochen zum Ende der laufenden Laufzeit gekündigt wird.\n(3) Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt unberührt.",
+    "s8Title": "§ 8 Schlussbestimmungen",
+    "s8Text": "(1) Es gilt das Recht der Bundesrepublik Deutschland.\n(2) Gerichtsstand für alle Streitigkeiten aus diesem Vertrag ist der Sitz des Anbieters, sofern es sich bei dem Nutzer um einen Kaufmann, eine juristische Person des öffentlichen Rechts oder ein öffentlich-rechtliches Sondervermögen handelt.\n(3) Sollte eine Bestimmung dieser Geschäftsbedingungen unwirksam sein oder werden, so bleibt die Wirksamkeit der übrigen Bestimmungen hiervon unberührt."
   },
   "patient": {
     "nav": {
