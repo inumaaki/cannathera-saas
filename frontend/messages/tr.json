@@ -1786,7 +1786,9 @@
       "symptom": "Semptom Penceresi Performansı",
       "last7": "Son 7 gün",
       "compliance": "Uyum: Herhangi bir uyarı tespit edilmedi",
-      "trust": "Güven Skoru"
+      "trust": "Güven Skoru",
+      "v2_subtitle": "Dozaj, kafa karıştırıcı notlar veya hasta, doktor muayenehanesi ve eczane arasındaki eksik bağlantıyla ilgili sorular olsun: başarılı kanabinoid tedavisi, koordinasyon sorunları nedeniyle günlük uygulamalarda sıklıkla başarısız olur. Cannathera, akıllı, klinik olarak desteklenen dijital merkeziniz olarak bu açığı kapatıyor. Uygulayıcıları ve hastaları sorunsuz bir şekilde birbirine bağlıyor, ilerleme dokümantasyonunu otomatikleştiriyor ve gerçek terapi güvenliği için gerekli olan geçerli veritabanını oluşturuyoruz. İlk günden itibaren şeffaf, yasal olarak uyumlu ve yapılandırılmış destek için Cannathera'nın bir parçası olun.",
+      "v2_ctaStart": "Terapi desteğinizi başlatın"
     },
     "features": {
       "tag": "Platform Yetenekleri",

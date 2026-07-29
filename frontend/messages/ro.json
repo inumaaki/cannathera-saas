@@ -1786,7 +1786,9 @@
       "symptom": "Performanța Fereastrei de Simptome",
       "last7": "Ultimele 7 zile",
       "compliance": "Conformitate: Nu au fost detectate avertismente",
-      "trust": "Scor de Încredere"
+      "trust": "Scor de Încredere",
+      "v2_subtitle": "Fie că este vorba despre întrebări despre dozare, note confuze sau legătura lipsă dintre pacient, cabinetul medicului și farmacie: terapia cu canabinoizi de succes eșuează adesea în practica de zi cu zi din cauza problemelor de coordonare. Cannathera reduce acest decalaj ca hub digital inteligent, susținut clinic. Conectăm fără probleme practicienii și pacienții, automatizăm documentarea progresului și creăm baza de date validă necesară pentru siguranța reală a terapiei. Deveniți parte din Cannathera – pentru asistență transparentă, conformă din punct de vedere legal și structurat din prima zi.",
+      "v2_ctaStart": "Începeți-vă asistența terapeutică"
     },
     "features": {
       "tag": "Capacități ale platformei",

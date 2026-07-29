@@ -10,26 +10,26 @@ export function LandingHero() {
     <section className="relative min-h-[calc(100vh-4rem)] overflow-hidden bg-pine py-16 text-white flex flex-col justify-center">
       <div className="relative mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-12 lg:items-center w-full">
         {/* Left Side Content (7 cols) */}
-        <div className="space-y-8 lg:col-span-7 max-w-2xl">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold text-mint-bright">
+        <div className="flex flex-col gap-5 lg:col-span-7 max-w-2xl">
+          <div className="inline-flex items-center self-start gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-xs font-semibold text-mint-bright">
             <span className="size-2 rounded-full bg-mint" />
             {t("certified")}
           </div>
 
-          <h1 className="font-display text-4xl font-extrabold tracking-tight sm:text-5xl xl:text-6xl text-white leading-[1.1] whitespace-pre-line">
+          <h1 className="font-display text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-[3.5rem] text-white leading-[1.1] whitespace-pre-line mt-2">
             {t("title")}
           </h1>
 
-          <p className="text-lg leading-relaxed text-white/80">
-            {t("subtitle")}
+          <p className="text-base sm:text-lg leading-relaxed text-white/80">
+            {t("v2_subtitle")}
           </p>
 
-          <div className="flex flex-wrap gap-4 pt-2">
+          <div className="flex flex-wrap gap-4 mt-2">
             <Link
               href="/signup/patient"
               className="group flex h-12 items-center justify-center rounded-xl bg-[#F97316] px-6 font-bold text-white shadow-md hover:bg-[#e66a12] hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.98] active:translate-y-0 transition-all duration-200 cursor-pointer"
             >
-              {t("ctaStart")}
+              {t("v2_ctaStart")}
               <span aria-hidden className="msym text-[18px] ml-1.5 transition-transform group-hover:translate-x-0.5">
                 arrow_forward
               </span>
@@ -46,7 +46,7 @@ export function LandingHero() {
           </div>
 
           {/* Quick value badges */}
-          <div className="flex flex-wrap items-center gap-6 pt-4 text-xs font-semibold uppercase tracking-wider text-white/60">
+          <div className="flex flex-wrap items-center gap-6 mt-2 text-xs font-semibold uppercase tracking-wider text-white/60">
             <span className="flex items-center gap-1.5">
               <span aria-hidden className="msym text-[16px] text-mint">
                 lock

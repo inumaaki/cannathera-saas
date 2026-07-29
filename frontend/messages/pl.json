@@ -1786,7 +1786,9 @@
       "symptom": "Wydajność okna objawów",
       "last7": "Ostatnie 7 dni",
       "compliance": "Zgodność: Brak wykrytych ostrzeżeń",
-      "trust": "Wskaźnik zaufania"
+      "trust": "Wskaźnik zaufania",
+      "v2_subtitle": "Niezależnie od tego, czy chodzi o pytania dotyczące dawkowania, mylące notatki, czy też brakujące ogniwo pomiędzy pacjentem, gabinetem lekarskim i apteką: skuteczna terapia kannabinoidami często zawodzi w codziennej praktyce ze względu na problemy z koordynacją. Cannathera wypełnia tę lukę jako inteligentne, wspierane klinicznie centrum cyfrowe. Płynnie łączymy lekarzy i pacjentów, automatyzujemy dokumentację postępów i tworzymy aktualną bazę danych niezbędną dla prawdziwego bezpieczeństwa terapii. Zostań częścią Cannathera – aby uzyskać przejrzyste, zgodne z prawem i zorganizowane wsparcie od pierwszego dnia.",
+      "v2_ctaStart": "Rozpocznij wsparcie terapeutyczne"
     },
     "features": {
       "tag": "Możliwości platformy",

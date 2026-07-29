@@ -1786,7 +1786,9 @@
       "symptom": "Therapieverlauf",
       "last7": "Letzte 7 Tage",
       "compliance": "Therapietreue: Keine Abweichungen erkannt",
-      "trust": "Vertrauens-Score"
+      "trust": "Vertrauens-Score",
+      "v2_subtitle": "Ob Fragen zur Dosierung, verwirrende Notizen oder die fehlende Verbindung zwischen Patient, Arztpraxis und Apotheke: Eine erfolgreiche Cannabinoid-Therapie scheitert im Praxisalltag häufig an Koordinationsproblemen. Cannathera schließt diese Lücke als Ihr intelligenter, klinisch unterstützter digitaler Hub. Wir verbinden Behandler und Patienten nahtlos, automatisieren die Fortschrittsdokumentation und schaffen die valide Datenbasis, die für echte Therapiesicherheit notwendig ist. Werden Sie Teil von Cannathera – für transparente, rechtssichere und strukturierte Betreuung vom ersten Tag an.",
+      "v2_ctaStart": "Starten Sie Ihre Therapieunterstützung"
     },
     "features": {
       "tag": "Plattform-Funktionen",

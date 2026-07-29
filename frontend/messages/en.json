@@ -1768,8 +1768,8 @@
     "hero": {
       "certified": "Certified Clinical Software",
       "title": "Your Therapy.\nMeticulously Structured.",
-      "subtitle": "Join thousands of patients who are optimizing their therapy progress with our clinically guided, adaptive, and ongoing therapy support. Complete daily assessments, view physiological timelines, and stay connected with your clinical team.",
-      "ctaStart": "Start your therapy support",
+      "v2_subtitle": "Whether it's questions about dosage, confusing notes, or the missing link between patient, doctor's office, and pharmacy: successful cannabinoid therapy often fails in everyday practice due to coordination issues. Cannathera closes this gap as your intelligent, clinically supported digital hub. We seamlessly connect practitioners and patients, automate progress documentation, and create the valid database necessary for true therapy safety. Become part of Cannathera – for transparent, legally compliant, and structured support from day one.",
+      "v2_ctaStart": "Start your therapy support",
       "ctaPortal": "Access Portal",
       "gdpr": "GDPR Compliant",
       "encrypted": "AES-256 Encrypted",
