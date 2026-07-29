@@ -43,7 +43,7 @@ function DisclaimerContent() {
             <div className="border-b border-hairline bg-gradient-to-r from-pine-50/50 to-transparent px-8 md:px-12 py-10 md:py-14">
               <div className="inline-flex items-center justify-center rounded-xl bg-white p-3 shadow-sm ring-1 ring-hairline mb-6">
                 <span aria-hidden className="msym text-2xl text-pine-600">
-                  gavel
+                  health_and_safety
                 </span>
               </div>
               <h1 className="font-display text-4xl md:text-5xl font-bold tracking-tight text-ink-strong">
@@ -58,8 +58,23 @@ function DisclaimerContent() {
             <div className="px-8 md:px-12 py-10 md:py-14">
               <div className="space-y-12">
                 <section className="relative">
+                  <h2 className="mb-4 text-xl md:text-2xl font-bold tracking-tight text-ink-strong">
+                    {t("s1Title")}
+                  </h2>
                   <div className="mt-4 prose prose-sage prose-sm md:prose-base max-w-none text-muted leading-relaxed">
-                    {t("text").split('\n').map((paragraph, pIdx) => (
+                    {t("s1Text").split('\n').map((paragraph, pIdx) => (
+                      <p key={pIdx} className="mb-4 last:mb-0">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </section>
+                <section className="relative">
+                  <h2 className="mb-4 text-xl md:text-2xl font-bold tracking-tight text-ink-strong">
+                    {t("s2Title")}
+                  </h2>
+                  <div className="mt-4 prose prose-sage prose-sm md:prose-base max-w-none text-muted leading-relaxed">
+                    {t("s2Text").split('\n').map((paragraph, pIdx) => (
                       <p key={pIdx} className="mb-4 last:mb-0">
                         {paragraph}
                       </p>

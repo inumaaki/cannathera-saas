@@ -1977,15 +1977,13 @@
       "copyright": "© 2026 Cannathera. Alle Rechte vorbehalten."
     }
   },
-  "cancellation": {
-    "title": "Widerrufsbelehrung",
-    "lastUpdated": "Zuletzt aktualisiert: Juli 2026",
-    "text": "Verbraucher haben ein gesetzliches Widerrufsrecht..."
-  },
   "disclaimer": {
     "title": "Medizinischer Haftungsausschluss",
-    "lastUpdated": "Zuletzt aktualisiert: Juli 2026",
-    "text": "Cannathera ist eine Softwareplattform zur Begleitung der Therapie. Sie ersetzt nicht den fachlichen Rat eines Arztes oder Apothekers."
+    "lastUpdated": "Zuletzt aktualisiert: August 2026",
+    "s1Title": "Kein Ersatz für professionellen medizinischen Rat",
+    "s1Text": "(1) Die über Cannathera bereitgestellten Inhalte, Funktionen, automatisierten Auswertungen und Berichte dienen ausschließlich als technisches Dokumentations- und Analysewerkzeug zur Unterstützung von medizinischen Fachkräften und Apotheken.\n(2) Die Plattform stellt keine medizinische, ärztliche oder pharmazeutische Beratung, Diagnose oder Behandlungsempfehlung durch den Anbieter dar. Die Nutzung der Software ersetzt niemals eine persönliche Konsultation beim Arzt, eine Untersuchung oder eine eigenständige professionelle Diagnose.",
+    "s2Title": "Verantwortung des medizinischen Fachpersonals",
+    "s2Text": "(1) Alle medizinischen Entscheidungen, Dosierungsanpassungen, Verordnungen und Behandlungsschritte liegen in der alleinigen Verantwortung des behandelnden Arztes oder sonstigen medizinischen Fachpersonals.\n(2) Der Anbieter übernimmt keine Haftung für die Richtigkeit, Vollständigkeit oder klinische Relevanz der vom Patienten eingegebenen Daten. Technische Analysen oder KI-gestützte Monatszusammenfassungen sind lediglich Orientierungshilfen und entbinden das medizinische Fachpersonal nicht von seinem eigenen Urteil."
   },
   "faq": {
     "title": "Häufig gestellte Fragen",
@@ -2077,5 +2075,13 @@
     "v2_feat3_text": "Erfassen Sie alle therapierelevanten Parameter und Fragebögen aus der Ferne nach strengsten Sicherheitsstandards (DSGVO-konform und AES-256-verschlüsselt).",
     "v2_feat4_title": "Skalierbarkeit mit Ihrem eigenen Branding",
     "v2_feat4_text": "Bieten Sie Ihren Patienten ein hochprofessionelles, rechtskonformes Umfeld, das Behandlungsqualität, Datenschutz und modernste Technologie perfekt vereint."
+  },
+  "cancellation": {
+    "title": "Stornierungsbedingungen",
+    "lastUpdated": "Zuletzt aktualisiert: August 2026",
+    "s1Title": "Widerrufsrecht für Geschäftskunden (B2B)",
+    "s1Text": "Da sich die Cannathera-Plattform ausschließlich an gewerbliche Nutzer (Ärzte, medizinisches Fachpersonal, Telemediziner und Apotheken) im Rahmen ihrer beruflichen oder gewerblichen Tätigkeit richtet, besteht kein gesetzliches Widerrufsrecht gemäß § 355 BGB.",
+    "s2Title": "Kündigung und Stornierung von Abonnements",
+    "s2Text": "(1) Verträge und Abonnements können mit einer Frist von vier Wochen zum Ende der jeweiligen Vertragslaufzeit gekündigt werden, vorbehaltlich abweichender individueller Vereinbarungen (z.B. während einer Pilotphase).\n(2) Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt für beide Parteien jederzeit unberührt.\n(3) Jede Kündigung bedarf zu ihrer Wirksamkeit der Schriftform (z.B. per E-Mail an den Support)."
   }
 }

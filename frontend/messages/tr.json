@@ -1977,15 +1977,13 @@
       "copyright": "© 2026 Cannathera. Tüm hakları saklıdır."
     }
   },
-  "cancellation": {
-    "title": "İptal Politikası",
-    "lastUpdated": "Son Güncelleme: Temmuz 2026",
-    "text": "Tüketicinin yasal cayma hakkı var..."
-  },
   "disclaimer": {
     "title": "Tıbbi Sorumluluk Reddi",
-    "lastUpdated": "Son Güncelleme: Temmuz 2026",
-    "text": "Cannathera terapiyi destekleyen bir yazılım platformudur. Bir doktor veya eczacının profesyonel tavsiyesinin yerine geçmez."
+    "lastUpdated": "Son Güncelleme: Ağustos 2026",
+    "s1Title": "Profesyonel Tıbbi Tavsiyenin Yerine Geçmez",
+    "s1Text": "(1) Cannathera aracılığıyla sağlanan içerik, işlevler, otomatik değerlendirmeler ve raporlar yalnızca sağlık hizmeti sağlayıcılarını ve eczaneleri desteklemek için teknik bir dokümantasyon ve analiz aracı olarak hizmet vermektedir.\n(2) Platform, sağlayıcı tarafından tıbbi, hekim veya farmasötik tavsiye, teşhis veya tedavi önerisi oluşturmamaktadır. Yazılımın kullanımı hiçbir zaman bir doktorla kişisel konsültasyonun, muayenenin veya bağımsız profesyonel teşhisin yerini almaz.",
+    "s2Title": "Tıbbi Personelin Sorumluluğu",
+    "s2Text": "(1) Tüm tıbbi kararlar, dozaj ayarlamaları, reçeteler ve tedavi adımları yalnızca tedavi eden doktorun veya diğer tıbbi profesyonelin sorumluluğundadır.\n(2) Sağlayıcı, hasta tarafından girilen verilerin doğruluğu, eksiksizliği veya klinik alaka düzeyi için hiçbir sorumluluk üstlenmez. Teknik analizler veya yapay zeka destekli aylık özetler yalnızca rehberlik niteliğindedir ve sağlık hizmeti sağlayıcısını kendi yargısından muaf tutmaz."
   },
   "faq": {
     "title": "Sıkça Sorulan Sorular",
@@ -2077,5 +2075,13 @@
     "v2_feat3_text": "Terapiyle ilgili tüm parametreleri ve anketleri en katı güvenlik standartlarına (GDPR uyumlu ve AES-256 şifreli) göre uzaktan toplayın.",
     "v2_feat4_title": "Kendi markanızla ölçeklenebilirlik",
     "v2_feat4_text": "Hastalarınıza tedavi kalitesini, veri korumayı ve en son teknolojiyi mükemmel bir şekilde harmanlayan son derece profesyonel, yasalara uygun bir ortam sunun."
+  },
+  "cancellation": {
+    "title": "İptal Politikası",
+    "lastUpdated": "Son Güncelleme: Ağustos 2026",
+    "s1Title": "İşletmeler İçin Cayma Hakkı (B2B)",
+    "s1Text": "Cannathera platformu tamamen mesleki veya ticari faaliyetleri kapsamında ticari kullanıcılara (doktorlar, tıp uzmanları, teletıp pratisyenleri ve eczaneler) yönelik olduğundan, Alman Medeni Kanunu'nun (BGB) 355. Maddesi uyarınca yasal bir cayma hakkı bulunmamaktadır.",
+    "s2Title": "Aboneliklerin Feshi ve İptali",
+    "s2Text": "(1) Sözleşmeler ve abonelikler, farklı bireysel anlaşmalara tabi olmak kaydıyla (örneğin pilot aşama sırasında), ilgili sözleşme süresinin bitimine dört hafta kala bildirilmeli feshedilebilir.\n(2) Haklı nedenle olağanüstü fesih hakkı her iki taraf için de her zaman saklıdır.\n(3) Herhangi bir feshin geçerli olabilmesi için yazılı olarak (örneğin desteğe e-posta yoluyla) yapılması gerekir."
   }
 }

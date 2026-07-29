@@ -361,8 +361,8 @@ export class AuthService {
 
     const policy = await this.policyFor(user.id);
 
-    // TODO(temp): 2FA skipped for ADMIN role — remove before production launch.
-    const skip2fa = !policy.mandatory2fa || user.role === Role.ADMIN;
+    // 2FA enforced for all roles including ADMIN.
+    const skip2fa = !policy.mandatory2fa;
 
     if (skip2fa) {
       await this.prisma.auditLog.create({

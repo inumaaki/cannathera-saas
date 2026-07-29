@@ -37,23 +37,23 @@ async function main() {
 
   // 2. Delete consents, 2FA codes, and password resets for deleted users
   const delConsents = await prisma.consent.deleteMany({
-    where: { user: { email: { not: "admin@cannathera.de" } } },
+    where: { user: { email: { not: "d.larkin@cannathera-report.de" } } },
   });
   console.log(`Deleted ${delConsents.count} consents.`);
 
   const del2fa = await prisma.twoFactorCode.deleteMany({
-    where: { user: { email: { not: "admin@cannathera.de" } } },
+    where: { user: { email: { not: "d.larkin@cannathera-report.de" } } },
   });
   console.log(`Deleted ${del2fa.count} 2FA codes.`);
 
   const delResets = await prisma.passwordResetToken.deleteMany({
-    where: { user: { email: { not: "admin@cannathera.de" } } },
+    where: { user: { email: { not: "d.larkin@cannathera-report.de" } } },
   });
   console.log(`Deleted ${delResets.count} reset tokens.`);
 
-  // 3. Delete all users except admin@cannathera.de (cascades memberships, profiles, etc.)
+  // 3. Delete all users except d.larkin@cannathera-report.de (cascades memberships, profiles, etc.)
   const delUsers = await prisma.user.deleteMany({
-    where: { email: { not: "admin@cannathera.de" } },
+    where: { email: { not: "d.larkin@cannathera-report.de" } },
   });
   console.log(`Deleted ${delUsers.count} user profiles.`);
 

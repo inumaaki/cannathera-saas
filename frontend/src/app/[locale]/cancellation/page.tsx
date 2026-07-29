@@ -58,8 +58,23 @@ function CancellationContent() {
             <div className="px-8 md:px-12 py-10 md:py-14">
               <div className="space-y-12">
                 <section className="relative">
+                  <h2 className="mb-4 text-xl md:text-2xl font-bold tracking-tight text-ink-strong">
+                    {t("s1Title")}
+                  </h2>
                   <div className="mt-4 prose prose-sage prose-sm md:prose-base max-w-none text-muted leading-relaxed">
-                    {t("text").split('\n').map((paragraph, pIdx) => (
+                    {t("s1Text").split('\n').map((paragraph, pIdx) => (
+                      <p key={pIdx} className="mb-4 last:mb-0">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </div>
+                </section>
+                <section className="relative">
+                  <h2 className="mb-4 text-xl md:text-2xl font-bold tracking-tight text-ink-strong">
+                    {t("s2Title")}
+                  </h2>
+                  <div className="mt-4 prose prose-sage prose-sm md:prose-base max-w-none text-muted leading-relaxed">
+                    {t("s2Text").split('\n').map((paragraph, pIdx) => (
                       <p key={pIdx} className="mb-4 last:mb-0">
                         {paragraph}
                       </p>

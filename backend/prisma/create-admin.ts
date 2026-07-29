@@ -4,7 +4,7 @@ import * as argon2 from "argon2";
 const prisma = new PrismaClient();
 
 async function main() {
-  const email = "admin@cannathera.de";
+  const email = "d.larkin@cannathera-report.de";
   const passwordHash = await argon2.hash("ct-admin-2026-secure!");
 
   const admin = await prisma.user.upsert({

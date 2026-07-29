@@ -1977,15 +1977,13 @@
       "copyright": "© 2026 Cannathera. Toate drepturile rezervate."
     }
   },
-  "cancellation": {
-    "title": "Politica de anulare",
-    "lastUpdated": "Ultima actualizare: iulie 2026",
-    "text": "Consumatorii au dreptul legal de retragere..."
-  },
   "disclaimer": {
-    "title": "Disclaimer medical",
-    "lastUpdated": "Ultima actualizare: iulie 2026",
-    "text": "Cannathera este o platformă software pentru sprijinirea terapiei. Nu înlocuiește sfatul profesional al unui medic sau farmacist."
+    "title": "Declinare de responsabilitate medicală",
+    "lastUpdated": "Ultima actualizare: August 2026",
+    "s1Title": "Nu înlocuiește sfatul medical profesionist",
+    "s1Text": "(1) Conținutul, funcțiile, evaluările automate și rapoartele furnizate prin Cannathera servesc exclusiv ca instrument tehnic de documentare și analiză pentru a sprijini furnizorii de servicii medicale și farmaciile.\n(2) Platforma nu constituie consultanță medicală, a unui medic sau farmaceutică, diagnostic sau recomandare de tratament din partea furnizorului. Utilizarea software-ului nu înlocuiește niciodată o consultație personală cu un medic, o examinare sau un diagnostic profesional independent.",
+    "s2Title": "Responsabilitatea personalului medical",
+    "s2Text": "(1) Toate deciziile medicale, ajustările de doze, prescripțiile și etapele de tratament sunt responsabilitatea exclusivă a medicului curant sau a altui profesionist medical.\n(2) Furnizorul nu își asumă nicio răspundere pentru exactitatea, completitudinea sau relevanța clinică a datelor introduse de pacient. Analizele tehnice sau rezumatele lunare susținute de AI sunt doar orientări și nu îl scutesc pe furnizorul de servicii medicale de propriul raționament."
   },
   "faq": {
     "title": "Întrebări frecvente",
@@ -2077,5 +2075,13 @@
     "v2_feat3_text": "Colectați de la distanță toți parametrii și chestionarele relevanți pentru terapie, conform celor mai stricte standarde de securitate (conform GDPR și criptat AES-256).",
     "v2_feat4_title": "Scalabilitate cu propriul branding",
     "v2_feat4_text": "Oferiți pacienților dumneavoastră un mediu extrem de profesionist, conform legii, care îmbină perfect calitatea tratamentului, protecția datelor și tehnologia de ultimă oră."
+  },
+  "cancellation": {
+    "title": "Politica de anulare",
+    "lastUpdated": "Ultima actualizare: August 2026",
+    "s1Title": "Dreptul de retragere pentru companii (B2B)",
+    "s1Text": "Deoarece platforma Cannathera este destinată exclusiv utilizatorilor comerciali (medici, profesioniști din domeniul medical, practicieni în telemedicină și farmacii) în cursul activității lor profesionale sau comerciale, nu există un drept legal de retragere conform secțiunii 355 din Codul civil german (BGB).",
+    "s2Title": "Încetarea și anularea abonamentelor",
+    "s2Text": "(1) Contractele și abonamentele pot fi reziliate cu un preaviz de patru săptămâni până la sfârșitul perioadei contractuale respective, sub rezerva oricăror acorduri individuale diferite (de exemplu, în timpul unei faze pilot).\n(2) Dreptul de reziliere extraordinară din motive întemeiate rămâne neafectat pentru ambele părți în orice moment.\n(3) Orice reziliere trebuie să fie în scris (de exemplu, prin e-mail la asistență) pentru a fi efectivă."
   }
 }

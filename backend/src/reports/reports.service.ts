@@ -8,6 +8,11 @@ import { renderReportPdf } from './report-template';
 const REPORT_DIR = join(process.cwd(), 'storage', 'reports');
 
 type Metrics = { pain?: number; sleep?: number; activity?: number; qol?: number };
+type LogMetrics = Metrics & {
+  symptomsText?: string;
+  effectDescription?: string;
+  sideEffectsText?: string;
+};
 
 export type ReportData = {
   type: ReportType;
