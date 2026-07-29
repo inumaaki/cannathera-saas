@@ -3,13 +3,25 @@
 import Image from "next/image";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitcher } from "@/components/auth/LocaleSwitcher";
 
 export function LandingHeader() {
   const t = useTranslations("common");
   const tl = useTranslations("landing.header");
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const navLinks = [
+    { href: "/", label: tl("home") },
+    { href: "/features", label: tl("features") },
+    { href: "/physicians", label: tl("physicians") },
+    { href: "/pharmacies", label: tl("pharmacies") },
+    { href: "/telemedicine", label: tl("telemedicine") },
+    { href: "/pricing", label: tl("pricing") },
+    { href: "/founder", label: tl("founder") },
+    { href: "/faq", label: tl("faq") },
+  ];
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-hairline bg-white/75 backdrop-blur-md transition-all duration-300">
@@ -31,31 +43,23 @@ export function LandingHeader() {
         {/* Navigation links */}
         <div className="hidden lg:flex flex-1 min-w-0 mx-1 items-center justify-end xl:justify-center relative">
           <div className="w-max max-w-full overflow-hidden rounded-full border border-hairline/45 bg-[#f5f8f6]/50">
-            <nav className="flex items-center gap-0.5 xl:gap-1 text-[13px] xl:text-sm font-semibold text-muted p-1 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              <Link href="/" className="px-2.5 xl:px-4 py-1.5 rounded-full text-[#4a5e54] hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
-                {tl("home")}
-              </Link>
-              <Link href="/features" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
-                {tl("features")}
-              </Link>
-              <Link href="/physicians" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
-                {tl("physicians")}
-              </Link>
-              <Link href="/pharmacies" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
-                {tl("pharmacies")}
-              </Link>
-              <Link href="/telemedicine" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
-                {tl("telemedicine")}
-              </Link>
-              <Link href="/pricing" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
-                {tl("pricing")}
-              </Link>
-              <Link href="/founder" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
-                {tl("founder")}
-              </Link>
-              <Link href="/faq" className="px-2.5 xl:px-4 py-1.5 rounded-full hover:text-pine hover:bg-white transition-all duration-200 hover:shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] whitespace-nowrap">
-                {tl("faq")}
-              </Link>
+            <nav className="flex items-center gap-0.5 xl:gap-1 text-[13px] xl:text-sm font-semibold p-1 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`px-2.5 xl:px-4 py-1.5 rounded-full transition-all duration-200 whitespace-nowrap font-bold ${
+                      isActive
+                        ? "bg-pine text-white shadow-md"
+                        : "text-[#4a5e54] font-semibold hover:text-pine hover:bg-white/80 hover:shadow-sm"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </nav>
           </div>
         </div>
@@ -103,14 +107,21 @@ export function LandingHeader() {
             className="absolute inset-x-3 top-[4.5rem] z-50 max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-2xl border border-hairline bg-white p-3 shadow-2xl sm:inset-x-6 lg:hidden"
           >
             <nav className="grid gap-1 text-sm font-bold text-ink-strong">
-              <Link href="/" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("home")}</Link>
-              <Link href="/features" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("features")}</Link>
-              <Link href="/physicians" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("physicians")}</Link>
-              <Link href="/pharmacies" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("pharmacies")}</Link>
-              <Link href="/telemedicine" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("telemedicine")}</Link>
-              <Link href="/pricing" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("pricing")}</Link>
-              <Link href="/founder" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("founder")}</Link>
-              <Link href="/faq" onClick={() => setMenuOpen(false)} className="rounded-xl px-4 py-3 hover:bg-surface">{tl("faq")}</Link>
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMenuOpen(false)}
+                    className={`rounded-xl px-4 py-3 transition-colors ${
+                      isActive ? "bg-pine text-white shadow-sm" : "hover:bg-surface text-ink-strong"
+                    }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
             </nav>
             <div className="mt-2 flex items-center justify-between rounded-xl border border-hairline bg-surface px-4 py-3">
               <span className="flex items-center gap-2 text-sm font-bold text-ink-strong">
