@@ -149,7 +149,14 @@
       "intakeTimeMorning": "Dimineața",
       "intakeTimeNoon": "La prânz",
       "intakeTimeEvening": "Seara",
-      "intakeTimeNeeded": "La nevoie"
+      "intakeTimeNeeded": "La nevoie",
+      "symptomsTextLabel": "Descrierea detaliată a simptomelor",
+      "symptomsTextPlaceholder": "Vă rugăm să descrieți în detaliu simptomele actuale...",
+      "effectDescriptionLabel": "Eficacitate și ușurare",
+      "effectDescriptionPlaceholder": "Cum anume a ajutat medicamentul cu simptomele tale?",
+      "sideEffectsTextLabel": "Note de efecte secundare",
+      "sideEffectsTextPlaceholder": "Descrieți orice reacții adverse pe care le-ați experimentat...",
+      "recentStrains": "Tulpinile recente"
     },
     "progress": {
       "thisPeriod": "Această perioadă",

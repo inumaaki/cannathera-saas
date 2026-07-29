@@ -149,7 +149,14 @@
       "intakeTimeMorning": "Morgens",
       "intakeTimeNoon": "Mittags",
       "intakeTimeEvening": "Abends",
-      "intakeTimeNeeded": "Bei Bedarf"
+      "intakeTimeNeeded": "Bei Bedarf",
+      "symptomsTextLabel": "Detaillierte Symptombeschreibung",
+      "symptomsTextPlaceholder": "Bitte beschreiben Sie Ihre aktuellen Symptome im Detail...",
+      "effectDescriptionLabel": "Wirksamkeit & Linderung",
+      "effectDescriptionPlaceholder": "Wie genau hat das Medikament bei Ihren Symptomen geholfen?",
+      "sideEffectsTextLabel": "Nebenwirkungen (Details)",
+      "sideEffectsTextPlaceholder": "Beschreiben Sie aufgetretene Nebenwirkungen...",
+      "recentStrains": "Kürzlich verwendet"
     },
     "progress": {
       "thisPeriod": "Dieser Zeitraum",

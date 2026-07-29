@@ -61,9 +61,14 @@ const PERIOD_DAYS: Record<ReportType, number | null> = {
   LONG_TERM: null, // since therapy start
 };
 
+import { AiService } from './ai.service';
+
 @Injectable()
 export class ReportsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly aiService: AiService
+  ) {}
 
   /**
    * A report is Art. 9 health data. Holding `reports:view` is not enough — the
@@ -222,95 +227,49 @@ export class ReportsService {
     const notes = typeof answerOf('notes') === 'string' ? (answerOf('notes') as string) : null;
     const prepVal = answerOf('doctorQuestions');
     const prep: string[] = typeof prepVal === 'string' && prepVal.trim() !== '' ? [prepVal] : [];
-    // ---- Comprehensive Clinical Summary (Option 2 Engine) --------------------
-    const summaryParts: string[] = [];
-
+    // ---- Comprehensive Clinical Summary (AI Engine) --------------------
+    let summary = '';
     if (logs.length === 0 && !review) {
-      summaryParts.push('Für diesen Zeitraum liegen noch keine strukturierten Tageseinträge oder Monatsreviews vor.');
+      summary = 'Für diesen Zeitraum liegen noch keine strukturierten Tageseinträge oder Monatsreviews vor.';
     } else {
-      const pain = metrics.find((m) => m.key === 'pain');
-      const sleep = metrics.find((m) => m.key === 'sleep');
-      const qol = metrics.find((m) => m.key === 'qol');
-
-      // 1. Overall Trend & Adherence
-      const improvedCount = metrics.filter(
-        (m) => m.changePct != null && (m.betterWhenDown ? m.changePct < 0 : m.changePct > 0),
-      ).length;
-
-      let overview = `Der dokumentierte Therapieverlauf im Betrachtungszeitraum zeigt eine Therapietreue von ${adherence.pct} % (${adherence.loggedDays} von ${adherence.totalDays} Tagen). `;
-      if (improvedCount >= 3) {
-        overview += `In ${improvedCount} von ${metrics.length} Kernbereichen zeigt sich eine deutliche positive Tendenz.`;
-      } else if (improvedCount >= 1) {
-        overview += `In ${improvedCount} von ${metrics.length} Bereichen zeichnen sich erste Verbesserungen ab.`;
-      } else {
-        overview += `Der Symptomverlauf zeigt im aktuellen Zeitraum ein stabilisierendes Niveau ohne nennenswerte Verschlechterung.`;
-      }
-      summaryParts.push(overview);
-
-      // 2. Symptom & Pain Analysis
-      if (pain?.start != null && pain?.end != null) {
-        let painText = `Schmerzentwicklung: Der NRS-Durchschnittswert veränderte sich von ${pain.start}/10 auf ${pain.end}/10. `;
-        if (painDesc) {
-          painText += `Patienten-Bemerkung zum Schmerzverlauf: „${painDesc}“. `;
+      const patientNameForAi = [profile.user.firstName, profile.user.lastName].filter(Boolean).join(' ') || 'Unbekannt';
+      const aiDataPayload = {
+        adherence,
+        dosage: { avgDailyG, totalG },
+        metrics,
+        strains,
+        dailyNotesAndFreeText: logs.map(l => {
+          const m = l.metrics as LogMetrics | null;
+          return {
+            date: l.loggedAt.toISOString().slice(0, 10),
+            note: l.note,
+            symptoms: m?.symptomsText,
+            effects: m?.effectDescription,
+            sideEffects: m?.sideEffectsText,
+          };
+        }),
+        monthlyReviewAnswers: {
+          painDesc,
+          sleepDetails,
+          sideEffectsDetails,
+          improvementsDetail,
+          unresolvedIssues,
+          doctorQuestions,
+          strainUsedText,
+          sideEffects,
+          satisfaction,
+          goalsReached,
+          notes,
         }
-        summaryParts.push(painText.trim());
-      }
+      };
 
-      // 3. Sleep & QoL
-      if (sleep?.end != null || qol?.end != null) {
-        let sleepQolText = '';
-        if (sleep?.end != null) {
-          sleepQolText += `Schlafqualität liegt im Schnitt bei ${sleep.end}/10. `;
-        }
-        if (sleepDetails) {
-          sleepQolText += `Schlaf-Details: „${sleepDetails}“. `;
-        }
-        if (qol?.end != null) {
-          sleepQolText += `Die allgemeine Lebensqualität wird mit ${qol.end}/10 bewertet. `;
-        }
-        summaryParts.push(sleepQolText.trim());
-      }
-
-      // 4. Strains & Dosage
-      if (strainUsedText || strains.length > 0) {
-        const strainList = strainUsedText ? strainUsedText : strains.map((s) => s.name).join(', ');
-        let dosageText = `Eingesetzte Sorten/Präparate: ${strainList}. `;
-        if (avgDailyG != null) {
-          dosageText += `Durchschnittliche Tagesdosis: ${avgDailyG.toFixed(2)} g (Gesamtmenge: ${totalG.toFixed(2)} g). `;
-        }
-        summaryParts.push(dosageText.trim());
-      }
-
-      // 5. Patient Improvements & Unresolved Issues
-      if (improvementsDetail || unresolvedIssues) {
-        let feedbackText = '';
-        if (improvementsDetail) {
-          feedbackText += `Hauptsächliche Verbesserungen laut Patient:in: „${improvementsDetail}“. `;
-        }
-        if (unresolvedIssues) {
-          feedbackText += `Weiterhin bestehende Beschwerden: „${unresolvedIssues}“. `;
-        }
-        summaryParts.push(feedbackText.trim());
-      }
-
-      // 6. Tolerability & Side Effects
-      if (sideEffects.length > 0) {
-        let seText = `Berichtete Nebenwirkungen: ${sideEffects.join(', ')}. `;
-        if (sideEffectsDetails) {
-          seText += `Details zur Verträglichkeit: „${sideEffectsDetails}“. `;
-        }
-        summaryParts.push(seText.trim());
-      } else {
-        summaryParts.push('Die Therapie wird bisher gut vertragen, es wurden keine beeinträchtigenden Nebenwirkungen gemeldet.');
-      }
-
-      // 7. Doctor Questions
-      if (doctorQuestions) {
-        summaryParts.push(`Anliegen für das nächste Arztgespräch: „${doctorQuestions}“.`);
-      }
+      summary = await this.aiService.generateClinicalSummary(
+        patientNameForAi,
+        periodStart.toISOString().slice(0, 10),
+        periodEnd.toISOString().slice(0, 10),
+        aiDataPayload
+      );
     }
-
-    const summary = summaryParts.join('\n\n');
 
     const branding = (profile.org?.branding ?? null) as { logoUrl?: string } | null;
     const therapyDay = Math.max(

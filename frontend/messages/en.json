@@ -149,7 +149,14 @@
       "intakeTimeMorning": "Morning",
       "intakeTimeNoon": "Noon",
       "intakeTimeEvening": "Evening",
-      "intakeTimeNeeded": "As needed"
+      "intakeTimeNeeded": "As needed",
+      "symptomsTextLabel": "Detailed Symptom Description",
+      "symptomsTextPlaceholder": "Please describe your current symptoms in detail...",
+      "effectDescriptionLabel": "Effectiveness & Relief",
+      "effectDescriptionPlaceholder": "How exactly did the medication help with your symptoms?",
+      "sideEffectsTextLabel": "Side Effect Notes",
+      "sideEffectsTextPlaceholder": "Describe any side effects you experienced...",
+      "recentStrains": "Recent Strains"
     },
     "progress": {
       "thisPeriod": "This period",

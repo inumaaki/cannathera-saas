@@ -149,7 +149,14 @@
       "intakeTimeMorning": "Ранок",
       "intakeTimeNoon": "Полудень",
       "intakeTimeEvening": "Вечір",
-      "intakeTimeNeeded": "За потреби"
+      "intakeTimeNeeded": "За потреби",
+      "symptomsTextLabel": "Детальний опис симптомів",
+      "symptomsTextPlaceholder": "Будь ласка, опишіть детально ваші поточні симптоми...",
+      "effectDescriptionLabel": "Ефективність і полегшення",
+      "effectDescriptionPlaceholder": "Як саме ліки допомогли при ваших симптомах?",
+      "sideEffectsTextLabel": "Примітки щодо побічних ефектів",
+      "sideEffectsTextPlaceholder": "Опишіть будь-які побічні ефекти, які ви відчували...",
+      "recentStrains": "Останні штами"
     },
     "progress": {
       "thisPeriod": "Цей період",

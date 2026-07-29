@@ -19,6 +19,9 @@ type LogMetrics = {
   benefitRating?: number;
   benefitOnset?: string;
   benefitDuration?: string;
+  symptomsText?: string;
+  effectDescription?: string;
+  sideEffectsText?: string;
 };
 
 @Injectable()
@@ -407,5 +410,18 @@ export class PatientService {
     });
     const progressPct = Math.round((summary.day / PLAN_DAYS) * 100);
     return { day: summary.day, planDays: PLAN_DAYS, progressPct, phases };
+  }
+
+  /** Fetch a unique list of strains the patient has recently used. */
+  async recentStrains(userId: string) {
+    const profile = await this.profileOf(userId);
+    const logs = await this.prisma.therapyLog.findMany({
+      where: { patientId: profile.id, strain: { not: null } },
+      select: { strain: true },
+      orderBy: { loggedAt: 'desc' },
+      take: 50,
+    });
+    const unique = new Set(logs.map((l) => l.strain!));
+    return Array.from(unique).slice(0, 5); // Return up to 5 unique recent strains
   }
 }

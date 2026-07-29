@@ -77,6 +77,21 @@ export class CreateLogDto {
   @IsString()
   @MaxLength(100)
   benefitDuration?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  symptomsText?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  effectDescription?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  sideEffectsText?: string;
 }
 
 export class UpdateProfileDto {

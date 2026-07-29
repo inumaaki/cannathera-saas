@@ -149,7 +149,14 @@
       "intakeTimeMorning": "Sabah",
       "intakeTimeNoon": "Öğle",
       "intakeTimeEvening": "Akşam",
-      "intakeTimeNeeded": "İhtiyaç halinde"
+      "intakeTimeNeeded": "İhtiyaç halinde",
+      "symptomsTextLabel": "Ayrıntılı Belirti Açıklaması",
+      "symptomsTextPlaceholder": "Lütfen mevcut belirtilerinizi ayrıntılı olarak tanımlayın...",
+      "effectDescriptionLabel": "Etkililik ve Rahatlama",
+      "effectDescriptionPlaceholder": "İlaç semptomlarınıza tam olarak nasıl yardımcı oldu?",
+      "sideEffectsTextLabel": "Yan Etki Notları",
+      "sideEffectsTextPlaceholder": "Yaşadığınız yan etkileri açıklayın...",
+      "recentStrains": "Son Suşlar"
     },
     "progress": {
       "thisPeriod": "Bu dönem",

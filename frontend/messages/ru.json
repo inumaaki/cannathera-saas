@@ -149,7 +149,14 @@
       "intakeTimeMorning": "Утро",
       "intakeTimeNoon": "Полдень",
       "intakeTimeEvening": "Вечер",
-      "intakeTimeNeeded": "По необходимости"
+      "intakeTimeNeeded": "По необходимости",
+      "symptomsTextLabel": "Подробное описание симптомов",
+      "symptomsTextPlaceholder": "Пожалуйста, опишите ваши текущие симптомы подробно...",
+      "effectDescriptionLabel": "Эффективность и облегчение",
+      "effectDescriptionPlaceholder": "Как именно лекарство помогло облегчить ваши симптомы?",
+      "sideEffectsTextLabel": "Примечания о побочных эффектах",
+      "sideEffectsTextPlaceholder": "Опишите любые побочные эффекты, которые вы испытали...",
+      "recentStrains": "Недавние штаммы"
     },
     "progress": {
       "thisPeriod": "Этот период",

@@ -149,7 +149,14 @@
       "intakeTimeMorning": "Rano",
       "intakeTimeNoon": "W południe",
       "intakeTimeEvening": "Wieczorem",
-      "intakeTimeNeeded": "W razie potrzeby"
+      "intakeTimeNeeded": "W razie potrzeby",
+      "symptomsTextLabel": "Szczegółowy opis objawu",
+      "symptomsTextPlaceholder": "Proszę szczegółowo opisać swoje obecne objawy...",
+      "effectDescriptionLabel": "Skuteczność i ulga",
+      "effectDescriptionPlaceholder": "W jaki sposób lek pomógł w złagodzeniu objawów?",
+      "sideEffectsTextLabel": "Uwagi dotyczące skutków ubocznych",
+      "sideEffectsTextPlaceholder": "Opisz wszelkie skutki uboczne, których doświadczyłeś...",
+      "recentStrains": "Najnowsze odmiany"
     },
     "progress": {
       "thisPeriod": "Ten okres",

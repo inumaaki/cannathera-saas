@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { api } from "@/lib/api";
+import useSWR from "swr";
 
 const STRAINS = ["Blue Dream (Hybrid)", "Bedrocan (Sativa)", "Pedanios 22/1"];
 
@@ -19,10 +20,16 @@ export function QuickLogSheet({
 
   // Core metrics
   const [dosage, setDosage] = useState(0.5);
-  const [strain, setStrain] = useState(STRAINS[0]);
+  const [strain, setStrain] = useState("");
   const [pain, setPain] = useState(5);
   const [sleep, setSleep] = useState(8);
   const [activity, setActivity] = useState(4);
+
+  // Fetch recent strains
+  const { data: recentStrains = [] } = useSWR<string[]>(
+    "/patient/strains",
+    (url: string) => api(url)
+  );
 
   // New Clinical Parameters
   const [intakeTime, setIntakeTime] = useState("morgens");
@@ -33,6 +40,9 @@ export function QuickLogSheet({
     locale === "de" ? "2 - 4 Std." : locale === "tr" ? "2 - 4 saat" : "2 - 4 hours"
   );
   const [note, setNote] = useState("");
+  const [symptomsText, setSymptomsText] = useState("");
+  const [effectDescription, setEffectDescription] = useState("");
+  const [sideEffectsText, setSideEffectsText] = useState("");
 
   const [pending, setPending] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -66,6 +76,9 @@ export function QuickLogSheet({
           benefitRating,
           benefitOnset,
           benefitDuration,
+          symptomsText,
+          effectDescription,
+          sideEffectsText,
           note,
         },
       });
@@ -192,18 +205,35 @@ export function QuickLogSheet({
         <div className="relative mt-2">
           <input
             type="text"
-            list="strain-suggestions"
             value={strain}
             onChange={(e) => setStrain(e.target.value)}
             placeholder={locale === "de" ? "z. B. Bedrocan, Pedanios 22/1, Cannamedical..." : "e.g. Bedrocan, Pedanios 22/1..."}
             className="h-12 w-full rounded-lg border border-hairline bg-white px-4 text-base text-ink-strong outline-none focus:border-pine-600 focus:ring-2 focus:ring-pine-600/20"
           />
-          <datalist id="strain-suggestions">
-            {STRAINS.map((s) => (
-              <option key={s} value={s} />
-            ))}
-          </datalist>
         </div>
+        {recentStrains.length > 0 && (
+          <div className="mt-2">
+            <p className="text-[11px] font-semibold uppercase tracking-wider text-muted mb-2">
+              {t("recentStrains")}
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {recentStrains.map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setStrain(s)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition-all ${
+                    strain === s
+                      ? "bg-pine-600 border-pine-600 text-white"
+                      : "bg-surface border-hairline text-ink-strong hover:bg-gray-100"
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Sliders (Vitals & Sentiment) */}
         <p className="mt-6 text-xs font-semibold uppercase tracking-[0.12em] text-sage-900">
@@ -220,6 +250,20 @@ export function QuickLogSheet({
           value={activity}
           onChange={setActivity}
         />
+
+        <div className="mt-6">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-sage-900">
+            {t("symptomsTextLabel")}
+          </p>
+          <hr className="mt-2 border-hairline" />
+          <textarea
+            value={symptomsText}
+            onChange={(e) => setSymptomsText(e.target.value)}
+            placeholder={t("symptomsTextPlaceholder")}
+            rows={3}
+            className="mt-3 w-full rounded-xl border border-hairline p-3 text-sm text-ink-strong outline-none focus:border-pine-600 min-h-[80px] bg-white resize-none"
+          />
+        </div>
 
         {/* Side Effects section */}
         <p className="mt-6 text-xs font-semibold uppercase tracking-[0.12em] text-sage-900">
@@ -255,6 +299,13 @@ export function QuickLogSheet({
             );
           })}
         </div>
+        <textarea
+          value={sideEffectsText}
+          onChange={(e) => setSideEffectsText(e.target.value)}
+          placeholder={t("sideEffectsTextPlaceholder")}
+          rows={2}
+          className="mt-3 w-full rounded-xl border border-hairline p-3 text-sm text-ink-strong outline-none focus:border-pine-600 min-h-[60px] bg-white resize-none"
+        />
 
         {/* Effect & Benefit Section */}
         <p className="mt-6 text-xs font-semibold uppercase tracking-[0.12em] text-sage-900">
@@ -303,6 +354,19 @@ export function QuickLogSheet({
               ))}
             </select>
           </div>
+        </div>
+
+        <div className="mt-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.12em] text-muted mb-2">
+            {t("effectDescriptionLabel")}
+          </p>
+          <textarea
+            value={effectDescription}
+            onChange={(e) => setEffectDescription(e.target.value)}
+            placeholder={t("effectDescriptionPlaceholder")}
+            rows={3}
+            className="w-full rounded-xl border border-hairline p-3 text-sm text-ink-strong outline-none focus:border-pine-600 min-h-[80px] bg-white resize-none"
+          />
         </div>
 
         {/* Free text comments */}

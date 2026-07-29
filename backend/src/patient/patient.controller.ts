@@ -45,9 +45,17 @@ export class PatientController {
         benefitRating: dto.benefitRating,
         benefitOnset: dto.benefitOnset,
         benefitDuration: dto.benefitDuration,
+        symptomsText: dto.symptomsText,
+        effectDescription: dto.effectDescription,
+        sideEffectsText: dto.sideEffectsText,
       },
       note: dto.note,
     });
+  }
+
+  @Get('strains')
+  strains(@CurrentUser() user: SessionPayload) {
+    return this.patients.recentStrains(user.sub);
   }
 
   @Get('stats')

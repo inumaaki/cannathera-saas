@@ -28,7 +28,7 @@ async function main() {
   await prisma.therapyLog.deleteMany({ where: { patientId } });
 
   // 34 days of logs, one gap day per week (adherence ~96%), improving trend.
-  const logs = [];
+  const logs: any[] = [];
   for (let d = 0; d < 34; d++) {
     if (d % 9 === 5) continue; // occasional missed day
     const t = d / 33; // 0..1 progress

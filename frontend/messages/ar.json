@@ -149,7 +149,14 @@
       "intakeTimeMorning": "صباحاً",
       "intakeTimeNoon": "ظهراً",
       "intakeTimeEvening": "مساءً",
-      "intakeTimeNeeded": "عند الحاجة"
+      "intakeTimeNeeded": "عند الحاجة",
+      "symptomsTextLabel": "وصف مفصل للأعراض",
+      "symptomsTextPlaceholder": "من فضلك قم بوصف أعراضك الحالية بالتفصيل...",
+      "effectDescriptionLabel": "الفعالية والإغاثة",
+      "effectDescriptionPlaceholder": "كيف ساعد الدواء بالضبط في علاج أعراضك؟",
+      "sideEffectsTextLabel": "ملاحظات الآثار الجانبية",
+      "sideEffectsTextPlaceholder": "قم بوصف أي آثار جانبية واجهتها...",
+      "recentStrains": "السلالات الأخيرة"
     },
     "progress": {
       "thisPeriod": "هذه الفترة",
