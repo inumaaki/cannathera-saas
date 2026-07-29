@@ -1,0 +1,9 @@
+# Cannathera SaaS Project Rules
+
+## Translation & Localization (i18n)
+- **CRITICAL RULE**: Everything must be translated into ALL available languages in this project. Not all the languages of the world.
+- The project uses `next-intl` with JSON files in `frontend/messages/`.
+- Available languages include (but may not be limited to): `ar`, `ary`, `bg`, `de`, `en`, `pl`, `ro`, `ru`, `tr`, `uk`.
+- When adding or modifying keys in `en.json` (or any default language), you MUST ensure those keys are also added to every other language's JSON file.
+- If you are updating a large amount of text, use the translation scripts (like `frontend/translate.py`) to automatically sync and translate the missing keys across all `.json` files.
+- Never leave other languages with missing keys or untranslated fallback English text without explicitly translating them (using `deep-translator` or a similar tool).

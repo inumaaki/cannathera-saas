@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { LocaleSwitcher } from "@/components/auth/LocaleSwitcher";
 
@@ -23,11 +23,17 @@ export function LandingHeader() {
     { href: "/faq", label: tl("faq") },
   ];
 
+  const locale = useLocale();
+  const needsMoreDropdown = ["bg", "ru", "pl", "ro"].includes(locale);
+  
+  const primaryLinks = needsMoreDropdown ? navLinks.slice(0, 7) : navLinks;
+  const moreLinks = needsMoreDropdown ? navLinks.slice(7) : [];
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-hairline bg-white/75 backdrop-blur-md transition-all duration-300">
       <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between gap-2 px-3 sm:px-6">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group transition-transform duration-300 active:scale-[0.97]">
+        <Link href="/" className="flex shrink-0 items-center gap-2.5 group transition-transform duration-300 active:scale-[0.97]">
           <Image
             src="/brand/logo.png"
             alt={tl("logoAlt")}
@@ -41,16 +47,16 @@ export function LandingHeader() {
         </Link>
 
         {/* Navigation links */}
-        <div className="hidden lg:flex flex-1 min-w-0 mx-1 items-center justify-end xl:justify-center relative">
-          <div className="w-max max-w-full overflow-hidden rounded-full border border-hairline/45 bg-[#f5f8f6]/50">
-            <nav className="flex items-center gap-0.5 xl:gap-1 text-[13px] xl:text-sm font-semibold p-1 overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-              {navLinks.map((link) => {
+        <div className="hidden xl:flex flex-1 min-w-0 mx-1 items-center justify-end xl:justify-center relative">
+          <div className="w-max max-w-full overflow-visible rounded-full border border-hairline/45 bg-[#f5f8f6]/50">
+            <nav className="flex items-center gap-0.5 xl:gap-1 text-[13px] xl:text-sm font-semibold p-1">
+              {primaryLinks.map((link) => {
                 const isActive = pathname === link.href;
                 return (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`px-2.5 xl:px-4 py-1.5 rounded-full transition-all duration-200 whitespace-nowrap font-bold ${
+                    className={`px-2 xl:px-3 py-1.5 rounded-full transition-all duration-200 whitespace-nowrap font-bold ${
                       isActive
                         ? "bg-pine text-white shadow-md"
                         : "text-[#4a5e54] font-semibold hover:text-pine hover:bg-white/80 hover:shadow-sm"
@@ -60,12 +66,43 @@ export function LandingHeader() {
                   </Link>
                 );
               })}
+              
+              {/* More Dropdown */}
+              {moreLinks.length > 0 && (
+                <div className="relative group">
+                  <button
+                    type="button"
+                    className="px-2 xl:px-3 py-1.5 rounded-full transition-all duration-200 text-[#4a5e54] font-semibold group-hover:text-pine group-hover:bg-white/80 group-hover:shadow-sm flex items-center gap-1"
+                  >
+                    {tl("more")}
+                    <span aria-hidden className="msym text-[18px]">expand_more</span>
+                  </button>
+                  <div className="absolute top-full right-0 mt-1 w-48 bg-white border border-hairline rounded-2xl shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col p-1.5 z-50 transform origin-top scale-95 group-hover:scale-100">
+                    {moreLinks.map((link) => {
+                      const isActive = pathname === link.href;
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className={`px-4 py-2 rounded-xl transition-all duration-200 font-bold text-sm ${
+                            isActive
+                              ? "bg-pine/10 text-pine"
+                              : "text-[#4a5e54] hover:bg-surface hover:text-pine"
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
             </nav>
           </div>
         </div>
 
         {/* Right CTAs */}
-        <div className="hidden items-center gap-2 lg:flex xl:gap-3">
+        <div className="hidden shrink-0 items-center gap-2 xl:flex xl:gap-3">
           <LocaleSwitcher direction="down" />
           <Link
             href="/login"
@@ -86,7 +123,7 @@ export function LandingHeader() {
           aria-label={tl("menu")}
           aria-expanded={menuOpen}
           onClick={() => setMenuOpen((current) => !current)}
-          className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-hairline text-pine transition hover:bg-surface lg:hidden"
+          className="flex size-10 shrink-0 items-center justify-center rounded-xl border border-hairline text-pine transition hover:bg-surface xl:hidden"
         >
           <span aria-hidden className="msym text-[22px]">{menuOpen ? "close" : "menu"}</span>
         </button>
@@ -98,13 +135,13 @@ export function LandingHeader() {
             type="button"
             aria-label={tl("menu")}
             onClick={() => setMenuOpen(false)}
-            className="fixed inset-0 top-16 z-40 bg-pine/30 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 top-16 z-40 bg-pine/30 backdrop-blur-sm xl:hidden"
           />
           <div
             role="dialog"
             aria-modal="true"
             aria-label={tl("menu")}
-            className="absolute inset-x-3 top-[4.5rem] z-50 max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-2xl border border-hairline bg-white p-3 shadow-2xl sm:inset-x-6 lg:hidden"
+            className="absolute inset-x-3 top-[4.5rem] z-50 max-h-[calc(100dvh-5.5rem)] overflow-y-auto rounded-2xl border border-hairline bg-white p-3 shadow-2xl sm:inset-x-6 xl:hidden"
           >
             <nav className="grid gap-1 text-sm font-bold text-ink-strong">
               {navLinks.map((link) => {

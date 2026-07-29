@@ -1762,7 +1762,8 @@
       "faq": "Întrebări frecvente / Ajutor",
       "physicians": "Pentru Medici",
       "pharmacies": "Pentru farmacii",
-      "telemedicine": "Pentru telemedicina"
+      "telemedicine": "Pentru telemedicina",
+      "more": "Mai mult"
     },
     "hero": {
       "certified": "Software Clinic Certificat",
@@ -2046,6 +2047,22 @@
     "api_title": "Schimb automat de date",
     "api_text": "Informații despre interfețele noastre API pentru schimbul de date complet automatizat pe întreaga platformă.",
     "integration_title": "Integrare perfectă",
-    "integration_text": "Conectați-vă infrastructura în zile, nu în luni, cu API-urile noastre REST bine documentate."
+    "integration_text": "Conectați-vă infrastructura în zile, nu în luni, cu API-urile noastre REST bine documentate.",
+    "v2_hero_title": "Integrare perfectă în procesele de tratament complet digitale, scalabilitate maximă și monitorizare de la distanță conformă legal",
+    "v2_hero_intro": "Platformele de telemedicină, centrele de îngrijire medicală și furnizorii de asistență medicală digitală reprezintă eficiență maximă, scalabilitate și căi de tratament pur digital. Atunci când sălile de practică fizică sunt înlocuite cu consultații digitale, îngrijirea continuă și automată pentru pacienți în mediul lor de acasă este factorul decisiv pentru calitate și siguranța pacientului. Cannathera offers the ideal infrastructure to perfectly complement digital remote treatments with structured, ongoing therapy support.",
+    "v2_f1_title": "Minimizarea riscurilor de răspundere în tratamentele la distanță",
+    "v2_f1_text": "În tratarea la distanță, platformele operează pe un teritoriu de reglementare complex. Cu logica noastră de triaj validată și alertele automate de prag, medicii dumneavoastră de telemedicină au la îndemână documentația completă în orice moment, conform căreia pacientul a fost monitorizat îndeaproape și că orice anomalie ar putea fi rezolvată imediat – protejând în mod demonstrabil împotriva cererilor de daune și a lipsurilor de răspundere.",
+    "v2_f2_title": "Creșterea reținerii pacienților în locul consultațiilor unice",
+    "v2_f2_text": "Spune-i la revedere utilizatorilor trecători, o singură dată, care doar își iau rețeta și apoi pleacă. Suportul de terapie integrat și continuu de la Cannathera menține pacienții implicați cu platforma dvs. pe termen lung, încurajând autentificarea zilnică și o ancoră consecventă pentru sănătatea lor.",
+    "v2_f3_title": "Eliberați povara medicilor prin pre-filtrare structurată",
+    "v2_f3_text": "În loc ca medicii tăi să se înece în mesaje de chat și e-mailuri nestructurate, Cannathera filtrează complet zgomotul de fundal. Scalele, simptomele și toleranțele standardizate ale durerii sunt prezentate într-un mod care permite medicilor de telemedicină să vadă doar ceea ce este relevant din punct de vedere clinic dintr-o privire - maximizând debitul per medic și reducând semnificativ costurile cu personalul.",
+    "v2_feat1_title": "Integrare complet digitală",
+    "v2_feat1_text": "Integrați fără probleme suportul nostru de terapie adaptativă ghidat clinic în procesele dvs. existente de telemedicină și în căile digitale ale pacientului.",
+    "v2_feat2_title": "Interfețe și urmărire inteligentă",
+    "v2_feat2_text": "Utilizați structuri API de ultimă generație pentru a monitoriza progresul terapiei în siguranță și fără probleme pe canalele digitale.",
+    "v2_feat3_title": "Triaj conform legii și monitorizare de la distanță",
+    "v2_feat3_text": "Colectați de la distanță toți parametrii și chestionarele relevanți pentru terapie, conform celor mai stricte standarde de securitate (conform GDPR și criptat AES-256).",
+    "v2_feat4_title": "Scalabilitate cu propriul branding",
+    "v2_feat4_text": "Oferiți pacienților dumneavoastră un mediu extrem de profesionist, conform legii, care îmbină perfect calitatea tratamentului, protecția datelor și tehnologia de ultimă oră."
   }
 }

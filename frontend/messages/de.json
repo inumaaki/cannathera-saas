@@ -1762,7 +1762,8 @@
       "faq": "FAQ / Hilfe",
       "physicians": "Für Ärzte",
       "pharmacies": "Für Apotheken",
-      "telemedicine": "Für Telemedizin"
+      "telemedicine": "Für Telemedizin",
+      "more": "Mehr"
     },
     "hero": {
       "certified": "ZERTIFIZIERTE MEDIZINPRODUKTEPLATTFORM",
@@ -2046,6 +2047,22 @@
     "api_title": "Automated Data Exchange",
     "api_text": "Information about our API interfaces for fully automated data exchange across your entire platform.",
     "integration_title": "Seamless Integration",
-    "integration_text": "Connect your infrastructure in days, not months, with our well-documented REST APIs."
+    "integration_text": "Connect your infrastructure in days, not months, with our well-documented REST APIs.",
+    "v2_hero_title": "Nahtlose Integration in volldigitale Behandlungsprozesse, maximale Skalierbarkeit und rechtssichere Fernüberwachung",
+    "v2_hero_intro": "Telemedizinplattformen, medizinische Versorgungszentren und digitale Gesundheitsdienstleister stehen für maximale Effizienz, Skalierbarkeit und rein digitale Behandlungspfade. Wenn physische Praxisräume durch digitale Sprechstunden ersetzt werden, ist eine reibungslose, automatisierte Nachbetreuung der Patienten in ihrer häuslichen Umgebung der entscheidende Faktor für Qualität und Patientensicherheit. Cannathera bietet die ideale Infrastruktur, um digitale Fernbehandlungen durch eine strukturierte, fortlaufende Therapieunterstützung perfekt zu ergänzen.",
+    "v2_f1_title": "Minimierung von Haftungsrisiken bei Fernbehandlungen",
+    "v2_f1_text": "Bei der Fernbehandlung agieren Plattformen in einem komplexen regulatorischen Umfeld. Mit unserer validierten Triage-Logik und automatisierten Schwellenwertalarmen haben Ihre telemedizinischen Ärzte jederzeit die vollständige Dokumentation zur Hand, dass der Patient engmaschig überwacht wurde und etwaige Auffälligkeiten sofort behoben werden konnten – und nachweislich vor Schadensersatzansprüchen und Haftungslücken geschützt sind.",
+    "v2_f2_title": "Erhöhte Patientenbindung statt einmaliger Konsultationen",
+    "v2_f2_text": "Verabschieden Sie sich von flüchtigen, einmaligen Benutzern, die einfach ihr Rezept abholen und dann gehen. Die integrierte, fortlaufende Therapieunterstützung von Cannathera sorgt dafür, dass Patienten langfristig an Ihre Plattform gebunden bleiben, indem sie zu täglichen Anmeldungen anregt und einen konsistenten Anker für ihre Gesundheit darstellt.",
+    "v2_f3_title": "Entlasten Sie Ärzte durch strukturierte Vorfilterung",
+    "v2_f3_text": "Anstatt dass Ihre Ärzte in unstrukturierten Chat-Nachrichten und E-Mails ertrinken, filtert Cannathera die Hintergrundgeräusche vollständig heraus. Standardisierte Schmerzskalen, Symptome und Toleranzen werden so dargestellt, dass telemedizinische Ärzte auf einen Blick nur das sehen, was klinisch relevant ist – wodurch der Durchsatz pro Arzt maximiert und die Personalkosten erheblich gesenkt werden.",
+    "v2_feat1_title": "Vollständig digitale Integration",
+    "v2_feat1_text": "Integrieren Sie unsere klinisch geführte, adaptive Therapieunterstützung nahtlos in Ihre bestehenden telemedizinischen Prozesse und digitalen Patientenpfade.",
+    "v2_feat2_title": "Schnittstellen & smarte Nachbereitung",
+    "v2_feat2_text": "Nutzen Sie modernste API-Strukturen, um den Therapiefortschritt sicher und nahtlos über digitale Kanäle hinweg zu überwachen.",
+    "v2_feat3_title": "Rechtssichere Triage und Fernüberwachung",
+    "v2_feat3_text": "Erfassen Sie alle therapierelevanten Parameter und Fragebögen aus der Ferne nach strengsten Sicherheitsstandards (DSGVO-konform und AES-256-verschlüsselt).",
+    "v2_feat4_title": "Skalierbarkeit mit Ihrem eigenen Branding",
+    "v2_feat4_text": "Bieten Sie Ihren Patienten ein hochprofessionelles, rechtskonformes Umfeld, das Behandlungsqualität, Datenschutz und modernste Technologie perfekt vereint."
   }
 }

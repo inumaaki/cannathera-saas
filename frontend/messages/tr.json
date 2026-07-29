@@ -1762,7 +1762,8 @@
       "faq": "SSS / Yardım",
       "physicians": "Hekimler için",
       "pharmacies": "Eczaneler için",
-      "telemedicine": "Teletıp için"
+      "telemedicine": "Teletıp için",
+      "more": "Daha"
     },
     "hero": {
       "certified": "SERTİFİKALI KLİNİK YAZILIM",
@@ -2046,6 +2047,22 @@
     "api_title": "Otomatik Veri Alışverişi",
     "api_text": "Platformunuzun tamamında tam otomatik veri alışverişi için API arayüzlerimiz hakkında bilgiler.",
     "integration_title": "Sorunsuz Entegrasyon",
-    "integration_text": "İyi belgelenmiş REST API'lerimizle altyapınızı aylar değil günler içinde bağlayın."
+    "integration_text": "İyi belgelenmiş REST API'lerimizle altyapınızı aylar değil günler içinde bağlayın.",
+    "v2_hero_title": "Tamamen dijital arıtma süreçlerine kusursuz entegrasyon, maksimum ölçeklenebilirlik ve yasal olarak uyumlu Uzaktan İzleme",
+    "v2_hero_intro": "Teletıp platformları, tıbbi bakım merkezleri ve dijital sağlık hizmeti sağlayıcıları, maksimum verimlilik, ölçeklenebilirlik ve tamamen dijital tedavi yollarını temsil eder. Fiziksel muayenehanelerin yerini dijital konsültasyonlar aldığında, hastaların ev ortamındaki kesintisiz, otomatik takip bakımı, kalite ve hasta güvenliği açısından belirleyici faktör haline geliyor. Cannathera, dijital uzaktan tedavileri yapılandırılmış, sürekli terapi desteğiyle mükemmel şekilde tamamlamak için ideal altyapıyı sunar.",
+    "v2_f1_title": "Uzaktan tedavilerde sorumluluk risklerinin en aza indirilmesi",
+    "v2_f1_text": "Uzaktan tedavide platformlar karmaşık düzenleyici bölgelerde faaliyet gösterir. Doğrulanmış triyaj mantığımız ve otomatik eşik uyarılarımız sayesinde, teletıp doktorlarınızın her zaman parmaklarının ucunda, hastanın yakından takip edildiğine ve herhangi bir anormalliğin anında ele alınabileceğine dair eksiksiz belgeler bulunur; bu da hasar iddialarına ve sorumluluk boşluklarına karşı açıkça koruma sağlar.",
+    "v2_f2_title": "Tek seferlik konsültasyonlar yerine daha fazla hastayı elde tutma",
+    "v2_f2_text": "Reçetelerini alıp sonra ayrılan, geçici, tek seferlik kullanıcılara elveda deyin. Cannathera'nın entegre, sürekli terapi desteği, hastaların platformunuzla uzun vadede etkileşimde kalmasını sağlayarak günlük oturum açmaları teşvik eder ve sağlıkları için tutarlı bir dayanak noktası oluşturur.",
+    "v2_f3_title": "Yapılandırılmış ön filtreleme yoluyla doktorların yükünü hafifletin",
+    "v2_f3_text": "Doktorlarınızın yapılandırılmamış sohbet mesajları ve e-postalarda boğulması yerine Cannathera, arka plandaki gürültüyü tamamen filtreler. Standartlaştırılmış ağrı ölçekleri, semptomlar ve toleranslar, teletıp doktorlarının bir bakışta yalnızca klinik açıdan anlamlı olanı görmesine olanak tanıyacak şekilde sunulur; böylece doktor başına iş verimi en üst düzeye çıkarılır ve personel maliyetleri önemli ölçüde azalır.",
+    "v2_feat1_title": "Tamamen dijital entegrasyon",
+    "v2_feat1_text": "Klinik olarak yönlendirilen, uyarlanabilir terapi desteğimizi mevcut teletıp süreçlerinize ve dijital hasta yollarınıza sorunsuz bir şekilde entegre edin.",
+    "v2_feat2_title": "Arayüzler ve akıllı takip",
+    "v2_feat2_text": "Terapinin ilerlemesini dijital kanallarda güvenli ve sorunsuz bir şekilde izlemek için en son teknolojiye sahip API yapılarını kullanın.",
+    "v2_feat3_title": "Yasal olarak uyumlu triyaj ve uzaktan izleme",
+    "v2_feat3_text": "Terapiyle ilgili tüm parametreleri ve anketleri en katı güvenlik standartlarına (GDPR uyumlu ve AES-256 şifreli) göre uzaktan toplayın.",
+    "v2_feat4_title": "Kendi markanızla ölçeklenebilirlik",
+    "v2_feat4_text": "Hastalarınıza tedavi kalitesini, veri korumayı ve en son teknolojiyi mükemmel bir şekilde harmanlayan son derece profesyonel, yasalara uygun bir ortam sunun."
   }
 }

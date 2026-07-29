@@ -1762,7 +1762,8 @@
       "faq": "FAQ / Help",
       "physicians": "For Physicians",
       "pharmacies": "For Pharmacies",
-      "telemedicine": "For Telemedicine"
+      "telemedicine": "For Telemedicine",
+      "more": "More"
     },
     "hero": {
       "certified": "Certified Clinical Software",
@@ -2040,12 +2041,22 @@
   "telemedicine": {
     "title": "For Telemedicine Providers",
     "subtitle": "Integration of digital, ongoing therapy support into fully digital treatment processes and remote consultations.",
-    "benefits_title": "Interface and Documentation Advantages",
-    "benefits_text": "Seamless digital follow-up and monitoring of patients. Legally compliant and structured remote recording of all therapy-relevant threshold values, triage procedures, and questionnaires.",
     "cta": "Request telemedicine integration",
-    "api_title": "Automated Data Exchange",
-    "api_text": "Information about our API interfaces for fully automated data exchange across your entire platform.",
-    "integration_title": "Seamless Integration",
-    "integration_text": "Connect your infrastructure in days, not months, with our well-documented REST APIs."
+    "v2_hero_title": "Seamless integration into fully digital treatment processes, maximum scalability, and legally compliant Remote Monitoring",
+    "v2_hero_intro": "Telemedicine platforms, medical care centers, and digital healthcare providers stand for maximum efficiency, scalability, and purely digital treatment pathways. When physical practice rooms are replaced by digital consultations, seamless, automated follow-up care for patients in their home environment is the decisive factor for quality and patient safety. Cannathera offers the ideal infrastructure to perfectly complement digital remote treatments with structured, ongoing therapy support.",
+    "v2_f1_title": "Minimizing liability risks in remote treatments",
+    "v2_f1_text": "In remote treatment, platforms operate in complex regulatory territory. With our validated triage logic and automated threshold alerts, your telemedicine physicians have complete documentation at their fingertips at all times that the patient was closely monitored and that any abnormalities could be addressed immediately – demonstrably protecting against claims for damages and liability gaps.",
+    "v2_f2_title": "Increased patient retention instead of one-off consultations",
+    "v2_f2_text": "Say goodbye to fleeting, one-time users who just pick up their prescription and then leave. Cannathera's integrated, ongoing therapy support keeps patients engaged with your platform long-term, encouraging daily logins and a consistent anchor for their health.",
+    "v2_f3_title": "Relieve the burden on physicians through structured pre-filtering",
+    "v2_f3_text": "Instead of your doctors drowning in unstructured chat messages and emails, Cannathera completely filters out the background noise. Standardized pain scales, symptoms, and tolerances are presented in a way that allows telemedicine physicians to see only what is clinically relevant at a glance – maximizing throughput per physician and significantly reducing personnel costs.",
+    "v2_feat1_title": "Fully digital integration",
+    "v2_feat1_text": "Seamlessly integrate our clinically guided, adaptive therapy support into your existing telemedicine processes and digital patient pathways.",
+    "v2_feat2_title": "Interfaces & smart follow-up",
+    "v2_feat2_text": "Utilize state-of-the-art API structures to monitor therapy progress securely and seamlessly across digital channels.",
+    "v2_feat3_title": "Legally compliant triage and remote monitoring",
+    "v2_feat3_text": "Remotely collect all therapy-relevant parameters and questionnaires according to the strictest security standards (GDPR-compliant and AES-256 encrypted).",
+    "v2_feat4_title": "Scalability with your own branding",
+    "v2_feat4_text": "Offer your patients a highly professional, legally compliant environment that perfectly blends treatment quality, data protection, and state-of-the-art technology."
   }
 }

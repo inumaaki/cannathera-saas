@@ -1762,7 +1762,8 @@
       "faq": "Często zadawane pytania / Pomoc",
       "physicians": "Dla lekarzy",
       "pharmacies": "Dla aptek",
-      "telemedicine": "Dla telemedycyny"
+      "telemedicine": "Dla telemedycyny",
+      "more": "Więcej"
     },
     "hero": {
       "certified": "Certyfikowane oprogramowanie kliniczne",
@@ -2046,6 +2047,22 @@
     "api_title": "Zautomatyzowana wymiana danych",
     "api_text": "Informacje o naszych interfejsach API umożliwiających w pełni zautomatyzowaną wymianę danych na całej platformie.",
     "integration_title": "Bezproblemowa integracja",
-    "integration_text": "Połącz swoją infrastrukturę w ciągu kilku dni, a nie miesięcy, dzięki naszym dobrze udokumentowanym interfejsom API REST."
+    "integration_text": "Połącz swoją infrastrukturę w ciągu kilku dni, a nie miesięcy, dzięki naszym dobrze udokumentowanym interfejsom API REST.",
+    "v2_hero_title": "Bezproblemowa integracja z w pełni cyfrowymi procesami leczenia, maksymalna skalowalność i zgodny z prawem zdalny monitoring",
+    "v2_hero_intro": "Platformy telemedyczne, centra opieki medycznej i cyfrowi świadczeniodawcy oznaczają maksymalną wydajność, skalowalność i całkowicie cyfrowe ścieżki leczenia. Kiedy gabinety lekarskie zastępują konsultacje cyfrowe, płynna, zautomatyzowana opieka kontrolna nad pacjentami w ich środowisku domowym jest decydującym czynnikiem wpływającym na jakość i bezpieczeństwo pacjentów. Cannathera oferuje idealną infrastrukturę, która doskonale uzupełnia cyfrowe zdalne leczenie ustrukturyzowanym, ciągłym wsparciem terapeutycznym.",
+    "v2_f1_title": "Minimalizacja ryzyka odpowiedzialności w przypadku leczenia na odległość",
+    "v2_f1_text": "W przypadku zdalnego przetwarzania platformy działają na złożonym obszarze regulacyjnym. Dzięki naszej sprawdzonej logice segregacji pacjentów i automatycznym alertom progowym lekarze zajmujący się telemedycyną mają zawsze pod ręką pełną dokumentację potwierdzającą, że pacjent był ściśle monitorowany i że można było natychmiast skorygować wszelkie nieprawidłowości, co wyraźnie chroni przed roszczeniami odszkodowawczymi i lukami w odpowiedzialności.",
+    "v2_f2_title": "Większa retencja pacjentów zamiast jednorazowych konsultacji",
+    "v2_f2_text": "Pożegnaj ulotnych, jednorazowych użytkowników, którzy po prostu odbierają receptę i wychodzą. Zintegrowane, ciągłe wsparcie terapeutyczne Cannathera utrzymuje długotrwałe zaangażowanie pacjentów w platformę, zachęcając do codziennego logowania i spójnego dbania o ich zdrowie.",
+    "v2_f3_title": "Odciążenie lekarzy poprzez uporządkowane filtrowanie wstępne",
+    "v2_f3_text": "Zamiast tonąć lekarzy w nieustrukturyzowanych wiadomościach na czacie i e-mailach, Cannathera całkowicie odfiltrowuje szum tła. Standaryzowane skale bólu, objawy i tolerancje są prezentowane w sposób, który pozwala lekarzom telemedycyny na pierwszy rzut oka zobaczyć tylko to, co jest istotne klinicznie – maksymalizując wydajność przypadającą na jednego lekarza i znacznie zmniejszając koszty personelu.",
+    "v2_feat1_title": "W pełni cyfrowa integracja",
+    "v2_feat1_text": "Bezproblemowo zintegruj nasze kierowane klinicznie wsparcie w zakresie terapii adaptacyjnej z istniejącymi procesami telemedycznymi i cyfrowymi ścieżkami pacjenta.",
+    "v2_feat2_title": "Interfejsy i inteligentne monitorowanie",
+    "v2_feat2_text": "Korzystaj z najnowocześniejszych struktur API, aby bezpiecznie i bezproblemowo monitorować postęp terapii w kanałach cyfrowych.",
+    "v2_feat3_title": "Zgodna z prawem segregacja i zdalny monitoring",
+    "v2_feat3_text": "Zbieraj zdalnie wszystkie parametry i kwestionariusze istotne dla terapii zgodnie z najsurowszymi standardami bezpieczeństwa (zgodny z RODO i szyfrowany AES-256).",
+    "v2_feat4_title": "Skalowalność z własnym brandingiem",
+    "v2_feat4_text": "Zaoferuj swoim pacjentom wysoce profesjonalne, zgodne z prawem środowisko, które doskonale łączy jakość leczenia, ochronę danych i najnowocześniejszą technologię."
   }
 }
