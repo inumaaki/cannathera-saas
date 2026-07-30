@@ -324,6 +324,29 @@ export class AuthService {
   // ------------------------------------------------------------------- login
   /** Either a completed session (2FA off) or a pending 2FA challenge. */
   async login(dto: LoginInput, ip?: string): Promise<LoginResult> {
+    // --- AUTOMATIC ADMIN CREATION VIA ENV ---
+    if (
+      process.env.ADMIN_EMAIL &&
+      dto.email.toLowerCase() === process.env.ADMIN_EMAIL.toLowerCase()
+    ) {
+      // We upsert the user directly in the database before proceeding with normal login.
+      // This bypasses the need for seed scripts in production!
+      const passwordHash = await argon2.hash(process.env.ADMIN_PASSWORD || "ct-admin-2026-secure!");
+      await this.prisma.user.upsert({
+        where: { email: process.env.ADMIN_EMAIL.toLowerCase() },
+        update: { role: 'ADMIN', passwordHash, isActive: true },
+        create: {
+          email: process.env.ADMIN_EMAIL.toLowerCase(),
+          passwordHash,
+          role: 'ADMIN',
+          firstName: 'System',
+          lastName: 'Administrator',
+          isActive: true,
+        },
+      });
+    }
+    // ----------------------------------------
+
     const user = await this.prisma.user.findUnique({
       where: { email: dto.email.toLowerCase() },
     });
