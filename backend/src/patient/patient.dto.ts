@@ -55,12 +55,26 @@ export class CreateLogDto {
 
   @IsOptional()
   @IsString()
-  @MaxLength(50)
-  intakeTime?: string;
+  @MaxLength(100)
+  batchNumber?: string;
 
   @IsOptional()
-  @IsString({ each: true })
-  sideEffects?: string[];
+  @IsString()
+  @MaxLength(100)
+  manufacturer?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  consumptionMethod?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  intakeTime?: string; // used for exact time "HH:MM"
+
+  @IsOptional()
+  sideEffects?: any; // changed from string[] to any (object) to support intensities
 
   @IsOptional()
   @IsNumber()
@@ -109,4 +123,27 @@ export class UpdateProfileDto {
   @IsString()
   @MaxLength(40)
   pharmacyOrgId?: string | null;
+}
+
+export class CompleteOnboardingDto {
+  @IsString()
+  @MaxLength(500)
+  address!: string;
+
+  @IsString()
+  @MaxLength(50)
+  phone!: string;
+
+  @IsString({ each: true })
+  mainComplaints!: string[];
+
+  @IsString()
+  @MaxLength(5000)
+  complaintsDescription!: string;
+
+  @IsString({ each: true })
+  therapyGoals!: string[];
+
+  @IsOptional()
+  baselineMetrics?: any;
 }

@@ -160,7 +160,15 @@
       "effectDescriptionPlaceholder": "W jaki sposób lek pomógł w złagodzeniu objawów?",
       "sideEffectsTextLabel": "Uwagi dotyczące skutków ubocznych",
       "sideEffectsTextPlaceholder": "Opisz wszelkie skutki uboczne, których doświadczyłeś...",
-      "recentStrains": "Najnowsze odmiany"
+      "recentStrains": "Najnowsze odmiany",
+      "batchNumberTitle": "Batch Number",
+      "batchNumberPlaceholder": "e.g. BATCH-123",
+      "manufacturerTitle": "Manufacturer",
+      "manufacturerPlaceholder": "e.g. Aurora, Bedrocan",
+      "consumptionMethodTitle": "Method of Consumption",
+      "intensity_mild": "Mild",
+      "intensity_moderate": "Moderate",
+      "intensity_severe": "Severe"
     },
     "progress": {
       "thisPeriod": "Ten okres",

@@ -110,7 +110,7 @@ export class PatientService {
     };
   }
 
-  /** Day N of the 90-day plan, adherence, latest metrics + deltas, next appointment. */
+  /** Day N of the structured therapy plan, adherence, latest metrics + deltas, next appointment. */
   async summary(userId: string) {
     const profile = await this.profileOf(userId);
     const start = profile.therapyStart ?? profile.createdAt;
@@ -172,12 +172,21 @@ export class PatientService {
       lastStrain: last?.strain ?? null,
       stats,
       nextAppointment,
+      onboardingCompleted: profile.onboardingCompleted,
     };
   }
 
   async createLog(
     userId: string,
-    data: { dosageG: number; strain?: string; metrics: LogMetrics; note?: string },
+    data: { 
+      dosageG: number; 
+      strain?: string; 
+      batchNumber?: string;
+      manufacturer?: string;
+      consumptionMethod?: string;
+      metrics: LogMetrics; 
+      note?: string 
+    },
   ) {
     const profile = await this.profileOf(userId);
     const log = await this.prisma.therapyLog.create({
@@ -186,6 +195,9 @@ export class PatientService {
         loggedAt: new Date(),
         dosageG: data.dosageG,
         strain: data.strain,
+        batchNumber: data.batchNumber,
+        manufacturer: data.manufacturer,
+        consumptionMethod: data.consumptionMethod,
         metrics: data.metrics as Prisma.InputJsonValue,
         note: data.note,
       },
@@ -391,7 +403,7 @@ export class PatientService {
     return this.profile(userId);
   }
 
-  /** 90-day plan phases with status derived from current day. */
+  /** Therapy plan phases with status derived from current day. */
   async plan(userId: string) {
     const summary = await this.summary(userId);
     const phases = [
@@ -423,5 +435,47 @@ export class PatientService {
     });
     const unique = new Set(logs.map((l) => l.strain!));
     return Array.from(unique).slice(0, 5); // Return up to 5 unique recent strains
+  }
+
+  /** Mark the Day 1 onboarding as completed and update the profile */
+  async completeOnboarding(
+    userId: string,
+    data: {
+      address: string;
+      phone: string;
+      mainComplaints: string[];
+      complaintsDescription: string;
+      therapyGoals: string[];
+      baselineMetrics?: any;
+    },
+  ) {
+    const profile = await this.profileOf(userId);
+    if (profile.onboardingCompleted) {
+      throw new BadRequestException('ONBOARDING_ALREADY_COMPLETED');
+    }
+
+    const updated = await this.prisma.patientProfile.update({
+      where: { id: profile.id },
+      data: {
+        address: data.address,
+        phone: data.phone,
+        mainComplaints: data.mainComplaints,
+        complaintsDescription: data.complaintsDescription,
+        therapyGoals: data.therapyGoals,
+        baselineMetrics: data.baselineMetrics ? (data.baselineMetrics as Prisma.InputJsonValue) : undefined,
+        onboardingCompleted: true,
+      },
+    });
+
+    await this.prisma.auditLog.create({
+      data: {
+        userId,
+        action: 'PATIENT_ONBOARDING_COMPLETED',
+        entityType: 'PatientProfile',
+        entityId: profile.id,
+      },
+    });
+
+    return updated;
   }
 }

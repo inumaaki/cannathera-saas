@@ -32,8 +32,11 @@ export function QuickLogSheet({
   );
 
   // New Clinical Parameters
-  const [intakeTime, setIntakeTime] = useState("morgens");
-  const [sideEffects, setSideEffects] = useState<string[]>([]);
+  const [intakeTime, setIntakeTime] = useState("");
+  const [consumptionMethod, setConsumptionMethod] = useState("Vaporizer");
+  const [batchNumber, setBatchNumber] = useState("");
+  const [manufacturer, setManufacturer] = useState("");
+  const [sideEffects, setSideEffects] = useState<Record<string, string>>({}); // mapped to intensities
   const [benefitRating, setBenefitRating] = useState(5);
   const [benefitOnset, setBenefitOnset] = useState("15 - 30 min");
   const [benefitDuration, setBenefitDuration] = useState(
@@ -49,14 +52,23 @@ export function QuickLogSheet({
 
   useEffect(() => {
     if (!open) return;
+    // Set current time as default if empty
+    if (!intakeTime) {
+      const now = new Date();
+      setIntakeTime(`${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`);
+    }
 
     const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
+    // Fix mobile scroll bug: don't lock body overflow entirely on iOS, 
+    // or use touch-action. We will allow normal modal scroll with touch scrolling.
+    if (!window.navigator.userAgent.match(/(iPad|iPhone|iPod)/g)) {
+      document.body.style.overflow = "hidden";
+    }
 
     return () => {
       document.body.style.overflow = previousOverflow;
     };
-  }, [open]);
+  }, [open, intakeTime]);
 
   if (!open) return null;
 
@@ -68,6 +80,9 @@ export function QuickLogSheet({
         body: {
           dosageG: dosage,
           strain,
+          batchNumber,
+          manufacturer,
+          consumptionMethod,
           pain,
           sleep,
           activity,
@@ -94,12 +109,16 @@ export function QuickLogSheet({
   }
 
   // Handle side effect toggles
-  function toggleSideEffect(effectKey: string) {
-    setSideEffects((prev) =>
-      prev.includes(effectKey)
-        ? prev.filter((x) => x !== effectKey)
-        : [...prev, effectKey]
-    );
+  function toggleSideEffect(effectKey: string, intensity: string) {
+    setSideEffects((prev) => {
+      const copy = { ...prev };
+      if (copy[effectKey] === intensity) {
+        delete copy[effectKey]; // toggle off if same intensity clicked again
+      } else {
+        copy[effectKey] = intensity; // set or change intensity
+      }
+      return copy;
+    });
   }
 
   const durationOptions =
@@ -120,9 +139,9 @@ export function QuickLogSheet({
         className="absolute inset-0 bg-black/50"
       />
       <div
+        style={{ WebkitOverflowScrolling: "touch" }}
         className="absolute inset-x-0 bottom-0 mx-auto max-h-[calc(100dvh-0.75rem)] w-full max-w-md
                    overflow-y-auto overscroll-contain rounded-t-3xl bg-white px-4 pt-3 shadow-2xl
-                   [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden
                    pb-[calc(1.5rem+env(safe-area-inset-bottom))]
                    sm:bottom-3 sm:max-h-[calc(100dvh-1.5rem)] sm:rounded-3xl sm:px-6"
       >
@@ -173,29 +192,29 @@ export function QuickLogSheet({
         <p className="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-ink-strong">
           {t("intakeTimeTitle")}
         </p>
-        <div className="mt-2 grid grid-cols-4 gap-2">
-          {[
-            { id: "morgens", label: t("intakeTimeMorning") },
-            { id: "mittags", label: t("intakeTimeNoon") },
-            { id: "abends", label: t("intakeTimeEvening") },
-            { id: "bedarf", label: t("intakeTimeNeeded") },
-          ].map((time) => {
-            const isSelected = intakeTime === time.id;
-            return (
-              <button
-                key={time.id}
-                type="button"
-                onClick={() => setIntakeTime(time.id)}
-                className={`py-2 rounded-xl text-center text-xs font-bold border transition-all select-none ${
-                  isSelected
-                    ? "bg-pine text-white border-pine shadow-sm"
-                    : "bg-white text-ink-strong border-hairline hover:bg-surface"
-                }`}
-              >
-                {time.label}
-              </button>
-            );
-          })}
+        <div className="mt-2">
+          <input
+            type="time"
+            value={intakeTime}
+            onChange={(e) => setIntakeTime(e.target.value)}
+            className="h-12 w-full rounded-lg border border-hairline bg-white px-4 text-base text-ink-strong outline-none focus:border-pine-600 focus:ring-2 focus:ring-pine-600/20"
+          />
+        </div>
+
+        {/* Consumption Method */}
+        <p className="mt-5 text-xs font-semibold uppercase tracking-[0.12em] text-ink-strong">
+          {t("consumptionMethodTitle")}
+        </p>
+        <div className="mt-2">
+          <select
+            value={consumptionMethod}
+            onChange={(e) => setConsumptionMethod(e.target.value)}
+            className="h-12 w-full rounded-lg border border-hairline bg-white px-4 text-base text-ink-strong outline-none focus:border-pine-600 focus:ring-2 focus:ring-pine-600/20"
+          >
+            {["Vaporizer", "Inhalation", "Oral/Drops", "Tea", "Joint/Classic"].map((m) => (
+              <option key={m} value={m}>{m}</option>
+            ))}
+          </select>
         </div>
 
         {/* Strain / Consumption Type — Open Free Text Field */}
@@ -235,6 +254,34 @@ export function QuickLogSheet({
           </div>
         )}
 
+        {/* Batch Number & Manufacturer */}
+        <div className="mt-4 grid grid-cols-2 gap-3">
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink-strong">
+              {t("batchNumberTitle")}
+            </p>
+            <input
+              type="text"
+              value={batchNumber}
+              onChange={(e) => setBatchNumber(e.target.value)}
+              placeholder={t("batchNumberPlaceholder")}
+              className="mt-2 h-12 w-full rounded-lg border border-hairline bg-white px-4 text-sm text-ink-strong outline-none focus:border-pine-600 focus:ring-2 focus:ring-pine-600/20"
+            />
+          </div>
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-ink-strong">
+              {t("manufacturerTitle")}
+            </p>
+            <input
+              type="text"
+              value={manufacturer}
+              onChange={(e) => setManufacturer(e.target.value)}
+              placeholder={t("manufacturerPlaceholder")}
+              className="mt-2 h-12 w-full rounded-lg border border-hairline bg-white px-4 text-sm text-ink-strong outline-none focus:border-pine-600 focus:ring-2 focus:ring-pine-600/20"
+            />
+          </div>
+        </div>
+
         {/* Sliders (Vitals & Sentiment) */}
         <p className="mt-6 text-xs font-semibold uppercase tracking-[0.12em] text-sage-900">
           {t("vitals")}
@@ -270,32 +317,51 @@ export function QuickLogSheet({
           {t("sideEffectsTitle")}
         </p>
         <hr className="mt-2 border-hairline" />
-        <div className="mt-3 grid grid-cols-2 gap-2">
+        <div className="mt-3 flex flex-col gap-3">
           {[
             { id: "fatigue", label: t("sideEffectFatigue") },
             { id: "dizziness", label: t("sideEffectDizziness") },
             { id: "dry_mouth", label: t("sideEffectDryMouth") },
             { id: "heartbeat", label: t("sideEffectHeartbeat") },
           ].map((effect) => {
-            const isSelected = sideEffects.includes(effect.id);
+            const currentIntensity = sideEffects[effect.id];
+            const isActive = !!currentIntensity;
             return (
-              <button
+              <div
                 key={effect.id}
-                type="button"
-                onClick={() => toggleSideEffect(effect.id)}
-                className={`py-2 px-3 rounded-xl border text-xs font-bold transition-all text-left flex items-center justify-between ${
-                  isSelected
-                    ? "bg-orange-50 border-orange-200 text-orange-800 shadow-sm"
-                    : "bg-white border-hairline text-ink-strong hover:bg-surface"
+                className={`p-3 rounded-xl border transition-all ${
+                  isActive
+                    ? "bg-orange-50 border-orange-200"
+                    : "bg-white border-hairline hover:bg-surface"
                 }`}
               >
-                <span>{effect.label}</span>
-                {isSelected && (
-                  <span aria-hidden className="msym text-[14px] text-orange-600">
-                    check_circle
+                <div className="flex items-center justify-between mb-2">
+                  <span className={`text-sm font-bold ${isActive ? "text-orange-800" : "text-ink-strong"}`}>
+                    {effect.label}
                   </span>
-                )}
-              </button>
+                  {isActive && (
+                    <span aria-hidden className="msym text-[16px] text-orange-600">
+                      warning
+                    </span>
+                  )}
+                </div>
+                <div className="grid grid-cols-3 gap-1">
+                  {["mild", "moderate", "severe"].map((intensity) => (
+                    <button
+                      key={intensity}
+                      type="button"
+                      onClick={() => toggleSideEffect(effect.id, intensity)}
+                      className={`py-1 text-xs font-bold rounded-lg transition-all ${
+                        currentIntensity === intensity
+                          ? "bg-orange-600 text-white shadow-sm"
+                          : "bg-white text-ink-strong border border-hairline hover:bg-orange-100"
+                      }`}
+                    >
+                      {t(`intensity_${intensity}`)}
+                    </button>
+                  ))}
+                </div>
+              </div>
             );
           })}
         </div>

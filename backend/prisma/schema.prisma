@@ -201,6 +201,16 @@ model PatientProfile {
   packageTier  SubscriptionTier @default(BASIC)
   condition    String? // e.g. "Chronische Schmerzen" — shown in the pharmacy roster
   lastReviewAt DateTime?
+  
+  // Day-1 Onboarding fields
+  address      String?
+  phone        String?
+  mainComplaints String[] @default([])
+  complaintsDescription String?
+  therapyGoals   String[] @default([])
+  baselineMetrics Json?
+  onboardingCompleted Boolean @default(false)
+
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 
@@ -483,6 +493,9 @@ model TherapyLog {
   loggedAt   DateTime
   dosageG    Float? // Blüten dosage in grams
   strain     String? // Sorte
+  batchNumber String? // Chargennummer
+  manufacturer String? // Hersteller
+  consumptionMethod String? // Vaporizer, Inhalation, Oral/Drops, Tea, Joint/Classic
   metrics    Json? // { painNrs, sleepH, activity, qol, satisfaction, sideEffects }
   note       String?
   createdAt  DateTime @default(now())

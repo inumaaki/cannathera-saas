@@ -17,13 +17,18 @@ import {
 } from '../auth/auth.guard';
 import type { SessionPayload } from '../auth/auth.service';
 import { PatientService } from './patient.service';
-import { CreateLogDto, RescheduleDto, UpdateProfileDto } from './patient.dto';
+import { CreateLogDto, RescheduleDto, UpdateProfileDto, CompleteOnboardingDto } from './patient.dto';
 
 @Controller('patient')
 @UseGuards(SessionGuard, RolesGuard)
 @Roles(Role.PATIENT)
 export class PatientController {
   constructor(private readonly patients: PatientService) {}
+
+  @Post('onboarding')
+  completeOnboarding(@CurrentUser() user: SessionPayload, @Body() dto: CompleteOnboardingDto) {
+    return this.patients.completeOnboarding(user.sub, dto);
+  }
 
   @Get('summary')
   summary(@CurrentUser() user: SessionPayload) {
@@ -35,6 +40,9 @@ export class PatientController {
     return this.patients.createLog(user.sub, {
       dosageG: dto.dosageG,
       strain: dto.strain,
+      batchNumber: dto.batchNumber,
+      manufacturer: dto.manufacturer,
+      consumptionMethod: dto.consumptionMethod,
       metrics: {
         pain: dto.pain,
         sleep: dto.sleep,

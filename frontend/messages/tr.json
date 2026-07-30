@@ -160,7 +160,15 @@
       "effectDescriptionPlaceholder": "İlaç semptomlarınıza tam olarak nasıl yardımcı oldu?",
       "sideEffectsTextLabel": "Yan Etki Notları",
       "sideEffectsTextPlaceholder": "Yaşadığınız yan etkileri açıklayın...",
-      "recentStrains": "Son Suşlar"
+      "recentStrains": "Son Suşlar",
+      "batchNumberTitle": "Parti Numarası",
+      "batchNumberPlaceholder": "örn. PARTI-123",
+      "manufacturerTitle": "Üretici",
+      "manufacturerPlaceholder": "örn. Aurora, Bedrocan",
+      "consumptionMethodTitle": "Tüketim Yöntemi",
+      "intensity_mild": "Hafif",
+      "intensity_moderate": "Orta",
+      "intensity_severe": "Şiddetli"
     },
     "progress": {
       "thisPeriod": "Bu dönem",

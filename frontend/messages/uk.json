@@ -160,7 +160,15 @@
       "effectDescriptionPlaceholder": "Як саме ліки допомогли при ваших симптомах?",
       "sideEffectsTextLabel": "Примітки щодо побічних ефектів",
       "sideEffectsTextPlaceholder": "Опишіть будь-які побічні ефекти, які ви відчували...",
-      "recentStrains": "Останні штами"
+      "recentStrains": "Останні штами",
+      "batchNumberTitle": "Batch Number",
+      "batchNumberPlaceholder": "e.g. BATCH-123",
+      "manufacturerTitle": "Manufacturer",
+      "manufacturerPlaceholder": "e.g. Aurora, Bedrocan",
+      "consumptionMethodTitle": "Method of Consumption",
+      "intensity_mild": "Mild",
+      "intensity_moderate": "Moderate",
+      "intensity_severe": "Severe"
     },
     "progress": {
       "thisPeriod": "Цей період",

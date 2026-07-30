@@ -160,7 +160,15 @@
       "effectDescriptionPlaceholder": "Как точно лекарството помогна при вашите симптоми?",
       "sideEffectsTextLabel": "Бележки за страничните ефекти",
       "sideEffectsTextPlaceholder": "Опишете всички странични ефекти, които сте изпитали...",
-      "recentStrains": "Скорошни щамове"
+      "recentStrains": "Скорошни щамове",
+      "batchNumberTitle": "Batch Number",
+      "batchNumberPlaceholder": "e.g. BATCH-123",
+      "manufacturerTitle": "Manufacturer",
+      "manufacturerPlaceholder": "e.g. Aurora, Bedrocan",
+      "consumptionMethodTitle": "Method of Consumption",
+      "intensity_mild": "Mild",
+      "intensity_moderate": "Moderate",
+      "intensity_severe": "Severe"
     },
     "progress": {
       "thisPeriod": "Този период",

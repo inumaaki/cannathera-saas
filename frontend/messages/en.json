@@ -78,7 +78,7 @@
       "milestoneTitle": "Next milestone",
       "menu": "Account menu",
       "myProfile": "My profile",
-      "myPlan": "My 90-day plan",
+      "myPlan": "My continuous therapy plan",
       "language": "Language",
       "logout": "Log out",
       "myForms": "My forms",
@@ -168,7 +168,15 @@
       "effectDescriptionPlaceholder": "How exactly did the medication help with your symptoms?",
       "sideEffectsTextLabel": "Side Effect Notes",
       "sideEffectsTextPlaceholder": "Describe any side effects you experienced...",
-      "recentStrains": "Recent Strains"
+      "recentStrains": "Recent Strains",
+      "batchNumberTitle": "Batch Number",
+      "batchNumberPlaceholder": "e.g. BATCH-123",
+      "manufacturerTitle": "Manufacturer",
+      "manufacturerPlaceholder": "e.g. Aurora, Bedrocan",
+      "consumptionMethodTitle": "Method of Consumption",
+      "intensity_mild": "Mild",
+      "intensity_moderate": "Moderate",
+      "intensity_severe": "Severe"
     },
     "progress": {
       "thisPeriod": "This period",
@@ -177,7 +185,7 @@
       "totalDosage": "Total dosage",
       "adherence": "Adherence",
       "cycleProgress": "Cycle progress",
-      "ofPlan": "of 90-day plan",
+      "ofPlan": "of continuous therapy plan",
       "correlationTitle": "Dosage & Symptom Correlation",
       "correlationSubtitle": "Tracking therapeutic window performance over the last 7 days",
       "legendDosage": "Dosage (mg)",
@@ -209,9 +217,9 @@
       "toForms": "Go to my forms"
     },
     "plan": {
-      "breadcrumbPlan": "90-Day Plan",
+      "breadcrumbPlan": "Continuous Therapy Plan",
       "title": "Therapeutic Progression Plan",
-      "subtitle": "A meticulously structured 90-day journey designed to optimize patient outcomes through measured assessment, precise titration, and monthly clinical reviews.",
+      "subtitle": "A meticulously structured continuous therapeutic journey designed to optimize patient outcomes through measured assessment, precise titration, and monthly clinical reviews.",
       "overallProgress": "Overall progress",
       "complete": "{pct}% complete",
       "day": "Day {day}",
@@ -239,7 +247,7 @@
         },
         "cycleCompletion": {
           "title": "Cycle Completion & Renewal",
-          "description": "Final assessment of the 90-day protocol. Determining maintenance dosage or transitioning to the next cycle."
+          "description": "Final assessment of the continuous protocol. Determining maintenance dosage or transitioning to the next cycle."
         }
       }
     },
@@ -375,7 +383,7 @@
       "fromLastWeek": "vs. last week",
       "activeFlags": "Active alerts",
       "requireAction": "{count} require immediate action",
-      "planReach": "90-day plan reach",
+      "planReach": "continuous therapy plan reach",
       "planReachPatients": "{count} patients",
       "onSchedule": "On schedule"
     },
@@ -428,7 +436,7 @@
     },
     "briefing": {
       "title": "Patient briefing",
-      "progress": "90-day progress",
+      "progress": "therapy progress",
       "mainConcern": "Main concern: {concern}",
       "painIndex": "Pain index",
       "sleepQuality": "Sleep quality",
@@ -453,7 +461,7 @@
     },
     "alerts": {
       "title": "Critical red flags",
-      "subtitle": "Manage and prioritise physiological anomalies across the 90-day course.",
+      "subtitle": "Manage and prioritise physiological anomalies across the therapy course.",
       "unreviewed": "Unreviewed",
       "reviewed": "Reviewed",
       "all": "All",
@@ -463,7 +471,7 @@
       "warning": "Warning",
       "overview": "Alert overview",
       "avgResponse": "Avg. response time",
-      "flux": "90-day course",
+      "flux": "therapy course",
       "volatility": "Course volatility:",
       "high": "High",
       "reported": "Reported {time} ago",
@@ -858,7 +866,7 @@
       },
       "hero": {
         "title": "Meticulous care for your wellness journey.",
-        "subtitle": "Join thousands of patients who have optimized their therapeutic progress through our clinically-led 90-day adaptive guidance platform.",
+        "subtitle": "Join thousands of patients who have optimized their therapeutic progress through our clinically-led long-term adaptive guidance platform.",
         "integrity": "Clinical Integrity"
       },
       "step": "Step {current} of {total}",
@@ -1033,10 +1041,10 @@
       "avgDosage": "Avg. dosage",
       "efficacy": "Reported efficacy",
       "efficacyNote": "Patient satisfaction",
-      "insightTitle": "90-day progress",
+      "insightTitle": "therapy progress",
       "day": "Day {day}",
       "phase": "Phase {phase}",
-      "insightText": "The patient is in phase {phase} of the 90-day plan. Adherence {adherence}%, pain trend {pain}% since the start of the month.",
+      "insightText": "The patient is in phase {phase} of the continuous therapy plan. Adherence {adherence}%, pain trend {pain}% since the start of the month.",
       "acknowledge": "Acknowledge data",
       "back": "Back",
       "step2Title": "Clinical review",
@@ -1116,7 +1124,7 @@
       "tabBilling": "Billing & usage",
       "retention": "Patient retention",
       "monthlyEntries": "Entries per month",
-      "adherenceTitle": "90-day adherence",
+      "adherenceTitle": "therapy adherence",
       "adherenceNote": "The cohort shows a stable trend towards full adherence.",
       "reviewVolume": "Review volume",
       "totalReviews": "Total reviews",
@@ -1426,7 +1434,7 @@
       "apply": "Apply branding",
       "saved": "Branding saved.",
       "preview": "Live preview",
-      "previewPlan": "90-day therapy plan",
+      "previewPlan": "continuous therapy plan",
       "previewProgress": "Plan progress",
       "previewDosage": "Dosage",
       "previewNextVisit": "Next visit",
@@ -1749,7 +1757,7 @@
     "patientDescription": "Unlock clinical PDF exports, in-depth therapy insights, and premium features.",
     "partnerDescription": "Activate your professional clinic or pharmacy package to compile audits and complete reviews.",
     "patientBenefit1": "Export legally compliant PDF reports",
-    "patientBenefit2": "Traceable 90-day progress indexes",
+    "patientBenefit2": "Traceable therapy progress indexes",
     "patientBenefit3": "Priority clinic support channels",
     "partnerBenefit1": "Complete structured monthly reviews",
     "partnerBenefit2": "Compile compliance audit logs",
@@ -1963,7 +1971,7 @@
       "unfair1Desc": "Targeted avoidance of administrative hurdles that burden physicians in their daily work and cost valuable time.",
       "unfair2Title": "Clinical Risk Management",
       "unfair2Desc": "Triage logic and questionnaires are based on genuine nursing and patient experience, not market speculation.",
-      "philosophy_text_1": "We do not replace doctors or pharmacists – we create the precise clinical structure that significantly reduces their workload in their daily practice and provides close support to patients. Successful cannabis therapy is not a rigid 90-day sprint, but a continuous, long-term journey that requires maximum data security and complete transparency. While patients manage their treatment independently in everyday life, pharmacies ensure safe supply and dosage determination, and physicians make medical decisions, Cannathera closes the potentially dangerous gaps between doctor's visits.",
+      "philosophy_text_1": "We do not replace doctors or pharmacists – we create the precise clinical structure that significantly reduces their workload in their daily practice and provides close support to patients. Successful cannabis therapy is not a rigid short-term sprint, but a continuous, long-term journey that requires maximum data security and complete transparency. While patients manage their treatment independently in everyday life, pharmacies ensure safe supply and dosage determination, and physicians make medical decisions, Cannathera closes the potentially dangerous gaps between doctor's visits.",
       "philosophy_text_2": "Through sound, practical risk management, validated triage logic, and fully GDPR-compliant, AES-256-encrypted documentation, we ensure that neither doctors nor pharmacies have blind spots. The result is a new dimension of therapy safety: All progress data, pain scales, and tolerability information are available completely, in a structured format, and at a medical level – for maximum treatment quality from day one and throughout the entire, ongoing course of therapy.",
       "section1_title": "From practice – for practice",
       "section1_text": "As a certified geriatric nurse with years of experience in outpatient intensive care, I have seen firsthand and in my daily work where conventional documentation fails: A chaotic mess of paperwork, unstructured patient notes, and missing data between quarters jeopardize the success of therapy. Cannathera wasn't developed on the drawing board or out of purely economic interest, but as a direct response to the real problems on the ground. We give doctors and pharmacists back the reliability they need to safely care for their patients.",

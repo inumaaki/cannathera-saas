@@ -70,7 +70,7 @@
       "milestoneTitle": "Nächster Meilenstein",
       "menu": "Kontomenü",
       "myProfile": "Mein Profil",
-      "myPlan": "Mein 90-Tage-Plan",
+      "myPlan": "Mein Strukturierter Therapieplan",
       "language": "Sprache",
       "logout": "Abmelden",
       "myForms": "Meine Formulare",
@@ -160,7 +160,15 @@
       "effectDescriptionPlaceholder": "Wie genau hat das Medikament bei Ihren Symptomen geholfen?",
       "sideEffectsTextLabel": "Nebenwirkungen (Details)",
       "sideEffectsTextPlaceholder": "Beschreiben Sie aufgetretene Nebenwirkungen...",
-      "recentStrains": "Kürzlich verwendet"
+      "recentStrains": "Kürzlich verwendet",
+      "batchNumberTitle": "Chargennummer",
+      "batchNumberPlaceholder": "z.B. CH123456",
+      "manufacturerTitle": "Hersteller",
+      "manufacturerPlaceholder": "z.B. Aurora, Bedrocan",
+      "consumptionMethodTitle": "Einnahmemethode",
+      "intensity_mild": "Leicht",
+      "intensity_moderate": "Mittel",
+      "intensity_severe": "Schwer"
     },
     "progress": {
       "thisPeriod": "Dieser Zeitraum",
@@ -169,7 +177,7 @@
       "totalDosage": "Gesamtdosis",
       "adherence": "Therapietreue",
       "cycleProgress": "Zyklusfortschritt",
-      "ofPlan": "des 90-Tage-Plans",
+      "ofPlan": "des Strukturierter Therapieplans",
       "correlationTitle": "Dosierung & Symptom-Korrelation",
       "correlationSubtitle": "Verlauf des therapeutischen Fensters der letzten 7 Tage",
       "legendDosage": "Dosierung (mg)",
@@ -201,9 +209,9 @@
       "toForms": "Zu meinen Formularen"
     },
     "plan": {
-      "breadcrumbPlan": "90-Tage-Plan",
+      "breadcrumbPlan": "Strukturierter Therapieplan",
       "title": "Therapieverlaufsplan",
-      "subtitle": "Ein sorgfältig strukturierter 90-Tage-Plan für optimale Behandlungsergebnisse durch regelmäßige Bewertung, präzise Titration und monatliche klinische Überprüfungen.",
+      "subtitle": "Ein sorgfältig strukturierter Strukturierter Therapieplan für optimale Behandlungsergebnisse durch regelmäßige Bewertung, präzise Titration und monatliche klinische Überprüfungen.",
       "overallProgress": "Gesamtfortschritt",
       "complete": "{pct} % abgeschlossen",
       "day": "Tag {day}",
@@ -231,7 +239,7 @@
         },
         "cycleCompletion": {
           "title": "Zyklusabschluss & Verlängerung",
-          "description": "Abschlussbewertung des 90-Tage-Protokolls. Festlegung der Erhaltungsdosis oder Übergang in den nächsten Zyklus."
+          "description": "Abschlussbewertung des Therapie-Protokolls. Festlegung der Erhaltungsdosis oder Übergang in den nächsten Zyklus."
         }
       }
     },
@@ -367,7 +375,7 @@
       "fromLastWeek": "gegenüber Vorwoche",
       "activeFlags": "Aktive Warnungen",
       "requireAction": "{count} erfordern sofortiges Handeln",
-      "planReach": "90-Tage-Plan-Reichweite",
+      "planReach": "Strukturierter Therapieplan-Reichweite",
       "planReachPatients": "{count} Patient:innen",
       "onSchedule": "Planmäßiger Fortschritt"
     },
@@ -420,7 +428,7 @@
     },
     "briefing": {
       "title": "Patient:innen-Überblick",
-      "progress": "90-Tage-Fortschritt",
+      "progress": "Therapiefortschritt",
       "mainConcern": "Hauptanliegen: {concern}",
       "painIndex": "Schmerzindex",
       "sleepQuality": "Schlafqualität",
@@ -445,7 +453,7 @@
     },
     "alerts": {
       "title": "Kritische Red-Flags",
-      "subtitle": "Physiologische Auffälligkeiten über den 90-Tage-Verlauf verwalten und priorisieren.",
+      "subtitle": "Physiologische Auffälligkeiten über den Therapieverlauf verwalten und priorisieren.",
       "unreviewed": "Ungeprüft",
       "reviewed": "Geprüft",
       "all": "Alle",
@@ -455,7 +463,7 @@
       "warning": "Warnung",
       "overview": "Warnungsübersicht",
       "avgResponse": "Ø Reaktionszeit",
-      "flux": "90-Tage-Verlauf",
+      "flux": "Therapieverlauf",
       "volatility": "Verlaufsvolatilität:",
       "high": "Hoch",
       "reported": "Gemeldet vor {time}",
@@ -850,7 +858,7 @@
       },
       "hero": {
         "title": "Sorgfältige Begleitung auf Ihrem Therapieweg.",
-        "subtitle": "Schließen Sie sich tausenden Patient:innen an, die ihren Therapiefortschritt mit unserer klinisch geführten 90-Tage-Plattform optimiert haben.",
+        "subtitle": "Schließen Sie sich tausenden Patient:innen an, die ihren Therapiefortschritt mit unserer klinisch geführten Therapie-Plattform optimiert haben.",
         "integrity": "Klinische Integrität"
       },
       "step": "Schritt {current} von {total}",
@@ -1025,10 +1033,10 @@
       "avgDosage": "Ø Dosierung",
       "efficacy": "Berichtete Wirksamkeit",
       "efficacyNote": "Patientenzufriedenheit",
-      "insightTitle": "90-Tage-Fortschritt",
+      "insightTitle": "Therapiefortschritt",
       "day": "Tag {day}",
       "phase": "Phase {phase}",
-      "insightText": "Patient:in befindet sich in Phase {phase} des 90-Tage-Plans. Therapietreue {adherence} %, Schmerzentwicklung {pain} % gegenüber Monatsbeginn.",
+      "insightText": "Patient:in befindet sich in Phase {phase} des Strukturierter Therapieplans. Therapietreue {adherence} %, Schmerzentwicklung {pain} % gegenüber Monatsbeginn.",
       "acknowledge": "Daten bestätigen",
       "back": "Zurück",
       "step2Title": "Klinische Prüfung",
@@ -1108,7 +1116,7 @@
       "tabBilling": "Abrechnung & Nutzung",
       "retention": "Patientenbindung",
       "monthlyEntries": "Einträge pro Monat",
-      "adherenceTitle": "90-Tage-Therapietreue",
+      "adherenceTitle": "Therapietreue",
       "adherenceNote": "Die Kohorte zeigt einen stabilen Verlauf in Richtung vollständiger Adhärenz.",
       "reviewVolume": "Review-Volumen",
       "totalReviews": "Reviews gesamt",
@@ -1418,7 +1426,7 @@
       "apply": "Branding anwenden",
       "saved": "Branding gespeichert.",
       "preview": "Live-Vorschau",
-      "previewPlan": "90-Tage-Therapieplan",
+      "previewPlan": "Strukturierter Therapieplan",
       "previewProgress": "Planfortschritt",
       "previewDosage": "Dosierung",
       "previewNextVisit": "Nächster Termin",
@@ -1741,7 +1749,7 @@
     "patientDescription": "Schalten Sie klinische PDF-Exporte, detaillierte Therapieanalysen und Premium-Funktionen frei.",
     "partnerDescription": "Aktivieren Sie Ihr Praxis- oder Apothekenpaket, um Audits und Reviews durchzuführen.",
     "patientBenefit1": "Rechtskonforme PDF-Berichte exportieren",
-    "patientBenefit2": "Nachvollziehbare 90-Tage-Verlaufswerte",
+    "patientBenefit2": "Nachvollziehbare Therapieverlaufswerte",
     "patientBenefit3": "Priorisierte klinische Supportkanäle",
     "partnerBenefit1": "Strukturierte Monatsreviews durchführen",
     "partnerBenefit2": "Compliance-Auditprotokolle erstellen",
@@ -1957,7 +1965,7 @@
       "unfair1Desc": "Gezielte Vermeidung administrativer Hürden, die Ärzte im Alltag belasten und wertvolle Zeit kosten.",
       "unfair2Title": "Klinisches Risikomanagement",
       "unfair2Desc": "Triage-Logik und Fragebögen basieren auf echter Pflege- und Patientenerfahrung, nicht auf Marktspekulationen.",
-      "philosophy_text_1": "Wir ersetzen keine Ärzte oder Apotheker – wir schaffen die präzise klinische Struktur, die sie im Praxisalltag spürbar entlastet und Patienten engmaschig begleitet. Eine erfolgreiche Cannabistherapie ist kein starrer 90-Tage-Sprint, sondern ein kontinuierlicher, langfristiger Weg, der höchste Datensicherheit und lückenlose Transparenz erfordert. Während Patienten im Alltag ihre Behandlung eigenverantwortlich steuern, Apotheken die sichere Versorgung und Dosisfindung gewährleisten und Ärzte die medizinischen Entscheidungen treffen, schließt Cannathera die potenziell gefährlichen Lücken zwischen den Arztbesuchen.",
+      "philosophy_text_1": "Wir ersetzen keine Ärzte oder Apotheker – wir schaffen die präzise klinische Struktur, die sie im Praxisalltag spürbar entlastet und Patienten engmaschig begleitet. Eine erfolgreiche Cannabistherapie ist kein starrer Sprint, sondern ein kontinuierlicher, langfristiger Weg, der höchste Datensicherheit und lückenlose Transparenz erfordert. Während Patienten im Alltag ihre Behandlung eigenverantwortlich steuern, Apotheken die sichere Versorgung und Dosisfindung gewährleisten und Ärzte die medizinischen Entscheidungen treffen, schließt Cannathera die potenziell gefährlichen Lücken zwischen den Arztbesuchen.",
       "philosophy_text_2": "Durch fundiertes, praxisnahes Risikomanagement, validierte Triage-Logik und vollständig DSGVO-konforme, AES-256-verschlüsselte Dokumentation stellen wir sicher, dass weder Ärzte noch Apotheken im Blindflug agieren. Das Ergebnis ist eine neue Dimension der Therapiesicherheit: Alle Verlaufsdaten, Schmerzskalen und Verträglichkeitsinformationen liegen lückenlos, strukturiert und auf medizinischem Niveau vor – für maximale Behandlungsqualität vom ersten Tag an und über den gesamten, kontinuierlichen Therapieverlauf hinweg.",
       "section1_title": "Aus der Praxis – für die Praxis",
       "section1_text": "Als examinierte Altenpflegerin mit jahrelanger Erfahrung in der außerklinischen Intensivpflege habe ich am eigenen Leib und im täglichen Einsatz gesehen, wo herkömmliche Dokumentation scheitert: Zettelwirtschaft, unstrukturierte Patientennotizen und fehlende Daten zwischen den Quartalen gefährden den Therapieerfolg. Cannathera ist nicht am Reißbrett oder aus rein wirtschaftlichem Interesse entstanden, sondern als direkte Antwort auf die echten Probleme an der Basis. Wir geben Ärzten und Apothekern die Verlässlichkeit zurück, die sie für eine sichere Begleitung ihrer Patienten brauchen.",

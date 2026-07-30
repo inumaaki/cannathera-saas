@@ -160,7 +160,15 @@
       "effectDescriptionPlaceholder": "Cum anume a ajutat medicamentul cu simptomele tale?",
       "sideEffectsTextLabel": "Note de efecte secundare",
       "sideEffectsTextPlaceholder": "Descrieți orice reacții adverse pe care le-ați experimentat...",
-      "recentStrains": "Tulpinile recente"
+      "recentStrains": "Tulpinile recente",
+      "batchNumberTitle": "Batch Number",
+      "batchNumberPlaceholder": "e.g. BATCH-123",
+      "manufacturerTitle": "Manufacturer",
+      "manufacturerPlaceholder": "e.g. Aurora, Bedrocan",
+      "consumptionMethodTitle": "Method of Consumption",
+      "intensity_mild": "Mild",
+      "intensity_moderate": "Moderate",
+      "intensity_severe": "Severe"
     },
     "progress": {
       "thisPeriod": "Această perioadă",
