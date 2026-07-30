@@ -28,7 +28,7 @@ export function QuickLogSheet({
   // Fetch recent strains
   const { data: recentStrains = [] } = useSWR<string[]>(
     "/patient/strains",
-    (url: string) => api(url)
+    (url: string) => api(url) as Promise<string[]>
   );
 
   // New Clinical Parameters
