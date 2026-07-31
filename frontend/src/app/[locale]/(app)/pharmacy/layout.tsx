@@ -3,6 +3,7 @@ import { redirect } from "@/i18n/navigation";
 import { apiServer } from "@/lib/api-server";
 import { getSessionUser } from "@/lib/session";
 import { PharmacyShell, type Notice } from "@/components/pharmacy/PharmacyShell";
+import { PaywallModal } from "@/components/paywall/PaywallModal";
 
 type Overview = {
   pharmacyName: string;
@@ -72,7 +73,11 @@ export default async function PharmacyLayout({
       pharmacyName={overview?.pharmacyName ?? ""}
       notices={notices}
     >
-      {children}
+      {!user.subscriptionActive ? (
+        <PaywallModal isOpen={true} type="partner" mandatory={true} />
+      ) : (
+        children
+      )}
     </PharmacyShell>
   );
 }

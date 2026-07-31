@@ -7,7 +7,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Locale, OrgType, Prisma, Role, User } from '@prisma/client';
+import { Locale, OrgType, Prisma, Role, User, SubscriptionTier } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { randomBytes, randomInt } from 'crypto';
 import * as nodemailer from 'nodemailer';
@@ -197,7 +197,18 @@ export class AuthService {
                 orgId: org.id,
                 roleInOrg: Role.DOCTOR,
                 orgRole: 'ADMIN',
-                permissions: [...ROLE_PRESETS.ADMIN],
+                permissions: [
+                  'patients:view',
+                  'patients:create',
+                  'patients:note',
+                  'alerts:view',
+                  'alerts:acknowledge',
+                  'appointments:manage',
+                  'reports:view',
+                  'settings:practice',
+                  'settings:team',
+                  'compliance:view',
+                ],
               },
             });
             break;
@@ -601,7 +612,19 @@ export class AuthService {
         mustChangePassword: true,
         memberships: {
           take: 1,
-          select: { orgRole: true, permissions: true, orgId: true },
+          select: { 
+            orgRole: true, 
+            permissions: true, 
+            orgId: true,
+            org: {
+              select: {
+                subscriptions: {
+                  where: { isActive: true },
+                  take: 1
+                }
+              }
+            }
+          },
         },
       },
     });
@@ -612,6 +635,7 @@ export class AuthService {
       orgId: membership?.orgId ?? null,
       orgRole: membership?.orgRole ?? null,
       permissions: membership?.permissions ?? [],
+      subscriptionActive: membership?.org?.subscriptions.length ? true : false,
     };
   }
 

@@ -3,6 +3,7 @@ import { redirect } from "@/i18n/navigation";
 import { apiServer } from "@/lib/api-server";
 import { getSessionUser } from "@/lib/session";
 import { EnterpriseShell, type Notice } from "@/components/enterprise/EnterpriseShell";
+import { PaywallModal } from "@/components/paywall/PaywallModal";
 
 type Overview = {
   enterpriseName: string;
@@ -85,7 +86,11 @@ export default async function EnterpriseLayout({
       networkName={overview?.enterpriseName ?? ""}
       notices={notices}
     >
-      {children}
+      {!user.subscriptionActive ? (
+        <PaywallModal isOpen={true} type="partner" mandatory={true} />
+      ) : (
+        children
+      )}
     </EnterpriseShell>
   );
 }

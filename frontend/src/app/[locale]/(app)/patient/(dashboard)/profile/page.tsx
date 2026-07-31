@@ -24,8 +24,8 @@ export default async function PatientProfilePage({
 
   return (
     <>
-      <section className="cw-watermark overflow-hidden rounded-2xl border border-hairline bg-white">
-        <h1 className="border-b border-hairline bg-[#f6f8fc] px-5 py-4 font-display text-xl font-bold text-pine">
+      <section className="cw-watermark rounded-2xl border border-hairline bg-white">
+        <h1 className="rounded-t-2xl border-b border-hairline bg-[#f6f8fc] px-5 py-4 font-display text-xl font-bold text-pine">
           {t("title")}
         </h1>
         <div className="p-5">

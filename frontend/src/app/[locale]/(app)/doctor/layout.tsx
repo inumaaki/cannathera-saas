@@ -3,6 +3,7 @@ import { redirect } from "@/i18n/navigation";
 import { apiServer } from "@/lib/api-server";
 import { getSessionUser } from "@/lib/session";
 import { DoctorShell } from "@/components/doctor/DoctorShell";
+import { PaywallModal } from "@/components/paywall/PaywallModal";
 
 type Org = { branding: { logoUrl?: string } | null };
 
@@ -32,7 +33,11 @@ export default async function DoctorLayout({
       logoUrl={org?.branding?.logoUrl ?? null}
       permissions={user!.permissions}
     >
-      {children}
+      {!user.subscriptionActive && user.role !== "ADMIN" ? (
+        <PaywallModal isOpen={true} type="partner" mandatory={true} />
+      ) : (
+        children
+      )}
     </DoctorShell>
   );
 }

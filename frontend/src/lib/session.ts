@@ -13,6 +13,7 @@ export type SessionUser = {
   orgId: string | null;
   orgRole: string | null;
   permissions: string[];
+  subscriptionActive?: boolean;
 };
 
 /** Server-side: fetch the logged-in user by forwarding the session cookie. */

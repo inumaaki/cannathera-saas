@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { api } from "@/lib/api";
+import { CustomSelect } from "./CustomSelect";
 
 type Profile = {
   fullName: string;
@@ -74,7 +75,7 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
         <div className="relative">
           <input
             id="patientRef"
-            value={profile.patientRef}
+            value={profile.patientRef || ""}
             readOnly
             className={`${box} bg-[#eef2fe] pe-11 font-mono`}
           />
@@ -122,19 +123,13 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
         <label htmlFor="pharmacy" className={label}>
           {t("pharmacy")}
         </label>
-        <select
-          id="pharmacy"
+        <CustomSelect
           value={pharmacy}
-          onChange={(e) => setPharmacy(e.target.value)}
-          className={`${box} outline-none focus:border-pine-600`}
-        >
-          <option value="">{t("noPharmacy")}</option>
-          {profile.pharmacies.map((p) => (
-            <option key={p.id} value={p.id}>
-              {p.name}
-            </option>
-          ))}
-        </select>
+          onChange={setPharmacy}
+          options={profile.pharmacies.map((p) => ({ value: p.id, label: p.name }))}
+          placeholder={t("noPharmacy")}
+          className={box}
+        />
       </div>
 
       <div className="flex justify-end">

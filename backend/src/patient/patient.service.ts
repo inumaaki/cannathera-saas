@@ -378,7 +378,17 @@ export class PatientService {
   }
 
   async profile(userId: string) {
-    const p = await this.profileOf(userId, true);
+    let p = await this.profileOf(userId, true);
+    
+    if (!p.patientRef) {
+      const newRef = `PAT-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
+      p = await this.prisma.patientProfile.update({
+        where: { id: p.id },
+        data: { patientRef: newRef },
+        include: { user: true }
+      }) as any;
+    }
+
     const pharmacies = await this.prisma.organization.findMany({
       where: { type: 'PHARMACY' },
       select: { id: true, name: true },
@@ -430,7 +440,11 @@ export class PatientService {
       }
       await this.prisma.patientProfile.update({
         where: { id: p.id },
-        data: { pharmacyId: data.pharmacyOrgId },
+        data: { 
+          ...(data.pharmacyOrgId !== undefined && { pharmacyId: data.pharmacyOrgId }),
+          ...(data.address !== undefined && { address: data.address }),
+          ...(data.phone !== undefined && { phone: data.phone }),
+        },
       });
     }
     await this.prisma.auditLog.create({

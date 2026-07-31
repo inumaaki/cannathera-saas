@@ -443,19 +443,13 @@ export class ReportsService {
       if (!hasActiveSub) {
         throw new ForbiddenException('PARTNER_INACTIVE');
       }
-
-      const profile = await this.prisma.patientProfile.findUnique({
-        where: { id: patientId },
-        select: { packageTier: true },
-      });
-      if (!profile) throw new NotFoundException('PATIENT_NOT_FOUND');
-      if (profile.packageTier === SubscriptionTier.BASIC) {
-        throw new ForbiddenException('UPGRADE_REQUIRED');
-      }
     }
 
+    console.log(`[ReportsService] generate: building data for patientId=${patientId} type=${type}`);
     const data = await this.buildData(patientId, type);
+    console.log(`[ReportsService] generate: rendering PDF...`);
     const buffer = await renderReportPdf(data);
+    console.log(`[ReportsService] generate: PDF rendered, size=${buffer.length}`);
 
     const fs = await import('fs/promises');
     const path = await import('path');
@@ -522,6 +516,42 @@ export class ReportsService {
     });
     if (!report) throw new NotFoundException('REPORT_NOT_FOUND');
     await this.assertCanAccessPatient(userId, report.patientId);
+
+    const user = await this.prisma.user.findUnique({
+      where: { id: userId },
+      select: {
+        role: true,
+        memberships: {
+          select: {
+            org: {
+              select: {
+                subscriptions: {
+                  where: { isActive: true },
+                  select: { id: true },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (user && user.role !== Role.PATIENT) {
+      const hasActiveSub = user.memberships.some(
+        (m) => m.org.subscriptions.length > 0,
+      );
+      if (!hasActiveSub) {
+        throw new ForbiddenException('PARTNER_INACTIVE');
+      }
+    } else if (user && user.role === Role.PATIENT) {
+      const profile = await this.prisma.patientProfile.findUnique({
+        where: { id: report.patientId },
+        select: { packageTier: true },
+      });
+      if (profile && profile.packageTier === 'BASIC') {
+        throw new ForbiddenException('UPGRADE_REQUIRED');
+      }
+    }
 
     const fs = await import('fs/promises');
     const path = await import('path');

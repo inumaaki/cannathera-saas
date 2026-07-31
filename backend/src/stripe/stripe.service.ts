@@ -97,6 +97,10 @@ export class StripeService {
 
       // Resolve Stripe price id or map dynamic items
       // (For real implementations, map tier to Stripe Price IDs)
+      const finalSuccessUrl = new URL(successUrl);
+      finalSuccessUrl.searchParams.set('session_id', '{CHECKOUT_SESSION_ID}');
+      finalSuccessUrl.searchParams.set('tier', planTier);
+
       const session = await this.stripe!.checkout.sessions.create({
         payment_method_types: ['card'],
         customer_email: email,
@@ -115,7 +119,7 @@ export class StripeService {
           },
         ],
         mode: 'subscription',
-        success_url: `${successUrl}?session_id={CHECKOUT_SESSION_ID}&tier=${planTier}`,
+        success_url: finalSuccessUrl.toString(),
         cancel_url: cancelUrl,
         metadata: {
           userId,

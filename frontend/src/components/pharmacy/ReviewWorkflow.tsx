@@ -56,9 +56,55 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
   const [note, setNote] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [actioning, setActioning] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [paywallOpen, setPaywallOpen] = useState(false);
   const [paywallType, setPaywallType] = useState<PaywallType>(null);
+
+  async function handleDownload(docId: string) {
+    if (actioning === docId) return;
+    setActioning(docId);
+    try {
+      const url = `/api/documents/file/${docId}`;
+      const res = await fetch(url, { credentials: "include" });
+      
+      const data = await res.clone().json().catch(() => null);
+      if (data && !res.ok) {
+        if (data.message === "UPGRADE_REQUIRED") {
+          setPaywallType("patient");
+          setPaywallOpen(true);
+          return;
+        } else if (data.message === "PARTNER_INACTIVE") {
+          setPaywallType("partner");
+          setPaywallOpen(true);
+          return;
+        }
+        alert(data.message || "Download failed");
+        return;
+      }
+      if (!res.ok) throw new Error("Download failed");
+
+      const blob = await res.blob();
+      const disposition = res.headers.get("Content-Disposition") ?? "";
+      let filename = `report-${docId}.pdf`;
+      const match = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/.exec(disposition);
+      if (match != null && match[1]) {
+        filename = match[1].replace(/['"]/g, "");
+      }
+      const downloadUrl = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = downloadUrl;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(downloadUrl);
+    } catch (err: any) {
+      alert("Network error: " + err.message);
+    } finally {
+      setActioning(null);
+    }
+  }
 
   const dosage = data.series.map((s) => s.dosageG ?? 0);
   const relief = data.series.map((s) => 10 - (s.pain ?? 0)); // relief = inverse pain
@@ -350,12 +396,13 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
                       <span className="truncate text-muted">
                         {r.type} · {day(r.periodStart)}–{day(r.periodEnd)}
                       </span>
-                      <a
-                        href={`${API_URL}/documents/file/${r.id}`}
-                        className="shrink-0 font-bold text-pine-600 hover:underline"
+                      <button
+                        onClick={() => handleDownload(r.id)}
+                        disabled={actioning === r.id}
+                        className="shrink-0 font-bold text-pine-600 hover:underline disabled:opacity-50"
                       >
-                        {t("download")}
-                      </a>
+                        {actioning === r.id ? t("downloading") : t("download")}
+                      </button>
                     </li>
                   ))}
                 </ul>
@@ -463,6 +510,7 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
         </section>
       ) : null}
       <PaywallModal isOpen={paywallOpen} onClose={() => setPaywallOpen(false)} type={paywallType} />
+      {/* Force Turbopack Cache Invalidation */}
     </>
   );
 }

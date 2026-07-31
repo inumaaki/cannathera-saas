@@ -172,7 +172,6 @@ export class PharmacyService {
       avgAdherence,
       adherenceBuckets: buckets,
       reviewsDueSoon: rows
-        .filter((r) => r.status !== 'onTrack')
         .sort((a, b) => a.diffDays - b.diffDays)
         .slice(0, 6),
       stockAlert: shortage

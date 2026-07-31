@@ -281,14 +281,8 @@ export class AdminService {
       },
     });
 
-    // Create active subscription
-    await this.prisma.subscription.create({
-      data: {
-        orgId: org.id,
-        planId: plan.id,
-        isActive: true,
-      },
-    });
+    // Subscription is no longer created automatically so the partner will hit the paywall
+
 
     const tempPassword = randomBytes(4).toString('hex');
     const passwordHash = await argon2.hash(tempPassword);

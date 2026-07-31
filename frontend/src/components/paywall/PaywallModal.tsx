@@ -39,7 +39,9 @@ export function PaywallModal({ isOpen, onClose, type, mandatory = false }: Reado
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           planTier,
-          successUrl: `${window.location.origin}${API_URL === "/api" ? "/api" : API_URL}/stripe/simulate-success`,
+          successUrl: API_URL === "/api" 
+            ? `${window.location.origin}/api/stripe/simulate-success?returnUrl=${encodeURIComponent(window.location.pathname)}`
+            : `${API_URL}/stripe/simulate-success?returnUrl=${encodeURIComponent(window.location.pathname)}`,
           cancelUrl: window.location.href,
         }),
         credentials: "include",

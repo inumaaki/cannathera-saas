@@ -119,7 +119,7 @@ export class PermissionsGuard implements CanActivate {
       select: { permissions: true },
     });
     const granted = membership?.permissions ?? [];
-    if (!required.every((p) => granted.includes(p))) {
+    if (!required.every((p) => granted.includes(p) || granted.includes('*'))) {
       throw new ForbiddenException('MISSING_PERMISSION');
     }
     return true;

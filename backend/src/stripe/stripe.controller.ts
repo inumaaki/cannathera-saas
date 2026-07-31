@@ -60,6 +60,7 @@ export class StripeController {
     @Query('orgId') orgId: string | undefined,
     @Query('userId') userId: string | undefined,
     @Query('tier') tier: SubscriptionTier,
+    @Query('returnUrl') returnUrl: string | undefined,
     @Res() res: Response,
   ) {
     const webOrigin =
@@ -76,12 +77,12 @@ export class StripeController {
           if (oId && t) {
             await this.stripeService.fulfillSimulatedCheckout(oId, t);
             return res.redirect(
-              `${webOrigin}/en/enterprise/billing?success=true`,
+              `${webOrigin}${returnUrl || '/en/enterprise/billing'}?success=true`,
             );
           }
           if (uId && t) {
             await this.stripeService.fulfillPatientCheckout(uId, t);
-            return res.redirect(`${webOrigin}/en/patient/plan?success=true`);
+            return res.redirect(`${webOrigin}${returnUrl || '/en/patient/plan'}?success=true`);
           }
         }
       } catch (_err) {
@@ -91,11 +92,11 @@ export class StripeController {
 
     if (orgId && tier) {
       await this.stripeService.fulfillSimulatedCheckout(orgId, tier);
-      return res.redirect(`${webOrigin}/en/enterprise/billing?success=true`);
+      return res.redirect(`${webOrigin}${returnUrl || '/en/enterprise/billing'}?success=true`);
     }
     if (userId && tier) {
       await this.stripeService.fulfillPatientCheckout(userId, tier);
-      return res.redirect(`${webOrigin}/en/patient/plan?success=true`);
+      return res.redirect(`${webOrigin}${returnUrl || '/en/patient/plan'}?success=true`);
     }
     return res.redirect(`${webOrigin}/en/login`);
   }

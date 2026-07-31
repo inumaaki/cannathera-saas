@@ -39,15 +39,23 @@ export class ReportsController {
     @Query('type') type: string,
     @Res() res: Response,
   ) {
-    await this.reports.assertCanAccessPatient(user.sub, patientId);
-    const { buffer, filename } = await this.reports.generate(
-      user.sub,
-      patientId,
-      toType(type),
-    );
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-    res.end(buffer);
+    try {
+      await this.reports.assertCanAccessPatient(user.sub, patientId);
+      const { buffer, filename } = await this.reports.generate(
+        user.sub,
+        patientId,
+        toType(type),
+      );
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.end(buffer);
+    } catch (err: any) {
+      console.error('[ReportsController] doctorReport error:', err?.message ?? err);
+      if (!res.headersSent) {
+        const status = err?.status ?? err?.statusCode ?? 500;
+        res.status(status).json({ statusCode: status, message: err?.message ?? 'Internal Server Error' });
+      }
+    }
   }
 
   @Get('patient/:patientId/history')
@@ -67,13 +75,21 @@ export class ReportsController {
     @Param('reportId') reportId: string,
     @Res() res: Response,
   ) {
-    const { buffer, filename } = await this.reports.fileById(
-      user.sub,
-      reportId,
-    );
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-    res.end(buffer);
+    try {
+      const { buffer, filename } = await this.reports.fileById(
+        user.sub,
+        reportId,
+      );
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.end(buffer);
+    } catch (err: any) {
+      console.error('[ReportsController] file error:', err?.message ?? err);
+      if (!res.headersSent) {
+        const status = err?.status ?? err?.statusCode ?? 500;
+        res.status(status).json({ statusCode: status, message: err?.message ?? 'Internal Server Error' });
+      }
+    }
   }
 
   /** Patient: their own reports only. */
@@ -88,14 +104,19 @@ export class ReportsController {
     console.log(`[ReportsController] Received request for myReport (type: ${type}) from user ${user.sub}`);
     
     const patientId = await this.reports.patientIdOfUser(user.sub);
-    const { buffer, filename } = await this.reports.generate(
-      user.sub,
-      patientId,
-      toType(type),
-    );
-    res.setHeader('Content-Type', 'application/pdf');
-    res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
-    res.end(buffer);
+    try {
+      const { buffer, filename } = await this.reports.generate(
+        user.sub,
+        patientId,
+        toType(type),
+      );
+      res.setHeader('Content-Type', 'application/pdf');
+      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.end(buffer);
+    } catch (err: any) {
+      console.error("[ReportsController] Fatal error during PDF generation:", err);
+      res.status(500).json({ statusCode: 500, message: 'Internal Server Error', error: err.message, stack: err.stack });
+    }
   }
 
   @Get('mine/history')

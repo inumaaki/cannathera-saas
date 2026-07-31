@@ -78,15 +78,37 @@ export default async function PatientReports({
                 </p>
               </div>
               {r.fileUrl ? (
-                <a
-                  href={`${API_URL}/documents/file/${r.id}`}
+                <button
+                  type="button"
+                  onClick={async () => {
+                    try {
+                      const res = await fetch(`${API_URL}/documents/file/${r.id}`, { credentials: 'include' });
+                      if (!res.ok) {
+                        const data = await res.json().catch(() => ({}));
+                        if (res.status === 403 && data.message === "UPGRADE_REQUIRED") {
+                           window.location.href = "/patient/plan";
+                           return;
+                        }
+                        throw new Error("Download failed");
+                      }
+                      const blob = await res.blob();
+                      const href = URL.createObjectURL(blob);
+                      const a = document.createElement("a");
+                      a.href = href;
+                      a.download = `cannathera-report.pdf`;
+                      a.click();
+                      URL.revokeObjectURL(href);
+                    } catch (err: any) {
+                      alert("Network error: " + err.message);
+                    }
+                  }}
                   className="flex shrink-0 items-center gap-1.5 rounded-lg border border-pine-600 px-3 py-2 text-xs font-bold text-pine-600 hover:bg-mint/20"
                 >
                   <span aria-hidden className="msym text-[16px]">
                     download
                   </span>
                   {t("download")}
-                </a>
+                </button>
               ) : null}
             </div>
           ))
