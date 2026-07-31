@@ -2057,7 +2057,13 @@
     "f3_title": "Düzeyde Uzmanlık",
     "f3_text": "Sistemimiz gerçek dünyadaki pratik deneyimlere dayanarak geliştirildi. Mesleki yeterliliklerin yüksek standartlarını, sertifikalı danışmanlığı ve yasal olarak uyumlu belgelendirme gerekliliklerini dikkate alır.",
     "f4_title": "Güçlü, Üç Yollu Bir Ortaklık",
-    "f4_text": "Eczanenizi, kesintisiz veri aktarımı yoluyla tıbbi uygulamaların yükünü hafifleten ve hastalara en yüksek düzeyde bakım güvenliği sunan, modern, dijital olarak ağ bağlantılı bir iletişim noktası olarak konumlandırın."
+    "f4_text": "Eczanenizi, kesintisiz veri aktarımı yoluyla tıbbi uygulamaların yükünü hafifleten ve hastalara en yüksek düzeyde bakım güvenliği sunan, modern, dijital olarak ağ bağlantılı bir iletişim noktası olarak konumlandırın.",
+    "val_title": "Eczaneler için katma değer",
+    "val_text": "Suş seçiminde şeffaflık, hastalara doğru dozajın belirlenmesinde destek ve sürekli desteğin bir parçası olarak yan etkilerin belgelenmesi.",
+    "comm_title": "Kolaylaştırılmış süreç ve İletişim",
+    "comm_text": "Platformun hasta, reçete yazma uygulaması ve eczaneyi hazırlayan arasındaki iletişimi ve kolaylaştırılmış süreci nasıl desteklediği.",
+    "qual_title": "Mesleki nitelikler",
+    "qual_text": "Mesleki nitelikler (pratik altyapı ve sertifikalı danışmanlık) ve eczanelerin ortak veya irtibat noktası olarak nasıl dahil edilebileceğine ilişkin bilgiler."
   },
   "telemedicine": {
     "title": "Teletıp Sağlayıcıları İçin",
@@ -2093,5 +2099,13 @@
     "s1Text": "Cannathera platformu tamamen mesleki veya ticari faaliyetleri kapsamında ticari kullanıcılara (doktorlar, tıp uzmanları, teletıp pratisyenleri ve eczaneler) yönelik olduğundan, Alman Medeni Kanunu'nun (BGB) 355. Maddesi uyarınca yasal bir cayma hakkı bulunmamaktadır.",
     "s2Title": "Aboneliklerin Feshi ve İptali",
     "s2Text": "(1) Sözleşmeler ve abonelikler, farklı bireysel anlaşmalara tabi olmak kaydıyla (örneğin pilot aşama sırasında), ilgili sözleşme süresinin bitimine dört hafta kala bildirilmeli feshedilebilir.\n(2) Haklı nedenle olağanüstü fesih hakkı her iki taraf için de her zaman saklıdır.\n(3) Herhangi bir feshin geçerli olabilmesi için yazılı olarak (örneğin desteğe e-posta yoluyla) yapılması gerekir."
+  },
+  "founder": {
+    "philosophy_text_1": "Doktorların veya eczacıların yerini almıyoruz; günlük uygulamalarında iş yükünü önemli ölçüde azaltan ve hastalara yakın destek sağlayan hassas klinik yapıyı yaratıyoruz. Başarılı esrar terapisi, katı, kısa vadeli bir sürat koşusu değil, maksimum veri güvenliği ve tam şeffaflık gerektiren sürekli, uzun vadeli bir yolculuktur. Hastalar günlük yaşamda tedavilerini bağımsız olarak yönetirken, eczaneler güvenli tedarik ve dozaj belirleme sağlarken ve doktorlar tıbbi kararlar alırken, Cannathera doktor ziyaretleri arasındaki potansiyel olarak tehlikeli boşlukları kapatır.",
+    "philosophy_text_2": "Sağlam, pratik risk yönetimi, doğrulanmış önceliklendirme mantığı ve tamamen GDPR uyumlu, AES-256 şifreli belgeler sayesinde ne doktorların ne de eczanelerin kör noktalarının olmamasını sağlıyoruz. Sonuç, terapi güvenliğinde yeni bir boyuttur: İlk günden itibaren ve devam eden terapi sürecinin tamamı boyunca maksimum tedavi kalitesi için tüm ilerleme verileri, ağrı ölçekleri ve tolere edilebilirlik bilgileri, yapılandırılmış bir formatta ve tıbbi düzeyde eksiksiz olarak mevcuttur.",
+    "section1_title": "Pratikten – pratik için",
+    "section1_text": "Ayakta yoğun bakım alanında uzun yıllara dayanan deneyime sahip, sertifikalı bir geriatri hemşiresi olarak, geleneksel dokümantasyonun başarısız olduğu durumları ilk elden ve günlük çalışmalarımda gördüm: Kaotik bir evrak karmaşası, yapılandırılmamış hasta notları ve üç aylık dönemler arasındaki eksik veriler tedavinin başarısını tehlikeye atıyor. Cannathera, çizim tahtasında veya tamamen ekonomik çıkarlar nedeniyle değil, sahadaki gerçek sorunlara doğrudan bir yanıt olarak geliştirildi. Doktorlara ve eczacılara, hastalarıyla güvenli bir şekilde ilgilenmek için ihtiyaç duydukları güvenilirliği geri veriyoruz.",
+    "section2_title": "Maksimum Güvenlik için Kapalı Döngü",
+    "section2_text": "Esrar terapisi yalnızca reçeteyi yazan doktorun, ilacı veren eczanenin ve hastanın günlük yaşamlarındaki ortak çabalarıyla çalışır. Arayüz sorunları ve bilgi boşluklarının daha önce süreci engellediği durumlarda Cannathera, ilgili tüm tarafları güvenli, veri korumayla uyumlu bir mimari aracılığıyla birbirine bağlıyor. Anonim algoritmalar yok, ancak insanları ilk sıraya koyan klinik açıdan sağlam bir mantık var."
   }
 }

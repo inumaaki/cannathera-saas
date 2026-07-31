@@ -379,14 +379,14 @@ export class PatientService {
 
   async profile(userId: string) {
     let p = await this.profileOf(userId, true);
-    
+
     if (!p.patientRef) {
       const newRef = `PAT-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
       p = await this.prisma.patientProfile.update({
         where: { id: p.id },
         data: { patientRef: newRef },
-        include: { user: true }
-      }) as any;
+        include: { user: true },
+      });
     }
 
     const pharmacies = await this.prisma.organization.findMany({
@@ -440,8 +440,10 @@ export class PatientService {
       }
       await this.prisma.patientProfile.update({
         where: { id: p.id },
-        data: { 
-          ...(data.pharmacyOrgId !== undefined && { pharmacyId: data.pharmacyOrgId }),
+        data: {
+          ...(data.pharmacyOrgId !== undefined && {
+            pharmacyId: data.pharmacyOrgId,
+          }),
           ...(data.address !== undefined && { address: data.address }),
           ...(data.phone !== undefined && { phone: data.phone }),
         },

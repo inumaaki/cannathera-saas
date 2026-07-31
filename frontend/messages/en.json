@@ -2063,7 +2063,13 @@
     "f3_title": "Expertise at the Level",
     "f3_text": "Our system was developed based on real-world practical experience. It takes into account the high standards of professional qualifications, certified consultation, and legally compliant documentation requirements.",
     "f4_title": "A Strong, Three-Way Partnership",
-    "f4_text": "Position your pharmacy as a modern, digitally networked point of contact that relieves the burden on medical practices through seamless data transfer and offers patients the highest level of care security."
+    "f4_text": "Position your pharmacy as a modern, digitally networked point of contact that relieves the burden on medical practices through seamless data transfer and offers patients the highest level of care security.",
+    "val_title": "Added value for pharmacies",
+    "val_text": "Transparency in strain selection, support for patients in determining the correct dosage, and documentation of side effects as part of ongoing support.",
+    "comm_title": "Streamlined process & Communication",
+    "comm_text": "How the platform supports communication and a streamlined process between the patient, prescribing practice, and dispensing pharmacy.",
+    "qual_title": "Professional qualifications",
+    "qual_text": "Information on professional qualifications (practical background and certified consultation) and how pharmacies can be involved as partners or points of contact."
   },
   "telemedicine": {
     "title": "For Telemedicine Providers",
@@ -2085,5 +2091,13 @@
     "v2_feat3_text": "Remotely collect all therapy-relevant parameters and questionnaires according to the strictest security standards (GDPR-compliant and AES-256 encrypted).",
     "v2_feat4_title": "Scalability with your own branding",
     "v2_feat4_text": "Offer your patients a highly professional, legally compliant environment that perfectly blends treatment quality, data protection, and state-of-the-art technology."
+  },
+  "founder": {
+    "philosophy_text_1": "We do not replace doctors or pharmacists – we create the precise clinical structure that significantly reduces their workload in their daily practice and provides close support to patients. Successful cannabis therapy is not a rigid short-term sprint, but a continuous, long-term journey that requires maximum data security and complete transparency. While patients manage their treatment independently in everyday life, pharmacies ensure safe supply and dosage determination, and physicians make medical decisions, Cannathera closes the potentially dangerous gaps between doctor's visits.",
+    "philosophy_text_2": "Through sound, practical risk management, validated triage logic, and fully GDPR-compliant, AES-256-encrypted documentation, we ensure that neither doctors nor pharmacies have blind spots. The result is a new dimension of therapy safety: All progress data, pain scales, and tolerability information are available completely, in a structured format, and at a medical level – for maximum treatment quality from day one and throughout the entire, ongoing course of therapy.",
+    "section1_title": "From practice – for practice",
+    "section1_text": "As a certified geriatric nurse with years of experience in outpatient intensive care, I have seen firsthand and in my daily work where conventional documentation fails: A chaotic mess of paperwork, unstructured patient notes, and missing data between quarters jeopardize the success of therapy. Cannathera wasn't developed on the drawing board or out of purely economic interest, but as a direct response to the real problems on the ground. We give doctors and pharmacists back the reliability they need to safely care for their patients.",
+    "section2_title": "A Closed Loop for Maximum Security",
+    "section2_text": "Cannabis therapy only works through the collaborative efforts of the prescribing physician, the dispensing pharmacy, and the patient in their daily life. Where interface issues and information gaps previously hampered the process, Cannathera connects all involved parties via a secure, data protection-compliant architecture. No anonymous algorithms, but clinically sound logic that puts people first."
   }
 }

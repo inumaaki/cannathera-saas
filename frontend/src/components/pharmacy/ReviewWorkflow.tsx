@@ -99,8 +99,9 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
       a.click();
       a.remove();
       window.URL.revokeObjectURL(downloadUrl);
-    } catch (err: any) {
-      alert("Network error: " + err.message);
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      alert("Network error: " + msg);
     } finally {
       setActioning(null);
     }

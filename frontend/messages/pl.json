@@ -646,7 +646,8 @@
       "memberSaved": "Zapisano",
       "statusPendingSetup": "Oczekuje na hasło",
       "noPermission": "Nie masz uprawnień do tego obszaru.",
-      "cannotRemoveOwnTeam": "Nie możesz usunąć własnego uprawnienia do zarządzania zespołem."
+      "cannotRemoveOwnTeam": "Nie możesz usunąć własnego uprawnienia do zarządzania zespołem.",
+      "colActions": "Działania"
     },
     "help": {
       "title": "Pomoc i wsparcie",
@@ -841,7 +842,8 @@
       "troubleLink": "Skontaktuj się z obsługą kliniczną",
       "badgeGdpr": "Zgodne z RODO",
       "badgeEncrypted": "Szyfrowanie AES-256",
-      "copyright": "© 2026 Cannathera Clinical Solutions. Wszelkie prawa zastrzeżone."
+      "copyright": "© 2026 Cannathera Clinical Solutions. Wszelkie prawa zastrzeżone.",
+      "codeSentSuccess": "Kod wysłany pomyślnie."
     },
     "signup": {
       "chooseRole": {
@@ -1813,26 +1815,26 @@
       "tag": "Możliwości platformy",
       "title": "Kompletny ekosystem do towarzyszenia terapii",
       "subtitle": "Cannathera wypełnia lukę między klinicystami, aptekami a pacjentami, przekształcając skomplikowane schematy terapii w uporządkowane, bezpieczne, oparte na danych przepływy postępu.",
-      "patientBullets": {
-        "0": "Uporządkowany 90-dniowy plan",
-        "1": "Dzienniki dziennej dawki",
-        "2": "Analiza przestrzegania zaleceń"
-      },
-      "doctorBullets": {
-        "0": "Zautomatyzowane alerty",
-        "1": "Zarządzanie listą pacjentów",
-        "2": "Eksporty PDF dla klinik"
-      },
-      "pharmacyBullets": {
-        "0": "Śledzenie zapasów",
-        "1": "Przeglądy zgodności",
-        "2": "Audyt zapisów billingowych"
-      },
-      "enterpriseBullets": {
-        "0": "Niestandardowe oznakowanie najemcy",
-        "1": "Dostęp do Webhook i API",
-        "2": "Kompleksowa polityka bezpieczeństwa"
-      },
+      "patientBullets": [
+        "Uporządkowany 90-dniowy plan",
+        "Dzienniki dziennej dawki",
+        "Analiza przestrzegania zaleceń"
+      ],
+      "doctorBullets": [
+        "Zautomatyzowane alerty",
+        "Zarządzanie listą pacjentów",
+        "Eksporty PDF dla klinik"
+      ],
+      "pharmacyBullets": [
+        "Śledzenie zapasów",
+        "Przeglądy zgodności",
+        "Audyt zapisów billingowych"
+      ],
+      "enterpriseBullets": [
+        "Niestandardowe oznakowanie najemcy",
+        "Dostęp do Webhook i API",
+        "Kompleksowa polityka bezpieczeństwa"
+      ],
       "patientDescSuffix": "Bezpieczne rejestrowanie objawów, dawek i codziennej aktywności. Śledzenie wskaźników przestrzegania zaleceń w czasie rzeczywistym.",
       "doctorDescSuffix": "Zautomatyzowane protokoły triage monitorują wartości pacjentów. Generowanie uporządkowanych raportów kursu w formacie PDF jednym kliknięciem.",
       "pharmacyDescSuffix": "Rejestrowanie wydawania leków i zarządzanie zapasami. Śledzenie przeglądów pacjentów i miesięcznych celów oceny.",
@@ -2055,7 +2057,13 @@
     "f3_title": "Fachowość na poziomie",
     "f3_text": "Nasz system powstał w oparciu o praktyczne doświadczenia z realnego świata. Uwzględnia wysokie standardy kwalifikacji zawodowych, certyfikowane konsultacje i zgodne z prawem wymogi dokumentacyjne.",
     "f4_title": "Silne, trójstronne partnerstwo",
-    "f4_text": "Pozycjonuj swoją aptekę jako nowoczesny, połączony cyfrowo punkt kontaktowy, który odciąża praktyki lekarskie poprzez płynny transfer danych i zapewnia pacjentom najwyższy poziom bezpieczeństwa opieki."
+    "f4_text": "Pozycjonuj swoją aptekę jako nowoczesny, połączony cyfrowo punkt kontaktowy, który odciąża praktyki lekarskie poprzez płynny transfer danych i zapewnia pacjentom najwyższy poziom bezpieczeństwa opieki.",
+    "val_title": "Wartość dodana dla aptek",
+    "val_text": "Przejrzystość w doborze szczepów, wsparcie pacjentów w ustaleniu prawidłowego dawkowania oraz dokumentacja skutków ubocznych w ramach bieżącego wsparcia.",
+    "comm_title": "Usprawniony proces i komunikacja",
+    "comm_text": "W jaki sposób platforma wspiera komunikację i usprawnia proces pomiędzy pacjentem, gabinetem przepisywania leków i apteką wydającą leki.",
+    "qual_title": "Kwalifikacje zawodowe",
+    "qual_text": "Informacje na temat kwalifikacji zawodowych (praktyka i certyfikowane konsultacje) oraz możliwości zaangażowania aptek jako partnerów lub punktów kontaktowych."
   },
   "telemedicine": {
     "title": "Dla dostawców telemedycyny",
@@ -2091,5 +2099,13 @@
     "s1Text": "Ponieważ platforma Cannathera jest przeznaczona wyłącznie dla użytkowników komercyjnych (lekarzy, personelu medycznego, praktyków telemedycyny i aptek) w ramach ich działalności zawodowej lub komercyjnej, nie istnieje ustawowe prawo do odstąpienia od umowy zgodnie z art. 355 niemieckiego kodeksu cywilnego (BGB).",
     "s2Title": "Zakończenie i anulowanie subskrypcji",
     "s2Text": "(1) Umowy i subskrypcje mogą zostać rozwiązane z zachowaniem czterotygodniowego okresu wypowiedzenia ze skutkiem na koniec odpowiedniego okresu obowiązywania umowy, z zastrzeżeniem innych ustaleń indywidualnych (np. w fazie pilotażowej).\n(2) Prawo do nadzwyczajnego wypowiedzenia z ważnej przyczyny pozostaje nienaruszone dla obu stron w każdym czasie.\n(3) Wypowiedzenie musi być sporządzone w formie pisemnej (np. e-mailem do wsparcia technicznego), aby było skuteczne."
+  },
+  "founder": {
+    "philosophy_text_1": "Nie zastępujemy lekarzy ani farmaceutów – tworzymy precyzyjną strukturę kliniczną, która znacząco odciąża ich pracę w codziennej praktyce i zapewnia bliskie wsparcie pacjentom. Skuteczna terapia konopiami indyjskimi nie jest sztywnym, krótkoterminowym sprintem, ale ciągłą, długoterminową podróżą, która wymaga maksymalnego bezpieczeństwa danych i całkowitej przejrzystości. Podczas gdy pacjenci na co dzień samodzielnie radzą sobie z leczeniem, apteki zapewniają bezpieczną podaż i ustalanie dawek, a lekarze podejmują decyzje medyczne, Cannathera wypełnia potencjalnie niebezpieczne luki pomiędzy wizytami lekarskimi.",
+    "philosophy_text_2": "Dzięki rozsądnemu, praktycznemu zarządzaniu ryzykiem, potwierdzonej logice segregacji pacjentów oraz dokumentacji w pełni zgodnej z RODO i zaszyfrowanej AES-256, zapewniamy, że ani lekarze, ani apteki nie mają martwych punktów. Rezultatem jest nowy wymiar bezpieczeństwa terapii: wszystkie dane dotyczące postępu, skale bólu i informacje o tolerancji są dostępne w całości, w ustrukturyzowanym formacie i na poziomie medycznym – dla maksymalnej jakości leczenia od pierwszego dnia i przez cały, trwający cykl terapii.",
+    "section1_title": "Z praktyki – dla praktyki",
+    "section1_text": "Jako certyfikowana pielęgniarka geriatryczna z wieloletnim doświadczeniem w ambulatoryjnej intensywnej terapii widziałam na własne oczy i w swojej codziennej pracy, gdzie zawodzi konwencjonalna dokumentacja: chaotyczny bałagan w dokumentacji, nieuporządkowane notatki pacjenta i brakujące dane pomiędzy kwartałami zagrażają powodzeniu terapii. Cannathera nie powstała na desce kreślarskiej ani w celach czysto ekonomicznych, ale jako bezpośrednia odpowiedź na realne problemy w terenie. Przywracamy lekarzom i farmaceutom niezawodność, której potrzebują, aby bezpiecznie opiekować się swoimi pacjentami.",
+    "section2_title": "Zamknięta pętla zapewniająca maksymalne bezpieczeństwo",
+    "section2_text": "Terapia konopiami indyjskimi działa wyłącznie dzięki wspólnym wysiłkom lekarza przepisującego, apteki wydającej leki i pacjenta w codziennym życiu. Tam, gdzie problemy z interfejsem i luki informacyjne wcześniej utrudniały proces, Cannathera łączy wszystkie zaangażowane strony za pośrednictwem bezpiecznej architektury zgodnej z ochroną danych. Żadnych anonimowych algorytmów, ale klinicznie uzasadniona logika, która stawia ludzi na pierwszym miejscu."
   }
 }

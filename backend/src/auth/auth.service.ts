@@ -7,7 +7,14 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { Locale, OrgType, Prisma, Role, User, SubscriptionTier } from '@prisma/client';
+import {
+  Locale,
+  OrgType,
+  Prisma,
+  Role,
+  User,
+  SubscriptionTier,
+} from '@prisma/client';
 import * as argon2 from 'argon2';
 import { randomBytes, randomInt } from 'crypto';
 import * as nodemailer from 'nodemailer';
@@ -612,18 +619,18 @@ export class AuthService {
         mustChangePassword: true,
         memberships: {
           take: 1,
-          select: { 
-            orgRole: true, 
-            permissions: true, 
+          select: {
+            orgRole: true,
+            permissions: true,
             orgId: true,
             org: {
               select: {
                 subscriptions: {
                   where: { isActive: true },
-                  take: 1
-                }
-              }
-            }
+                  take: 1,
+                },
+              },
+            },
           },
         },
       },

@@ -82,7 +82,9 @@ export class StripeController {
           }
           if (uId && t) {
             await this.stripeService.fulfillPatientCheckout(uId, t);
-            return res.redirect(`${webOrigin}${returnUrl || '/en/patient/plan'}?success=true`);
+            return res.redirect(
+              `${webOrigin}${returnUrl || '/en/patient/plan'}?success=true`,
+            );
           }
         }
       } catch (_err) {
@@ -92,11 +94,15 @@ export class StripeController {
 
     if (orgId && tier) {
       await this.stripeService.fulfillSimulatedCheckout(orgId, tier);
-      return res.redirect(`${webOrigin}${returnUrl || '/en/enterprise/billing'}?success=true`);
+      return res.redirect(
+        `${webOrigin}${returnUrl || '/en/enterprise/billing'}?success=true`,
+      );
     }
     if (userId && tier) {
       await this.stripeService.fulfillPatientCheckout(userId, tier);
-      return res.redirect(`${webOrigin}${returnUrl || '/en/patient/plan'}?success=true`);
+      return res.redirect(
+        `${webOrigin}${returnUrl || '/en/patient/plan'}?success=true`,
+      );
     }
     return res.redirect(`${webOrigin}/en/login`);
   }

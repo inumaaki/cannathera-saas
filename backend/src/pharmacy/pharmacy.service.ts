@@ -171,9 +171,7 @@ export class PharmacyService {
         : 0,
       avgAdherence,
       adherenceBuckets: buckets,
-      reviewsDueSoon: rows
-        .sort((a, b) => a.diffDays - b.diffDays)
-        .slice(0, 6),
+      reviewsDueSoon: rows.sort((a, b) => a.diffDays - b.diffDays).slice(0, 6),
       stockAlert: shortage
         ? {
             id: shortage.id,

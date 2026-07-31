@@ -33,7 +33,7 @@ export default async function DoctorLayout({
       logoUrl={org?.branding?.logoUrl ?? null}
       permissions={user!.permissions}
     >
-      {!user.subscriptionActive && user.role !== "ADMIN" ? (
+      {!user!.subscriptionActive && user!.role !== "ADMIN" ? (
         <PaywallModal isOpen={true} type="partner" mandatory={true} />
       ) : (
         children

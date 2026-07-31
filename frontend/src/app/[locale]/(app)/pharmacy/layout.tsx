@@ -73,7 +73,7 @@ export default async function PharmacyLayout({
       pharmacyName={overview?.pharmacyName ?? ""}
       notices={notices}
     >
-      {!user.subscriptionActive ? (
+      {!user!.subscriptionActive ? (
         <PaywallModal isOpen={true} type="partner" mandatory={true} />
       ) : (
         children

@@ -646,7 +646,8 @@
       "memberSaved": "Salvat",
       "statusPendingSetup": "Parola în așteptare",
       "noPermission": "Nu aveți permisiunea pentru această zonă.",
-      "cannotRemoveOwnTeam": "Nu vă puteți elimina propria permisiune de gestionare a echipei."
+      "cannotRemoveOwnTeam": "Nu vă puteți elimina propria permisiune de gestionare a echipei.",
+      "colActions": "Acțiuni"
     },
     "help": {
       "title": "Ajutor și suport",
@@ -841,7 +842,8 @@
       "troubleLink": "Contactați Suportul Clinic",
       "badgeGdpr": "Conform GDPR",
       "badgeEncrypted": "Criptare AES-256",
-      "copyright": "© 2026 Cannathera Clinical Solutions. Toate drepturile rezervate."
+      "copyright": "© 2026 Cannathera Clinical Solutions. Toate drepturile rezervate.",
+      "codeSentSuccess": "Cod trimis cu succes."
     },
     "signup": {
       "chooseRole": {
@@ -1813,26 +1815,26 @@
       "tag": "Capacități ale platformei",
       "title": "Un Ecosistem Complet pentru Însoțirea Terapiei",
       "subtitle": "Cannathera umple golul dintre clinicieni, farmacii și pacienți prin traducerea regimurilor complexe de terapie în fluxuri de progres structurate, securizate și bazate pe date.",
-      "patientBullets": {
-        "0": "Plan Structurat de 90 de Zile",
-        "1": "Jurnale Zilnice de Dozare",
-        "2": "Analize de Conformitate"
-      },
-      "doctorBullets": {
-        "0": "Semnale Roșii Automatizate",
-        "1": "Gestionarea Listei de Pacienți",
-        "2": "Exporturi PDF Clinice"
-      },
-      "pharmacyBullets": {
-        "0": "Monitorizarea Inventarului",
-        "1": "Revizuiri de Conformitate",
-        "2": "Audit al Jurnalelor de Facturare"
-      },
-      "enterpriseBullets": {
-        "0": "Branding Personalizat pentru Chiriaș",
-        "1": "Acces Webhook & API",
-        "2": "Politică de Securitate Cuprinzătoare"
-      },
+      "patientBullets": [
+        "Plan Structurat de 90 de Zile",
+        "Jurnale Zilnice de Dozare",
+        "Analize de Conformitate"
+      ],
+      "doctorBullets": [
+        "Semnale Roșii Automatizate",
+        "Gestionarea Listei de Pacienți",
+        "Exporturi PDF Clinice"
+      ],
+      "pharmacyBullets": [
+        "Monitorizarea Inventarului",
+        "Revizuiri de Conformitate",
+        "Audit al Jurnalelor de Facturare"
+      ],
+      "enterpriseBullets": [
+        "Branding Personalizat pentru Chiriaș",
+        "Acces Webhook & API",
+        "Politică de Securitate Cuprinzătoare"
+      ],
       "patientDescSuffix": "Înregistrează în siguranță simptome, doze și activități zilnice. Monitorizează indicatorii de conformitate în timp real.",
       "doctorDescSuffix": "Protocoalele de triere automatizate monitorizează valorile pacienților. Generează rapoarte structurate PDF despre curs cu un singur clic.",
       "pharmacyDescSuffix": "Înregistrează distribuțiile și gestionează stocurile. Urmărește recenziile pacienților și obiectivele evaluărilor lunare.",
@@ -2055,7 +2057,13 @@
     "f3_title": "Expertiza la Nivel",
     "f3_text": "Sistemul nostru a fost dezvoltat pe baza experienței practice din lumea reală. Ia în considerare standardele înalte de calificări profesionale, consultarea certificată și cerințele de documentare conforme din punct de vedere legal.",
     "f4_title": "Un parteneriat puternic, în trei",
-    "f4_text": "Poziționați-vă farmacia ca un punct de contact modern, în rețea digitală, care ușurează povara practicilor medicale prin transferul de date fără întreruperi și oferă pacienților cel mai înalt nivel de securitate a îngrijirii."
+    "f4_text": "Poziționați-vă farmacia ca un punct de contact modern, în rețea digitală, care ușurează povara practicilor medicale prin transferul de date fără întreruperi și oferă pacienților cel mai înalt nivel de securitate a îngrijirii.",
+    "val_title": "Valoare adăugată pentru farmacii",
+    "val_text": "Transparență în selecția tulpinii, sprijin pentru pacienți în determinarea dozei corecte și documentarea efectelor secundare ca parte a sprijinului permanent.",
+    "comm_title": "Proces simplificat și comunicare",
+    "comm_text": "Cum susține platforma comunicarea și un proces simplificat între pacient, practica de prescriere și farmacia de eliberare.",
+    "qual_title": "Calificări profesionale",
+    "qual_text": "Informații despre calificările profesionale (formații practice și consultanță certificată) și despre modul în care farmaciile pot fi implicate ca parteneri sau puncte de contact."
   },
   "telemedicine": {
     "title": "Pentru furnizorii de telemedicină",
@@ -2091,5 +2099,13 @@
     "s1Text": "Deoarece platforma Cannathera este destinată exclusiv utilizatorilor comerciali (medici, profesioniști din domeniul medical, practicieni în telemedicină și farmacii) în cursul activității lor profesionale sau comerciale, nu există un drept legal de retragere conform secțiunii 355 din Codul civil german (BGB).",
     "s2Title": "Încetarea și anularea abonamentelor",
     "s2Text": "(1) Contractele și abonamentele pot fi reziliate cu un preaviz de patru săptămâni până la sfârșitul perioadei contractuale respective, sub rezerva oricăror acorduri individuale diferite (de exemplu, în timpul unei faze pilot).\n(2) Dreptul de reziliere extraordinară din motive întemeiate rămâne neafectat pentru ambele părți în orice moment.\n(3) Orice reziliere trebuie să fie în scris (de exemplu, prin e-mail la asistență) pentru a fi efectivă."
+  },
+  "founder": {
+    "philosophy_text_1": "Nu înlocuim medicii sau farmaciștii – creăm structura clinică precisă care le reduce semnificativ volumul de muncă în practica lor zilnică și oferă un sprijin apropiat pacienților. Terapia de succes cu canabis nu este un sprint rigid pe termen scurt, ci o călătorie continuă, pe termen lung, care necesită securitate maximă a datelor și transparență completă. În timp ce pacienții își gestionează tratamentul în mod independent în viața de zi cu zi, farmaciile asigură aprovizionarea în siguranță și determinarea dozelor, iar medicii iau decizii medicale, Cannathera închide decalajele potențial periculoase dintre vizitele la medic.",
+    "philosophy_text_2": "Prin managementul practic și solid al riscurilor, logica de triaj validată și documentația criptată AES-256, compatibilă cu GDPR, ne asigurăm că nici medicii, nici farmaciile nu au puncte moarte. Rezultatul este o nouă dimensiune a siguranței terapiei: toate datele de progres, scalele de durere și informațiile de tolerabilitate sunt disponibile complet, într-un format structurat și la nivel medical - pentru o calitate maximă a tratamentului din prima zi și pe parcursul întregului curs de terapie în curs.",
+    "section1_title": "Din practică – pentru practică",
+    "section1_text": "În calitate de asistent medical de geriatrie certificat, cu ani de experiență în terapie intensivă ambulatorie, am văzut direct și în munca mea de zi cu zi unde documentația convențională eșuează: un haos haotic de documente, notițe nestructurate ale pacientului și datele lipsă între trimestre periclitează succesul terapiei. Cannathera nu a fost dezvoltată pe planșa de desen sau din interes pur economic, ci ca răspuns direct la problemele reale de pe teren. Oferim medicilor și farmaciștilor fiabilitatea de care au nevoie pentru a-și îngriji în siguranță pacienții.",
+    "section2_title": "O buclă închisă pentru securitate maximă",
+    "section2_text": "Terapia cu canabis funcționează doar prin eforturile de colaborare ale medicului care prescrie, farmaciei care eliberează și pacientului în viața lor de zi cu zi. Acolo unde problemele de interfață și lacunele de informații au împiedicat anterior procesul, Cannathera conectează toate părțile implicate printr-o arhitectură sigură, conformă cu protecția datelor. Fără algoritmi anonimi, ci o logică solidă din punct de vedere clinic care pune oamenii pe primul loc."
   }
 }

@@ -98,8 +98,9 @@ export default async function PatientReports({
                       a.download = `cannathera-report.pdf`;
                       a.click();
                       URL.revokeObjectURL(href);
-                    } catch (err: any) {
-                      alert("Network error: " + err.message);
+                    } catch (err: unknown) {
+                      const msg = err instanceof Error ? err.message : String(err);
+                      alert("Network error: " + msg);
                     }
                   }}
                   className="flex shrink-0 items-center gap-1.5 rounded-lg border border-pine-600 px-3 py-2 text-xs font-bold text-pine-600 hover:bg-mint/20"

@@ -33,8 +33,9 @@ export function ReportButtons({
       let res: Response;
       try {
         res = await fetch(url, { credentials: "include" });
-      } catch (err: any) {
-        alert(`Fetch blocked! URL: ${url}. Error: ${err.message}. If you have an Adblocker or Edge Tracking Prevention, please disable it!`);
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : String(err);
+        alert(`Fetch blocked! URL: ${url}. Error: ${msg}. If you have an Adblocker or Edge Tracking Prevention, please disable it!`);
         throw err;
       }
       

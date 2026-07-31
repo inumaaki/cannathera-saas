@@ -47,13 +47,22 @@ export class ReportsController {
         toType(type),
       );
       res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader(
+        'Content-Disposition',
+        `attachment; filename="${filename}"`,
+      );
       res.end(buffer);
     } catch (err: any) {
-      console.error('[ReportsController] doctorReport error:', err?.message ?? err);
+      console.error(
+        '[ReportsController] doctorReport error:',
+        err?.message ?? err,
+      );
       if (!res.headersSent) {
         const status = err?.status ?? err?.statusCode ?? 500;
-        res.status(status).json({ statusCode: status, message: err?.message ?? 'Internal Server Error' });
+        res.status(status).json({
+          statusCode: status,
+          message: err?.message ?? 'Internal Server Error',
+        });
       }
     }
   }
@@ -81,13 +90,19 @@ export class ReportsController {
         reportId,
       );
       res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader(
+        'Content-Disposition',
+        `attachment; filename="${filename}"`,
+      );
       res.end(buffer);
     } catch (err: any) {
       console.error('[ReportsController] file error:', err?.message ?? err);
       if (!res.headersSent) {
         const status = err?.status ?? err?.statusCode ?? 500;
-        res.status(status).json({ statusCode: status, message: err?.message ?? 'Internal Server Error' });
+        res.status(status).json({
+          statusCode: status,
+          message: err?.message ?? 'Internal Server Error',
+        });
       }
     }
   }
@@ -100,9 +115,11 @@ export class ReportsController {
     @Res() res: Response,
   ) {
     if (user.role !== Role.PATIENT) throw new ForbiddenException();
-    
-    console.log(`[ReportsController] Received request for myReport (type: ${type}) from user ${user.sub}`);
-    
+
+    console.log(
+      `[ReportsController] Received request for myReport (type: ${type}) from user ${user.sub}`,
+    );
+
     const patientId = await this.reports.patientIdOfUser(user.sub);
     try {
       const { buffer, filename } = await this.reports.generate(
@@ -111,11 +128,22 @@ export class ReportsController {
         toType(type),
       );
       res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
+      res.setHeader(
+        'Content-Disposition',
+        `attachment; filename="${filename}"`,
+      );
       res.end(buffer);
     } catch (err: any) {
-      console.error("[ReportsController] Fatal error during PDF generation:", err);
-      res.status(500).json({ statusCode: 500, message: 'Internal Server Error', error: err.message, stack: err.stack });
+      console.error(
+        '[ReportsController] Fatal error during PDF generation:',
+        err,
+      );
+      res.status(500).json({
+        statusCode: 500,
+        message: 'Internal Server Error',
+        error: err.message,
+        stack: err.stack,
+      });
     }
   }
 

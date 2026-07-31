@@ -445,11 +445,15 @@ export class ReportsService {
       }
     }
 
-    console.log(`[ReportsService] generate: building data for patientId=${patientId} type=${type}`);
+    console.log(
+      `[ReportsService] generate: building data for patientId=${patientId} type=${type}`,
+    );
     const data = await this.buildData(patientId, type);
     console.log(`[ReportsService] generate: rendering PDF...`);
     const buffer = await renderReportPdf(data);
-    console.log(`[ReportsService] generate: PDF rendered, size=${buffer.length}`);
+    console.log(
+      `[ReportsService] generate: PDF rendered, size=${buffer.length}`,
+    );
 
     const fs = await import('fs/promises');
     const path = await import('path');

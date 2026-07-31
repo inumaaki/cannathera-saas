@@ -3,7 +3,6 @@ import { InvoiceStatus, OrgType, SubmissionStatus } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { requirePermission } from './access';
 
-
 /* Client's volume tiers, applied to the whole network's monthly review count. */
 const TIERS = [
   { key: 'Tier 1', label: 'Basic (1 – 500)', from: 1, to: 500, unitPrice: 8 },

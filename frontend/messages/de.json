@@ -2057,7 +2057,13 @@
     "f3_title": "Expertise auf Augenhöhe",
     "f3_text": "Unser System wurde auf Basis echter praktischer Erfahrungen entwickelt. Es berücksichtigt die hohen Standards beruflicher Qualifikationen, zertifizierter Beratung und rechtssicherer Dokumentationspflichten.",
     "f4_title": "Eine starke Dreieckspartnerschaft",
-    "f4_text": "Positionieren Sie Ihre Apotheke als modernen, digital vernetzten Ansprechpartner, der Arztpraxen durch nahtlosen Datentransfer entlastet und Patienten ein Höchstmaß an Versorgungssicherheit bietet."
+    "f4_text": "Positionieren Sie Ihre Apotheke als modernen, digital vernetzten Ansprechpartner, der Arztpraxen durch nahtlosen Datentransfer entlastet und Patienten ein Höchstmaß an Versorgungssicherheit bietet.",
+    "val_title": "Mehrwert für Apotheken",
+    "val_text": "Transparenz bei der Sortenauswahl, Unterstützung der Patienten bei der Findung der richtigen Dosierung und Dokumentation von Nebenwirkungen im Rahmen der kontinuierlichen Begleitung.",
+    "comm_title": "Geführter Prozess & Kommunikation",
+    "comm_text": "Wie die Plattform die Kommunikation und einen reibungslosen Ablauf zwischen Patient, verordnender Praxis und abgebender Apotheke unterstützt.",
+    "qual_title": "Fachliche Qualifikationen",
+    "qual_text": "Informationen zu fachlichen Qualifikationen (praktischer Hintergrund und zertifizierte Beratung) und wie sich Apotheken als Partner oder Ansprechpartner einbringen können."
   },
   "telemedicine": {
     "title": "Für Telemedizin-Anbieter",
@@ -2093,5 +2099,13 @@
     "s1Text": "Da sich die Cannathera-Plattform ausschließlich an gewerbliche Nutzer (Ärzte, medizinisches Fachpersonal, Telemediziner und Apotheken) im Rahmen ihrer beruflichen oder gewerblichen Tätigkeit richtet, besteht kein gesetzliches Widerrufsrecht gemäß § 355 BGB.",
     "s2Title": "Kündigung und Stornierung von Abonnements",
     "s2Text": "(1) Verträge und Abonnements können mit einer Frist von vier Wochen zum Ende der jeweiligen Vertragslaufzeit gekündigt werden, vorbehaltlich abweichender individueller Vereinbarungen (z.B. während einer Pilotphase).\n(2) Das Recht zur außerordentlichen Kündigung aus wichtigem Grund bleibt für beide Parteien jederzeit unberührt.\n(3) Jede Kündigung bedarf zu ihrer Wirksamkeit der Schriftform (z.B. per E-Mail an den Support)."
+  },
+  "founder": {
+    "philosophy_text_1": "Wir ersetzen keine Ärzte oder Apotheker – wir schaffen die präzise klinische Struktur, die sie im Praxisalltag spürbar entlastet und Patienten engmaschig begleitet. Eine erfolgreiche Cannabistherapie ist kein starrer Sprint, sondern ein kontinuierlicher, langfristiger Weg, der höchste Datensicherheit und lückenlose Transparenz erfordert. Während Patienten im Alltag ihre Behandlung eigenverantwortlich steuern, Apotheken die sichere Versorgung und Dosisfindung gewährleisten und Ärzte die medizinischen Entscheidungen treffen, schließt Cannathera die potenziell gefährlichen Lücken zwischen den Arztbesuchen.",
+    "philosophy_text_2": "Durch fundiertes, praxisnahes Risikomanagement, validierte Triage-Logik und vollständig DSGVO-konforme, AES-256-verschlüsselte Dokumentation stellen wir sicher, dass weder Ärzte noch Apotheken im Blindflug agieren. Das Ergebnis ist eine neue Dimension der Therapiesicherheit: Alle Verlaufsdaten, Schmerzskalen und Verträglichkeitsinformationen liegen lückenlos, strukturiert und auf medizinischem Niveau vor – für maximale Behandlungsqualität vom ersten Tag an und über den gesamten, kontinuierlichen Therapieverlauf hinweg.",
+    "section1_title": "Aus der Praxis – für die Praxis",
+    "section1_text": "Als examinierte Altenpflegerin mit jahrelanger Erfahrung in der außerklinischen Intensivpflege habe ich am eigenen Leib und im täglichen Einsatz gesehen, wo herkömmliche Dokumentation scheitert: Zettelwirtschaft, unstrukturierte Patientennotizen und fehlende Daten zwischen den Quartalen gefährden den Therapieerfolg. Cannathera ist nicht am Reißbrett oder aus rein wirtschaftlichem Interesse entstanden, sondern als direkte Antwort auf die echten Probleme an der Basis. Wir geben Ärzten und Apothekern die Verlässlichkeit zurück, die sie für eine sichere Begleitung ihrer Patienten brauchen.",
+    "section2_title": "Ein geschlossener Kreislauf für maximale Sicherheit",
+    "section2_text": "Cannabistherapie funktioniert nur im Zusammenspiel zwischen verordnendem Arzt, abgebender Apotheke und dem Patienten im Alltag. Wo bisher Schnittstellenprobleme und Informationslücken den Ablauf hemmten, vernetzt Cannathera alle Beteiligten über eine sichere, datenschutzkonforme Architektur. Keine anonymen Algorithmen, sondern klinisch fundierte Logik, bei der der Mensch im Mittelpunkt steht."
   }
 }

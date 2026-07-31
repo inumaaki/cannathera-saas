@@ -86,7 +86,7 @@ export default async function EnterpriseLayout({
       networkName={overview?.enterpriseName ?? ""}
       notices={notices}
     >
-      {!user.subscriptionActive ? (
+      {!user!.subscriptionActive ? (
         <PaywallModal isOpen={true} type="partner" mandatory={true} />
       ) : (
         children
