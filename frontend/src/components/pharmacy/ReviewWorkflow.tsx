@@ -97,7 +97,7 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
 
   async function downloadReport(type: string) {
     try {
-      const url = `${API_URL}/reports/patient/${data.patient.id}?type=${type}`;
+      const url = `${API_URL}/documents/patient/${data.patient.id}?type=${type}`;
       const res = await fetch(url, { credentials: "include" });
       if (!res.ok) {
         if (res.status === 403) {
@@ -351,7 +351,7 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
                         {r.type} · {day(r.periodStart)}–{day(r.periodEnd)}
                       </span>
                       <a
-                        href={`${API_URL}/reports/file/${r.id}`}
+                        href={`${API_URL}/documents/file/${r.id}`}
                         className="shrink-0 font-bold text-pine-600 hover:underline"
                       >
                         {t("download")}

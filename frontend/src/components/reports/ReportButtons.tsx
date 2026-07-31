@@ -28,9 +28,16 @@ export function ReportButtons({
     setBusy(type);
     try {
       const url = patientId
-        ? `${API_URL}/reports/patient/${patientId}?type=${type}`
-        : `${API_URL}/reports/mine?type=${type}`;
-      const res = await fetch(url, { credentials: "include" });
+        ? `${API_URL}/documents/patient/${patientId}?type=${type}`
+        : `${API_URL}/documents/mine?type=${type}`;
+      let res: Response;
+      try {
+        res = await fetch(url, { credentials: "include" });
+      } catch (err: any) {
+        alert(`Fetch blocked! URL: ${url}. Error: ${err.message}. If you have an Adblocker or Edge Tracking Prevention, please disable it!`);
+        throw err;
+      }
+      
       if (!res.ok) {
         if (res.status === 403) {
           const data = await res.json().catch(() => ({}));
@@ -43,8 +50,11 @@ export function ReportButtons({
             setPaywallOpen(true);
             return;
           }
+          throw new Error(`403 Forbidden: ${JSON.stringify(data)}`);
         }
-        throw new Error();
+        
+        const text = await res.text().catch(() => "no body");
+        throw new Error(`Report fetch failed: ${res.status} - ${text}`);
       }
       const blob = await res.blob();
       const disposition = res.headers.get("Content-Disposition") ?? "";

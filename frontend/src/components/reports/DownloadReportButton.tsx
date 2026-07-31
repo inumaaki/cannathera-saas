@@ -20,7 +20,7 @@ export function DownloadReportButton({
   async function download() {
     setBusy(true);
     try {
-      const url = `${API_URL}/reports/patient/${patientId}?type=MONTHLY`;
+      const url = `${API_URL}/documents/patient/${patientId}?type=MONTHLY`;
       const res = await fetch(url, { credentials: "include" });
       if (!res.ok) {
         if (res.status === 403) {

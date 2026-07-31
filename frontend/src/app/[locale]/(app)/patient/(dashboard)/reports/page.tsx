@@ -29,7 +29,7 @@ export default async function PatientReports({
   const [t, format, history] = await Promise.all([
     getTranslations("patient.reports"),
     getFormatter(),
-    apiServer<ReportRow[]>("/reports/mine/history"),
+    apiServer<ReportRow[]>("/documents/mine/history"),
   ]);
 
   const labels = {
@@ -79,7 +79,7 @@ export default async function PatientReports({
               </div>
               {r.fileUrl ? (
                 <a
-                  href={`${API_URL}/reports/file/${r.id}`}
+                  href={`${API_URL}/documents/file/${r.id}`}
                   className="flex shrink-0 items-center gap-1.5 rounded-lg border border-pine-600 px-3 py-2 text-xs font-bold text-pine-600 hover:bg-mint/20"
                 >
                   <span aria-hidden className="msym text-[16px]">

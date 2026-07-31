@@ -25,7 +25,7 @@ function toType(value?: string): ReportType {
     : ReportType.MONTHLY;
 }
 
-@Controller('reports')
+@Controller('documents')
 @UseGuards(SessionGuard, PermissionsGuard)
 export class ReportsController {
   constructor(private readonly reports: ReportsService) {}
@@ -84,6 +84,9 @@ export class ReportsController {
     @Res() res: Response,
   ) {
     if (user.role !== Role.PATIENT) throw new ForbiddenException();
+    
+    console.log(`[ReportsController] Received request for myReport (type: ${type}) from user ${user.sub}`);
+    
     const patientId = await this.reports.patientIdOfUser(user.sub);
     const { buffer, filename } = await this.reports.generate(
       user.sub,
