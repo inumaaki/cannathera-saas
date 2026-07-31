@@ -2,7 +2,12 @@ import { ForbiddenException, NotFoundException } from '@nestjs/common';
 import type { PrismaService } from '../prisma/prisma.service';
 
 /** Enterprise org roles, ordered by power. */
-export const ORG_ROLES = ['SUPER_ADMIN', 'SUPPORT', 'BILLING', 'VIEWER'] as const;
+export const ORG_ROLES = [
+  'SUPER_ADMIN',
+  'SUPPORT',
+  'BILLING',
+  'VIEWER',
+] as const;
 export type OrgRole = (typeof ORG_ROLES)[number];
 
 /**
@@ -46,7 +51,9 @@ export async function membershipOf(prisma: PrismaService, userId: string) {
     org role "ADMIN"; treat it as the enterprise's SUPER_ADMIN. */
 export function normalizeRole(orgRole: string | null | undefined): OrgRole {
   if (orgRole === 'ADMIN') return 'SUPER_ADMIN';
-  return ORG_ROLES.includes(orgRole as OrgRole) ? (orgRole as OrgRole) : 'VIEWER';
+  return ORG_ROLES.includes(orgRole as OrgRole)
+    ? (orgRole as OrgRole)
+    : 'VIEWER';
 }
 
 export async function requirePermission(

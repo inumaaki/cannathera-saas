@@ -8,11 +8,12 @@ export type PaywallType = "patient" | "partner" | null;
 
 interface PaywallModalProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   type: PaywallType;
+  mandatory?: boolean;
 }
 
-export function PaywallModal({ isOpen, onClose, type }: Readonly<PaywallModalProps>) {
+export function PaywallModal({ isOpen, onClose, type, mandatory = false }: Readonly<PaywallModalProps>) {
   const t = useTranslations("paywall");
   const tc = useTranslations("common");
   const [busy, setBusy] = useState(false);
@@ -38,7 +39,7 @@ export function PaywallModal({ isOpen, onClose, type }: Readonly<PaywallModalPro
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           planTier,
-          successUrl: `${API_URL}/stripe/simulate-success`,
+          successUrl: `${window.location.origin}${API_URL === "/api" ? "/api" : API_URL}/stripe/simulate-success`,
           cancelUrl: window.location.href,
         }),
         credentials: "include",
@@ -60,7 +61,7 @@ export function PaywallModal({ isOpen, onClose, type }: Readonly<PaywallModalPro
 
   return (
     <div
-      onClick={onClose}
+      onClick={mandatory ? undefined : onClose}
       className={`fixed inset-0 z-50 flex items-center justify-center p-4 transition-opacity duration-200 ${
         isOpen ? "opacity-100 backdrop-blur-md bg-pine-900/40" : "opacity-0 pointer-events-none"
       }`}
@@ -74,14 +75,16 @@ export function PaywallModal({ isOpen, onClose, type }: Readonly<PaywallModalPro
           isOpen ? "scale-100 translate-y-0 opacity-100" : "scale-95 translate-y-4 opacity-0"
         }`}
       >
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 flex size-8 items-center justify-center rounded-full hover:bg-surface text-muted transition-colors"
-          aria-label={tc("close")}
-        >
-          <span className="msym text-[20px]">close</span>
-        </button>
+        {/* Close Button (Hidden if mandatory) */}
+        {!mandatory && (
+          <button
+            onClick={onClose}
+            className="absolute top-4 right-4 flex size-8 items-center justify-center rounded-full hover:bg-surface text-muted transition-colors"
+            aria-label={tc("close")}
+          >
+            <span className="msym text-[20px]">close</span>
+          </button>
+        )}
 
         {/* Premium Badge Icon */}
         <div className="flex justify-center">

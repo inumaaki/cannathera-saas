@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 for (const lang of ['en', 'de']) {
   const path = 'messages/' + lang + '.json';
@@ -57,3 +58,4 @@ for (const lang of ['en', 'de']) {
     fs.writeFileSync(path, JSON.stringify(d, null, 2));
   }
 }
+

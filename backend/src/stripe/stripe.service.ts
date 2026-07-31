@@ -44,7 +44,8 @@ export class StripeService {
       include: { org: true },
     });
 
-    const email = (await this.prisma.user.findUnique({ where: { id: userId } }))?.email;
+    const email = (await this.prisma.user.findUnique({ where: { id: userId } }))
+      ?.email;
 
     if (this.isMock) {
       this.logger.log(
@@ -52,7 +53,10 @@ export class StripeService {
       );
       // Simulate Stripe checkout callback directly by adding success=true and tier query param
       const simulatedUrl = new URL(successUrl);
-      simulatedUrl.searchParams.set('session_id', 'mock_sess_' + Math.random().toString(36).substr(2, 9));
+      simulatedUrl.searchParams.set(
+        'session_id',
+        'mock_sess_' + Math.random().toString(36).substr(2, 9),
+      );
       simulatedUrl.searchParams.set('tier', planTier);
       if (membership) {
         simulatedUrl.searchParams.set('orgId', membership.orgId);
@@ -70,12 +74,15 @@ export class StripeService {
       let priceAmount = 29.99;
       if (membership) {
         // B2B Partner Pricing
-        if (planTier === SubscriptionTier.BASIC || planTier === SubscriptionTier.PLUS) {
-          priceAmount = 449.00;
+        if (
+          planTier === SubscriptionTier.BASIC ||
+          planTier === SubscriptionTier.PLUS
+        ) {
+          priceAmount = 449.0;
         } else if (planTier === SubscriptionTier.PREMIUM) {
-          priceAmount = 899.00;
+          priceAmount = 899.0;
         } else if (planTier === SubscriptionTier.ENTERPRISE) {
-          priceAmount = 1599.00;
+          priceAmount = 1599.0;
         }
       } else {
         // Patient Pricing
@@ -138,21 +145,33 @@ export class StripeService {
         webhookSecret ?? '',
       );
     } catch (err: any) {
-      this.logger.error(`Webhook signature verification failed: ${err.message}`);
+      this.logger.error(
+        `Webhook signature verification failed: ${err.message}`,
+      );
       throw new BadRequestException('Invalid webhook signature');
     }
 
     if (event.type === 'checkout.session.completed') {
-      const session = event.data.object as Stripe.Checkout.Session;
+      const session = event.data.object;
       const metadata = session.metadata;
 
       if (metadata) {
         if (metadata.orgId && metadata.planTier) {
-          this.logger.log(`Activating subscription for organization ${metadata.orgId}`);
-          await this.fulfillOrganizationCheckout(metadata.orgId, metadata.planTier as SubscriptionTier);
+          this.logger.log(
+            `Activating subscription for organization ${metadata.orgId}`,
+          );
+          await this.fulfillOrganizationCheckout(
+            metadata.orgId,
+            metadata.planTier as SubscriptionTier,
+          );
         } else if (metadata.userId && metadata.planTier) {
-          this.logger.log(`Upgrading package tier for patient ${metadata.userId} to ${metadata.planTier}`);
-          await this.fulfillPatientCheckout(metadata.userId, metadata.planTier as SubscriptionTier);
+          this.logger.log(
+            `Upgrading package tier for patient ${metadata.userId} to ${metadata.planTier}`,
+          );
+          await this.fulfillPatientCheckout(
+            metadata.userId,
+            metadata.planTier as SubscriptionTier,
+          );
         }
       }
     }
@@ -163,7 +182,7 @@ export class StripeService {
   async fulfillPatientCheckout(userId: string, tier: SubscriptionTier) {
     await this.prisma.patientProfile.update({
       where: { userId },
-      data: { packageTier: tier },
+      data: { packageTier: tier, hasActiveSubscription: true },
     });
 
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
@@ -179,28 +198,38 @@ export class StripeService {
       });
 
       // 2. Send transaction success email
-      if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+      if (
+        process.env.SMTP_HOST &&
+        process.env.SMTP_USER &&
+        process.env.SMTP_PASS
+      ) {
         const smtpHost = process.env.SMTP_HOST;
-        lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
-          const greetingName = user.firstName ? `${user.firstName} ${user.lastName ?? ''}`.trim() : user.email;
-          const transporter = nodemailer.createTransport({
-            host: dnsResult.address,
-            port: Number(process.env.SMTP_PORT ?? 587),
-            secure: process.env.SMTP_SECURE === 'true',
-            auth: {
-              user: process.env.SMTP_USER,
-              pass: process.env.SMTP_PASS,
-            },
-            tls: {
-              servername: smtpHost,
-            },
-          } as any);
-          transporter.sendMail({
-            from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
-            to: user.email,
-            subject: 'Subscription Activated - Cannathera',
-            text: `Hello ${greetingName},\n\nYour ${tier} package subscription has been successfully activated on your Cannathera account.\n\nBest regards,\nYour Cannathera Team`,
-            html: `
+        lookup(smtpHost, { family: 4 })
+          .then((dnsResult: { address: string }) => {
+            const greetingName = user.firstName
+              ? `${user.firstName} ${user.lastName ?? ''}`.trim()
+              : user.email;
+            const transporter = nodemailer.createTransport({
+              host: dnsResult.address,
+              port: Number(process.env.SMTP_PORT ?? 587),
+              secure: process.env.SMTP_SECURE === 'true',
+              auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASS,
+              },
+              tls: {
+                servername: smtpHost,
+              },
+            } as nodemailer.TransportOptions);
+            transporter
+              .sendMail({
+                from:
+                  process.env.SMTP_FROM ??
+                  '"Cannathera" <no-reply@cannathera.de>',
+                to: user.email,
+                subject: 'Subscription Activated - Cannathera',
+                text: `Hello ${greetingName},\n\nYour ${tier} package subscription has been successfully activated on your Cannathera account.\n\nBest regards,\nYour Cannathera Team`,
+                html: `
               <div style="background-color: #f1f5f9; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; min-height: 100%;">
                 <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid #e2e8f0;">
                   <!-- Header -->
@@ -232,14 +261,21 @@ export class StripeService {
                 </div>
               </div>
             `,
-          }).then(() => {
-            this.logger.log(`Success email sent to patient ${user.email}`);
-          }).catch((err) => {
-            this.logger.error(`Failed to send success email to patient ${user.email}: ${err instanceof Error ? err.message : String(err)}`);
+              })
+              .then(() => {
+                this.logger.log(`Success email sent to patient ${user.email}`);
+              })
+              .catch((err) => {
+                this.logger.error(
+                  `Failed to send success email to patient ${user.email}: ${err instanceof Error ? err.message : String(err)}`,
+                );
+              });
+          })
+          .catch((err: any) => {
+            this.logger.error(
+              `Failed to resolve SMTP host to IPv4 for patient checkout: ${err instanceof Error ? err.message : String(err)}`,
+            );
           });
-        }).catch((err: any) => {
-          this.logger.error(`Failed to resolve SMTP host to IPv4 for patient checkout: ${err instanceof Error ? err.message : String(err)}`);
-        });
       }
     }
   }
@@ -302,28 +338,38 @@ export class StripeService {
           data: { isActive: true },
         });
 
-        if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
+        if (
+          process.env.SMTP_HOST &&
+          process.env.SMTP_USER &&
+          process.env.SMTP_PASS
+        ) {
           const smtpHost = process.env.SMTP_HOST;
-          lookup(smtpHost, { family: 4 }).then((dnsResult: any) => {
-            const greetingName = updatedUser.firstName ? `${updatedUser.firstName} ${updatedUser.lastName ?? ''}`.trim() : updatedUser.email;
-            const transporter = nodemailer.createTransport({
-              host: dnsResult.address,
-              port: Number(process.env.SMTP_PORT ?? 587),
-              secure: process.env.SMTP_SECURE === 'true',
-              auth: {
-                user: process.env.SMTP_USER,
-                pass: process.env.SMTP_PASS,
-              },
-              tls: {
-                servername: smtpHost,
-              },
-            } as any);
-            transporter.sendMail({
-              from: process.env.SMTP_FROM ?? '"Cannathera" <no-reply@cannathera.de>',
-              to: updatedUser.email,
-              subject: 'License Activated - Cannathera',
-              text: `Hello ${greetingName},\n\nYour organization license (${planTier} plan) has been successfully activated on Cannathera.\n\nBest regards,\nYour Cannathera Team`,
-              html: `
+          lookup(smtpHost, { family: 4 })
+            .then((dnsResult: any) => {
+              const greetingName = updatedUser.firstName
+                ? `${updatedUser.firstName} ${updatedUser.lastName ?? ''}`.trim()
+                : updatedUser.email;
+              const transporter = nodemailer.createTransport({
+                host: dnsResult.address,
+                port: Number(process.env.SMTP_PORT ?? 587),
+                secure: process.env.SMTP_SECURE === 'true',
+                auth: {
+                  user: process.env.SMTP_USER,
+                  pass: process.env.SMTP_PASS,
+                },
+                tls: {
+                  servername: smtpHost,
+                },
+              } as any);
+              transporter
+                .sendMail({
+                  from:
+                    process.env.SMTP_FROM ??
+                    '"Cannathera" <no-reply@cannathera.de>',
+                  to: updatedUser.email,
+                  subject: 'License Activated - Cannathera',
+                  text: `Hello ${greetingName},\n\nYour organization license (${planTier} plan) has been successfully activated on Cannathera.\n\nBest regards,\nYour Cannathera Team`,
+                  html: `
                 <div style="background-color: #f1f5f9; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; min-height: 100%;">
                   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); border: 1px solid #e2e8f0;">
                     <!-- Header -->
@@ -355,14 +401,23 @@ export class StripeService {
                   </div>
                 </div>
               `,
-            }).then(() => {
-              this.logger.log(`Success email sent to org member ${updatedUser.email}`);
-            }).catch((err) => {
-              this.logger.error(`Failed to send success email to B2B member ${updatedUser.email}: ${err instanceof Error ? err.message : String(err)}`);
+                })
+                .then(() => {
+                  this.logger.log(
+                    `Success email sent to org member ${updatedUser.email}`,
+                  );
+                })
+                .catch((err) => {
+                  this.logger.error(
+                    `Failed to send success email to B2B member ${updatedUser.email}: ${err instanceof Error ? err.message : String(err)}`,
+                  );
+                });
+            })
+            .catch((err: any) => {
+              this.logger.error(
+                `Failed to resolve SMTP host to IPv4 for B2B member ${updatedUser.email}: ${err instanceof Error ? err.message : String(err)}`,
+              );
             });
-          }).catch((err: any) => {
-            this.logger.error(`Failed to resolve SMTP host to IPv4 for B2B member ${updatedUser.email}: ${err instanceof Error ? err.message : String(err)}`);
-          });
         }
       }
     }

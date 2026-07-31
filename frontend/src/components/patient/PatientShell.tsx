@@ -50,7 +50,6 @@ export function PatientShell({
   const t = useTranslations("patient.nav");
   const th = useTranslations("patient.header");
   const pathname = usePathname();
-  const router = useRouter();
   const [sheetOpen, setSheetOpen] = useState(false);
   const [panel, setPanel] = useState<"none" | "notifications" | "menu">("none");
   const [hidden, setHidden] = useState(false);
@@ -70,6 +69,7 @@ export function PatientShell({
   }, []);
 
   // Close any dropdown on navigation.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setPanel("none"), [pathname]);
 
   const initials = userName

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 const path = require('path');
 
@@ -82,3 +83,4 @@ files.forEach(file => {
   fs.writeFileSync(filePath, updatedContent, 'utf8');
   console.log(`Updated ${file}`);
 });
+

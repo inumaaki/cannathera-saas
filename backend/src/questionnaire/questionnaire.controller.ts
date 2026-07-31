@@ -24,7 +24,9 @@ class SubmitDto {
 }
 
 function toLocale(value?: string): Locale {
-  return Object.values(Locale).includes(value as Locale) ? (value as Locale) : Locale.de;
+  return Object.values(Locale).includes(value as Locale)
+    ? (value as Locale)
+    : Locale.de;
 }
 
 @Controller('questionnaires')

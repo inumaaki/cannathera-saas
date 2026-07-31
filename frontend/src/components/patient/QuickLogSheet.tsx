@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { api } from "@/lib/api";
 import useSWR from "swr";
-
-const STRAINS = ["Blue Dream (Hybrid)", "Bedrocan (Sativa)", "Pedanios 22/1"];
 
 /* Quick Log bottom sheet (Figma 6-558): dosage stepper, strain select,
    three 0-10 sliders, plus professional clinical parameters, save -> POST /patient/logs. */
@@ -55,6 +54,7 @@ export function QuickLogSheet({
     // Set current time as default if empty
     if (!intakeTime) {
       const now = new Date();
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIntakeTime(`${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`);
     }
 

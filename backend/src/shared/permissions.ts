@@ -3,16 +3,16 @@
 // gate on it, so adding a new capability = adding a key here (no rework).
 
 export const PERMISSIONS = [
-  "patients:view", // see roster + patient files
-  "patients:create", // onboard new patients
-  "patients:note", // write clinical notes
-  "alerts:view", // red-flag inbox
-  "alerts:acknowledge", // mark red-flags reviewed
-  "appointments:manage", // reschedule consultations
-  "reports:view", // clinical reports + exports
-  "settings:practice", // practice profile, notifications, integrations
-  "settings:team", // invite/manage team members and their permissions
-  "compliance:view", // compliance page + audit export
+  'patients:view', // see roster + patient files
+  'patients:create', // onboard new patients
+  'patients:note', // write clinical notes
+  'alerts:view', // red-flag inbox
+  'alerts:acknowledge', // mark red-flags reviewed
+  'appointments:manage', // reschedule consultations
+  'reports:view', // clinical reports + exports
+  'settings:practice', // practice profile, notifications, integrations
+  'settings:team', // invite/manage team members and their permissions
+  'compliance:view', // compliance page + audit export
 ] as const;
 
 export type Permission = (typeof PERMISSIONS)[number];
@@ -22,16 +22,16 @@ export type Permission = (typeof PERMISSIONS)[number];
 export const ROLE_PRESETS = {
   ADMIN: [...PERMISSIONS],
   DOCTOR: [
-    "patients:view",
-    "patients:create",
-    "patients:note",
-    "alerts:view",
-    "alerts:acknowledge",
-    "appointments:manage",
-    "reports:view",
+    'patients:view',
+    'patients:create',
+    'patients:note',
+    'alerts:view',
+    'alerts:acknowledge',
+    'appointments:manage',
+    'reports:view',
   ],
-  ASSISTANT: ["patients:view", "alerts:view", "appointments:manage"],
-  VIEWER: ["patients:view", "reports:view"],
+  ASSISTANT: ['patients:view', 'alerts:view', 'appointments:manage'],
+  VIEWER: ['patients:view', 'reports:view'],
 } as const satisfies Record<string, readonly Permission[]>;
 
 export type OrgRole = keyof typeof ROLE_PRESETS;

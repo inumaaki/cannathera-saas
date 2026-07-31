@@ -67,7 +67,10 @@ export class ReportsController {
     @Param('reportId') reportId: string,
     @Res() res: Response,
   ) {
-    const { buffer, filename } = await this.reports.fileById(user.sub, reportId);
+    const { buffer, filename } = await this.reports.fileById(
+      user.sub,
+      reportId,
+    );
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', `attachment; filename="${filename}"`);
     res.end(buffer);

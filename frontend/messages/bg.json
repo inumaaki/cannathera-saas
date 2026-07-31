@@ -725,9 +725,9 @@
     "imprint": {
       "title": "Импресум",
       "providerHeading": "Информация съгласно § 5 TMG / § 5 DDG",
-      "provider": "Cannathera\nСобственик: Dominique Larkin\n[Улица и номер]\n[Пощенски код и град]\nГермания",
+      "provider": "Cannathera\nСобственик: Dominique Larkin\nHügelstr. 1\n46117 Oberhausen\nГермания",
       "contactHeading": "Контакт",
-      "contact": "Имейл: [kontakt@cannathera.de]\nТелефон: [+49 …]",
+      "contact": "Имейл: d.larkin@cannathera-report.de\nТелефон: [+49 …]",
       "responsibleHeading": "Отговорен за съдържанието съгласно § 18 (2) MStV",
       "responsible": "Dominique Larkin, адресът е същият като горе",
       "disputeHeading": "Разрешаване на спорове",
@@ -739,7 +739,7 @@
       "intro": "Защитата на личните ви данни — по-специално на здравните ви данни — е най-висок приоритет за Cannathera. Обработваме данните ви изключително въз основа на приложимото законодателство (GDPR, BDSG) и тази политика за поверителност.",
       "sections": {
         "controllerHeading": "1. Администратор",
-        "controller": "Cannathera, собственик: Dominique Larkin, [адрес]. Имейл: [datenschutz@cannathera.de]",
+        "controller": "Cannathera, собственик: Dominique Larkin, Hügelstr. 1, 46117 Oberhausen. Имейл: d.larkin@cannathera-report.de",
         "dataHeading": "2. Какви данни обработваме",
         "data": "Основни данни (име, имейл адрес, дата на раждане), данни за достъп (пароли, съхранявани криптирано), здравни данни в рамките на терапевтичната подкрепа (чл. 9 GDPR) и технически регистрационни данни (одитен регистър).",
         "purposeHeading": "3. Цели и правни основания",

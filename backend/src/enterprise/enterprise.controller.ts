@@ -27,7 +27,13 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
-import { CurrentUser, Roles, RolesGuard, SessionGuard, SubscriptionGuard } from '../auth/auth.guard';
+import {
+  CurrentUser,
+  Roles,
+  RolesGuard,
+  SessionGuard,
+  SubscriptionGuard,
+} from '../auth/auth.guard';
 import type { SessionPayload } from '../auth/auth.service';
 import { BillingService } from './billing.service';
 import { EnterpriseService } from './enterprise.service';
@@ -168,12 +174,17 @@ export class EnterpriseController {
   }
 
   @Patch('branding')
-  updateBranding(@CurrentUser() user: SessionPayload, @Body() dto: BrandingDto) {
+  updateBranding(
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: BrandingDto,
+  ) {
     return this.enterprise.updateBranding(user.sub, dto);
   }
 
   @Post('branding/logo')
-  @UseInterceptors(FileInterceptor('file', { limits: { fileSize: 5 * 1024 * 1024 } }))
+  @UseInterceptors(
+    FileInterceptor('file', { limits: { fileSize: 5 * 1024 * 1024 } }),
+  )
   uploadLogo(
     @CurrentUser() user: SessionPayload,
     @UploadedFile() file: Express.Multer.File,
@@ -183,7 +194,10 @@ export class EnterpriseController {
 
   @Get('export')
   @Header('Content-Type', 'text/csv; charset=utf-8')
-  @Header('Content-Disposition', 'attachment; filename="cannathera-netzwerk.csv"')
+  @Header(
+    'Content-Disposition',
+    'attachment; filename="cannathera-netzwerk.csv"',
+  )
   exportCsv(@CurrentUser() user: SessionPayload) {
     return this.enterprise.exportCsv(user.sub);
   }
@@ -201,7 +215,12 @@ export class EnterpriseController {
 
   @Post('integrations/keys')
   createKey(@CurrentUser() user: SessionPayload, @Body() dto: CreateKeyDto) {
-    return this.integrations.createKey(user.sub, dto.name, dto.scopes, dto.live ?? true);
+    return this.integrations.createKey(
+      user.sub,
+      dto.name,
+      dto.scopes,
+      dto.live ?? true,
+    );
   }
 
   @Delete('integrations/keys/:id')
@@ -215,7 +234,10 @@ export class EnterpriseController {
   }
 
   @Post('integrations/webhooks')
-  createWebhook(@CurrentUser() user: SessionPayload, @Body() dto: CreateWebhookDto) {
+  createWebhook(
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: CreateWebhookDto,
+  ) {
     return this.integrations.createWebhook(user.sub, dto.url, dto.events);
   }
 
@@ -234,7 +256,10 @@ export class EnterpriseController {
   }
 
   @Get('integrations/deliveries')
-  deliveries(@CurrentUser() user: SessionPayload, @Query('limit') limit?: string) {
+  deliveries(
+    @CurrentUser() user: SessionPayload,
+    @Query('limit') limit?: string,
+  ) {
     return this.integrations.deliveries(user.sub, Number(limit) || 25);
   }
 
@@ -250,7 +275,10 @@ export class EnterpriseController {
   }
 
   @Get('billing/invoices')
-  invoices(@CurrentUser() user: SessionPayload, @Query('status') status?: string) {
+  invoices(
+    @CurrentUser() user: SessionPayload,
+    @Query('status') status?: string,
+  ) {
     return this.billing.invoices(user.sub, status);
   }
 
@@ -261,7 +289,10 @@ export class EnterpriseController {
 
   @Get('billing/invoices/export')
   @Header('Content-Type', 'text/csv; charset=utf-8')
-  @Header('Content-Disposition', 'attachment; filename="cannathera-rechnungen.csv"')
+  @Header(
+    'Content-Disposition',
+    'attachment; filename="cannathera-rechnungen.csv"',
+  )
   exportInvoices(@CurrentUser() user: SessionPayload) {
     return this.billing.exportInvoicesCsv(user.sub);
   }
@@ -297,7 +328,10 @@ export class EnterpriseController {
   }
 
   @Patch('settings')
-  updateSettings(@CurrentUser() user: SessionPayload, @Body() dto: UpdateSettingsDto) {
+  updateSettings(
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: UpdateSettingsDto,
+  ) {
     return this.settings.updateSettings(user.sub, dto);
   }
 

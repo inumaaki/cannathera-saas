@@ -64,12 +64,6 @@ export default function ImprintPage({
                   </section>
                 ))}
               </div>
-              
-              <div className="mt-12 rounded-2xl bg-pine-50/50 px-6 py-5 border border-pine-100/50">
-                <p className="text-sm text-pine-900/80 leading-relaxed">
-                  {t("notice")}
-                </p>
-              </div>
             </div>
           </div>
         </div>

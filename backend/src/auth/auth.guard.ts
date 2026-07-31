@@ -25,7 +25,9 @@ export class SessionGuard implements CanActivate {
 
   canActivate(ctx: ExecutionContext): boolean {
     const req = ctx.switchToHttp().getRequest<AuthedRequest>();
-    const token = (req.cookies as Record<string, string> | undefined)?.[SESSION_COOKIE];
+    const token = (req.cookies as Record<string, string> | undefined)?.[
+      SESSION_COOKIE
+    ];
     if (!token) throw new UnauthorizedException('NO_SESSION');
     try {
       const payload = this.jwt.verify<SessionPayload & { exp?: number }>(token);
@@ -43,7 +45,10 @@ export class SessionGuard implements CanActivate {
    * Once the token is past its half-life, re-issue it for a fresh full window —
    * an idle user still expires exactly `ttlMin` after their last request.
    */
-  private slide(ctx: ExecutionContext, payload: SessionPayload & { exp?: number }) {
+  private slide(
+    ctx: ExecutionContext,
+    payload: SessionPayload & { exp?: number },
+  ) {
     const ttlMin = payload.ttlMin;
     if (!ttlMin || !payload.exp) return;
 
@@ -78,10 +83,10 @@ export class RolesGuard implements CanActivate {
   constructor(private readonly reflector: Reflector) {}
 
   canActivate(ctx: ExecutionContext): boolean {
-    const required = this.reflector.getAllAndOverride<Role[] | undefined>(ROLES_KEY, [
-      ctx.getHandler(),
-      ctx.getClass(),
-    ]);
+    const required = this.reflector.getAllAndOverride<Role[] | undefined>(
+      ROLES_KEY,
+      [ctx.getHandler(), ctx.getClass()],
+    );
     if (!required?.length) return true;
     const req = ctx.switchToHttp().getRequest<AuthedRequest>();
     if (!required.includes(req.user.role)) throw new ForbiddenException();
@@ -102,10 +107,10 @@ export class PermissionsGuard implements CanActivate {
   ) {}
 
   async canActivate(ctx: ExecutionContext): Promise<boolean> {
-    const required = this.reflector.getAllAndOverride<string[] | undefined>(PERMS_KEY, [
-      ctx.getHandler(),
-      ctx.getClass(),
-    ]);
+    const required = this.reflector.getAllAndOverride<string[] | undefined>(
+      PERMS_KEY,
+      [ctx.getHandler(), ctx.getClass()],
+    );
     if (!required?.length) return true;
 
     const req = ctx.switchToHttp().getRequest<AuthedRequest>();

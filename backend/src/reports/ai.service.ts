@@ -11,7 +11,9 @@ export class AiService {
     if (apiKey) {
       this.openai = new OpenAI({ apiKey });
     } else {
-      this.logger.warn('OPENAI_API_KEY is missing from environment. AI features will fail gracefully.');
+      this.logger.warn(
+        'OPENAI_API_KEY is missing from environment. AI features will fail gracefully.',
+      );
     }
   }
 
@@ -19,7 +21,7 @@ export class AiService {
     patientName: string,
     periodStart: string,
     periodEnd: string,
-    logsData: any
+    logsData: any,
   ): Promise<string> {
     if (!this.openai) {
       return `AI-generierte Zusammenfassung konnte nicht erstellt werden, da der API-Schlüssel fehlt.`;
@@ -52,12 +54,15 @@ Bitte verfasse nun die klinische Zusammenfassung basierend auf diesen Daten.
         model: 'gpt-4o-mini',
         messages: [
           { role: 'system', content: systemPrompt.trim() },
-          { role: 'user', content: userMessage.trim() }
+          { role: 'user', content: userMessage.trim() },
         ],
         temperature: 0.2,
       });
 
-      return response.choices[0]?.message?.content || 'Fehler bei der Generierung der KI-Zusammenfassung.';
+      return (
+        response.choices[0]?.message?.content ||
+        'Fehler bei der Generierung der KI-Zusammenfassung.'
+      );
     } catch (error: any) {
       this.logger.error('Error generating AI clinical summary', error);
       return `Fehler bei der Kommunikation mit dem KI-Dienst: ${error.message}`;

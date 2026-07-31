@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 const path = require('path');
 
@@ -27,3 +28,4 @@ for (const file of files) {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf8');
   console.log(`Updated ${file}`);
 }
+

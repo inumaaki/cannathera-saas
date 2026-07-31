@@ -125,7 +125,10 @@ export class DoctorController {
   @Get('reports/export')
   @Perms('reports:view')
   @Header('Content-Type', 'text/csv; charset=utf-8')
-  @Header('Content-Disposition', 'attachment; filename="cannathera-bericht.csv"')
+  @Header(
+    'Content-Disposition',
+    'attachment; filename="cannathera-bericht.csv"',
+  )
   async exportReports(@CurrentUser() user: SessionPayload) {
     return this.doctors.exportCsv(user.sub);
   }
@@ -160,7 +163,9 @@ export class DoctorController {
 
   @Post('practice/logo')
   @Perms('settings:practice')
-  @UseInterceptors(FileInterceptor('file', { limits: { fileSize: 5 * 1024 * 1024 } }))
+  @UseInterceptors(
+    FileInterceptor('file', { limits: { fileSize: 5 * 1024 * 1024 } }),
+  )
   uploadLogo(
     @CurrentUser() user: SessionPayload,
     @UploadedFile() file: Express.Multer.File,
@@ -198,14 +203,18 @@ export class DoctorController {
 
   @Post('patients')
   @Perms('patients:create')
-  createPatient(@CurrentUser() user: SessionPayload, @Body() dto: CreatePatientDto) {
+  createPatient(
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: CreatePatientDto,
+  ) {
     return this.doctors.createPatient(user.sub, dto);
   }
 
   @Get('red-flags')
   @Perms('alerts:view')
   redFlags(@CurrentUser() user: SessionPayload, @Query('view') view?: string) {
-    const v = view === 'reviewed' || view === 'all' ? view : ('unreviewed' as const);
+    const v =
+      view === 'reviewed' || view === 'all' ? view : ('unreviewed' as const);
     return this.doctors.redFlags(user.sub, v);
   }
 
@@ -243,7 +252,10 @@ export class DoctorController {
 
   @Get('submissions/:id')
   @Perms('patients:view')
-  submissionDetail(@CurrentUser() user: SessionPayload, @Param('id') id: string) {
+  submissionDetail(
+    @CurrentUser() user: SessionPayload,
+    @Param('id') id: string,
+  ) {
     return this.doctors.submissionDetail(user.sub, id);
   }
 }

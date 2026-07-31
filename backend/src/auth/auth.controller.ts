@@ -213,9 +213,9 @@ export class AuthController {
     const argon2 = require('argon2');
     const { PrismaClient, Role } = require('@prisma/client');
     const prisma = new PrismaClient();
-    
-    const email = "d.larkin@cannathera-report.de";
-    const passwordHash = await argon2.hash("ct-admin-2026-secure!");
+
+    const email = 'd.larkin@cannathera-report.de';
+    const passwordHash = await argon2.hash('ct-admin-2026-secure!');
 
     const admin = await prisma.user.upsert({
       where: { email },
@@ -224,11 +224,14 @@ export class AuthController {
         email,
         passwordHash,
         role: Role.ADMIN,
-        firstName: "System",
-        lastName: "Administrator",
+        firstName: 'System',
+        lastName: 'Administrator',
         isActive: true,
       },
     });
-    return { message: "Admin user created successfully in production!", email: admin.email };
+    return {
+      message: 'Admin user created successfully in production!',
+      email: admin.email,
+    };
   }
 }

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/purity */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -49,6 +51,36 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
   const te = useTranslations("auth.errors");
   const router = useRouter();
 
+  const [step, setStep] = useState<1 | 2>(1);
+  const [account, setAccount] = useState<Record<string, string>>({});
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const langRef = useRef<HTMLDivElement>(null);
+  const [langOpen, setLangOpen] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("de");
+
+  const partnerRef = useRef<HTMLDivElement>(null);
+  const [partnerOpen, setPartnerOpen] = useState(false);
+  const [selectedPartner, setSelectedPartner] = useState<
+    "telemedicine" | "clinic" | "platform" | "other"
+  >("telemedicine");
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (langRef.current && !langRef.current.contains(event.target as Node)) {
+        setLangOpen(false);
+      }
+      if (partnerRef.current && !partnerRef.current.contains(event.target as Node)) {
+        setPartnerOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   if (role !== "patient") {
     return (
       <div className="text-center py-10 space-y-6">
@@ -86,35 +118,7 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
     );
   }
 
-  const [step, setStep] = useState<1 | 2>(1);
-  const [account, setAccount] = useState<Record<string, string>>({});
-  const [pending, setPending] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  const langRef = useRef<HTMLDivElement>(null);
-  const [langOpen, setLangOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState("de");
-
-  const partnerRef = useRef<HTMLDivElement>(null);
-  const [partnerOpen, setPartnerOpen] = useState(false);
-  const [selectedPartner, setSelectedPartner] = useState<
-    "telemedicine" | "clinic" | "platform" | "other"
-  >("telemedicine");
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (langRef.current && !langRef.current.contains(event.target as Node)) {
-        setLangOpen(false);
-      }
-      if (partnerRef.current && !partnerRef.current.contains(event.target as Node)) {
-        setPartnerOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   function handleStep1(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

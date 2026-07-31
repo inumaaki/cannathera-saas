@@ -15,6 +15,7 @@ type Summary = {
   stats: Array<{ key: "pain" | "sleep" | "activity" | "qol"; value: number | null; delta: number | null }>;
   nextAppointment: { scheduledAt: string; joinUrl: string | null } | null;
   onboardingCompleted?: boolean;
+  hasActiveSubscription: boolean;
 };
 
 type Plan = {
@@ -43,10 +44,6 @@ export default async function PatientHome({
     apiServer<Summary>("/patient/summary"),
     apiServer<Plan>("/patient/plan"),
   ]);
-
-  if (summary && summary.onboardingCompleted === false) {
-    redirect(`/${locale}/patient/onboarding`);
-  }
 
   const name = summary?.firstName ?? user?.firstName ?? "";
   const hour = new Date().getHours();

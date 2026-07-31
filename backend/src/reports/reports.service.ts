@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { ReportType, Role, SubscriptionTier } from '@prisma/client';
 import { join } from 'path';
 import { PrismaService } from '../prisma/prisma.service';
@@ -7,7 +11,12 @@ import { renderReportPdf } from './report-template';
 /* Report PDFs live outside `uploads/` so no static handler can ever expose them. */
 const REPORT_DIR = join(process.cwd(), 'storage', 'reports');
 
-type Metrics = { pain?: number; sleep?: number; activity?: number; qol?: number };
+type Metrics = {
+  pain?: number;
+  sleep?: number;
+  activity?: number;
+  qol?: number;
+};
 type LogMetrics = Metrics & {
   symptomsText?: string;
   effectDescription?: string;
@@ -52,10 +61,30 @@ export type ReportData = {
 };
 
 const METRIC_META = [
-  { key: 'pain', label: 'Schmerz (NRS 0–10)', unit: '/10', betterWhenDown: true },
-  { key: 'sleep', label: 'Schlafqualität (0–10)', unit: '/10', betterWhenDown: false },
-  { key: 'activity', label: 'Aktivität (0–10)', unit: '/10', betterWhenDown: false },
-  { key: 'qol', label: 'Lebensqualität (0–10)', unit: '/10', betterWhenDown: false },
+  {
+    key: 'pain',
+    label: 'Schmerz (NRS 0–10)',
+    unit: '/10',
+    betterWhenDown: true,
+  },
+  {
+    key: 'sleep',
+    label: 'Schlafqualität (0–10)',
+    unit: '/10',
+    betterWhenDown: false,
+  },
+  {
+    key: 'activity',
+    label: 'Aktivität (0–10)',
+    unit: '/10',
+    betterWhenDown: false,
+  },
+  {
+    key: 'qol',
+    label: 'Lebensqualität (0–10)',
+    unit: '/10',
+    betterWhenDown: false,
+  },
 ] as const;
 
 /** Period presets. LONG_TERM = whole therapy (answers the client's >90-day ask). */
@@ -72,7 +101,7 @@ import { AiService } from './ai.service';
 export class ReportsService {
   constructor(
     private readonly prisma: PrismaService,
-    private readonly aiService: AiService
+    private readonly aiService: AiService,
   ) {}
 
   /**
@@ -92,7 +121,8 @@ export class ReportsService {
       where: { id: userId },
       select: { role: true, memberships: { select: { orgId: true } } },
     });
-    if (!user || user.role === Role.PATIENT) throw new ForbiddenException('FORBIDDEN');
+    if (!user || user.role === Role.PATIENT)
+      throw new ForbiddenException('FORBIDDEN');
 
     const orgIds = user.memberships.map((m) => m.orgId);
     const onCase =
@@ -118,7 +148,12 @@ export class ReportsService {
     const periodStart =
       days === null
         ? therapyStart
-        : new Date(Math.max(therapyStart.getTime(), periodEnd.getTime() - days * 86_400_000));
+        : new Date(
+            Math.max(
+              therapyStart.getTime(),
+              periodEnd.getTime() - days * 86_400_000,
+            ),
+          );
 
     const [logs, submissions, redFlags] = await Promise.all([
       this.prisma.therapyLog.findMany({
@@ -157,7 +192,9 @@ export class ReportsService {
       weekBuckets.set(week, bucket);
     }
     const avg = (a: number[]) =>
-      a.length ? Math.round((a.reduce((x, y) => x + y, 0) / a.length) * 100) / 100 : null;
+      a.length
+        ? Math.round((a.reduce((x, y) => x + y, 0) / a.length) * 100) / 100
+        : null;
     const weeks = [...weekBuckets.entries()]
       .sort(([a], [b]) => a - b)
       .map(([w, vals]) => ({ label: `Woche ${w + 1}`, avgG: avg(vals) }));
@@ -178,10 +215,13 @@ export class ReportsService {
     const firstOf = (k: keyof Metrics) =>
       logs.find((l) => (l.metrics as Metrics | null)?.[k] != null);
     const lastOf = (k: keyof Metrics) =>
-      [...logs].reverse().find((l) => (l.metrics as Metrics | null)?.[k] != null);
+      [...logs]
+        .reverse()
+        .find((l) => (l.metrics as Metrics | null)?.[k] != null);
 
     const metrics = METRIC_META.map((m) => {
-      const start = (firstOf(m.key)?.metrics as Metrics | null)?.[m.key] ?? null;
+      const start =
+        (firstOf(m.key)?.metrics as Metrics | null)?.[m.key] ?? null;
       const end = (lastOf(m.key)?.metrics as Metrics | null)?.[m.key] ?? null;
       const changePct =
         start != null && end != null && start !== 0
@@ -191,7 +231,9 @@ export class ReportsService {
     });
 
     // ---- Adherence ----------------------------------------------------------
-    const loggedDays = new Set(logs.map((l) => l.loggedAt.toISOString().slice(0, 10))).size;
+    const loggedDays = new Set(
+      logs.map((l) => l.loggedAt.toISOString().slice(0, 10)),
+    ).size;
     const totalDays = Math.max(
       1,
       Math.ceil((periodEnd.getTime() - periodStart.getTime()) / 86_400_000),
@@ -210,7 +252,8 @@ export class ReportsService {
       const raw = a.value as unknown;
       if (Array.isArray(raw)) {
         return raw.map(
-          (v) => a.question.options.find((o) => o.value === v)?.label ?? String(v),
+          (v) =>
+            a.question.options.find((o) => o.value === v)?.label ?? String(v),
         );
       }
       if (typeof raw === 'string') {
@@ -218,32 +261,71 @@ export class ReportsService {
       }
       return raw;
     };
-    const painDesc = typeof answerOf('painDescription') === 'string' ? (answerOf('painDescription') as string) : null;
-    const sleepDetails = typeof answerOf('sleepQualityDetails') === 'string' ? (answerOf('sleepQualityDetails') as string) : null;
-    const sideEffectsDetails = typeof answerOf('sideEffectsDetails') === 'string' ? (answerOf('sideEffectsDetails') as string) : null;
-    const improvementsDetail = typeof answerOf('improvementsDetail') === 'string' ? (answerOf('improvementsDetail') as string) : null;
-    const unresolvedIssues = typeof answerOf('unresolvedIssues') === 'string' ? (answerOf('unresolvedIssues') as string) : null;
-    const doctorQuestions = typeof answerOf('doctorQuestions') === 'string' ? (answerOf('doctorQuestions') as string) : null;
-    const strainUsedText = typeof answerOf('strainUsed') === 'string' ? (answerOf('strainUsed') as string) : null;
-    const sideEffects = Array.isArray(answerOf('sideEffects')) ? (answerOf('sideEffects') as string[]) : [];
+    const painDesc =
+      typeof answerOf('painDescription') === 'string'
+        ? (answerOf('painDescription') as string)
+        : null;
+    const sleepDetails =
+      typeof answerOf('sleepQualityDetails') === 'string'
+        ? (answerOf('sleepQualityDetails') as string)
+        : null;
+    const sideEffectsDetails =
+      typeof answerOf('sideEffectsDetails') === 'string'
+        ? (answerOf('sideEffectsDetails') as string)
+        : null;
+    const improvementsDetail =
+      typeof answerOf('improvementsDetail') === 'string'
+        ? (answerOf('improvementsDetail') as string)
+        : null;
+    const unresolvedIssues =
+      typeof answerOf('unresolvedIssues') === 'string'
+        ? (answerOf('unresolvedIssues') as string)
+        : null;
+    const doctorQuestions =
+      typeof answerOf('doctorQuestions') === 'string'
+        ? (answerOf('doctorQuestions') as string)
+        : null;
+    const strainUsedText =
+      typeof answerOf('strainUsed') === 'string'
+        ? (answerOf('strainUsed') as string)
+        : null;
+    const sideEffects = Array.isArray(answerOf('sideEffects'))
+      ? (answerOf('sideEffects') as string[])
+      : [];
     const satisfactionVal = answerOf('satisfaction');
-    const satisfaction = typeof satisfactionVal === 'number' ? satisfactionVal : (typeof satisfactionVal === 'string' ? parseInt(satisfactionVal, 10) : null);
-    const goalsReached = typeof answerOf('goalsReached') === 'string' ? (answerOf('goalsReached') as string) : null;
-    const notes = typeof answerOf('notes') === 'string' ? (answerOf('notes') as string) : null;
+    const satisfaction =
+      typeof satisfactionVal === 'number'
+        ? satisfactionVal
+        : typeof satisfactionVal === 'string'
+          ? parseInt(satisfactionVal, 10)
+          : null;
+    const goalsReached =
+      typeof answerOf('goalsReached') === 'string'
+        ? (answerOf('goalsReached') as string)
+        : null;
+    const notes =
+      typeof answerOf('notes') === 'string'
+        ? (answerOf('notes') as string)
+        : null;
     const prepVal = answerOf('doctorQuestions');
-    const prep: string[] = typeof prepVal === 'string' && prepVal.trim() !== '' ? [prepVal] : [];
+    const prep: string[] =
+      typeof prepVal === 'string' && prepVal.trim() !== '' ? [prepVal] : [];
     // ---- Comprehensive Clinical Summary (AI Engine) --------------------
     let summary = '';
     if (logs.length === 0 && !review) {
-      summary = 'Für diesen Zeitraum liegen noch keine strukturierten Tageseinträge oder Monatsreviews vor.';
+      summary =
+        'Für diesen Zeitraum liegen noch keine strukturierten Tageseinträge oder Monatsreviews vor.';
     } else {
-      const patientNameForAi = [profile.user.firstName, profile.user.lastName].filter(Boolean).join(' ') || 'Unbekannt';
+      const patientNameForAi =
+        [profile.user.firstName, profile.user.lastName]
+          .filter(Boolean)
+          .join(' ') || 'Unbekannt';
       const aiDataPayload = {
         adherence,
         dosage: { avgDailyG, totalG },
         metrics,
         strains,
-        dailyNotesAndFreeText: logs.map(l => {
+        dailyNotesAndFreeText: logs.map((l) => {
           const m = l.metrics as LogMetrics | null;
           return {
             date: l.loggedAt.toISOString().slice(0, 10),
@@ -265,21 +347,24 @@ export class ReportsService {
           satisfaction,
           goalsReached,
           notes,
-        }
+        },
       };
 
       summary = await this.aiService.generateClinicalSummary(
         patientNameForAi,
         periodStart.toISOString().slice(0, 10),
         periodEnd.toISOString().slice(0, 10),
-        aiDataPayload
+        aiDataPayload,
       );
     }
 
-    const branding = (profile.org?.branding ?? null) as { logoUrl?: string } | null;
+    const branding = (profile.org?.branding ?? null) as {
+      logoUrl?: string;
+    } | null;
     const therapyDay = Math.max(
       1,
-      Math.floor((periodEnd.getTime() - therapyStart.getTime()) / 86_400_000) + 1,
+      Math.floor((periodEnd.getTime() - therapyStart.getTime()) / 86_400_000) +
+        1,
     );
 
     return {
@@ -288,7 +373,9 @@ export class ReportsService {
       periodEnd,
       generatedAt: new Date(),
       patient: {
-        name: [profile.user.firstName, profile.user.lastName].filter(Boolean).join(' '),
+        name: [profile.user.firstName, profile.user.lastName]
+          .filter(Boolean)
+          .join(' '),
         patientRef: profile.patientRef,
         dateOfBirth: profile.dateOfBirth,
         therapyDay,
@@ -351,7 +438,7 @@ export class ReportsService {
       }
     } else {
       const hasActiveSub = user.memberships.some(
-        (m) => m.org.subscriptions.length > 0
+        (m) => m.org.subscriptions.length > 0,
       );
       if (!hasActiveSub) {
         throw new ForbiddenException('PARTNER_INACTIVE');

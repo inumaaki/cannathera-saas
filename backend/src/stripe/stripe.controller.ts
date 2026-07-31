@@ -14,6 +14,7 @@ import {
 import type { Response } from 'express';
 import { SubscriptionTier } from '@prisma/client';
 import { IsEnum, IsNotEmpty, IsString } from 'class-validator';
+import { ConfigService } from '@nestjs/config';
 import { SessionGuard } from '../auth/auth.guard';
 import type { AuthedRequest } from '../auth/auth.guard';
 import { StripeService } from './stripe.service';
@@ -33,7 +34,10 @@ class CreateCheckoutDto {
 
 @Controller('stripe')
 export class StripeController {
-  constructor(private readonly stripeService: StripeService) {}
+  constructor(
+    private readonly stripeService: StripeService,
+    private readonly config: ConfigService,
+  ) {}
 
   @Post('checkout')
   @UseGuards(SessionGuard)
@@ -58,36 +62,42 @@ export class StripeController {
     @Query('tier') tier: SubscriptionTier,
     @Res() res: Response,
   ) {
+    const webOrigin =
+      this.config.get<string>('WEB_ORIGIN') ?? 'http://localhost:3000';
+
     if (sessionId && sessionId.startsWith('cs_')) {
       try {
-        const session = await this.stripeService.retrieveCheckoutSession(sessionId);
+        const session =
+          await this.stripeService.retrieveCheckoutSession(sessionId);
         if (session) {
           const uId = session.metadata?.userId;
           const oId = session.metadata?.orgId;
           const t = session.metadata?.planTier as SubscriptionTier;
           if (oId && t) {
             await this.stripeService.fulfillSimulatedCheckout(oId, t);
-            return res.redirect('http://localhost:3000/en/enterprise/billing?success=true');
+            return res.redirect(
+              `${webOrigin}/en/enterprise/billing?success=true`,
+            );
           }
           if (uId && t) {
             await this.stripeService.fulfillPatientCheckout(uId, t);
-            return res.redirect('http://localhost:3000/en/patient/plan?success=true');
+            return res.redirect(`${webOrigin}/en/patient/plan?success=true`);
           }
         }
-      } catch (err) {
+      } catch (_err) {
         // Fall through
       }
     }
 
     if (orgId && tier) {
       await this.stripeService.fulfillSimulatedCheckout(orgId, tier);
-      return res.redirect('http://localhost:3000/en/enterprise/billing?success=true');
+      return res.redirect(`${webOrigin}/en/enterprise/billing?success=true`);
     }
     if (userId && tier) {
       await this.stripeService.fulfillPatientCheckout(userId, tier);
-      return res.redirect('http://localhost:3000/en/patient/plan?success=true');
+      return res.redirect(`${webOrigin}/en/patient/plan?success=true`);
     }
-    return res.redirect('http://localhost:3000/en/login');
+    return res.redirect(`${webOrigin}/en/login`);
   }
 
   @Post('webhook')

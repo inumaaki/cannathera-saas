@@ -123,6 +123,16 @@ export class UpdateProfileDto {
   @IsString()
   @MaxLength(40)
   pharmacyOrgId?: string | null;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  address?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  phone?: string;
 }
 
 export class CompleteOnboardingDto {

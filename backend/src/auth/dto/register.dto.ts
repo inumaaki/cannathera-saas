@@ -13,7 +13,12 @@ import {
 } from 'class-validator';
 import { Locale } from '@prisma/client';
 
-export const SIGNUP_ROLES = ['patient', 'doctor', 'pharmacy', 'enterprise'] as const;
+export const SIGNUP_ROLES = [
+  'patient',
+  'doctor',
+  'pharmacy',
+  'enterprise',
+] as const;
 export type SignupRole = (typeof SIGNUP_ROLES)[number];
 
 class PatientDataDto {
@@ -138,7 +143,13 @@ export class RegisterDto {
         return PatientDataDto;
     }
   })
-  roleData?: PatientDataDto | DoctorDataDto | PharmacyDataDto | EnterpriseDataDto;
+  roleData?:
+    PatientDataDto | DoctorDataDto | PharmacyDataDto | EnterpriseDataDto;
 }
 
-export type { PatientDataDto, DoctorDataDto, PharmacyDataDto, EnterpriseDataDto };
+export type {
+  PatientDataDto,
+  DoctorDataDto,
+  PharmacyDataDto,
+  EnterpriseDataDto,
+};

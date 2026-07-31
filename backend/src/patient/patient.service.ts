@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -31,12 +32,17 @@ export class PatientService {
     private readonly notifications: NotificationsService,
   ) {}
 
-  private async profileOf(userId: string) {
+  private async profileOf(userId: string, requireSubscription = false) {
     const profile = await this.prisma.patientProfile.findUnique({
       where: { userId },
-      include: { user: { select: { firstName: true, lastName: true, email: true } } },
+      include: {
+        user: { select: { firstName: true, lastName: true, email: true } },
+      },
     });
     if (!profile) throw new NotFoundException('NO_PATIENT_PROFILE');
+    if (requireSubscription && !profile.hasActiveSubscription) {
+      throw new ForbiddenException('SUBSCRIPTION_REQUIRED');
+    }
     return profile;
   }
 
@@ -86,7 +92,11 @@ export class PatientService {
     for (const org of ordered) {
       const own = org.branding as Branding | null;
       if (hasTheme(own)) {
-        return { partner: org.name, ...own, poweredBy: 'Powered by Cannathera' };
+        return {
+          partner: org.name,
+          ...own,
+          poweredBy: 'Powered by Cannathera',
+        };
       }
     }
     for (const org of ordered) {
@@ -127,7 +137,9 @@ export class PatientService {
 
     // Adherence: distinct days with a log in the last 30 (or since start) days.
     const windowDays = Math.min(30, day);
-    const loggedDays = new Set(logs.map((l) => l.loggedAt.toISOString().slice(0, 10)));
+    const loggedDays = new Set(
+      logs.map((l) => l.loggedAt.toISOString().slice(0, 10)),
+    );
     const adherence = windowDays
       ? Math.min(100, Math.round((loggedDays.size / windowDays) * 100))
       : 0;
@@ -136,8 +148,10 @@ export class PatientService {
     const todayLogged = loggedDays.has(today);
 
     // Latest metrics + delta vs ~7 days earlier.
-    const metric = (l: (typeof logs)[number] | undefined, key: keyof LogMetrics) =>
-      l ? ((l.metrics as LogMetrics | null)?.[key] ?? null) : null;
+    const metric = (
+      l: (typeof logs)[number] | undefined,
+      key: keyof LogMetrics,
+    ) => (l ? ((l.metrics as LogMetrics | null)?.[key] ?? null) : null);
     const last = logs.at(-1);
     const weekAgoIdx = logs.findIndex(
       (l) => l.loggedAt.getTime() >= Date.now() - 7 * 86_400_000,
@@ -173,22 +187,23 @@ export class PatientService {
       stats,
       nextAppointment,
       onboardingCompleted: profile.onboardingCompleted,
+      hasActiveSubscription: profile.hasActiveSubscription,
     };
   }
 
   async createLog(
     userId: string,
-    data: { 
-      dosageG: number; 
-      strain?: string; 
+    data: {
+      dosageG: number;
+      strain?: string;
       batchNumber?: string;
       manufacturer?: string;
       consumptionMethod?: string;
-      metrics: LogMetrics; 
-      note?: string 
+      metrics: LogMetrics;
+      note?: string;
     },
   ) {
-    const profile = await this.profileOf(userId);
+    const profile = await this.profileOf(userId, true);
     const log = await this.prisma.therapyLog.create({
       data: {
         patientId: profile.id,
@@ -198,7 +213,7 @@ export class PatientService {
         batchNumber: data.batchNumber,
         manufacturer: data.manufacturer,
         consumptionMethod: data.consumptionMethod,
-        metrics: data.metrics as Prisma.InputJsonValue,
+        metrics: data.metrics,
         note: data.note,
       },
     });
@@ -212,7 +227,8 @@ export class PatientService {
     });
 
     // Clinical thresholds on daily logs (mirror of the monthly-review rules).
-    const hits: Array<{ severity: 'CRITICAL' | 'WARNING'; message: string }> = [];
+    const hits: Array<{ severity: 'CRITICAL' | 'WARNING'; message: string }> =
+      [];
     if (data.metrics.pain != null && data.metrics.pain >= 9) {
       hits.push({
         severity: 'CRITICAL',
@@ -240,8 +256,9 @@ export class PatientService {
     // Push the alert to the care team live — a CRITICAL pain score should not
     // wait for the doctor to navigate. Goes to the practice AND the pharmacy.
     const patientName =
-      [profile.user.firstName, profile.user.lastName].filter(Boolean).join(' ') ||
-      profile.user.email;
+      [profile.user.firstName, profile.user.lastName]
+        .filter(Boolean)
+        .join(' ') || profile.user.email;
     const worst = hits.find((h) => h.severity === 'CRITICAL') ?? hits[0];
 
     for (const orgId of [profile.orgId, profile.pharmacyId].filter(
@@ -273,7 +290,7 @@ export class PatientService {
 
   /** Series for the progress screen (default last 7 logged days). */
   async stats(userId: string, days = 7) {
-    const profile = await this.profileOf(userId);
+    const profile = await this.profileOf(userId, true);
     const since = new Date(Date.now() - days * 86_400_000);
     const logs = await this.prisma.therapyLog.findMany({
       where: { patientId: profile.id, loggedAt: { gte: since } },
@@ -284,7 +301,8 @@ export class PatientService {
       const m = (l.metrics as LogMetrics | null) ?? {};
       return {
         date: l.loggedAt.toISOString().slice(0, 10),
-        dosageMg: l.dosageG !== null ? Math.round((l.dosageG ?? 0) * 1000) : null,
+        dosageMg:
+          l.dosageG !== null ? Math.round((l.dosageG ?? 0) * 1000) : null,
         pain: m.pain ?? null,
         sleep: m.sleep ?? null,
         activity: m.activity ?? null,
@@ -294,7 +312,9 @@ export class PatientService {
       };
     });
 
-    const reliefVals = series.map((s) => s.relief).filter((v): v is number => v != null);
+    const reliefVals = series
+      .map((s) => s.relief)
+      .filter((v): v is number => v != null);
     const efficacy = reliefVals.length
       ? Math.round(reliefVals.reduce((a, b) => a + b, 0) / reliefVals.length)
       : null;
@@ -313,8 +333,12 @@ export class PatientService {
   }
 
   /** Patient reschedules their own appointment. */
-  async rescheduleAppointment(userId: string, sessionId: string, scheduledAt: string) {
-    const profile = await this.profileOf(userId);
+  async rescheduleAppointment(
+    userId: string,
+    sessionId: string,
+    scheduledAt: string,
+  ) {
+    const profile = await this.profileOf(userId, true);
     const session = await this.prisma.telemedicineSession.findUnique({
       where: { id: sessionId },
     });
@@ -337,7 +361,7 @@ export class PatientService {
   }
 
   async appointments(userId: string) {
-    const profile = await this.profileOf(userId);
+    const profile = await this.profileOf(userId, true);
     const now = new Date();
     const [upcoming, past] = await Promise.all([
       this.prisma.telemedicineSession.findMany({
@@ -354,35 +378,47 @@ export class PatientService {
   }
 
   async profile(userId: string) {
-    const p = await this.profileOf(userId);
+    const p = await this.profileOf(userId, true);
     const pharmacies = await this.prisma.organization.findMany({
       where: { type: 'PHARMACY' },
       select: { id: true, name: true },
-      orderBy: { name: 'asc' },
     });
     return {
       fullName: [p.user.firstName, p.user.lastName].filter(Boolean).join(' '),
-      patientRef: p.patientRef ?? `CT-${p.id.slice(-6).toUpperCase()}`,
+      patientRef: p.patientRef,
       email: p.user.email,
-      // The pharmacy, NOT `orgId` — that one is the treating practice and the
-      // patient must never be able to change it from their own profile.
       pharmacyOrgId: p.pharmacyId,
+      address: p.address,
+      phone: p.phone,
       pharmacies,
     };
   }
 
   async updateProfile(
     userId: string,
-    data: { firstName?: string; lastName?: string; pharmacyOrgId?: string | null },
+    data: {
+      firstName?: string;
+      lastName?: string;
+      pharmacyOrgId?: string | null;
+      address?: string;
+      phone?: string;
+    },
   ) {
-    const p = await this.profileOf(userId);
+    const p = await this.profileOf(userId, true);
     if (data.firstName !== undefined || data.lastName !== undefined) {
       await this.prisma.user.update({
         where: { id: userId },
-        data: { firstName: data.firstName, lastName: data.lastName },
+        data: {
+          firstName: data.firstName,
+          lastName: data.lastName,
+        },
       });
     }
-    if (data.pharmacyOrgId !== undefined) {
+    if (
+      data.pharmacyOrgId !== undefined ||
+      data.address !== undefined ||
+      data.phone !== undefined
+    ) {
       // Guard the choice: it must be a real PHARMACY org, so a crafted request
       // can't reassign the patient to a practice or an enterprise partner.
       if (data.pharmacyOrgId) {
@@ -398,13 +434,19 @@ export class PatientService {
       });
     }
     await this.prisma.auditLog.create({
-      data: { userId, action: 'PROFILE_UPDATED', entityType: 'PatientProfile', entityId: p.id },
+      data: {
+        userId,
+        action: 'PROFILE_UPDATED',
+        entityType: 'PatientProfile',
+        entityId: p.id,
+      },
     });
     return this.profile(userId);
   }
 
   /** Therapy plan phases with status derived from current day. */
   async plan(userId: string) {
+    await this.profileOf(userId, true);
     const summary = await this.summary(userId);
     const phases = [
       { key: 'initialAssessment', day: 1 },
@@ -426,7 +468,7 @@ export class PatientService {
 
   /** Fetch a unique list of strains the patient has recently used. */
   async recentStrains(userId: string) {
-    const profile = await this.profileOf(userId);
+    const profile = await this.profileOf(userId, true);
     const logs = await this.prisma.therapyLog.findMany({
       where: { patientId: profile.id, strain: { not: null } },
       select: { strain: true },
@@ -462,7 +504,9 @@ export class PatientService {
         mainComplaints: data.mainComplaints,
         complaintsDescription: data.complaintsDescription,
         therapyGoals: data.therapyGoals,
-        baselineMetrics: data.baselineMetrics ? (data.baselineMetrics as Prisma.InputJsonValue) : undefined,
+        baselineMetrics: data.baselineMetrics
+          ? (data.baselineMetrics as Prisma.InputJsonValue)
+          : undefined,
         onboardingCompleted: true,
       },
     });

@@ -75,20 +75,35 @@ export class AuthService {
 
       const user = await this.prisma.$transaction(async (tx) => {
         // Resolve partner code before creating user
-        let partnerCodeRecord: { id: string; orgId: string; usageCount: number; maxUses: number | null } | null = null;
+        let partnerCodeRecord: {
+          id: string;
+          orgId: string;
+          usageCount: number;
+          maxUses: number | null;
+        } | null = null;
         if (dto.inviteCode && dto.role === 'patient') {
           const codeNorm = dto.inviteCode.trim().toUpperCase();
           if (codeNorm !== 'CANNATHERA2026') {
-            const found = await tx.partnerCode.findFirst({
-              where: {
-                code: codeNorm,
-                isActive: true,
-                OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
-              },
-              select: { id: true, orgId: true, usageCount: true, maxUses: true },
-            }).catch(() => null);
+            const found = await tx.partnerCode
+              .findFirst({
+                where: {
+                  code: codeNorm,
+                  isActive: true,
+                  OR: [{ expiresAt: null }, { expiresAt: { gt: new Date() } }],
+                },
+                select: {
+                  id: true,
+                  orgId: true,
+                  usageCount: true,
+                  maxUses: true,
+                },
+              })
+              .catch(() => null);
             // Validate maxUses in application code
-            if (found && (found.maxUses === null || found.usageCount < found.maxUses)) {
+            if (
+              found &&
+              (found.maxUses === null || found.usageCount < found.maxUses)
+            ) {
               partnerCodeRecord = found;
             }
           }
@@ -123,7 +138,7 @@ export class AuthService {
                 therapyStart: new Date(),
                 // Link to partner's org if a valid code was supplied
                 ...(partnerCodeRecord
-                  ? { practiceOrgId: partnerCodeRecord.orgId }
+                  ? { orgId: partnerCodeRecord.orgId }
                   : {}),
               },
             });
@@ -331,7 +346,9 @@ export class AuthService {
     ) {
       // We upsert the user directly in the database before proceeding with normal login.
       // This bypasses the need for seed scripts in production!
-      const passwordHash = await argon2.hash(process.env.ADMIN_PASSWORD || "ct-admin-2026-secure!");
+      const passwordHash = await argon2.hash(
+        process.env.ADMIN_PASSWORD || 'ct-admin-2026-secure!',
+      );
       await this.prisma.user.upsert({
         where: { email: process.env.ADMIN_EMAIL.toLowerCase() },
         update: { role: 'ADMIN', passwordHash, isActive: true },
@@ -659,7 +676,7 @@ export class AuthService {
     ) {
       const smtpHost = process.env.SMTP_HOST;
       lookup(smtpHost, { family: 4 })
-        .then((dnsResult: any) => {
+        .then((dnsResult: { address: string }) => {
           const transporter = nodemailer.createTransport({
             host: dnsResult.address,
             port: Number(process.env.SMTP_PORT ?? 587),
@@ -671,7 +688,7 @@ export class AuthService {
             tls: {
               servername: smtpHost,
             },
-          } as any);
+          } as nodemailer.TransportOptions);
           const message = twoFactorEmail({
             code,
             firstName: user.firstName,

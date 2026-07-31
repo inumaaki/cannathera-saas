@@ -1,11 +1,8 @@
 "use client";
 
-import { useRouter } from "@/i18n/navigation";
 import { api } from "@/lib/api";
 
 export function LogoutButton({ label }: Readonly<{ label: string }>) {
-  const router = useRouter();
-
   async function handleLogout() {
     try {
       await api("/auth/logout", { method: "POST" });

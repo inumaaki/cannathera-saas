@@ -19,7 +19,13 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
-import { CurrentUser, Roles, RolesGuard, SessionGuard, SubscriptionGuard } from '../auth/auth.guard';
+import {
+  CurrentUser,
+  Roles,
+  RolesGuard,
+  SessionGuard,
+  SubscriptionGuard,
+} from '../auth/auth.guard';
 import type { SessionPayload } from '../auth/auth.service';
 import { PharmacyService } from './pharmacy.service';
 
@@ -121,8 +127,13 @@ export class PharmacyController {
   }
 
   @Get('reviews')
-  reviews(@CurrentUser() user: SessionPayload, @Query('filter') filter?: string) {
-    const f = ['overdue', 'dueSoon', 'onTrack', 'flagged'].includes(filter ?? '')
+  reviews(
+    @CurrentUser() user: SessionPayload,
+    @Query('filter') filter?: string,
+  ) {
+    const f = ['overdue', 'dueSoon', 'onTrack', 'flagged'].includes(
+      filter ?? '',
+    )
       ? filter!
       : 'all';
     return this.pharmacy.reviews(user.sub, f);
@@ -131,7 +142,10 @@ export class PharmacyController {
   // Must stay above `reviews/:patientId` or the param route swallows "export".
   @Get('reviews/export')
   @Header('Content-Type', 'text/csv; charset=utf-8')
-  @Header('Content-Disposition', 'attachment; filename="cannathera-reviews.csv"')
+  @Header(
+    'Content-Disposition',
+    'attachment; filename="cannathera-reviews.csv"',
+  )
   exportReviews(@CurrentUser() user: SessionPayload) {
     return this.pharmacy.exportReviewsCsv(user.sub);
   }
@@ -169,7 +183,10 @@ export class PharmacyController {
 
   @Get('logs/export')
   @Header('Content-Type', 'text/csv; charset=utf-8')
-  @Header('Content-Disposition', 'attachment; filename="cannathera-behandlungslogs.csv"')
+  @Header(
+    'Content-Disposition',
+    'attachment; filename="cannathera-behandlungslogs.csv"',
+  )
   exportLogs(@CurrentUser() user: SessionPayload) {
     return this.pharmacy.exportLogsCsv(user.sub);
   }
@@ -181,14 +198,20 @@ export class PharmacyController {
 
   @Get('analytics/export')
   @Header('Content-Type', 'text/csv; charset=utf-8')
-  @Header('Content-Disposition', 'attachment; filename="cannathera-analytik.csv"')
+  @Header(
+    'Content-Disposition',
+    'attachment; filename="cannathera-analytik.csv"',
+  )
   exportAnalytics(@CurrentUser() user: SessionPayload) {
     return this.pharmacy.exportAnalyticsCsv(user.sub);
   }
 
   @Get('inventory/export')
   @Header('Content-Type', 'text/csv; charset=utf-8')
-  @Header('Content-Disposition', 'attachment; filename="cannathera-warenbestand.csv"')
+  @Header(
+    'Content-Disposition',
+    'attachment; filename="cannathera-warenbestand.csv"',
+  )
   exportInventory(@CurrentUser() user: SessionPayload) {
     return this.pharmacy.exportInventoryCsv(user.sub);
   }

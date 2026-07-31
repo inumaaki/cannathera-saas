@@ -334,7 +334,7 @@ export class AdminService {
     ) {
       const smtpHost = process.env.SMTP_HOST;
       lookup(smtpHost, { family: 4 })
-        .then((dnsResult: any) => {
+        .then((dnsResult: { address: string }) => {
           const transporter = nodemailer.createTransport({
             host: dnsResult.address,
             port: Number(process.env.SMTP_PORT ?? 587),
@@ -346,7 +346,7 @@ export class AdminService {
             tls: {
               servername: smtpHost,
             },
-          } as any);
+          } as nodemailer.TransportOptions);
           const message = onboardingEmail({
             firstName: user.firstName,
             email: user.email,
@@ -401,7 +401,10 @@ export class AdminService {
 
   async listUsers() {
     // Exclude protected admin accounts from the UI to prevent accidental suspension
-    const PROTECTED_EMAILS = ['d.larkin@cannathera-report.de', 'admin@example.com'];
+    const PROTECTED_EMAILS = [
+      'd.larkin@cannathera-report.de',
+      'admin@example.com',
+    ];
     return this.prisma.user.findMany({
       where: {
         email: { notIn: PROTECTED_EMAILS },
@@ -418,7 +421,10 @@ export class AdminService {
   }
 
   async toggleUser(userId: string) {
-    const PROTECTED_EMAILS = ['d.larkin@cannathera-report.de', 'admin@example.com'];
+    const PROTECTED_EMAILS = [
+      'd.larkin@cannathera-report.de',
+      'admin@example.com',
+    ];
     const user = await this.prisma.user.findUnique({ where: { id: userId } });
     if (!user) throw new NotFoundException('USER_NOT_FOUND');
     if (PROTECTED_EMAILS.includes(user.email)) {

@@ -3,18 +3,30 @@ import { InvoiceStatus, OrgType, SubmissionStatus } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { requirePermission } from './access';
 
-const DAY = 86_400_000;
 
 /* Client's volume tiers, applied to the whole network's monthly review count. */
 const TIERS = [
   { key: 'Tier 1', label: 'Basic (1 – 500)', from: 1, to: 500, unitPrice: 8 },
-  { key: 'Tier 2', label: 'Enterprise (501 – 1.500)', from: 501, to: 1500, unitPrice: 6.5 },
-  { key: 'Tier 3', label: 'Unlimited (1.501+)', from: 1501, to: null, unitPrice: 5 },
+  {
+    key: 'Tier 2',
+    label: 'Enterprise (501 – 1.500)',
+    from: 501,
+    to: 1500,
+    unitPrice: 6.5,
+  },
+  {
+    key: 'Tier 3',
+    label: 'Unlimited (1.501+)',
+    from: 1501,
+    to: null,
+    unitPrice: 5,
+  },
 ] as const;
 
 export function tierFor(reviews: number) {
   return (
-    TIERS.find((t) => t.to === null || reviews <= t.to) ?? TIERS[TIERS.length - 1]
+    TIERS.find((t) => t.to === null || reviews <= t.to) ??
+    TIERS[TIERS.length - 1]
   );
 }
 
@@ -101,7 +113,11 @@ export class BillingService {
     });
 
     return {
-      cycle: { from, to, label: `Q${Math.floor(qStartMonth / 3) + 1} ${now.getFullYear()}` },
+      cycle: {
+        from,
+        to,
+        label: `Q${Math.floor(qStartMonth / 3) + 1} ${now.getFullYear()}`,
+      },
       totalVolume: reviews,
       volumeLimit: 1500,
       activeTier: active.key,

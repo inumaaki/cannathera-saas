@@ -13,7 +13,12 @@ import {
 import { NotificationsService } from '../notifications/notifications.service';
 import { PrismaService } from '../prisma/prisma.service';
 
-type Metrics = { pain?: number; sleep?: number; activity?: number; qol?: number };
+type Metrics = {
+  pain?: number;
+  sleep?: number;
+  activity?: number;
+  qol?: number;
+};
 
 const CYCLE_DAYS = 30; // monthly review cadence (client's Monatsreview)
 
@@ -56,7 +61,10 @@ export class PharmacyService {
       where: { pharmacyId: org.id },
       include: {
         user: { select: { firstName: true, lastName: true } },
-        redFlagHits: { where: { acknowledged: false }, select: { severity: true } },
+        redFlagHits: {
+          where: { acknowledged: false },
+          select: { severity: true },
+        },
       },
     });
 
@@ -79,7 +87,11 @@ export class PharmacyService {
     });
 
     // Reviews completed this month (submissions of the monthly review).
-    const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const monthStart = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1,
+    );
     const completedThisMonth = await this.prisma.submission.count({
       where: {
         status: SubmissionStatus.SUBMITTED,
@@ -105,9 +117,15 @@ export class PharmacyService {
       const start = p.therapyStart ?? p.createdAt;
       const days = Math.max(
         1,
-        Math.min(30, Math.floor((Date.now() - start.getTime()) / 86_400_000) + 1),
+        Math.min(
+          30,
+          Math.floor((Date.now() - start.getTime()) / 86_400_000) + 1,
+        ),
       );
-      return Math.min(100, Math.round(((daysByPatient.get(p.id)?.size ?? 0) / days) * 100));
+      return Math.min(
+        100,
+        Math.round(((daysByPatient.get(p.id)?.size ?? 0) / days) * 100),
+      );
     });
     const avgAdherence = adherences.length
       ? Math.round(adherences.reduce((a, b) => a + b, 0) / adherences.length)
@@ -123,7 +141,10 @@ export class PharmacyService {
     });
     const shortage = inventory
       .filter((i) => i.stockLevel < i.safetyThreshold)
-      .sort((a, b) => a.stockLevel / a.safetyThreshold - b.stockLevel / b.safetyThreshold)[0];
+      .sort(
+        (a, b) =>
+          a.stockLevel / a.safetyThreshold - b.stockLevel / b.safetyThreshold,
+      )[0];
 
     const subscription = await this.prisma.subscription.findFirst({
       where: { orgId: org.id, isActive: true },
@@ -142,7 +163,8 @@ export class PharmacyService {
       },
       retention: patients.length
         ? Math.round(
-            (patients.filter((p) => (p.lastReviewAt ?? p.createdAt) > since).length /
+            (patients.filter((p) => (p.lastReviewAt ?? p.createdAt) > since)
+              .length /
               patients.length) *
               100,
           )
@@ -171,7 +193,10 @@ export class PharmacyService {
       where: { pharmacyId: org.id },
       include: {
         user: { select: { firstName: true, lastName: true, email: true } },
-        redFlagHits: { where: { acknowledged: false }, select: { severity: true } },
+        redFlagHits: {
+          where: { acknowledged: false },
+          select: { severity: true },
+        },
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -181,7 +206,9 @@ export class PharmacyService {
       const state = this.reviewState(p.lastReviewAt, start);
       return {
         id: p.id,
-        name: [p.user.firstName, p.user.lastName].filter(Boolean).join(' ') || p.user.email,
+        name:
+          [p.user.firstName, p.user.lastName].filter(Boolean).join(' ') ||
+          p.user.email,
         patientRef: p.patientRef,
         condition: p.condition,
         tier: p.packageTier,
@@ -265,15 +292,18 @@ export class PharmacyService {
     );
     const phase = day <= 30 ? 1 : day <= 60 ? 2 : 3;
 
-    const loggedDays = new Set(logs.map((l) => l.loggedAt.toISOString().slice(0, 10)))
-      .size;
+    const loggedDays = new Set(
+      logs.map((l) => l.loggedAt.toISOString().slice(0, 10)),
+    ).size;
     const window = Math.min(30, day);
     const adherence = Math.min(100, Math.round((loggedDays / window) * 100));
 
     const dosed = logs.filter((l) => l.dosageG != null);
     const avgDosageG = dosed.length
-      ? Math.round((dosed.reduce((a, l) => a + (l.dosageG ?? 0), 0) / dosed.length) * 100) /
-        100
+      ? Math.round(
+          (dosed.reduce((a, l) => a + (l.dosageG ?? 0), 0) / dosed.length) *
+            100,
+        ) / 100
       : null;
 
     const qols = logs
@@ -383,9 +413,28 @@ export class PharmacyService {
           ...(needleRaw
             ? {
                 OR: needleRaw.split(/\s+/).flatMap((term) => [
-                  { patientRef: { contains: term, mode: 'insensitive' as const } },
-                  { user: { firstName: { contains: term, mode: 'insensitive' as const } } },
-                  { user: { lastName: { contains: term, mode: 'insensitive' as const } } },
+                  {
+                    patientRef: {
+                      contains: term,
+                      mode: 'insensitive' as const,
+                    },
+                  },
+                  {
+                    user: {
+                      firstName: {
+                        contains: term,
+                        mode: 'insensitive' as const,
+                      },
+                    },
+                  },
+                  {
+                    user: {
+                      lastName: {
+                        contains: term,
+                        mode: 'insensitive' as const,
+                      },
+                    },
+                  },
                 ]),
               }
             : {}),
@@ -497,11 +546,19 @@ export class PharmacyService {
     });
 
     // Monthly review volume + adherence trend.
-    const byMonth = new Map<string, { adherenceDays: Set<string>; qol: number[] }>();
+    const byMonth = new Map<
+      string,
+      { adherenceDays: Set<string>; qol: number[] }
+    >();
     for (const l of logs) {
       const key = l.loggedAt.toISOString().slice(0, 7);
-      const b = byMonth.get(key) ?? { adherenceDays: new Set<string>(), qol: [] };
-      b.adherenceDays.add(`${l.patientId}:${l.loggedAt.toISOString().slice(0, 10)}`);
+      const b = byMonth.get(key) ?? {
+        adherenceDays: new Set<string>(),
+        qol: [],
+      };
+      b.adherenceDays.add(
+        `${l.patientId}:${l.loggedAt.toISOString().slice(0, 10)}`,
+      );
       const m = (l.metrics as Metrics | null) ?? {};
       if (m.qol != null) b.qol.push(m.qol);
       byMonth.set(key, b);
@@ -513,7 +570,8 @@ export class PharmacyService {
         month,
         entries: b.adherenceDays.size,
         avgQol: b.qol.length
-          ? Math.round((b.qol.reduce((x, y) => x + y, 0) / b.qol.length) * 10) / 10
+          ? Math.round((b.qol.reduce((x, y) => x + y, 0) / b.qol.length) * 10) /
+            10
           : null,
       }));
 
@@ -522,13 +580,19 @@ export class PharmacyService {
         patient: { pharmacyId: org.id },
         status: SubmissionStatus.SUBMITTED,
       },
-      include: { answers: { include: { question: { select: { key: true } } } } },
+      include: {
+        answers: { include: { question: { select: { key: true } } } },
+      },
     });
     const ratings = submissions
-      .map((s) => s.answers.find((a) => a.question.key === 'satisfaction')?.value)
+      .map(
+        (s) => s.answers.find((a) => a.question.key === 'satisfaction')?.value,
+      )
       .filter((v): v is number => typeof v === 'number');
     const avgRating = ratings.length
-      ? Math.round((ratings.reduce((a, b) => a + b, 0) / ratings.length / 2) * 10) / 10
+      ? Math.round(
+          (ratings.reduce((a, b) => a + b, 0) / ratings.length / 2) * 10,
+        ) / 10
       : null;
 
     const patients = await this.prisma.patientProfile.count({
@@ -542,14 +606,20 @@ export class PharmacyService {
         therapyLogs: { some: { loggedAt: { gte: since30 } } },
       },
     });
-    const retention = patients ? Math.round((activeRecently / patients) * 100) : 0;
+    const retention = patients
+      ? Math.round((activeRecently / patients) * 100)
+      : 0;
 
     // Billing: tier, usage, projected cost (client's enterprise tiering).
     const subscription = await this.prisma.subscription.findFirst({
       where: { orgId: org.id, isActive: true },
       include: { plan: true },
     });
-    const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const monthStart = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1,
+    );
     const reviewsThisMonth = await this.prisma.submission.count({
       where: {
         patient: { pharmacyId: org.id },
@@ -567,7 +637,10 @@ export class PharmacyService {
       totalReviews: submissions.length,
       avgRating,
       responseRate: patients
-        ? Math.min(100, Math.round((submissions.length / Math.max(1, patients)) * 100))
+        ? Math.min(
+            100,
+            Math.round((submissions.length / Math.max(1, patients)) * 100),
+          )
         : 0,
       billing: {
         tier: subscription?.plan.tier ?? SubscriptionTier.BASIC,
@@ -648,21 +721,32 @@ export class PharmacyService {
 
     const needle = opts.q?.trim().toLowerCase();
     let rows = all.map(decorate).filter((i) => {
-      if (opts.category && opts.category !== 'all' && i.category !== opts.category)
+      if (
+        opts.category &&
+        opts.category !== 'all' &&
+        i.category !== opts.category
+      )
         return false;
-      if (needle && !`${i.name} ${i.sku}`.toLowerCase().includes(needle)) return false;
+      if (needle && !`${i.name} ${i.sku}`.toLowerCase().includes(needle))
+        return false;
       if (opts.status === 'pending') return i.pendingOrder;
-      if (opts.status && opts.status !== 'all' && i.status !== opts.status) return false;
+      if (opts.status && opts.status !== 'all' && i.status !== opts.status)
+        return false;
       return true;
     });
 
-    const SORTS: Record<string, (a: typeof rows[number], b: typeof rows[number]) => number> = {
+    const SORTS: Record<
+      string,
+      (a: (typeof rows)[number], b: (typeof rows)[number]) => number
+    > = {
       name: (a, b) => a.name.localeCompare(b.name, 'de'),
       sku: (a, b) => a.sku.localeCompare(b.sku),
       // Fullness relative to the safety threshold — the emptiest shelf first.
       stock: (a, b) =>
-        a.stockLevel / (a.safetyThreshold || 1) - b.stockLevel / (b.safetyThreshold || 1),
-      category: (a, b) => a.category.localeCompare(b.category) || a.name.localeCompare(b.name),
+        a.stockLevel / (a.safetyThreshold || 1) -
+        b.stockLevel / (b.safetyThreshold || 1),
+      category: (a, b) =>
+        a.category.localeCompare(b.category) || a.name.localeCompare(b.name),
     };
     rows = [...rows].sort(SORTS[opts.sort ?? 'name'] ?? SORTS.name);
 
@@ -670,9 +754,18 @@ export class PharmacyService {
     const shortages = all
       .map(decorate)
       .filter((i) => i.status === 'critical')
-      .sort((a, b) => a.stockLevel / (a.safetyThreshold || 1) - b.stockLevel / (b.safetyThreshold || 1));
+      .sort(
+        (a, b) =>
+          a.stockLevel / (a.safetyThreshold || 1) -
+          b.stockLevel / (b.safetyThreshold || 1),
+      );
 
-    return { items: rows, stats, shortages, categories: [...new Set(all.map((i) => i.category))].sort() };
+    return {
+      items: rows,
+      stats,
+      shortages,
+      categories: [...new Set(all.map((i) => i.category))].sort(),
+    };
   }
 
   async createItem(
@@ -697,7 +790,13 @@ export class PharmacyService {
     if (exists && !exists.active) {
       const revived = await this.prisma.inventoryItem.update({
         where: { id: exists.id },
-        data: { ...data, sku, active: true, pendingOrder: false, reorderQty: null },
+        data: {
+          ...data,
+          sku,
+          active: true,
+          pendingOrder: false,
+          reorderQty: null,
+        },
       });
       await this.trail(userId, revived.id, 'INVENTORY_ITEM_RESTORED', { sku });
       return revived;
@@ -705,7 +804,11 @@ export class PharmacyService {
     if (exists) throw new ConflictException('SKU_TAKEN');
 
     const item = await this.prisma.inventoryItem.create({
-      data: { ...data, sku, orgId: org.id } as Prisma.InventoryItemUncheckedCreateInput,
+      data: {
+        ...data,
+        sku,
+        orgId: org.id,
+      },
     });
     await this.trail(userId, item.id, 'INVENTORY_ITEM_CREATED', {
       sku,
@@ -738,7 +841,10 @@ export class PharmacyService {
 
     // Alert the pharmacy live the moment a correction drops stock into critical.
     const wasCritical = this.stockStatus(item.stockLevel, item.safetyThreshold);
-    const nowCritical = this.stockStatus(updated.stockLevel, updated.safetyThreshold);
+    const nowCritical = this.stockStatus(
+      updated.stockLevel,
+      updated.safetyThreshold,
+    );
     if (nowCritical === 'critical' && wasCritical !== 'critical') {
       this.notifications.publish({
         target: { orgId: item.orgId },
@@ -759,9 +865,10 @@ export class PharmacyService {
         unit: item.unit,
       });
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { stockLevel: _ignored, ...master } = data;
     if (Object.keys(master).length > 0) {
-      await this.trail(userId, itemId, 'INVENTORY_ITEM_UPDATED', master as Prisma.InputJsonValue);
+      await this.trail(userId, itemId, 'INVENTORY_ITEM_UPDATED', master);
     }
     return updated;
   }
@@ -772,7 +879,8 @@ export class PharmacyService {
     if (item.pendingOrder) throw new ConflictException('ORDER_ALREADY_OPEN');
 
     const quantity =
-      qty ?? Math.max(1, Math.round(item.safetyThreshold * 2 - item.stockLevel));
+      qty ??
+      Math.max(1, Math.round(item.safetyThreshold * 2 - item.stockLevel));
 
     const updated = await this.prisma.inventoryItem.update({
       where: { id: itemId },
@@ -834,7 +942,12 @@ export class PharmacyService {
     const item = await this.itemOf(userId, itemId);
     await this.prisma.inventoryItem.update({
       where: { id: itemId },
-      data: { active: false, pendingOrder: false, reorderQty: null, orderedAt: null },
+      data: {
+        active: false,
+        pendingOrder: false,
+        reorderQty: null,
+        orderedAt: null,
+      },
     });
     await this.trail(userId, itemId, 'INVENTORY_ITEM_ARCHIVED', {
       sku: item.sku,
@@ -850,7 +963,9 @@ export class PharmacyService {
       where: { entityType: 'InventoryItem', entityId: itemId },
       orderBy: { createdAt: 'desc' },
       take: 50,
-      include: { user: { select: { firstName: true, lastName: true, email: true } } },
+      include: {
+        user: { select: { firstName: true, lastName: true, email: true } },
+      },
     });
     return {
       item: { id: item.id, sku: item.sku, name: item.name, unit: item.unit },
@@ -872,10 +987,11 @@ export class PharmacyService {
      numbers survive a re-import. */
   private toCsv(header: string, rows: Array<Array<string | number>>) {
     const escape = (v: string | number) =>
-      typeof v === 'string' && /[;"\r\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
+      typeof v === 'string' && /[;"\r\n]/.test(v)
+        ? `"${v.replace(/"/g, '""')}"`
+        : v;
     return (
-      '﻿' +
-      [header, ...rows.map((r) => r.map(escape).join(';'))].join('\r\n')
+      '﻿' + [header, ...rows.map((r) => r.map(escape).join(';'))].join('\r\n')
     );
   }
 

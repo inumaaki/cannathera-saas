@@ -10,6 +10,8 @@ type Profile = {
   patientRef: string;
   email: string;
   pharmacyOrgId: string | null;
+  address?: string;
+  phone?: string;
   pharmacies: Array<{ id: string; name: string }>;
 };
 
@@ -21,6 +23,8 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
   const t = useTranslations("patient.profile");
   const router = useRouter();
   const [fullName, setFullName] = useState(profile.fullName);
+  const [address, setAddress] = useState(profile.address ?? "");
+  const [phone, setPhone] = useState(profile.phone ?? "");
   const [pharmacy, setPharmacy] = useState(profile.pharmacyOrgId ?? "");
   const [pending, setPending] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -37,6 +41,8 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
           firstName,
           lastName: rest.join(" "),
           pharmacyOrgId: pharmacy || null,
+          address,
+          phone,
         },
       });
       setSaved(true);
@@ -86,6 +92,30 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
           {t("email")}
         </label>
         <input id="email" value={profile.email} readOnly className={box} />
+      </div>
+
+      <div>
+        <label htmlFor="address" className={label}>
+          Address
+        </label>
+        <input
+          id="address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+          className={`${box} outline-none focus:border-pine-600`}
+        />
+      </div>
+
+      <div>
+        <label htmlFor="phone" className={label}>
+          Phone Number
+        </label>
+        <input
+          id="phone"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
+          className={`${box} outline-none focus:border-pine-600`}
+        />
       </div>
 
       <div>

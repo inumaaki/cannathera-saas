@@ -15,14 +15,15 @@ export function VerifyForm() {
   const ta = useTranslations("auth");
   const te = useTranslations("auth.errors");
   const locale = useLocale();
-  const router = useRouter();
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const [devCode, setDevCode] = useState<string | null>(null);
 
   // Dev-only convenience: backend returns the 2FA code outside production.
   useEffect(() => {
     if (EXPOSE_DEV_AUTH_CODES) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDevCode(sessionStorage.getItem("cannathera_dev_code"));
     } else {
       sessionStorage.removeItem("cannathera_dev_code");
@@ -35,6 +36,7 @@ export function VerifyForm() {
     const code = [0, 1, 2, 3, 4, 5].map((i) => form.get(`code-${i}`) ?? "").join("");
     setPending(true);
     setError(null);
+    setSuccess(null);
     try {
       const res = await api<{
         pendingActivation: boolean;
@@ -62,6 +64,7 @@ export function VerifyForm() {
 
   async function handleResend() {
     setError(null);
+    setSuccess(null);
     try {
       const res = await api<{ sent: boolean; devCode?: string }>("/auth/resend", {
         method: "POST",
@@ -70,6 +73,7 @@ export function VerifyForm() {
         sessionStorage.setItem("cannathera_dev_code", res.devCode);
         setDevCode(res.devCode);
       }
+      setSuccess(t("codeSentSuccess"));
     } catch (err) {
       const codeKey = err instanceof ApiError ? err.code : "GENERIC";
       setError(te.has(codeKey) ? te(codeKey) : te("GENERIC"));
@@ -89,6 +93,14 @@ export function VerifyForm() {
           className="mx-auto mb-4 max-w-md rounded-lg border border-accent/40 bg-accent/5 px-4 py-2 text-center text-sm text-accent-print"
         >
           {error}
+        </p>
+      ) : null}
+      {success ? (
+        <p
+          role="alert"
+          className="mx-auto mb-4 max-w-md rounded-lg border border-pine/40 bg-pine/5 px-4 py-2 text-center text-sm text-pine-600"
+        >
+          {success}
         </p>
       ) : null}
 

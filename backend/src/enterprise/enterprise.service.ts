@@ -15,7 +15,12 @@ import {
 import { PrismaService } from '../prisma/prisma.service';
 import { requirePermission } from './access';
 
-type Metrics = { pain?: number; sleep?: number; activity?: number; qol?: number };
+type Metrics = {
+  pain?: number;
+  sleep?: number;
+  activity?: number;
+  qol?: number;
+};
 type Branding = {
   logoUrl?: string | null;
   primaryColor?: string | null;
@@ -36,7 +41,8 @@ const VOLUME_TIERS = [
 
 function unitPriceFor(reviews: number) {
   return (
-    VOLUME_TIERS.find((t) => t.upTo === null || reviews <= t.upTo)?.unitPrice ?? 5
+    VOLUME_TIERS.find((t) => t.upTo === null || reviews <= t.upTo)?.unitPrice ??
+    5
   );
 }
 
@@ -90,14 +96,23 @@ export class EnterpriseService {
         openFlags: 0,
         criticalFlags: 0,
         avgAdherence: 0,
-        billing: { reviewsThisMonth: 0, unitPrice: 8, projectedCost: 0, tierLabel: '1–500' },
+        billing: {
+          reviewsThisMonth: 0,
+          unitPrice: 8,
+          projectedCost: 0,
+          tierLabel: '1–500',
+        },
         topPartners: [],
         months: [],
       };
     }
 
     const since30 = new Date(Date.now() - 30 * DAY);
-    const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const monthStart = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1,
+    );
     const scope = this.patientScope(memberIds);
 
     const [patients, reviewsThisMonth, flags, logs] = await Promise.all([
@@ -165,7 +180,8 @@ export class EnterpriseService {
           (p) => p.orgId === m.id || p.pharmacyId === m.id,
         );
         const ads = own.map(adherenceOf);
-        const branding = (m.branding as (Branding & { address?: string }) | null) ?? {};
+        const branding =
+          (m.branding as (Branding & { address?: string }) | null) ?? {};
         // City is parsed from the stored address; nothing is geocoded, so no
         // partner or patient data is ever sent to an external map service.
         const address = branding.address ?? '';
@@ -214,7 +230,8 @@ export class EnterpriseService {
         month,
         entries: b.days.size,
         avgQol: b.qol.length
-          ? Math.round((b.qol.reduce((x, y) => x + y, 0) / b.qol.length) * 10) / 10
+          ? Math.round((b.qol.reduce((x, y) => x + y, 0) / b.qol.length) * 10) /
+            10
           : null,
       }));
 
@@ -233,7 +250,9 @@ export class EnterpriseService {
       reviewsThisMonth,
       overdueReviews,
       openFlags: flags.length,
-      criticalFlags: flags.filter((f) => f.severity === RedFlagSeverity.CRITICAL).length,
+      criticalFlags: flags.filter(
+        (f) => f.severity === RedFlagSeverity.CRITICAL,
+      ).length,
       avgAdherence,
       billing: {
         reviewsThisMonth,
@@ -273,7 +292,10 @@ export class EnterpriseService {
       where: { OR: [{ orgId: partner.id }, { pharmacyId: partner.id }] },
       include: {
         user: { select: { firstName: true, lastName: true } },
-        redFlagHits: { where: { acknowledged: false }, select: { severity: true } },
+        redFlagHits: {
+          where: { acknowledged: false },
+          select: { severity: true },
+        },
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -315,7 +337,9 @@ export class EnterpriseService {
   async addPartner(userId: string, orgId: string) {
     await requirePermission(this.prisma, userId, 'partners:manage');
     const org = await this.orgOf(userId);
-    const target = await this.prisma.organization.findUnique({ where: { id: orgId } });
+    const target = await this.prisma.organization.findUnique({
+      where: { id: orgId },
+    });
     if (!target) throw new NotFoundException('ORGANIZATION_NOT_FOUND');
     if (target.type === OrgType.ENTERPRISE) {
       throw new BadRequestException('CANNOT_NEST_ENTERPRISE');
@@ -386,7 +410,7 @@ export class EnterpriseService {
 
     const updated = await this.prisma.organization.update({
       where: { id: org.id },
-      data: { branding: merged as Prisma.InputJsonValue },
+      data: { branding: merged },
     });
     await this.prisma.auditLog.create({
       data: {
@@ -394,7 +418,7 @@ export class EnterpriseService {
         action: 'ENTERPRISE_BRANDING_UPDATED',
         entityType: 'Organization',
         entityId: org.id,
-        metadata: merged as Prisma.InputJsonValue,
+        metadata: merged,
       },
     });
     return { branding: updated.branding, poweredBy: 'Powered by Cannathera' };
@@ -432,7 +456,9 @@ export class EnterpriseService {
   async exportCsv(userId: string) {
     const { topPartners } = await this.overview(userId);
     const escape = (v: string | number) =>
-      typeof v === 'string' && /[;"\r\n]/.test(v) ? `"${v.replace(/"/g, '""')}"` : v;
+      typeof v === 'string' && /[;"\r\n]/.test(v)
+        ? `"${v.replace(/"/g, '""')}"`
+        : v;
     const lines = [
       'Partner;Typ;Beigetreten;Patient:innen;Überfällige Reviews;Ø Therapietreue (%)',
       ...topPartners.map((p) =>

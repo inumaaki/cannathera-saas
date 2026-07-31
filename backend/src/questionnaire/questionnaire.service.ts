@@ -12,6 +12,7 @@ export class QuestionnaireService {
   constructor(private readonly prisma: PrismaService) {}
 
   /** Published questionnaires (patient-facing list). */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   async list(locale: Locale) {
     const questionnaires = await this.prisma.questionnaire.findMany({
       where: { isActive: true, versions: { some: { isPublished: true } } },
@@ -47,7 +48,10 @@ export class QuestionnaireService {
             questions: {
               orderBy: { order: 'asc' },
               include: {
-                options: { orderBy: { order: 'asc' }, include: { translations: true } },
+                options: {
+                  orderBy: { order: 'asc' },
+                  include: { translations: true },
+                },
                 translations: true,
               },
             },
@@ -78,7 +82,9 @@ export class QuestionnaireService {
             showIf: q.showIf,
             options: q.options.map((o) => ({
               value: o.value,
-              label: o.translations.find((t) => t.locale === locale)?.label ?? o.label,
+              label:
+                o.translations.find((t) => t.locale === locale)?.label ??
+                o.label,
             })),
           };
         }),
@@ -87,8 +93,15 @@ export class QuestionnaireService {
   }
 
   /** Store a submission and evaluate red-flag rules. */
-  async submit(userId: string, key: string, answers: AnswerMap, locale: Locale) {
-    const profile = await this.prisma.patientProfile.findUnique({ where: { userId } });
+  async submit(
+    userId: string,
+    key: string,
+    answers: AnswerMap,
+    locale: Locale,
+  ) {
+    const profile = await this.prisma.patientProfile.findUnique({
+      where: { userId },
+    });
     if (!profile) throw new BadRequestException('NO_PATIENT_PROFILE');
 
     const version = await this.prisma.questionnaireVersion.findFirst({
@@ -107,9 +120,14 @@ export class QuestionnaireService {
     // Required check — only for questions currently visible given the answers.
     for (const q of questions) {
       const visible =
-        !q.showIf || evaluateCondition(q.showIf as unknown as Condition, answers);
+        !q.showIf ||
+        evaluateCondition(q.showIf as unknown as Condition, answers);
       const val = answers[q.key];
-      if (q.required && visible && (val === undefined || val === null || val === '')) {
+      if (
+        q.required &&
+        visible &&
+        (val === undefined || val === null || val === '')
+      ) {
         throw new BadRequestException(`MISSING_ANSWER:${q.key}`);
       }
     }
@@ -166,7 +184,9 @@ export class QuestionnaireService {
 
   /** Patient's own submission history. */
   async mySubmissions(userId: string) {
-    const profile = await this.prisma.patientProfile.findUnique({ where: { userId } });
+    const profile = await this.prisma.patientProfile.findUnique({
+      where: { userId },
+    });
     if (!profile) return [];
     return this.prisma.submission.findMany({
       where: { patientId: profile.id, status: SubmissionStatus.SUBMITTED },
@@ -176,7 +196,10 @@ export class QuestionnaireService {
         id: true,
         submittedAt: true,
         version: {
-          select: { version: true, questionnaire: { select: { key: true, title: true } } },
+          select: {
+            version: true,
+            questionnaire: { select: { key: true, title: true } },
+          },
         },
       },
     });

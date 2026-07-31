@@ -4,10 +4,20 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { Prisma, RedFlagSeverity, Role, SubmissionStatus } from '@prisma/client';
+import {
+  Prisma,
+  RedFlagSeverity,
+  Role,
+  SubmissionStatus,
+} from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
-type LogMetrics = { pain?: number; sleep?: number; activity?: number; qol?: number };
+type LogMetrics = {
+  pain?: number;
+  sleep?: number;
+  activity?: number;
+  qol?: number;
+};
 
 @Injectable()
 export class DoctorService {
@@ -28,7 +38,10 @@ export class DoctorService {
    * practice. Every :id route must pass through here, or knowing an id would be
    * enough to read or write another clinic's records.
    */
-  private async assertPatientInPractice(doctorUserId: string, patientId: string) {
+  private async assertPatientInPractice(
+    doctorUserId: string,
+    patientId: string,
+  ) {
     const orgId = await this.orgIdOf(doctorUserId);
     const patient = await this.prisma.patientProfile.findUnique({
       where: { id: patientId },
@@ -95,7 +108,8 @@ export class DoctorService {
     return {
       activePatients: patients.length,
       appointmentsToday: todaysSessions.length,
-      nextAppointment: todaysSessions.find((s) => s.scheduledAt > new Date()) ?? null,
+      nextAppointment:
+        todaysSessions.find((s) => s.scheduledAt > new Date()) ?? null,
       openRedFlags: openFlags,
       avgAdherence,
       appointments: todaysSessions.map((s) => ({
@@ -139,7 +153,9 @@ export class DoctorService {
       byMonth.set(key, bucket);
     }
     const avg = (a: number[]) =>
-      a.length ? Math.round((a.reduce((x, y) => x + y, 0) / a.length) * 10) / 10 : null;
+      a.length
+        ? Math.round((a.reduce((x, y) => x + y, 0) / a.length) * 10) / 10
+        : null;
     const trend = [...byMonth.entries()]
       .sort(([a], [b]) => a.localeCompare(b))
       .slice(-6)
@@ -181,8 +197,9 @@ export class DoctorService {
       },
     });
     const rows = submissions.map((s) => {
-      const satisfaction = s.answers.find((a) => a.question.key === 'satisfaction')
-        ?.value as number | undefined;
+      const satisfaction = s.answers.find(
+        (a) => a.question.key === 'satisfaction',
+      )?.value as number | undefined;
       const critical = s.redFlagHits.some((h) => h.severity === 'CRITICAL');
       return {
         id: s.id,
@@ -253,7 +270,10 @@ export class DoctorService {
       include: {
         user: { select: { firstName: true, lastName: true, email: true } },
         therapyLogs: { orderBy: { loggedAt: 'desc' }, take: 1 },
-        redFlagHits: { where: { acknowledged: false }, select: { severity: true } },
+        redFlagHits: {
+          where: { acknowledged: false },
+          select: { severity: true },
+        },
         _count: { select: { submissions: true } },
       },
       orderBy: { createdAt: 'desc' },
@@ -284,7 +304,9 @@ export class DoctorService {
       );
       const adherence = Math.min(
         100,
-        Math.round(((daysByPatient.get(p.id)?.size ?? 0) / Math.min(30, day)) * 100),
+        Math.round(
+          ((daysByPatient.get(p.id)?.size ?? 0) / Math.min(30, day)) * 100,
+        ),
       );
       return {
         adherence,
@@ -314,7 +336,11 @@ export class DoctorService {
         patient: { orgId },
         ...(view === 'all' ? {} : { acknowledged: view === 'reviewed' }),
       },
-      orderBy: [{ acknowledged: 'asc' }, { severity: 'desc' }, { createdAt: 'desc' }],
+      orderBy: [
+        { acknowledged: 'asc' },
+        { severity: 'desc' },
+        { createdAt: 'desc' },
+      ],
       take: 100,
       include: {
         patient: {
@@ -324,7 +350,9 @@ export class DoctorService {
           select: {
             id: true,
             submittedAt: true,
-            version: { select: { questionnaire: { select: { key: true, title: true } } } },
+            version: {
+              select: { questionnaire: { select: { key: true, title: true } } },
+            },
           },
         },
       },
@@ -342,7 +370,8 @@ export class DoctorService {
         .join(' '),
       patientRef: h.patient.patientRef,
       submissionId: h.submissionId,
-      questionnaire: h.submission?.version.questionnaire.title ?? 'Tageseintrag',
+      questionnaire:
+        h.submission?.version.questionnaire.title ?? 'Tageseintrag',
       submittedAt: h.submission?.submittedAt ?? h.createdAt,
     }));
   }
@@ -380,10 +409,14 @@ export class DoctorService {
         lastName: data.lastName,
         patientProfile: {
           create: {
-            dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : undefined,
+            dateOfBirth: data.dateOfBirth
+              ? new Date(data.dateOfBirth)
+              : undefined,
             therapyStart: new Date(),
             orgId: membership?.orgId,
-            patientRef: `CT-${randomBytes(2).toString('hex').toUpperCase()}-${randomBytes(2)
+            patientRef: `CT-${randomBytes(2).toString('hex').toUpperCase()}-${randomBytes(
+              2,
+            )
               .toString('hex')
               .toUpperCase()
               .slice(0, 3)}`,
@@ -415,7 +448,10 @@ export class DoctorService {
     const alphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
     const { randomInt } = require('crypto') as typeof import('crypto');
     const pick = (n: number) =>
-      Array.from({ length: n }, () => alphabet[randomInt(alphabet.length)]).join('');
+      Array.from(
+        { length: n },
+        () => alphabet[randomInt(alphabet.length)],
+      ).join('');
     return `${pick(4)}-${pick(4)}-${pick(2)}`;
   }
 
@@ -583,7 +619,11 @@ export class DoctorService {
   }
 
   /** Reschedule an appointment of one of this practice's patients. */
-  async reschedule(doctorUserId: string, sessionId: string, scheduledAt: string) {
+  async reschedule(
+    doctorUserId: string,
+    sessionId: string,
+    scheduledAt: string,
+  ) {
     const existing = await this.prisma.telemedicineSession.findUnique({
       where: { id: sessionId },
       select: { patientId: true },
@@ -607,7 +647,10 @@ export class DoctorService {
   }
 
   /** Store the uploaded practice logo and remember its URL in branding. */
-  async saveLogo(doctorUserId: string, file: { buffer: Buffer; mimetype: string }) {
+  async saveLogo(
+    doctorUserId: string,
+    file: { buffer: Buffer; mimetype: string },
+  ) {
     const membership = await this.prisma.membership.findFirst({
       where: { userId: doctorUserId },
     });
@@ -636,14 +679,17 @@ export class DoctorService {
 
   /** CSV export of the reports table (Excel-compatible) — this practice only. */
   async exportCsv(doctorUserId: string) {
-    const { rows, painReduction, phases } = await this.reportsSummary(doctorUserId);
+    const { rows, painReduction, phases } =
+      await this.reportsSummary(doctorUserId);
     const lines = [
       'Patient;Patienten-ID;Eingereicht am;Zufriedenheit (%);Risikostufe',
       ...rows.map((r) =>
         [
           r.patientName,
           r.patientRef ?? '',
-          r.submittedAt ? new Date(r.submittedAt).toISOString().slice(0, 10) : '',
+          r.submittedAt
+            ? new Date(r.submittedAt).toISOString().slice(0, 10)
+            : '',
           r.compliance ?? '',
           r.risk,
         ].join(';'),
@@ -725,7 +771,14 @@ export class DoctorService {
     const p = await this.prisma.patientProfile.findUnique({
       where: { id: patientId },
       include: {
-        user: { select: { firstName: true, lastName: true, email: true, locale: true } },
+        user: {
+          select: {
+            firstName: true,
+            lastName: true,
+            email: true,
+            locale: true,
+          },
+        },
         pharmacy: { select: { id: true, name: true } }, // dispensing pharmacy
         therapyLogs: { orderBy: { loggedAt: 'asc' } },
         redFlagHits: { orderBy: { createdAt: 'desc' }, take: 20 },
@@ -741,7 +794,9 @@ export class DoctorService {
           orderBy: { submittedAt: 'desc' },
           take: 20,
           include: {
-            version: { select: { questionnaire: { select: { key: true, title: true } } } },
+            version: {
+              select: { questionnaire: { select: { key: true, title: true } } },
+            },
             redFlagHits: { select: { severity: true } },
           },
         },
@@ -783,7 +838,9 @@ export class DoctorService {
         id: n.id,
         text: n.text,
         createdAt: n.createdAt,
-        author: [n.author.firstName, n.author.lastName].filter(Boolean).join(' '),
+        author: [n.author.firstName, n.author.lastName]
+          .filter(Boolean)
+          .join(' '),
       })),
       logs: p.therapyLogs.map((l) => ({
         loggedAt: l.loggedAt,
@@ -817,7 +874,10 @@ export class DoctorService {
             sections: {
               orderBy: { order: 'asc' },
               include: {
-                questions: { orderBy: { order: 'asc' }, include: { options: true } },
+                questions: {
+                  orderBy: { order: 'asc' },
+                  include: { options: true },
+                },
               },
             },
           },
@@ -830,7 +890,9 @@ export class DoctorService {
     // A submission is health data — it must belong to this practice's patient.
     await this.assertPatientInPractice(doctorUserId, s.patientId);
 
-    const answerByQuestion = new Map(s.answers.map((a) => [a.questionId, a.value]));
+    const answerByQuestion = new Map(
+      s.answers.map((a) => [a.questionId, a.value]),
+    );
 
     await this.prisma.auditLog.create({
       data: {

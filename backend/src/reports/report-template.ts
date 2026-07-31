@@ -13,16 +13,25 @@ const TYPE_TITLE: Record<string, string> = {
 };
 
 const de = (d: Date) =>
-  d.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  d.toLocaleDateString('de-DE', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
 
 const esc = (s: string) =>
-  s.replace(/[&<>"']/g, (c) =>
-    ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!,
+  s.replace(
+    /[&<>"']/g,
+    (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[
+        c
+      ]!,
   );
 
 /** Dosage bar chart (weekly averages). */
 function dosageChart(weeks: ReportData['dosage']['weeks']): string {
-  if (!weeks.length) return '<p class="empty">Keine Dosierungsdaten im Zeitraum.</p>';
+  if (!weeks.length)
+    return '<p class="empty">Keine Dosierungsdaten im Zeitraum.</p>';
   const max = Math.max(...weeks.map((w) => w.avgG ?? 0), 0.1);
   const W = 640;
   const TOP = 16; // headroom so the value label never clips
@@ -186,7 +195,10 @@ export function reportHtml(d: ReportData, logoDataUri: string | null): string {
     ${
       d.strains.length
         ? `<div>${d.strains
-            .map((s) => `<span class="chip ok">${esc(s.name)} · ${s.days} Tage</span>`)
+            .map(
+              (s) =>
+                `<span class="chip ok">${esc(s.name)} · ${s.days} Tage</span>`,
+            )
             .join('')}</div>
            ${d.strains.length === 1 ? '<p style="margin:6px 0 0" class="empty">Keine Sortenumstellung im Zeitraum.</p>' : ''}`
         : '<p class="empty">Keine Sortenangaben im Zeitraum.</p>'
@@ -200,7 +212,9 @@ export function reportHtml(d: ReportData, logoDataUri: string | null): string {
       <div class="card"><h3>Nebenwirkungen</h3>
         ${
           d.sideEffects.length
-            ? d.sideEffects.map((s) => `<span class="chip">${esc(s)}</span>`).join('')
+            ? d.sideEffects
+                .map((s) => `<span class="chip">${esc(s)}</span>`)
+                .join('')
             : '<span class="chip ok">Keine berichtet</span>'
         }
       </div>
@@ -276,14 +290,26 @@ export async function renderReportPdf(d: ReportData): Promise<Buffer> {
     d.practice?.logoUrl
       ? path.join(process.cwd(), d.practice.logoUrl.replace(/^\//, ''))
       : null,
-    path.join(process.cwd(), '..', 'web', 'public', 'brand', 'logo-transparent.png'),
+    path.join(
+      process.cwd(),
+      '..',
+      'web',
+      'public',
+      'brand',
+      'logo-transparent.png',
+    ),
   ].filter(Boolean) as string[];
 
   for (const file of candidates) {
     try {
       const buf = await fs.readFile(file);
       const ext = path.extname(file).slice(1).toLowerCase();
-      const mime = ext === 'svg' ? 'image/svg+xml' : ext === 'jpg' ? 'image/jpeg' : `image/${ext}`;
+      const mime =
+        ext === 'svg'
+          ? 'image/svg+xml'
+          : ext === 'jpg'
+            ? 'image/jpeg'
+            : `image/${ext}`;
       logoDataUri = `data:${mime};base64,${buf.toString('base64')}`;
       break;
     } catch {

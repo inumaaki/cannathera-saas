@@ -84,7 +84,8 @@ export class AdminController {
   @Patch('pricing-plans/:id')
   async updatePricingPlan(
     @Param('id') id: string,
-    @Body() dto: { monthlyPrice?: number; reviewCap?: number; isActive?: boolean },
+    @Body()
+    dto: { monthlyPrice?: number; reviewCap?: number; isActive?: boolean },
   ) {
     return this.adminService.updatePricingPlan(id, dto);
   }

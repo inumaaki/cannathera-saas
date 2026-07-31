@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const fs = require('fs');
 const path = require('path');
 const { translate } = require('bing-translate-api');
@@ -123,3 +124,4 @@ async function main() {
 }
 
 main().catch(console.error);
+

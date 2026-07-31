@@ -1,9 +1,18 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { Prisma, Role } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { randomInt } from 'crypto';
 import { PrismaService } from '../prisma/prisma.service';
-import { ORG_ROLES, membershipOf, normalizeRole, requirePermission } from './access';
+import {
+  ORG_ROLES,
+  membershipOf,
+  normalizeRole,
+  requirePermission,
+} from './access';
 
 /* Figma 8.7 Team Management + 8.8 Organization Settings. */
 @Injectable()
@@ -33,7 +42,10 @@ export class SettingsService {
   private generateTempPassword() {
     const alphabet = 'ABCDEFGHJKMNPQRSTUVWXYZ23456789';
     const pick = (n: number) =>
-      Array.from({ length: n }, () => alphabet[randomInt(alphabet.length)]).join('');
+      Array.from(
+        { length: n },
+        () => alphabet[randomInt(alphabet.length)],
+      ).join('');
     return `${pick(4)}-${pick(4)}-${pick(2)}`;
   }
 
@@ -61,7 +73,8 @@ export class SettingsService {
       id: m.id,
       userId: m.userId,
       name:
-        [m.user.firstName, m.user.lastName].filter(Boolean).join(' ') || m.user.email,
+        [m.user.firstName, m.user.lastName].filter(Boolean).join(' ') ||
+        m.user.email,
       email: m.user.email,
       orgRole: normalizeRole(m.orgRole),
       permissions: m.permissions,
@@ -95,7 +108,12 @@ export class SettingsService {
 
   async invite(
     userId: string,
-    data: { email: string; firstName?: string; lastName?: string; orgRole: string },
+    data: {
+      email: string;
+      firstName?: string;
+      lastName?: string;
+      orgRole: string;
+    },
   ) {
     // Only a SUPER_ADMIN may add members.
     const me = await this.requirePermission(userId, 'team:manage');
@@ -123,7 +141,14 @@ export class SettingsService {
             orgRole: data.orgRole,
             permissions:
               data.orgRole === 'SUPER_ADMIN'
-                ? ['patients:view', 'alerts:view', 'reports:view', 'settings:practice', 'settings:team', 'compliance:view']
+                ? [
+                    'patients:view',
+                    'alerts:view',
+                    'reports:view',
+                    'settings:practice',
+                    'settings:team',
+                    'compliance:view',
+                  ]
                 : data.orgRole === 'BILLING'
                   ? ['reports:view', 'compliance:view']
                   : ['patients:view', 'reports:view'],
@@ -163,7 +188,10 @@ export class SettingsService {
       throw new ConflictException('CANNOT_DEMOTE_SELF');
     }
     // …nor demote the only remaining admin.
-    if (normalizeRole(target.orgRole) === 'SUPER_ADMIN' && orgRole !== 'SUPER_ADMIN') {
+    if (
+      normalizeRole(target.orgRole) === 'SUPER_ADMIN' &&
+      orgRole !== 'SUPER_ADMIN'
+    ) {
       await this.assertNotLastAdmin(me.orgId, membershipId);
     }
 
@@ -191,7 +219,8 @@ export class SettingsService {
       where: { id: membershipId, orgId: me.orgId },
     });
     if (!target) throw new NotFoundException('MEMBER_NOT_FOUND');
-    if (target.userId === userId) throw new ConflictException('CANNOT_REMOVE_SELF');
+    if (target.userId === userId)
+      throw new ConflictException('CANNOT_REMOVE_SELF');
     if (normalizeRole(target.orgRole) === 'SUPER_ADMIN') {
       await this.assertNotLastAdmin(me.orgId, membershipId);
     }

@@ -42,7 +42,7 @@ function FaqContent() {
 
         <div className="cw-watermark rounded-2xl border border-hairline bg-white p-6 shadow-sm sm:p-10">
           <div className="flex flex-col gap-1">
-            {questions && (Array.isArray(questions) ? questions : Object.values(questions)).map((q: any, i) => (
+            {questions && (Array.isArray(questions) ? questions : Object.values(questions as Record<string, { question: string; answer: string }>)).map((q, i) => (
               <details key={i} className="group border-b border-hairline last:border-0">
                 <summary className="flex cursor-pointer list-none items-center justify-between py-5 text-left text-base font-bold text-ink-strong transition-colors hover:text-pine-600 focus:outline-none">
                   {q.question}

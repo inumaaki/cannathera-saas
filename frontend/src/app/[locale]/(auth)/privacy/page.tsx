@@ -71,15 +71,6 @@ export default function PrivacyPage({
                   </section>
                 ))}
               </div>
-              
-              <div className="mt-12 rounded-2xl bg-pine-50/50 px-6 py-5 border border-pine-100/50">
-                <p className="text-sm text-pine-900/80 leading-relaxed mb-2">
-                  {t("notice")}
-                </p>
-                <p className="text-xs text-pine-900/60">
-                  {t("updated")}
-                </p>
-              </div>
             </div>
           </div>
         </div>

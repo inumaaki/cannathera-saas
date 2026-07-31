@@ -62,7 +62,9 @@ export class IntegrationsService {
    */
   async createKey(userId: string, name: string, scopes: string[], live = true) {
     const org = await this.orgOfAdmin(userId, 'keys:manage');
-    const valid = scopes.filter((s) => SCOPES.includes(s as (typeof SCOPES)[number]));
+    const valid = scopes.filter((s) =>
+      SCOPES.includes(s as (typeof SCOPES)[number]),
+    );
     if (valid.length === 0) throw new ConflictException('INVALID_SCOPES');
 
     const prefix = live ? 'sk_live_' : 'sk_test_';
@@ -191,7 +193,12 @@ export class IntegrationsService {
       },
     });
     // The signing secret is shown once so the receiver can verify our signature.
-    return { id: hook.id, url: hook.url, events: hook.events, secret: hook.secret };
+    return {
+      id: hook.id,
+      url: hook.url,
+      events: hook.events,
+      secret: hook.secret,
+    };
   }
 
   async toggleWebhook(userId: string, id: string, active: boolean) {
@@ -280,7 +287,9 @@ export class IntegrationsService {
     payload: Prisma.JsonObject,
   ): Promise<{ ok: boolean; statusCode: number | null; error: string | null }> {
     const body = JSON.stringify({ event, data: payload, sentAt: new Date() });
-    const signature = createHash('sha256').update(`${secret}.${body}`).digest('hex');
+    const signature = createHash('sha256')
+      .update(`${secret}.${body}`)
+      .digest('hex');
     try {
       const res = await fetch(url, {
         method: 'POST',
@@ -311,7 +320,11 @@ export class IntegrationsService {
    * finalised report, a red flag). Delivers to the patient's own org AND to the
    * enterprise umbrella above it, then records every attempt.
    */
-  async dispatch(orgIds: string[], event: WebhookEvent, payload: Prisma.JsonObject) {
+  async dispatch(
+    orgIds: string[],
+    event: WebhookEvent,
+    payload: Prisma.JsonObject,
+  ) {
     const ids = [...new Set(orgIds.filter(Boolean))];
     if (ids.length === 0) return;
 
@@ -351,7 +364,9 @@ export class IntegrationsService {
   async status(userId: string) {
     const org = await this.orgOf(userId);
     const [hooks, deliveries, keys] = await Promise.all([
-      this.prisma.webhookEndpoint.count({ where: { orgId: org.id, active: true } }),
+      this.prisma.webhookEndpoint.count({
+        where: { orgId: org.id, active: true },
+      }),
       this.prisma.webhookDelivery.findMany({
         where: { endpoint: { orgId: org.id } },
         orderBy: { createdAt: 'desc' },
@@ -370,7 +385,12 @@ export class IntegrationsService {
       where: {
         patient:
           org.type === OrgType.ENTERPRISE
-            ? { OR: [{ org: { parentOrgId: org.id } }, { pharmacy: { parentOrgId: org.id } }] }
+            ? {
+                OR: [
+                  { org: { parentOrgId: org.id } },
+                  { pharmacy: { parentOrgId: org.id } },
+                ],
+              }
             : { OR: [{ orgId: org.id }, { pharmacyId: org.id }] },
       },
     });
@@ -379,7 +399,11 @@ export class IntegrationsService {
       // Honest states — Zoom is not connected until M9 delivers real credentials.
       zoom: { status: 'planned', sessions: teleSessions },
       zapier: { status: hooks > 0 ? 'connected' : 'inactive', hooks },
-      webhooks: { status: hooks > 0 ? 'active' : 'inactive', active: hooks, successRate },
+      webhooks: {
+        status: hooks > 0 ? 'active' : 'inactive',
+        active: hooks,
+        successRate,
+      },
       restApi: { status: 'operational', version: 'v1', activeKeys: keys },
     };
   }
