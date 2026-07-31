@@ -6,7 +6,9 @@ import { join } from 'path';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    rawBody: true,
+  });
 
   // Railway/Vercel-style deployments terminate the public connection at a
   // reverse proxy. Trust only the configured number of nearest proxy hops so

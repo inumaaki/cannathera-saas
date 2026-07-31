@@ -104,8 +104,8 @@ export class StripeController {
   @HttpCode(HttpStatus.OK)
   async handleWebhook(
     @Headers('stripe-signature') signature: string,
-    @Req() req: any, // Raw Express Request with buffer body
+    @Req() req: any,
   ) {
-    return this.stripeService.handleWebhook(signature, req.body);
+    return this.stripeService.handleWebhook(signature, req.rawBody);
   }
 }
