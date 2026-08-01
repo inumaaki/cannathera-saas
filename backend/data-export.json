@@ -364,6 +364,21 @@
       "emailVerified": null,
       "createdAt": "2026-07-31T05:20:00.770Z",
       "updatedAt": "2026-07-31T18:58:02.839Z"
+    },
+    {
+      "id": "cmsadcb8x0000ft7gj8c3snug",
+      "email": "local_test_123456@example.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$J5fE4jrT7uEzVAksA5Clsw$giCSJuEpXHajOBR+TG0/5vz4NMAve9cGOX5gt1EYiOQ",
+      "role": "PATIENT",
+      "firstName": "Agent",
+      "lastName": "Smith",
+      "locale": "en",
+      "isActive": false,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-08-01T12:49:46.737Z",
+      "updatedAt": "2026-08-01T12:49:46.758Z"
     }
   ],
   "memberships": [
@@ -812,6 +827,28 @@
       "hasActiveSubscription": true,
       "createdAt": "2026-07-31T13:27:29.897Z",
       "updatedAt": "2026-07-31T17:52:07.636Z"
+    },
+    {
+      "id": "cmsadcb9c0002ft7g1jnpccme",
+      "orgId": null,
+      "pharmacyId": null,
+      "userId": "cmsadcb8x0000ft7gj8c3snug",
+      "dateOfBirth": "1990-01-01T00:00:00.000Z",
+      "patientRef": null,
+      "therapyStart": "2026-08-01T12:49:46.749Z",
+      "packageTier": "BASIC",
+      "condition": null,
+      "lastReviewAt": null,
+      "address": null,
+      "phone": null,
+      "mainComplaints": [],
+      "complaintsDescription": null,
+      "therapyGoals": [],
+      "baselineMetrics": null,
+      "onboardingCompleted": false,
+      "hasActiveSubscription": false,
+      "createdAt": "2026-08-01T12:49:46.751Z",
+      "updatedAt": "2026-08-01T12:49:46.751Z"
     }
   ],
   "consents": [
@@ -932,6 +969,17 @@
       "version": "2026-07-v1",
       "granted": true,
       "grantedAt": "2026-07-31T13:27:29.946Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cmsadcb9m0004ft7g2nw3fvml",
+      "userId": "cmsadcb8x0000ft7gj8c3snug",
+      "purpose": "data_processing_art9",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-08-01T12:49:46.763Z",
       "revokedAt": null,
       "ipAddress": "::1",
       "userAgent": null

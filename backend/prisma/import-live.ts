@@ -85,11 +85,25 @@ async function importData() {
       if (pp.dateOfBirth) pp.dateOfBirth = new Date(pp.dateOfBirth);
       if (pp.therapyStart) pp.therapyStart = new Date(pp.therapyStart);
       if (pp.lastReviewAt) pp.lastReviewAt = new Date(pp.lastReviewAt);
-      const { id, userId, ...rest } = pp;
+      
+      const { 
+        id, 
+        userId, 
+        address, 
+        phone, 
+        mainComplaints, 
+        complaintsDescription, 
+        therapyGoals, 
+        baselineMetrics, 
+        onboardingCompleted, 
+        hasActiveSubscription, 
+        ...rest 
+      } = pp as any;
+      
       await prisma.patientProfile.upsert({
         where: { id },
         update: rest,
-        create: pp,
+        create: { ...rest, id, userId },
       });
     }
     console.log(`✅ Imported ${data.patientProfiles.length} patient profiles`);
@@ -121,11 +135,19 @@ async function importData() {
     // ── Therapy Logs ──────────────────────────────────────────────────────────
     for (const log of data.therapyLogs) {
       if (log.loggedAt) log.loggedAt = new Date(log.loggedAt);
-      const { id, ...rest } = log;
+      
+      const { 
+        id, 
+        batchNumber, 
+        consumptionMethod, 
+        manufacturer, 
+        ...rest 
+      } = log as any;
+      
       await prisma.therapyLog.upsert({
         where: { id },
         update: rest,
-        create: log,
+        create: { ...rest, id },
       });
     }
     console.log(`✅ Imported ${data.therapyLogs.length} therapy logs`);
