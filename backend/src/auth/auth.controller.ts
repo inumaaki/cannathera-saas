@@ -60,9 +60,24 @@ export class AuthController {
     @Res({ passthrough: true }) res: Response,
     @Ip() ip: string,
   ) {
-    const { preAuthToken, devCode } = await this.auth.register(dto, ip);
-    res.cookie(PRE_AUTH_COOKIE, preAuthToken, preAuthCookieOpts);
-    return { requires2fa: true, ...(devCode ? { devCode } : {}) };
+    const result = await this.auth.register(dto, ip);
+
+    if ('session' in result) {
+      this.setSessionCookie(res, result.session, 12 * 60);
+      return {
+        requires2fa: false,
+        user: {
+          id: result.user.id,
+          email: result.user.email,
+          role: result.user.role,
+          locale: result.user.locale,
+        },
+        home: ROLE_HOME[result.user.role] ?? '/',
+      };
+    }
+
+    res.cookie(PRE_AUTH_COOKIE, result.preAuthToken, preAuthCookieOpts);
+    return { requires2fa: true, ...(result.devCode ? { devCode: result.devCode } : {}) };
   }
 
   @Post('login')

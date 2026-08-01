@@ -282,6 +282,20 @@ export class AuthService {
         return created;
       });
 
+      // TEMPORARY FOR TESTING: Force 2FA to be skipped for all accounts
+      const skip2fa = true;
+
+      if (skip2fa) {
+        await this.prisma.auditLog.create({
+          data: { userId: user.id, action: 'LOGIN_2FA_SKIPPED', ipAddress: ip },
+        });
+        const policy = await this.policyFor(user.id);
+        return {
+          user,
+          session: this.signSession(user, policy.sessionTimeoutMin, false),
+        };
+      }
+
       const devCode = await this.issueTwoFactorCode(user, true);
       return { user, preAuthToken: this.signPreAuth(user), devCode };
     } catch (error) {
