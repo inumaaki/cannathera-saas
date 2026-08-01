@@ -144,13 +144,14 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
     setPending(true);
     setError(null);
     try {
-      const res = await api<{ requires2fa: boolean; devCode?: string }>(
-        "/auth/register",
-        {
-          method: "POST",
-          body: { role, ...account, roleData },
-        },
-      );
+      const res = await api<{
+        requires2fa: boolean;
+        devCode?: string;
+        home?: string;
+      }>("/auth/register", {
+        method: "POST",
+        body: { role, ...account, roleData },
+      });
       sessionStorage.removeItem("cannathera_dev_code");
       if (
         process.env.NEXT_PUBLIC_EXPOSE_DEV_AUTH_CODES === "true" &&
@@ -158,7 +159,12 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
       ) {
         sessionStorage.setItem("cannathera_dev_code", res.devCode);
       }
-      router.push("/verify");
+      
+      if (res.requires2fa === false && res.home) {
+        window.location.href = res.home;
+      } else {
+        router.push("/verify");
+      }
     } catch (err) {
       const code = err instanceof ApiError ? err.code : "GENERIC";
       const userActionableErrors = new Set([
