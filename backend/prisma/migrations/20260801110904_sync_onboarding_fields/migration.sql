@@ -6,11 +6,11 @@
 -- the enum.
 
 
-ALTER TYPE "Locale" ADD VALUE 'uk';
-ALTER TYPE "Locale" ADD VALUE 'ary';
-ALTER TYPE "Locale" ADD VALUE 'ru';
-ALTER TYPE "Locale" ADD VALUE 'pl';
-ALTER TYPE "Locale" ADD VALUE 'ro';
+ALTER TYPE "Locale" ADD VALUE IF NOT EXISTS 'uk';
+ALTER TYPE "Locale" ADD VALUE IF NOT EXISTS 'ary';
+ALTER TYPE "Locale" ADD VALUE IF NOT EXISTS 'ru';
+ALTER TYPE "Locale" ADD VALUE IF NOT EXISTS 'pl';
+ALTER TYPE "Locale" ADD VALUE IF NOT EXISTS 'ro';
 
 -- AlterTable
 ALTER TABLE "PatientProfile" ADD COLUMN     "address" TEXT,
