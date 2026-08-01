@@ -1,0 +1,3539 @@
+{
+  "organizations": [
+    {
+      "id": "cmrohnrpe0006ftsctxe7e0yk",
+      "name": "Evil Corp",
+      "type": "PHARMACY",
+      "branding": null,
+      "parentOrgId": null,
+      "joinedAt": null,
+      "createdAt": "2026-07-17T05:19:43.874Z",
+      "updatedAt": "2026-07-17T05:19:43.874Z"
+    },
+    {
+      "id": "cmrvzdvfg0000ft6c5by4iogy",
+      "name": "GreenPath Health Group",
+      "type": "ENTERPRISE",
+      "branding": {
+        "address": "Friedrichstraße 68, 10117 Berlin",
+        "accentColor": "#F97316",
+        "primaryColor": "#0B4D34",
+        "contactPerson": "Markus Lehmann"
+      },
+      "parentOrgId": null,
+      "joinedAt": null,
+      "createdAt": "2026-07-22T11:10:18.460Z",
+      "updatedAt": "2026-07-22T11:10:18.460Z"
+    },
+    {
+      "id": "cmrvzdm3k0000ftt0ab2iwd13",
+      "name": "Adler-Apotheke Berlin",
+      "type": "PHARMACY",
+      "branding": {
+        "address": "Kurfürstendamm 112, 10711 Berlin",
+        "contactPerson": "Dr. Elena Vance"
+      },
+      "parentOrgId": "cmrvzdvfg0000ft6c5by4iogy",
+      "joinedAt": "2026-03-24T11:10:18.584Z",
+      "createdAt": "2026-07-22T11:10:06.368Z",
+      "updatedAt": "2026-07-22T11:10:18.587Z"
+    },
+    {
+      "id": "cms8hu20e0004ft209fus5m7e",
+      "name": "Big Pharma Network",
+      "type": "ENTERPRISE",
+      "branding": null,
+      "parentOrgId": null,
+      "joinedAt": null,
+      "createdAt": "2026-07-31T05:20:00.685Z",
+      "updatedAt": "2026-07-31T05:20:00.685Z"
+    },
+    {
+      "id": "cms8ifbf60009ft7wpc1m9bnw",
+      "name": "Dr. Smith Clinic",
+      "type": "PRACTICE",
+      "branding": null,
+      "parentOrgId": null,
+      "joinedAt": null,
+      "createdAt": "2026-07-31T05:36:32.658Z",
+      "updatedAt": "2026-07-31T05:36:32.658Z"
+    },
+    {
+      "id": "cms8ypmum0005ftcct5sq5hwq",
+      "name": "Inumaki",
+      "type": "PHARMACY",
+      "branding": null,
+      "parentOrgId": null,
+      "joinedAt": null,
+      "createdAt": "2026-07-31T13:12:27.886Z",
+      "updatedAt": "2026-07-31T13:12:27.886Z"
+    },
+    {
+      "id": "cms99a4270014ftjss3z83yvq",
+      "name": "HASSAN",
+      "type": "PHARMACY",
+      "branding": null,
+      "parentOrgId": null,
+      "joinedAt": null,
+      "createdAt": "2026-07-31T18:08:19.471Z",
+      "updatedAt": "2026-07-31T18:08:19.471Z"
+    }
+  ],
+  "users": [
+    {
+      "id": "cmrnnheg80000ftlgrd0sgov3",
+      "email": "admin@cannathera.de",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$IaDynQB8oCrEantmaH9PDg$vJ+hv6zmrglk5JlITWrOB6x2RccgqUaaIZrMqj/oUTE",
+      "role": "ADMIN",
+      "firstName": "System",
+      "lastName": "Administrator",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-16T15:14:58.279Z",
+      "updatedAt": "2026-07-22T11:09:29.636Z"
+    },
+    {
+      "id": "cmrvzdvij0001ft6chvs3b5t3",
+      "email": "enterprise@example.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$YCkYbRIb1pEEnxz3RWWo2g$Wb8EfmUE2YWB0uJ4gqu+5p1RCznevs0LnjobGhkfZzk",
+      "role": "ENTERPRISE",
+      "firstName": "Markus",
+      "lastName": "Lehmann",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-22T11:10:18.571Z",
+      "updatedAt": "2026-07-22T11:10:18.571Z"
+    },
+    {
+      "id": "cmrx8g3fv0000ft64jwfac6dj",
+      "email": "john.doe@example.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$luNCYOilrkzyPIi0Lx1yYA$OObVbwsbMcGIx3wtObQJvtYOjXoxWBP5/e+ibyuSXX0",
+      "role": "PATIENT",
+      "firstName": "John",
+      "lastName": "Doe",
+      "locale": "de",
+      "isActive": false,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-23T08:11:44.875Z",
+      "updatedAt": "2026-07-23T08:11:44.955Z"
+    },
+    {
+      "id": "cms8ifbik000cft7weyu6pbbm",
+      "email": "evilurl117@gmail.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$n/kdh8OhrsFddVu9J2h7yQ$12FtKJrll638YKuKtcSlVnzHJPL8XF1Cx/2GJtteMMw",
+      "role": "DOCTOR",
+      "firstName": "Smith",
+      "lastName": "James",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-31T05:36:32.781Z",
+      "updatedAt": "2026-07-31T05:37:19.551Z"
+    },
+    {
+      "id": "cms8iyrtw0000ftgcnnyaf7dh",
+      "email": "lucasjoe@gmail.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$W1VFIvM0q4o1AcEmWRuGKA$xjYECdDHPyHdzDKM3BCGauWrJmT/xlSkemAzmLXefzs",
+      "role": "PATIENT",
+      "firstName": "Alice",
+      "lastName": "Harry",
+      "locale": "en",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-31T05:51:40.388Z",
+      "updatedAt": "2026-07-31T05:51:40.405Z"
+    },
+    {
+      "id": "cms8z8yud000jftccceru3ime",
+      "email": "dua.fatima11396@gmail.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$ioKnEY2AIdWwms9qpHIN9w$gFbeme1pu0iZx8FeS+MyxVpA+xQFPTs8g75xjOR33kY",
+      "role": "PATIENT",
+      "firstName": "Dua",
+      "lastName": "Fatima",
+      "locale": "en",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-31T13:27:29.893Z",
+      "updatedAt": "2026-07-31T15:18:54.896Z"
+    },
+    {
+      "id": "cms698f7q0000ftn4cj3pf0vi",
+      "email": "d.larkin@cannathera-report.de",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$GcFmPOE7xehQEf2CCZur8g$MTq+5PGLkcJaw03Fk79WPk8PXNw9gAyfyGhcH9UMgPM",
+      "role": "ADMIN",
+      "firstName": "D.",
+      "lastName": "Larkin",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-29T15:43:42.083Z",
+      "updatedAt": "2026-07-31T18:07:27.801Z"
+    },
+    {
+      "id": "cmrohnrth0009ftsclr5h1emf",
+      "email": "xhr19xhr19@gmail.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$WPoC7Rg8UQciFXNFTDGxig$GZCXN9B/lE/JoSJgb9kkbPpn2DlsdjkVNE26ceShRpo",
+      "role": "PHARMACY",
+      "firstName": "Evil",
+      "lastName": "Corp",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-17T05:19:44.022Z",
+      "updatedAt": "2026-07-17T05:25:32.621Z"
+    },
+    {
+      "id": "cmrvzdm7i0001ftt0zpwiigfq",
+      "email": "apotheke@example.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$EFb7TtDWKiv3s8/gzWAjkQ$0Bf9ibrhjC7YvPJWq0gpXXS+p7Cg4b6JTODSoKtoAIY",
+      "role": "PHARMACY",
+      "firstName": "Elena",
+      "lastName": "Vance",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-22T11:10:06.510Z",
+      "updatedAt": "2026-07-22T11:10:06.510Z"
+    },
+    {
+      "id": "cmrvzdmd5000gftt03dx9r3sy",
+      "email": "julianne.schmidt@example.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$FRPcZ6/upwsQQhd+xll94Q$vrnAW0sV9AaeI+vT+oQ1TF2KPN0Me59eLBw4mQzN+hU",
+      "role": "PATIENT",
+      "firstName": "Julianne",
+      "lastName": "Schmidt",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-22T11:10:06.713Z",
+      "updatedAt": "2026-07-22T11:10:06.713Z"
+    },
+    {
+      "id": "cmrvzdmj0001bftt0vh6yk1q7",
+      "email": "robert.mller@example.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$k1uCr1fYdF0y8c22OzRCYw$FdLWHS9gvpeYuAy+bg+qdu29DifMMolY6aTWaOQG94M",
+      "role": "PATIENT",
+      "firstName": "Robert",
+      "lastName": "Müller",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-22T11:10:06.924Z",
+      "updatedAt": "2026-07-22T11:10:06.924Z"
+    },
+    {
+      "id": "cmrvzdmmb0025ftt02je01gn8",
+      "email": "elena.rodriguez@example.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$+Ki92oXaa9B37DjsNX0X+A$BhgSbUAe5bT0GGHWrTCjTo60l/HRM9C5wKdw2nkoMnc",
+      "role": "PATIENT",
+      "firstName": "Elena",
+      "lastName": "Rodriguez",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-22T11:10:07.043Z",
+      "updatedAt": "2026-07-22T11:10:07.043Z"
+    },
+    {
+      "id": "cmrvzdmpx002yftt0k5mwxfrg",
+      "email": "william.sterling@example.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$gQvM2Qr4lhu2tYPXUbmoaQ$9YA/y0n170khG/i5o2gRZuKI1RZ/0cJKaia9BDEAtNE",
+      "role": "PATIENT",
+      "firstName": "William",
+      "lastName": "Sterling",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-22T11:10:07.174Z",
+      "updatedAt": "2026-07-22T11:10:07.174Z"
+    },
+    {
+      "id": "cmrw20k5q0006ft0wvwswyno9",
+      "email": "lucasjoe131781@gmail.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$CHtTg+BYKastcuYVwVcfqg$W+yv6UQ1wI+MiPXONq6Wxl9xk5iaixKQW0k5ox3/ACI",
+      "role": "PATIENT",
+      "firstName": "Lucas",
+      "lastName": "Joe",
+      "locale": "en",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-22T12:23:56.174Z",
+      "updatedAt": "2026-07-22T12:23:56.185Z"
+    },
+    {
+      "id": "cms5mcd7s0000ftj4xa8sqra2",
+      "email": "test.patient@example.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$65HUgpHFini2eMykmb3kBQ$xNFmX5+m6vNUQWH5SshHRaySo4fFxUE5at6ZpVV0Igw",
+      "role": "PATIENT",
+      "firstName": "Test",
+      "lastName": "Patient",
+      "locale": "en",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-29T05:02:54.952Z",
+      "updatedAt": "2026-07-29T05:02:55.000Z"
+    },
+    {
+      "id": "cms8j9rep000rftgc2rwliv5f",
+      "email": "pathtoprogress0@gmail.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$idi3sNAEmv8PJS1qn/XEpA$UAOcGkyFpyupxBegEO0mP4mji58URAKvWA+YhMC0uWI",
+      "role": "PATIENT",
+      "firstName": "Alice",
+      "lastName": "Harry",
+      "locale": "en",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-31T06:00:13.058Z",
+      "updatedAt": "2026-07-31T06:00:13.070Z"
+    },
+    {
+      "id": "cms8ypmwh0008ftccggb3ucis",
+      "email": "umerali7451@gmail.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$7K1+5xXwu6vfpGxc3GEs6Q$l/c8gi1NJWHoFJDmZ+eRKXT1XrsLJiB0hvRrvDV8mF4",
+      "role": "PHARMACY",
+      "firstName": "Inumaki",
+      "lastName": "Harry",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-31T13:12:27.953Z",
+      "updatedAt": "2026-07-31T13:13:28.319Z"
+    },
+    {
+      "id": "cms99a45m0015ftjsrqg0o9s4",
+      "email": "hassanraza2in1@gmail.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$lM2pnmxYyoMQ86YGH7YGQQ$Q1va4F/mavlg+ndLR8ATtg8ZTti95XROOQRk/NVL7TM",
+      "role": "PHARMACY",
+      "firstName": "Hassan",
+      "lastName": "Raza",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-31T18:08:19.595Z",
+      "updatedAt": "2026-07-31T18:10:16.971Z"
+    },
+    {
+      "id": "cms8hu22p0007ft20nr3ldfn6",
+      "email": "hsnxinu@gmail.com",
+      "passwordHash": "$argon2id$v=19$m=65536,t=3,p=4$HThDxWhZpPpw9HgGGDmRFg$w92IW+NAHfr0Uvsnp1LHiV++KAB32XtxOL18E7Eeyb0",
+      "role": "ENTERPRISE",
+      "firstName": "Hassan",
+      "lastName": "Inumaki",
+      "locale": "de",
+      "isActive": true,
+      "mustChangePassword": false,
+      "temporaryPasswordEncrypted": null,
+      "emailVerified": null,
+      "createdAt": "2026-07-31T05:20:00.770Z",
+      "updatedAt": "2026-07-31T18:58:02.839Z"
+    }
+  ],
+  "memberships": [
+    {
+      "id": "cmrohnrth000bftscd1yjnpce",
+      "userId": "cmrohnrth0009ftsclr5h1emf",
+      "orgId": "cmrohnrpe0006ftsctxe7e0yk",
+      "roleInOrg": "PHARMACY",
+      "orgRole": "ADMIN",
+      "permissions": [
+        "patients:view",
+        "patients:create",
+        "patients:note",
+        "alerts:view",
+        "alerts:acknowledge",
+        "appointments:manage",
+        "reports:view",
+        "settings:practice",
+        "settings:team",
+        "compliance:view"
+      ],
+      "createdAt": "2026-07-17T05:19:44.022Z"
+    },
+    {
+      "id": "cmrvzdm7i0003ftt0v4cq3i9r",
+      "userId": "cmrvzdm7i0001ftt0zpwiigfq",
+      "orgId": "cmrvzdm3k0000ftt0ab2iwd13",
+      "roleInOrg": "PHARMACY",
+      "orgRole": "ADMIN",
+      "permissions": [
+        "patients:view",
+        "patients:create",
+        "patients:note",
+        "alerts:view",
+        "alerts:acknowledge",
+        "appointments:manage",
+        "reports:view",
+        "settings:practice",
+        "settings:team",
+        "compliance:view"
+      ],
+      "createdAt": "2026-07-22T11:10:06.510Z"
+    },
+    {
+      "id": "cmrvzdvij0003ft6chno84din",
+      "userId": "cmrvzdvij0001ft6chvs3b5t3",
+      "orgId": "cmrvzdvfg0000ft6c5by4iogy",
+      "roleInOrg": "ENTERPRISE",
+      "orgRole": "SUPER_ADMIN",
+      "permissions": [
+        "patients:view",
+        "alerts:view",
+        "reports:view",
+        "settings:practice",
+        "settings:team",
+        "compliance:view"
+      ],
+      "createdAt": "2026-07-22T11:10:18.571Z"
+    },
+    {
+      "id": "cms8hu22p0009ft20b78bss0f",
+      "userId": "cms8hu22p0007ft20nr3ldfn6",
+      "orgId": "cms8hu20e0004ft209fus5m7e",
+      "roleInOrg": "ENTERPRISE",
+      "orgRole": "ADMIN",
+      "permissions": [
+        "patients:view",
+        "patients:create",
+        "patients:note",
+        "alerts:view",
+        "alerts:acknowledge",
+        "appointments:manage",
+        "reports:view",
+        "settings:practice",
+        "settings:team",
+        "compliance:view"
+      ],
+      "createdAt": "2026-07-31T05:20:00.770Z"
+    },
+    {
+      "id": "cms8ifbil000eft7wj15dfldt",
+      "userId": "cms8ifbik000cft7weyu6pbbm",
+      "orgId": "cms8ifbf60009ft7wpc1m9bnw",
+      "roleInOrg": "DOCTOR",
+      "orgRole": "ADMIN",
+      "permissions": [
+        "patients:view",
+        "patients:create",
+        "patients:note",
+        "alerts:view",
+        "alerts:acknowledge",
+        "appointments:manage",
+        "reports:view",
+        "settings:practice",
+        "settings:team",
+        "compliance:view"
+      ],
+      "createdAt": "2026-07-31T05:36:32.781Z"
+    },
+    {
+      "id": "cms8ypmwh000aftcczplt13z2",
+      "userId": "cms8ypmwh0008ftccggb3ucis",
+      "orgId": "cms8ypmum0005ftcct5sq5hwq",
+      "roleInOrg": "PHARMACY",
+      "orgRole": "ADMIN",
+      "permissions": [
+        "patients:view",
+        "patients:create",
+        "patients:note",
+        "alerts:view",
+        "alerts:acknowledge",
+        "appointments:manage",
+        "reports:view",
+        "settings:practice",
+        "settings:team",
+        "compliance:view"
+      ],
+      "createdAt": "2026-07-31T13:12:27.953Z"
+    },
+    {
+      "id": "cms99a45m0017ftjsn7mjxgsg",
+      "userId": "cms99a45m0015ftjsrqg0o9s4",
+      "orgId": "cms99a4270014ftjss3z83yvq",
+      "roleInOrg": "PHARMACY",
+      "orgRole": "ADMIN",
+      "permissions": [
+        "patients:view",
+        "patients:create",
+        "patients:note",
+        "alerts:view",
+        "alerts:acknowledge",
+        "appointments:manage",
+        "reports:view",
+        "settings:practice",
+        "settings:team",
+        "compliance:view"
+      ],
+      "createdAt": "2026-07-31T18:08:19.595Z"
+    }
+  ],
+  "partnerCodes": [
+    {
+      "id": "cms18rmne0009ftjwbwcrf39w",
+      "orgId": "cmrohnrpe0006ftsctxe7e0yk",
+      "code": "EVILCO-947D63",
+      "label": null,
+      "usageCount": 0,
+      "maxUses": null,
+      "isActive": false,
+      "expiresAt": null,
+      "createdAt": "2026-07-26T03:31:47.690Z"
+    },
+    {
+      "id": "cms8ioy9i000oft7w0153fd9k",
+      "orgId": "cms8ifbf60009ft7wpc1m9bnw",
+      "code": "DRSMIT-15E6AC",
+      "label": null,
+      "usageCount": 3,
+      "maxUses": null,
+      "isActive": true,
+      "expiresAt": null,
+      "createdAt": "2026-07-31T05:44:02.166Z"
+    }
+  ],
+  "patientProfiles": [
+    {
+      "id": "cmrw20k5v0008ft0wzpb2twy3",
+      "orgId": null,
+      "pharmacyId": null,
+      "userId": "cmrw20k5q0006ft0wvwswyno9",
+      "dateOfBirth": "2003-10-29T00:00:00.000Z",
+      "patientRef": null,
+      "therapyStart": "2026-07-22T12:23:56.177Z",
+      "packageTier": "BASIC",
+      "condition": null,
+      "lastReviewAt": null,
+      "address": null,
+      "phone": null,
+      "mainComplaints": [],
+      "complaintsDescription": null,
+      "therapyGoals": [],
+      "baselineMetrics": null,
+      "onboardingCompleted": false,
+      "hasActiveSubscription": false,
+      "createdAt": "2026-07-22T12:23:56.179Z",
+      "updatedAt": "2026-07-22T12:23:56.179Z"
+    },
+    {
+      "id": "cmrvzdmd5000iftt0wdjab6zo",
+      "orgId": null,
+      "pharmacyId": "cmrvzdm3k0000ftt0ab2iwd13",
+      "userId": "cmrvzdmd5000gftt03dx9r3sy",
+      "dateOfBirth": null,
+      "patientRef": "CT-5784-PH",
+      "therapyStart": "2026-05-09T11:10:06.709Z",
+      "packageTier": "PREMIUM",
+      "condition": "Chronische Schmerzen",
+      "lastReviewAt": "2026-06-19T07:59:44.398Z",
+      "address": null,
+      "phone": null,
+      "mainComplaints": [],
+      "complaintsDescription": null,
+      "therapyGoals": [],
+      "baselineMetrics": null,
+      "onboardingCompleted": false,
+      "hasActiveSubscription": false,
+      "createdAt": "2026-07-22T11:10:06.713Z",
+      "updatedAt": "2026-07-23T07:59:44.402Z"
+    },
+    {
+      "id": "cmrvzdmj0001dftt07pewydkj",
+      "orgId": null,
+      "pharmacyId": "cmrvzdm3k0000ftt0ab2iwd13",
+      "userId": "cmrvzdmj0001bftt0vh6yk1q7",
+      "dateOfBirth": null,
+      "patientRef": "CT-9049-PH",
+      "therapyStart": "2026-05-17T11:10:06.922Z",
+      "packageTier": "BASIC",
+      "condition": "Schlafstörungen",
+      "lastReviewAt": "2026-06-27T07:59:44.429Z",
+      "address": null,
+      "phone": null,
+      "mainComplaints": [],
+      "complaintsDescription": null,
+      "therapyGoals": [],
+      "baselineMetrics": null,
+      "onboardingCompleted": false,
+      "hasActiveSubscription": false,
+      "createdAt": "2026-07-22T11:10:06.924Z",
+      "updatedAt": "2026-07-23T07:59:44.431Z"
+    },
+    {
+      "id": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "orgId": null,
+      "pharmacyId": "cmrvzdm3k0000ftt0ab2iwd13",
+      "userId": "cmrvzdmmb0025ftt02je01gn8",
+      "dateOfBirth": null,
+      "patientRef": "CT-4088-PH",
+      "therapyStart": "2026-05-31T11:10:07.042Z",
+      "packageTier": "PLUS",
+      "condition": "Neuropathischer Schmerz",
+      "lastReviewAt": "2026-07-11T07:59:44.438Z",
+      "address": null,
+      "phone": null,
+      "mainComplaints": [],
+      "complaintsDescription": null,
+      "therapyGoals": [],
+      "baselineMetrics": null,
+      "onboardingCompleted": false,
+      "hasActiveSubscription": false,
+      "createdAt": "2026-07-22T11:10:07.043Z",
+      "updatedAt": "2026-07-23T07:59:44.439Z"
+    },
+    {
+      "id": "cmrvzdmpy0030ftt0t7gu0nur",
+      "orgId": null,
+      "pharmacyId": "cmrvzdm3k0000ftt0ab2iwd13",
+      "userId": "cmrvzdmpx002yftt0k5mwxfrg",
+      "dateOfBirth": null,
+      "patientRef": "CT-7099-PH",
+      "therapyStart": "2026-06-09T11:10:07.172Z",
+      "packageTier": "PREMIUM",
+      "condition": "Spastik",
+      "lastReviewAt": "2026-07-20T07:59:44.446Z",
+      "address": null,
+      "phone": null,
+      "mainComplaints": [],
+      "complaintsDescription": null,
+      "therapyGoals": [],
+      "baselineMetrics": null,
+      "onboardingCompleted": false,
+      "hasActiveSubscription": false,
+      "createdAt": "2026-07-22T11:10:07.174Z",
+      "updatedAt": "2026-07-23T07:59:44.447Z"
+    },
+    {
+      "id": "cmrx8g3h20002ft64s15x3c0m",
+      "orgId": null,
+      "pharmacyId": null,
+      "userId": "cmrx8g3fv0000ft64jwfac6dj",
+      "dateOfBirth": "1990-01-01T00:00:00.000Z",
+      "patientRef": null,
+      "therapyStart": "2026-07-23T08:11:44.916Z",
+      "packageTier": "BASIC",
+      "condition": null,
+      "lastReviewAt": null,
+      "address": null,
+      "phone": null,
+      "mainComplaints": [],
+      "complaintsDescription": null,
+      "therapyGoals": [],
+      "baselineMetrics": null,
+      "onboardingCompleted": false,
+      "hasActiveSubscription": false,
+      "createdAt": "2026-07-23T08:11:44.918Z",
+      "updatedAt": "2026-07-23T08:11:44.918Z"
+    },
+    {
+      "id": "cms5mcd8l0002ftj4x11rgu9a",
+      "orgId": null,
+      "pharmacyId": null,
+      "userId": "cms5mcd7s0000ftj4xa8sqra2",
+      "dateOfBirth": "1985-05-15T00:00:00.000Z",
+      "patientRef": "CT-8829-XPL",
+      "therapyStart": "2026-06-26T05:08:12.644Z",
+      "packageTier": "BASIC",
+      "condition": null,
+      "lastReviewAt": null,
+      "address": null,
+      "phone": null,
+      "mainComplaints": [],
+      "complaintsDescription": null,
+      "therapyGoals": [],
+      "baselineMetrics": null,
+      "onboardingCompleted": false,
+      "hasActiveSubscription": false,
+      "createdAt": "2026-07-29T05:02:54.980Z",
+      "updatedAt": "2026-07-29T05:08:12.646Z"
+    },
+    {
+      "id": "cms8dv04q0002ftm8a1z5069t",
+      "orgId": null,
+      "pharmacyId": null,
+      "userId": "cms698f7q0000ftn4cj3pf0vi",
+      "dateOfBirth": null,
+      "patientRef": null,
+      "therapyStart": null,
+      "packageTier": "BASIC",
+      "condition": null,
+      "lastReviewAt": null,
+      "address": "Hügelstr. 1, 46117 Oberhausen",
+      "phone": "015568425924",
+      "mainComplaints": [
+        "Chronic Pain",
+        "Insomnia"
+      ],
+      "complaintsDescription": "Real user data injected for testing.",
+      "therapyGoals": [
+        "Pain Management",
+        "Better Sleep"
+      ],
+      "baselineMetrics": null,
+      "onboardingCompleted": true,
+      "hasActiveSubscription": true,
+      "createdAt": "2026-07-31T03:28:46.442Z",
+      "updatedAt": "2026-07-31T03:28:46.442Z"
+    },
+    {
+      "id": "cms8iyru10002ftgcmv7t8vt9",
+      "orgId": "cms8ifbf60009ft7wpc1m9bnw",
+      "pharmacyId": null,
+      "userId": "cms8iyrtw0000ftgcnnyaf7dh",
+      "dateOfBirth": "2003-10-29T00:00:00.000Z",
+      "patientRef": null,
+      "therapyStart": "2026-07-31T05:51:40.391Z",
+      "packageTier": "BASIC",
+      "condition": null,
+      "lastReviewAt": null,
+      "address": null,
+      "phone": null,
+      "mainComplaints": [],
+      "complaintsDescription": null,
+      "therapyGoals": [],
+      "baselineMetrics": null,
+      "onboardingCompleted": false,
+      "hasActiveSubscription": false,
+      "createdAt": "2026-07-31T05:51:40.393Z",
+      "updatedAt": "2026-07-31T05:51:40.393Z"
+    },
+    {
+      "id": "cms8j9res000tftgcuj7t3q0u",
+      "orgId": "cms8ifbf60009ft7wpc1m9bnw",
+      "pharmacyId": null,
+      "userId": "cms8j9rep000rftgc2rwliv5f",
+      "dateOfBirth": "2003-10-29T00:00:00.000Z",
+      "patientRef": null,
+      "therapyStart": "2026-07-31T06:00:13.059Z",
+      "packageTier": "PREMIUM",
+      "condition": null,
+      "lastReviewAt": null,
+      "address": "123 Mockingbird Lane, Berlin 10115, Germany",
+      "phone": "+49 151 1234 5678",
+      "mainComplaints": [
+        "ADHD"
+      ],
+      "complaintsDescription": "Patient experiences severe difficulty concentrating, frequent restlessness, and chronic insomnia. Symptoms affect daily work performance and overall quality of life.",
+      "therapyGoals": [
+        "Pain Relief",
+        "Better Sleep",
+        "Mood Improvement",
+        "Increased Focus",
+        "Appetite Stimulation",
+        "General Wellbeing"
+      ],
+      "baselineMetrics": {
+        "adherence": 7,
+        "stressLevel": 4,
+        "sleepQuality": 8,
+        "painIntensity": 4,
+        "qualityOfLife": 7,
+        "symptomBurden": 4,
+        "dailyStructure": 6,
+        "selfOrganization": 7,
+        "personalMotivation": 7
+      },
+      "onboardingCompleted": true,
+      "hasActiveSubscription": true,
+      "createdAt": "2026-07-31T06:00:13.060Z",
+      "updatedAt": "2026-07-31T06:12:18.273Z"
+    },
+    {
+      "id": "cms8z8yuh000lftccpndqmrvt",
+      "orgId": "cms8ifbf60009ft7wpc1m9bnw",
+      "pharmacyId": "cms8ypmum0005ftcct5sq5hwq",
+      "userId": "cms8z8yud000jftccceru3ime",
+      "dateOfBirth": "2003-10-29T00:00:00.000Z",
+      "patientRef": "PAT-QRGSLE",
+      "therapyStart": "2026-07-31T13:27:29.895Z",
+      "packageTier": "PREMIUM",
+      "condition": null,
+      "lastReviewAt": "2026-07-31T17:52:07.634Z",
+      "address": "123 xyz",
+      "phone": "+49123456789",
+      "mainComplaints": [
+        "Chronic Pain",
+        "Migraine"
+      ],
+      "complaintsDescription": "ETS",
+      "therapyGoals": [
+        "General Wellbeing",
+        "Mood Improvement",
+        "Better Sleep"
+      ],
+      "baselineMetrics": {
+        "adherence": 5,
+        "stressLevel": 5,
+        "sleepQuality": 5,
+        "painIntensity": 5,
+        "qualityOfLife": 5,
+        "symptomBurden": 5,
+        "dailyStructure": 5,
+        "selfOrganization": 5,
+        "personalMotivation": 5
+      },
+      "onboardingCompleted": true,
+      "hasActiveSubscription": true,
+      "createdAt": "2026-07-31T13:27:29.897Z",
+      "updatedAt": "2026-07-31T17:52:07.636Z"
+    }
+  ],
+  "consents": [
+    {
+      "id": "cmrw20k64000aft0wx9dpdaj3",
+      "userId": "cmrw20k5q0006ft0wvwswyno9",
+      "purpose": "data_processing_art9",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-22T12:23:56.188Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cmrw20k6f000cft0wd1ljyd29",
+      "userId": "cmrw20k5q0006ft0wvwswyno9",
+      "purpose": "share_with_doctor",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-22T12:23:56.200Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cmrx8g3i70004ft64518rk9gr",
+      "userId": "cmrx8g3fv0000ft64jwfac6dj",
+      "purpose": "data_processing_art9",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-23T08:11:44.959Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cmrx8g3ic0006ft64l2yg8avz",
+      "userId": "cmrx8g3fv0000ft64jwfac6dj",
+      "purpose": "share_with_doctor",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-23T08:11:44.964Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cms5mcd980004ftj4pavlydt2",
+      "userId": "cms5mcd7s0000ftj4xa8sqra2",
+      "purpose": "data_processing_art9",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-29T05:02:55.005Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cms8iyruh0004ftgcet0czmcz",
+      "userId": "cms8iyrtw0000ftgcnnyaf7dh",
+      "purpose": "data_processing_art9",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-31T05:51:40.409Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cms8iyruq0006ftgc6p39t9nr",
+      "userId": "cms8iyrtw0000ftgcnnyaf7dh",
+      "purpose": "share_with_doctor",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-31T05:51:40.418Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cms8j9rf5000vftgcn794ki0f",
+      "userId": "cms8j9rep000rftgc2rwliv5f",
+      "purpose": "data_processing_art9",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-31T06:00:13.073Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cms8j9rf8000xftgcse8o4s87",
+      "userId": "cms8j9rep000rftgc2rwliv5f",
+      "purpose": "share_with_doctor",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-31T06:00:13.076Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cms8z8yvk000nftccojmuhkwl",
+      "userId": "cms8z8yud000jftccceru3ime",
+      "purpose": "data_processing_art9",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-31T13:27:29.937Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    },
+    {
+      "id": "cms8z8yvu000pftcc7ojth8xg",
+      "userId": "cms8z8yud000jftccceru3ime",
+      "purpose": "share_with_doctor",
+      "version": "2026-07-v1",
+      "granted": true,
+      "grantedAt": "2026-07-31T13:27:29.946Z",
+      "revokedAt": null,
+      "ipAddress": "::1",
+      "userAgent": null
+    }
+  ],
+  "clinicalNotes": [
+    {
+      "id": "cms8zmbmb000xftcktayt8en3",
+      "patientId": "cms8z8yuh000lftccpndqmrvt",
+      "authorId": "cms8ifbik000cft7weyu6pbbm",
+      "text": "Get a job or something",
+      "createdAt": "2026-07-31T13:37:52.980Z"
+    }
+  ],
+  "therapyLogs": [
+    {
+      "id": "cmrvzdmet000jftt0pwss3zeb",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-06-23T20:10:06.770Z",
+      "dosageG": 0.35,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4,
+        "pain": 7.9,
+        "sleep": 3.8,
+        "activity": 3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmet000kftt08djvgwzp",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-06-24T20:10:06.770Z",
+      "dosageG": 0.35,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.1,
+        "pain": 7.7,
+        "sleep": 3.8,
+        "activity": 3.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmet000lftt0r0sef7qh",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-06-25T20:10:06.770Z",
+      "dosageG": 0.35,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.2,
+        "pain": 8.1,
+        "sleep": 3.8,
+        "activity": 3.2
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmet000mftt06oi3k30f",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-06-26T20:10:06.770Z",
+      "dosageG": 0.4,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.3,
+        "pain": 7.8,
+        "sleep": 4.4,
+        "activity": 3.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmet000nftt0tc2dcj0a",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-06-27T20:10:06.770Z",
+      "dosageG": 0.4,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.4,
+        "pain": 7,
+        "sleep": 4.7,
+        "activity": 3.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmet000oftt0xd1m3fol",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-06-29T20:10:06.770Z",
+      "dosageG": 0.4,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.6,
+        "pain": 7.3,
+        "sleep": 4.2,
+        "activity": 3.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmet000pftt0twmjt3o7",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-06-30T20:10:06.770Z",
+      "dosageG": 0.4,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.7,
+        "pain": 7.1,
+        "sleep": 4.3,
+        "activity": 3.7
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu000qftt04ika4izk",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-01T20:10:06.770Z",
+      "dosageG": 0.45,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.8,
+        "pain": 7.2,
+        "sleep": 4.7,
+        "activity": 3.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu000rftt0sr7vuxxl",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-02T20:10:06.770Z",
+      "dosageG": 0.45,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.9,
+        "pain": 6.9,
+        "sleep": 5.1,
+        "activity": 3.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu000sftt0t0ec32hz",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-03T20:10:06.770Z",
+      "dosageG": 0.45,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5,
+        "pain": 6.1,
+        "sleep": 5.4,
+        "activity": 4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu000tftt0rcobcbq3",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-04T20:10:06.770Z",
+      "dosageG": 0.45,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.1,
+        "pain": 6.9,
+        "sleep": 4.8,
+        "activity": 4.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu000uftt04twnaa70",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-06T20:10:06.770Z",
+      "dosageG": 0.5,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.3,
+        "pain": 6.3,
+        "sleep": 5.7,
+        "activity": 4.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu000vftt0su8zpbad",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-07T20:10:06.770Z",
+      "dosageG": 0.5,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.4,
+        "pain": 5.9,
+        "sleep": 5.3,
+        "activity": 4.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu000wftt0y4ug7z93",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-08T20:10:06.770Z",
+      "dosageG": 0.5,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.4,
+        "pain": 5.5,
+        "sleep": 5.2,
+        "activity": 4.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu000xftt0tgnj42dk",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-09T20:10:06.770Z",
+      "dosageG": 0.5,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.5,
+        "pain": 6,
+        "sleep": 5.7,
+        "activity": 4.7
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu000yftt0angs5vr1",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-10T20:10:06.770Z",
+      "dosageG": 0.55,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.6,
+        "pain": 5.7,
+        "sleep": 5.9,
+        "activity": 4.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu000zftt0ah7a6jbt",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-11T20:10:06.770Z",
+      "dosageG": 0.55,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 2,
+        "pain": 9.5,
+        "sleep": 2,
+        "activity": 1.5
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu0010ftt0vrf2a4y1",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-13T20:10:06.770Z",
+      "dosageG": 0.55,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.9,
+        "pain": 4.8,
+        "sleep": 5.6,
+        "activity": 5.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu0011ftt0ci2b0uw8",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-14T20:10:06.770Z",
+      "dosageG": 0.55,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6,
+        "pain": 5.3,
+        "sleep": 6.4,
+        "activity": 5.2
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu0012ftt0dujid615",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-15T20:10:06.770Z",
+      "dosageG": 0.6,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.1,
+        "pain": 5.1,
+        "sleep": 5.9,
+        "activity": 5.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu0013ftt0t2tmycnb",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-16T20:10:06.770Z",
+      "dosageG": 0.6,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.2,
+        "pain": 5,
+        "sleep": 6.5,
+        "activity": 5.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu0014ftt0k92wtrc1",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-17T20:10:06.770Z",
+      "dosageG": 0.6,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.3,
+        "pain": 5,
+        "sleep": 6.1,
+        "activity": 5.5
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu0015ftt0nqfuzs5i",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-18T20:10:06.770Z",
+      "dosageG": 0.6,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 2,
+        "pain": 9.5,
+        "sleep": 2,
+        "activity": 1.5
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu0016ftt0z6rvglca",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-20T20:10:06.770Z",
+      "dosageG": 0.65,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.6,
+        "pain": 4.3,
+        "sleep": 6.9,
+        "activity": 5.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu0017ftt0utb77o4s",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-21T20:10:06.770Z",
+      "dosageG": 0.65,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.7,
+        "pain": 3.9,
+        "sleep": 6.9,
+        "activity": 5.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmeu0018ftt0nfvk2yw5",
+      "patientId": "cmrvzdmd5000iftt0wdjab6zo",
+      "loggedAt": "2026-07-22T20:10:06.770Z",
+      "dosageG": 0.65,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.8,
+        "pain": 4.5,
+        "sleep": 7.1,
+        "activity": 6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.773Z"
+    },
+    {
+      "id": "cmrvzdmjc001eftt06p5h2mv9",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-06-23T20:10:06.933Z",
+      "dosageG": 0.35,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4,
+        "pain": 7.8,
+        "sleep": 3.9,
+        "activity": 3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001fftt0mje3kwwp",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-06-24T20:10:06.933Z",
+      "dosageG": 0.35,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.1,
+        "pain": 7.5,
+        "sleep": 4.5,
+        "activity": 3.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001gftt0wt1t0vtw",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-06-25T20:10:06.933Z",
+      "dosageG": 0.35,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.2,
+        "pain": 7.3,
+        "sleep": 4.3,
+        "activity": 3.2
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001hftt0x14v8hxb",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-06-26T20:10:06.933Z",
+      "dosageG": 0.4,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.3,
+        "pain": 7.5,
+        "sleep": 4.4,
+        "activity": 3.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001iftt0iklad39d",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-06-27T20:10:06.933Z",
+      "dosageG": 0.4,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.4,
+        "pain": 7.2,
+        "sleep": 4,
+        "activity": 3.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001jftt0qucvbql2",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-06-29T20:10:06.933Z",
+      "dosageG": 0.4,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.6,
+        "pain": 6.7,
+        "sleep": 4.6,
+        "activity": 3.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001kftt0928n63xt",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-06-30T20:10:06.933Z",
+      "dosageG": 0.4,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.7,
+        "pain": 7.3,
+        "sleep": 4.9,
+        "activity": 3.7
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001lftt03wm1gjml",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-01T20:10:06.933Z",
+      "dosageG": 0.45,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.8,
+        "pain": 6.7,
+        "sleep": 5.3,
+        "activity": 3.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001mftt0aznpt83b",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-02T20:10:06.933Z",
+      "dosageG": 0.45,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.9,
+        "pain": 6.3,
+        "sleep": 4.7,
+        "activity": 3.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001nftt0ume9fjww",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-03T20:10:06.933Z",
+      "dosageG": 0.45,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5,
+        "pain": 6.3,
+        "sleep": 5,
+        "activity": 4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001oftt0y43hg024",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-04T20:10:06.933Z",
+      "dosageG": 0.45,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.1,
+        "pain": 6.3,
+        "sleep": 5.2,
+        "activity": 4.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001pftt0oi9qe0ef",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-06T20:10:06.933Z",
+      "dosageG": 0.5,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.3,
+        "pain": 6.1,
+        "sleep": 5.1,
+        "activity": 4.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001qftt0b83qr18q",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-07T20:10:06.933Z",
+      "dosageG": 0.5,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.4,
+        "pain": 6.1,
+        "sleep": 5.3,
+        "activity": 4.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001rftt0e7njzp0v",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-08T20:10:06.933Z",
+      "dosageG": 0.5,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.4,
+        "pain": 5.7,
+        "sleep": 5.5,
+        "activity": 4.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001sftt0qkj5t9tp",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-09T20:10:06.933Z",
+      "dosageG": 0.5,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.5,
+        "pain": 6.3,
+        "sleep": 5.6,
+        "activity": 4.7
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001tftt0af27otqf",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-10T20:10:06.933Z",
+      "dosageG": 0.55,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.6,
+        "pain": 6.1,
+        "sleep": 5.3,
+        "activity": 4.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001uftt0iy6isu1i",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-11T20:10:06.933Z",
+      "dosageG": 0.55,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.7,
+        "pain": 5.5,
+        "sleep": 5.9,
+        "activity": 4.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001vftt0rg5bpqct",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-13T20:10:06.933Z",
+      "dosageG": 0.55,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.9,
+        "pain": 5,
+        "sleep": 6.5,
+        "activity": 5.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001wftt040r1zonp",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-14T20:10:06.933Z",
+      "dosageG": 0.55,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6,
+        "pain": 5.2,
+        "sleep": 6.2,
+        "activity": 5.2
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001xftt0pn20mffg",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-15T20:10:06.933Z",
+      "dosageG": 0.6,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.1,
+        "pain": 4.5,
+        "sleep": 6.3,
+        "activity": 5.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001yftt0yrr2qciq",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-16T20:10:06.933Z",
+      "dosageG": 0.6,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.2,
+        "pain": 5.2,
+        "sleep": 6.3,
+        "activity": 5.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc001zftt0g4hd8je3",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-17T20:10:06.933Z",
+      "dosageG": 0.6,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.3,
+        "pain": 4.6,
+        "sleep": 6.3,
+        "activity": 5.5
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc0020ftt0vfh48ju6",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-18T20:10:06.933Z",
+      "dosageG": 0.6,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.4,
+        "pain": 4.7,
+        "sleep": 6.6,
+        "activity": 5.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjc0021ftt0rxp8acer",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-20T20:10:06.933Z",
+      "dosageG": 0.65,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 2,
+        "pain": 9.5,
+        "sleep": 2,
+        "activity": 1.5
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjd0022ftt0umzbtsca",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-21T20:10:06.933Z",
+      "dosageG": 0.65,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.7,
+        "pain": 4.5,
+        "sleep": 6.9,
+        "activity": 5.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmjd0023ftt074firqtq",
+      "patientId": "cmrvzdmj0001dftt07pewydkj",
+      "loggedAt": "2026-07-22T20:10:06.933Z",
+      "dosageG": 0.65,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.8,
+        "pain": 3.6,
+        "sleep": 7.1,
+        "activity": 6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:06.936Z"
+    },
+    {
+      "id": "cmrvzdmml0028ftt0lcyytecg",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-06-23T20:10:07.051Z",
+      "dosageG": 0.35,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4,
+        "pain": 8.1,
+        "sleep": 4.3,
+        "activity": 3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml0029ftt0nrb835nh",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-06-24T20:10:07.051Z",
+      "dosageG": 0.35,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.1,
+        "pain": 7.4,
+        "sleep": 4.1,
+        "activity": 3.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002aftt009vnd19h",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-06-25T20:10:07.051Z",
+      "dosageG": 0.35,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.2,
+        "pain": 7.8,
+        "sleep": 4.6,
+        "activity": 3.2
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002bftt0eqa074fo",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-06-26T20:10:07.051Z",
+      "dosageG": 0.4,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.3,
+        "pain": 7.1,
+        "sleep": 4.7,
+        "activity": 3.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002cftt0ky2fs4v7",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-06-27T20:10:07.051Z",
+      "dosageG": 0.4,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.4,
+        "pain": 7.8,
+        "sleep": 4.5,
+        "activity": 3.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002dftt0xf93ibb5",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-06-29T20:10:07.051Z",
+      "dosageG": 0.4,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.6,
+        "pain": 7,
+        "sleep": 5,
+        "activity": 3.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002eftt0scsvsp8t",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-06-30T20:10:07.051Z",
+      "dosageG": 0.4,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.7,
+        "pain": 7.5,
+        "sleep": 4.6,
+        "activity": 3.7
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002fftt0q7yc7zby",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-01T20:10:07.051Z",
+      "dosageG": 0.45,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.8,
+        "pain": 7.4,
+        "sleep": 4.6,
+        "activity": 3.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002gftt0fkxu33ga",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-02T20:10:07.051Z",
+      "dosageG": 0.45,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.9,
+        "pain": 6.5,
+        "sleep": 4.7,
+        "activity": 3.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002hftt0ng6f6b4b",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-03T20:10:07.051Z",
+      "dosageG": 0.45,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5,
+        "pain": 6.8,
+        "sleep": 5.4,
+        "activity": 4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002iftt004dcqa4k",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-04T20:10:07.051Z",
+      "dosageG": 0.45,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.1,
+        "pain": 6.4,
+        "sleep": 5.1,
+        "activity": 4.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002jftt05dzhdu2j",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-06T20:10:07.051Z",
+      "dosageG": 0.5,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.3,
+        "pain": 6.7,
+        "sleep": 5.5,
+        "activity": 4.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002kftt0grllz4dr",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-07T20:10:07.051Z",
+      "dosageG": 0.5,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.4,
+        "pain": 5.9,
+        "sleep": 5,
+        "activity": 4.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002lftt0xp7a07gh",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-08T20:10:07.051Z",
+      "dosageG": 0.5,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.4,
+        "pain": 5.9,
+        "sleep": 6,
+        "activity": 4.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002mftt0ygfjnxhi",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-09T20:10:07.051Z",
+      "dosageG": 0.5,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.5,
+        "pain": 5.4,
+        "sleep": 6,
+        "activity": 4.7
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002nftt0w7mi8lc8",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-10T20:10:07.051Z",
+      "dosageG": 0.55,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.6,
+        "pain": 5.7,
+        "sleep": 5.6,
+        "activity": 4.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmml002oftt0c3i7jsj9",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-11T20:10:07.051Z",
+      "dosageG": 0.55,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.7,
+        "pain": 5.8,
+        "sleep": 5.7,
+        "activity": 4.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmmm002pftt0zzc2vart",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-13T20:10:07.051Z",
+      "dosageG": 0.55,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.9,
+        "pain": 5.1,
+        "sleep": 6.1,
+        "activity": 5.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmmm002qftt0bzqqsgmt",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-14T20:10:07.051Z",
+      "dosageG": 0.55,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6,
+        "pain": 5.6,
+        "sleep": 6.3,
+        "activity": 5.2
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmmm002rftt00qan9a62",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-15T20:10:07.051Z",
+      "dosageG": 0.6,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.1,
+        "pain": 5,
+        "sleep": 6.3,
+        "activity": 5.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmmm002sftt09exvutt0",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-16T20:10:07.051Z",
+      "dosageG": 0.6,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.2,
+        "pain": 5.1,
+        "sleep": 6.3,
+        "activity": 5.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmmm002tftt032zyxxb0",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-17T20:10:07.051Z",
+      "dosageG": 0.6,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.3,
+        "pain": 4.5,
+        "sleep": 6.3,
+        "activity": 5.5
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmmm002uftt09expwlw8",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-18T20:10:07.051Z",
+      "dosageG": 0.6,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.4,
+        "pain": 4.7,
+        "sleep": 6.6,
+        "activity": 5.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmmm002vftt0w4zpgv3b",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-20T20:10:07.051Z",
+      "dosageG": 0.65,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.6,
+        "pain": 4.3,
+        "sleep": 6.8,
+        "activity": 5.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmmm002wftt09b93rs5z",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-21T20:10:07.051Z",
+      "dosageG": 0.65,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.7,
+        "pain": 4.5,
+        "sleep": 7.3,
+        "activity": 5.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmmm002xftt0goa1idqp",
+      "patientId": "cmrvzdmmb0027ftt0eqa7ez1j",
+      "loggedAt": "2026-07-22T20:10:07.051Z",
+      "dosageG": 0.65,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.8,
+        "pain": 4.2,
+        "sleep": 6.9,
+        "activity": 6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.053Z"
+    },
+    {
+      "id": "cmrvzdmq90031ftt0v54hvudn",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-06-23T20:10:07.182Z",
+      "dosageG": 0.35,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4,
+        "pain": 7.9,
+        "sleep": 3.8,
+        "activity": 3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq90032ftt0y96fscxc",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-06-24T20:10:07.182Z",
+      "dosageG": 0.35,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.1,
+        "pain": 7.4,
+        "sleep": 3.9,
+        "activity": 3.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq90033ftt0ucthiupk",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-06-25T20:10:07.182Z",
+      "dosageG": 0.35,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.2,
+        "pain": 7.8,
+        "sleep": 4.2,
+        "activity": 3.2
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq90034ftt001b8g2de",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-06-26T20:10:07.182Z",
+      "dosageG": 0.4,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.3,
+        "pain": 7.8,
+        "sleep": 4.7,
+        "activity": 3.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq90035ftt086no59jj",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-06-27T20:10:07.182Z",
+      "dosageG": 0.4,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.4,
+        "pain": 7.4,
+        "sleep": 4.1,
+        "activity": 3.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq90036ftt0agu9tx2g",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-06-29T20:10:07.182Z",
+      "dosageG": 0.4,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.6,
+        "pain": 7,
+        "sleep": 4.4,
+        "activity": 3.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq90037ftt0gl57qspt",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-06-30T20:10:07.182Z",
+      "dosageG": 0.4,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.7,
+        "pain": 6.7,
+        "sleep": 4.8,
+        "activity": 3.7
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq90038ftt0htdtgg8j",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-01T20:10:07.182Z",
+      "dosageG": 0.45,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.8,
+        "pain": 6.5,
+        "sleep": 4.4,
+        "activity": 3.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq90039ftt0aeyo8e8d",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-02T20:10:07.182Z",
+      "dosageG": 0.45,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.9,
+        "pain": 6.6,
+        "sleep": 5.3,
+        "activity": 3.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq9003aftt0nqbihqub",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-03T20:10:07.182Z",
+      "dosageG": 0.45,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5,
+        "pain": 7,
+        "sleep": 4.7,
+        "activity": 4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq9003bftt07f3ujw6x",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-04T20:10:07.182Z",
+      "dosageG": 0.45,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.1,
+        "pain": 6.1,
+        "sleep": 4.7,
+        "activity": 4.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmq9003cftt01r8af9wb",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-06T20:10:07.182Z",
+      "dosageG": 0.5,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.3,
+        "pain": 5.9,
+        "sleep": 5.1,
+        "activity": 4.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003dftt0rxfo5r7g",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-07T20:10:07.182Z",
+      "dosageG": 0.5,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.4,
+        "pain": 6.4,
+        "sleep": 5.3,
+        "activity": 4.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003eftt0urjk9yf5",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-08T20:10:07.182Z",
+      "dosageG": 0.5,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.4,
+        "pain": 5.8,
+        "sleep": 5.8,
+        "activity": 4.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003fftt0m5qq2zuz",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-09T20:10:07.182Z",
+      "dosageG": 0.5,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.5,
+        "pain": 5.4,
+        "sleep": 5.4,
+        "activity": 4.7
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003gftt04sydc2sr",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-10T20:10:07.182Z",
+      "dosageG": 0.55,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.6,
+        "pain": 5.9,
+        "sleep": 6.1,
+        "activity": 4.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003hftt0vkpmbd0k",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-11T20:10:07.182Z",
+      "dosageG": 0.55,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.7,
+        "pain": 5.7,
+        "sleep": 6.2,
+        "activity": 4.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003iftt0ciie8xxt",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-13T20:10:07.182Z",
+      "dosageG": 0.55,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.9,
+        "pain": 5,
+        "sleep": 6.2,
+        "activity": 5.1
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003jftt0ne4cip46",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-14T20:10:07.182Z",
+      "dosageG": 0.55,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6,
+        "pain": 5.4,
+        "sleep": 5.7,
+        "activity": 5.2
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003kftt0gdrk88ob",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-15T20:10:07.182Z",
+      "dosageG": 0.6,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.1,
+        "pain": 4.5,
+        "sleep": 5.9,
+        "activity": 5.3
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003lftt0btntr7vy",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-16T20:10:07.182Z",
+      "dosageG": 0.6,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.2,
+        "pain": 4.4,
+        "sleep": 6.5,
+        "activity": 5.4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003mftt0iy9vw4dm",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-17T20:10:07.182Z",
+      "dosageG": 0.6,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.3,
+        "pain": 4.9,
+        "sleep": 6,
+        "activity": 5.5
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003nftt0tahwvs00",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-18T20:10:07.182Z",
+      "dosageG": 0.6,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.4,
+        "pain": 4.2,
+        "sleep": 7.1,
+        "activity": 5.6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003oftt0z2rzd97d",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-20T20:10:07.182Z",
+      "dosageG": 0.65,
+      "strain": "Bedrocan 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.6,
+        "pain": 3.9,
+        "sleep": 7.1,
+        "activity": 5.8
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003pftt07kkd3pc4",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-21T20:10:07.182Z",
+      "dosageG": 0.65,
+      "strain": "Balanced Harmony 10:10",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.7,
+        "pain": 3.8,
+        "sleep": 6.8,
+        "activity": 5.9
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrvzdmqa003qftt0gpl5lh3x",
+      "patientId": "cmrvzdmpy0030ftt0t7gu0nur",
+      "loggedAt": "2026-07-22T20:10:07.182Z",
+      "dosageG": 0.65,
+      "strain": "Midnight Blue Kush",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.8,
+        "pain": 3.7,
+        "sleep": 7.1,
+        "activity": 6
+      },
+      "note": null,
+      "createdAt": "2026-07-22T11:10:07.185Z"
+    },
+    {
+      "id": "cmrw3hucy000kft0we30t7xo8",
+      "patientId": "cmrw20k5v0008ft0wzpb2twy3",
+      "loggedAt": "2026-07-22T13:05:22.044Z",
+      "dosageG": 0.5,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "pain": 5,
+        "sleep": 8,
+        "activity": 4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T13:05:22.162Z"
+    },
+    {
+      "id": "cmrw3hvbi000oft0wqt84ekrb",
+      "patientId": "cmrw20k5v0008ft0wzpb2twy3",
+      "loggedAt": "2026-07-22T13:05:23.404Z",
+      "dosageG": 0.5,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "pain": 5,
+        "sleep": 8,
+        "activity": 4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T13:05:23.406Z"
+    },
+    {
+      "id": "cmrw3i24d000sft0wx3gm1hmn",
+      "patientId": "cmrw20k5v0008ft0wzpb2twy3",
+      "loggedAt": "2026-07-22T13:05:32.219Z",
+      "dosageG": 0.7,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "pain": 5,
+        "sleep": 8,
+        "activity": 4
+      },
+      "note": null,
+      "createdAt": "2026-07-22T13:05:32.221Z"
+    },
+    {
+      "id": "cms5mj6cy0000ft44bvyq5i58",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-06-26T14:08:12.644Z",
+      "dosageG": 0.3,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.4,
+        "pain": 7.9,
+        "sleep": 4.2,
+        "activity": 2.8
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cy0001ft44djwapoja",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-06-27T14:08:12.644Z",
+      "dosageG": 0.3,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 3.9,
+        "pain": 8,
+        "sleep": 3.9,
+        "activity": 3.1
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz0002ft44wf0peqjk",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-06-28T14:08:12.644Z",
+      "dosageG": 0.3,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.1,
+        "pain": 7.8,
+        "sleep": 4.1,
+        "activity": 2.8
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz0003ft448tm3bg5n",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-06-29T14:08:12.644Z",
+      "dosageG": 0.3,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.5,
+        "pain": 7.7,
+        "sleep": 4.2,
+        "activity": 3.3
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz0004ft44ceichah5",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-06-30T14:08:12.644Z",
+      "dosageG": 0.35,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4,
+        "pain": 7.4,
+        "sleep": 4.5,
+        "activity": 3.1
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz0005ft440l0jfi6u",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-02T14:08:12.644Z",
+      "dosageG": 0.35,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.7,
+        "pain": 7.1,
+        "sleep": 4.6,
+        "activity": 3.4
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz0006ft44375ap7uw",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-03T14:08:12.644Z",
+      "dosageG": 0.35,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.5,
+        "pain": 7.4,
+        "sleep": 4.5,
+        "activity": 3.6
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz0007ft44tayiywxa",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-04T14:08:12.644Z",
+      "dosageG": 0.35,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.8,
+        "pain": 7,
+        "sleep": 4.5,
+        "activity": 3.9
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz0008ft44ehwpws2u",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-05T14:08:12.644Z",
+      "dosageG": 0.35,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.8,
+        "pain": 7.2,
+        "sleep": 4.7,
+        "activity": 4.1
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz0009ft44bnsxgz9k",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-06T14:08:12.644Z",
+      "dosageG": 0.4,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 4.7,
+        "pain": 7,
+        "sleep": 4.6,
+        "activity": 3.7
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000aft44nybquhlm",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-07T14:08:12.644Z",
+      "dosageG": 0.4,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.2,
+        "pain": 6.4,
+        "sleep": 4.8,
+        "activity": 4.1
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000bft4422thyvlu",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-08T14:08:12.644Z",
+      "dosageG": 0.4,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.1,
+        "pain": 6.5,
+        "sleep": 4.9,
+        "activity": 4.3
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000cft44a6hxa61j",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-09T14:08:12.644Z",
+      "dosageG": 0.4,
+      "strain": "Blue Dream (Hybrid)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.2,
+        "pain": 6.6,
+        "sleep": 4.9,
+        "activity": 4.5
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000dft4413wd28jv",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-11T14:08:12.644Z",
+      "dosageG": 0.4,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5,
+        "pain": 6,
+        "sleep": 5.3,
+        "activity": 4.7
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000eft44341jaxpc",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-12T14:08:12.644Z",
+      "dosageG": 0.4,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.4,
+        "pain": 5.6,
+        "sleep": 5.7,
+        "activity": 4.2
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000fft44chme13am",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-13T14:08:12.644Z",
+      "dosageG": 0.45,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5,
+        "pain": 5.4,
+        "sleep": 5.7,
+        "activity": 4.9
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000gft44azf4vy86",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-14T14:08:12.644Z",
+      "dosageG": 0.45,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.2,
+        "pain": 5.6,
+        "sleep": 6.1,
+        "activity": 4.9
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000hft44v7l3o2oy",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-15T14:08:12.644Z",
+      "dosageG": 0.45,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.5,
+        "pain": 5.3,
+        "sleep": 5.6,
+        "activity": 4.8
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000ift44hbikzyn2",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-16T14:08:12.644Z",
+      "dosageG": 0.45,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.2,
+        "pain": 5.1,
+        "sleep": 6.1,
+        "activity": 5
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000jft44g8fm5jlc",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-17T14:08:12.644Z",
+      "dosageG": 0.45,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.9,
+        "pain": 5.2,
+        "sleep": 6.1,
+        "activity": 5.2
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000kft44coo3itd9",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-18T14:08:12.644Z",
+      "dosageG": 0.45,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.7,
+        "pain": 4.9,
+        "sleep": 6.5,
+        "activity": 5
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000lft44p24zjqvq",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-20T14:08:12.644Z",
+      "dosageG": 0.5,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6,
+        "pain": 5,
+        "sleep": 6.1,
+        "activity": 5.2
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000mft44siksnkeh",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-21T14:08:12.644Z",
+      "dosageG": 0.5,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.1,
+        "pain": 4.3,
+        "sleep": 6.5,
+        "activity": 5.7
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000nft44fhrgmo7n",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-22T14:08:12.644Z",
+      "dosageG": 0.5,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6,
+        "pain": 4.7,
+        "sleep": 6.3,
+        "activity": 5.6
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000oft44fn8lmq2b",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-23T14:08:12.644Z",
+      "dosageG": 0.5,
+      "strain": "Bedrocan (Sativa)",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.7,
+        "pain": 4.2,
+        "sleep": 6.4,
+        "activity": 5.4
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000pft44fprl9yxc",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-24T14:08:12.644Z",
+      "dosageG": 0.5,
+      "strain": "Pedanios 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.8,
+        "pain": 4.3,
+        "sleep": 6.4,
+        "activity": 5.4
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000qft44zk09dlr9",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-25T14:08:12.644Z",
+      "dosageG": 0.5,
+      "strain": "Pedanios 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 5.8,
+        "pain": 3.8,
+        "sleep": 6.9,
+        "activity": 6
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000rft44c5gg5yl5",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-26T14:08:12.644Z",
+      "dosageG": 0.55,
+      "strain": "Pedanios 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6,
+        "pain": 3.6,
+        "sleep": 7,
+        "activity": 5.9
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000sft44bxjml9vq",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-27T14:08:12.644Z",
+      "dosageG": 0.55,
+      "strain": "Pedanios 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6,
+        "pain": 3.9,
+        "sleep": 7.1,
+        "activity": 5.9
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms5mj6cz000tft44aqor9kh1",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "loggedAt": "2026-07-29T14:08:12.644Z",
+      "dosageG": 0.55,
+      "strain": "Pedanios 22/1",
+      "batchNumber": null,
+      "manufacturer": null,
+      "consumptionMethod": null,
+      "metrics": {
+        "qol": 6.7,
+        "pain": 3.7,
+        "sleep": 7.4,
+        "activity": 5.9
+      },
+      "note": null,
+      "createdAt": "2026-07-29T05:08:12.658Z"
+    },
+    {
+      "id": "cms8whqw5000fftb8jsyx0trw",
+      "patientId": "cms8j9res000tftgcuj7t3q0u",
+      "loggedAt": "2026-07-31T12:10:20.641Z",
+      "dosageG": 0.5,
+      "strain": "test",
+      "batchNumber": "1",
+      "manufacturer": "Aurora",
+      "consumptionMethod": "Oral/Drops",
+      "metrics": {
+        "pain": 5,
+        "sleep": 8,
+        "activity": 4,
+        "intakeTime": "17:09",
+        "sideEffects": {
+          "fatigue": "mild",
+          "dizziness": "moderate",
+          "dry_mouth": "mild",
+          "heartbeat": "moderate"
+        },
+        "benefitOnset": "15 - 30 min",
+        "symptomsText": "Mild",
+        "benefitRating": 5,
+        "benefitDuration": "2 - 4 hours",
+        "sideEffectsText": "NO",
+        "effectDescription": "Check"
+      },
+      "note": "",
+      "createdAt": "2026-07-31T12:10:20.645Z"
+    },
+    {
+      "id": "cms92sghr0005ftt4v3swqc1q",
+      "patientId": "cms8z8yuh000lftccpndqmrvt",
+      "loggedAt": "2026-07-31T15:06:38.072Z",
+      "dosageG": 0.5,
+      "strain": "test",
+      "batchNumber": "1",
+      "manufacturer": "Aurora",
+      "consumptionMethod": "Vaporizer",
+      "metrics": {
+        "pain": 6,
+        "sleep": 5,
+        "activity": 6,
+        "intakeTime": "20:06",
+        "sideEffects": {
+          "fatigue": "moderate",
+          "dizziness": "moderate",
+          "dry_mouth": "mild",
+          "heartbeat": "severe"
+        },
+        "benefitOnset": "15 - 30 min",
+        "symptomsText": "test",
+        "benefitRating": 3,
+        "benefitDuration": "2 - 4 hours",
+        "sideEffectsText": "test",
+        "effectDescription": "test"
+      },
+      "note": "test",
+      "createdAt": "2026-07-31T15:06:38.080Z"
+    },
+    {
+      "id": "cms9392x40003ftlwbpim1jhu",
+      "patientId": "cms8z8yuh000lftccpndqmrvt",
+      "loggedAt": "2026-07-31T15:19:33.638Z",
+      "dosageG": 0.5,
+      "strain": "test",
+      "batchNumber": "123",
+      "manufacturer": "123",
+      "consumptionMethod": "Vaporizer",
+      "metrics": {
+        "pain": 5,
+        "sleep": 8,
+        "activity": 4,
+        "intakeTime": "20:19",
+        "sideEffects": {
+          "fatigue": "moderate",
+          "dizziness": "moderate",
+          "dry_mouth": "mild",
+          "heartbeat": "severe"
+        },
+        "benefitOnset": "15 - 30 min",
+        "symptomsText": "123ww",
+        "benefitRating": 5,
+        "benefitDuration": "2 - 4 hours",
+        "sideEffectsText": "",
+        "effectDescription": "qww"
+      },
+      "note": "we",
+      "createdAt": "2026-07-31T15:19:33.640Z"
+    }
+  ],
+  "telemedicineSessions": [
+    {
+      "id": "cms5mj6dm000uft44v15irqr9",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "provider": "ZOOM",
+      "externalId": null,
+      "joinUrl": "https://zoom.example/join/dev-consult",
+      "hostUrl": null,
+      "scheduledAt": "2026-07-29T05:20:12.681Z",
+      "durationMin": 30,
+      "createdAt": "2026-07-29T05:08:12.683Z"
+    },
+    {
+      "id": "cms5mj6dm000vft44yz87f68x",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "provider": "ZOOM",
+      "externalId": null,
+      "joinUrl": null,
+      "hostUrl": null,
+      "scheduledAt": "2026-08-12T05:08:12.681Z",
+      "durationMin": 20,
+      "createdAt": "2026-07-29T05:08:12.683Z"
+    },
+    {
+      "id": "cms5mj6dm000wft44m6x8wke5",
+      "patientId": "cms5mcd8l0002ftj4x11rgu9a",
+      "provider": "ZOOM",
+      "externalId": null,
+      "joinUrl": null,
+      "hostUrl": null,
+      "scheduledAt": "2026-06-24T05:08:12.644Z",
+      "durationMin": 45,
+      "createdAt": "2026-07-29T05:08:12.683Z"
+    }
+  ]
+}
