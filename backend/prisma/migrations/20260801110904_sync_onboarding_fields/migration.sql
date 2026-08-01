@@ -13,16 +13,16 @@ ALTER TYPE "Locale" ADD VALUE IF NOT EXISTS 'pl';
 ALTER TYPE "Locale" ADD VALUE IF NOT EXISTS 'ro';
 
 -- AlterTable
-ALTER TABLE "PatientProfile" ADD COLUMN     "address" TEXT,
-ADD COLUMN     "baselineMetrics" JSONB,
-ADD COLUMN     "complaintsDescription" TEXT,
-ADD COLUMN     "hasActiveSubscription" BOOLEAN NOT NULL DEFAULT false,
-ADD COLUMN     "mainComplaints" TEXT[] DEFAULT ARRAY[]::TEXT[],
-ADD COLUMN     "onboardingCompleted" BOOLEAN NOT NULL DEFAULT false,
-ADD COLUMN     "phone" TEXT,
-ADD COLUMN     "therapyGoals" TEXT[] DEFAULT ARRAY[]::TEXT[];
+ALTER TABLE "PatientProfile" ADD COLUMN IF NOT EXISTS "address" TEXT,
+ADD COLUMN IF NOT EXISTS "baselineMetrics" JSONB,
+ADD COLUMN IF NOT EXISTS "complaintsDescription" TEXT,
+ADD COLUMN IF NOT EXISTS "hasActiveSubscription" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN IF NOT EXISTS "mainComplaints" TEXT[] DEFAULT ARRAY[]::TEXT[],
+ADD COLUMN IF NOT EXISTS "onboardingCompleted" BOOLEAN NOT NULL DEFAULT false,
+ADD COLUMN IF NOT EXISTS "phone" TEXT,
+ADD COLUMN IF NOT EXISTS "therapyGoals" TEXT[] DEFAULT ARRAY[]::TEXT[];
 
 -- AlterTable
-ALTER TABLE "TherapyLog" ADD COLUMN     "batchNumber" TEXT,
-ADD COLUMN     "consumptionMethod" TEXT,
-ADD COLUMN     "manufacturer" TEXT;
+ALTER TABLE "TherapyLog" ADD COLUMN IF NOT EXISTS "batchNumber" TEXT,
+ADD COLUMN IF NOT EXISTS "consumptionMethod" TEXT,
+ADD COLUMN IF NOT EXISTS "manufacturer" TEXT;
