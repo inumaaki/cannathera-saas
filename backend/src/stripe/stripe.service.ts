@@ -364,7 +364,7 @@ export class StripeService {
                 tls: {
                   servername: smtpHost,
                 },
-              } as any);
+              } as nodemailer.TransportOptions);
               transporter
                 .sendMail({
                   from:

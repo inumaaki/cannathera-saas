@@ -87,7 +87,7 @@ export class StripeController {
             );
           }
         }
-      } catch (_err) {
+      } catch {
         // Fall through
       }
     }
@@ -111,7 +111,7 @@ export class StripeController {
   @HttpCode(HttpStatus.OK)
   async handleWebhook(
     @Headers('stripe-signature') signature: string,
-    @Req() req: any,
+    @Req() req: import('express').Request & { rawBody: Buffer },
   ) {
     return this.stripeService.handleWebhook(signature, req.rawBody);
   }

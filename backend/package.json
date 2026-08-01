@@ -12,7 +12,7 @@
     "dev": "nest start --watch",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "prisma migrate deploy && npx tsx prisma/create-admin.ts && node dist/main",
+    "start:prod": "prisma migrate deploy && npx --yes tsx prisma/create-admin.ts && node dist/main",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",

@@ -58,7 +58,7 @@ export class ReportsController {
         err?.message ?? err,
       );
       if (!res.headersSent) {
-        const status = err?.status ?? err?.statusCode ?? 500;
+        const status = Number(err?.status ?? err?.statusCode ?? 500);
         res.status(status).json({
           statusCode: status,
           message: err?.message ?? 'Internal Server Error',
@@ -98,7 +98,7 @@ export class ReportsController {
     } catch (err: any) {
       console.error('[ReportsController] file error:', err?.message ?? err);
       if (!res.headersSent) {
-        const status = err?.status ?? err?.statusCode ?? 500;
+        const status = Number(err?.status ?? err?.statusCode ?? 500);
         res.status(status).json({
           statusCode: status,
           message: err?.message ?? 'Internal Server Error',

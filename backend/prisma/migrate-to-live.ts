@@ -25,9 +25,10 @@ async function migrate() {
     console.log('\n--- Migrating Organizations ---');
     const orgs = await localPrisma.organization.findMany();
     for (const org of orgs) {
+      const { id, ...rest } = org;
       await livePrisma.organization.upsert({
-        where: { id: org.id },
-        update: org,
+        where: { id },
+        update: rest,
         create: org,
       });
     }
@@ -37,9 +38,21 @@ async function migrate() {
     console.log('\n--- Migrating Users ---');
     const users = await localPrisma.user.findMany();
     for (const user of users) {
+      const { id, email, createdAt, updatedAt, ...mutableFields } = user;
+      
+      const existingByEmail = await livePrisma.user.findUnique({ where: { email } });
+      if (existingByEmail && existingByEmail.id !== id) {
+        console.warn(`⚠️  Email "${email}" exists with a different ID. Updating existing record.`);
+        await livePrisma.user.update({
+          where: { email },
+          data: mutableFields,
+        });
+        continue;
+      }
+
       await livePrisma.user.upsert({
-        where: { id: user.id },
-        update: user,
+        where: { id },
+        update: mutableFields,
         create: user,
       });
     }
@@ -49,9 +62,10 @@ async function migrate() {
     console.log('\n--- Migrating Memberships ---');
     const memberships = await localPrisma.membership.findMany();
     for (const m of memberships) {
+      const { id, ...rest } = m;
       await livePrisma.membership.upsert({
-        where: { id: m.id },
-        update: m,
+        where: { id },
+        update: rest,
         create: m,
       });
     }
@@ -61,9 +75,10 @@ async function migrate() {
     console.log('\n--- Migrating Partner Codes ---');
     const partnerCodes = await localPrisma.partnerCode.findMany();
     for (const pc of partnerCodes) {
+      const { id, code, ...rest } = pc;
       await livePrisma.partnerCode.upsert({
-        where: { id: pc.id },
-        update: pc,
+        where: { id },
+        update: rest,
         create: pc,
       });
     }
@@ -73,9 +88,10 @@ async function migrate() {
     console.log('\n--- Migrating Patient Profiles ---');
     const patientProfiles = await localPrisma.patientProfile.findMany();
     for (const pp of patientProfiles) {
+      const { id, userId, ...rest } = pp;
       await livePrisma.patientProfile.upsert({
-        where: { id: pp.id },
-        update: pp,
+        where: { id },
+        update: rest,
         create: pp,
       });
     }
@@ -85,9 +101,10 @@ async function migrate() {
     console.log('\n--- Migrating Consents ---');
     const consents = await localPrisma.consent.findMany();
     for (const consent of consents) {
+      const { id, ...rest } = consent;
       await livePrisma.consent.upsert({
-        where: { id: consent.id },
-        update: consent,
+        where: { id },
+        update: rest,
         create: consent,
       });
     }
@@ -97,9 +114,10 @@ async function migrate() {
     console.log('\n--- Migrating Clinical Notes ---');
     const notes = await localPrisma.clinicalNote.findMany();
     for (const note of notes) {
+      const { id, ...rest } = note;
       await livePrisma.clinicalNote.upsert({
-        where: { id: note.id },
-        update: note,
+        where: { id },
+        update: rest,
         create: note,
       });
     }
@@ -109,9 +127,10 @@ async function migrate() {
     console.log('\n--- Migrating Therapy Logs ---');
     const logs = await localPrisma.therapyLog.findMany();
     for (const log of logs) {
+      const { id, ...rest } = log;
       await livePrisma.therapyLog.upsert({
-        where: { id: log.id },
-        update: log,
+        where: { id },
+        update: rest,
         create: log,
       });
     }
@@ -121,9 +140,10 @@ async function migrate() {
     console.log('\n--- Migrating Telemedicine Sessions ---');
     const sessions = await localPrisma.telemedicineSession.findMany();
     for (const session of sessions) {
+      const { id, ...rest } = session;
       await livePrisma.telemedicineSession.upsert({
-        where: { id: session.id },
-        update: session,
+        where: { id },
+        update: rest,
         create: session,
       });
     }

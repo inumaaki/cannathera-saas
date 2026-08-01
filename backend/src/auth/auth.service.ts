@@ -7,14 +7,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import {
-  Locale,
-  OrgType,
-  Prisma,
-  Role,
-  User,
-  SubscriptionTier,
-} from '@prisma/client';
+import { Locale, OrgType, Prisma, Role, User } from '@prisma/client';
 import * as argon2 from 'argon2';
 import { randomBytes, randomInt } from 'crypto';
 import * as nodemailer from 'nodemailer';
@@ -300,7 +293,7 @@ export class AuthService {
       }
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         this.logger.error(
-          `[register] Prisma error ${error.code} on model ${error.meta?.modelName ?? '?'}: ${error.message}`,
+          `[register] Prisma error ${error.code} on model ${typeof error.meta?.modelName === 'string' ? error.meta.modelName : '?'}: ${error.message}`,
           error.stack,
         );
         if (error.code === 'P2002') {
@@ -341,7 +334,6 @@ export class AuthService {
       throw new ServiceUnavailableException('REGISTRATION_SERVICE_ERROR');
     }
   }
-
 
   /**
    * The security policy that governs this user: their organisation's, or a safe
