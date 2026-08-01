@@ -88,11 +88,25 @@ async function migrate() {
     console.log('\n--- Migrating Patient Profiles ---');
     const patientProfiles = await localPrisma.patientProfile.findMany();
     for (const pp of patientProfiles) {
-      const { id, userId, ...rest } = pp;
+      // Strip out the new columns that don't exist on the live database yet
+      const { 
+        id, 
+        userId, 
+        address, 
+        phone, 
+        mainComplaints, 
+        complaintsDescription, 
+        therapyGoals, 
+        baselineMetrics, 
+        onboardingCompleted, 
+        hasActiveSubscription, 
+        ...rest 
+      } = pp as any; // Cast to any because TS doesn't know about the stripped fields if they are not in the generated client
+
       await livePrisma.patientProfile.upsert({
         where: { id },
         update: rest,
-        create: pp,
+        create: { ...rest, id, userId },
       });
     }
     console.log(`✅ Migrated ${patientProfiles.length} patient profiles.`);
@@ -127,11 +141,19 @@ async function migrate() {
     console.log('\n--- Migrating Therapy Logs ---');
     const logs = await localPrisma.therapyLog.findMany();
     for (const log of logs) {
-      const { id, ...rest } = log;
+      // Strip out the new columns that don't exist on the live database yet
+      const { 
+        id, 
+        batchNumber, 
+        consumptionMethod, 
+        manufacturer, 
+        ...rest 
+      } = log as any;
+
       await livePrisma.therapyLog.upsert({
         where: { id },
         update: rest,
-        create: log,
+        create: { ...rest, id },
       });
     }
     console.log(`✅ Migrated ${logs.length} therapy logs.`);
