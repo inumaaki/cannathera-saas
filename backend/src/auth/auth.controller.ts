@@ -63,7 +63,7 @@ export class AuthController {
     const result = await this.auth.register(dto, ip);
 
     if ('session' in result) {
-      this.setSessionCookie(res, result.session, 12 * 60);
+      this.setSessionCookie(res, result.session as string, 12 * 60);
       return {
         requires2fa: false,
         user: {
