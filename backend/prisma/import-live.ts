@@ -14,63 +14,138 @@ async function importData() {
   console.log('Connected to Database. Starting import...');
 
   try {
+    // ── Organizations ─────────────────────────────────────────────────────────
     for (const org of data.organizations) {
-      await prisma.organization.upsert({ where: { id: org.id }, update: org, create: org });
+      const { id, ...rest } = org;
+      await prisma.organization.upsert({
+        where: { id },
+        update: rest,
+        create: org,
+      });
     }
     console.log(`✅ Imported ${data.organizations.length} organizations`);
 
+    // ── Users ─────────────────────────────────────────────────────────────────
+    // upsert by ID; if that ID doesn't exist but the email does (e.g. a user
+    // seeded by the setup-admin endpoint), merge by email instead.
     for (const user of data.users) {
-      await prisma.user.upsert({ where: { id: user.id }, update: user, create: user });
+      const { id, email, createdAt, updatedAt, ...mutableFields } = user;
+
+      // Check if a different user already holds this email
+      const existingByEmail = await prisma.user.findUnique({ where: { email } });
+
+      if (existingByEmail && existingByEmail.id !== id) {
+        // Merge: update the existing row by email, skip creating a new one
+        console.warn(
+          `⚠️  Email "${email}" already exists with different id — updating existing row (${existingByEmail.id})`,
+        );
+        await prisma.user.update({
+          where: { email },
+          data: mutableFields,
+        });
+        continue;
+      }
+
+      // Normal upsert by primary key — do NOT include email or id in the update
+      // payload to avoid hitting the unique constraint on UPDATE
+      await prisma.user.upsert({
+        where: { id },
+        update: mutableFields,
+        create: user,
+      });
     }
     console.log(`✅ Imported ${data.users.length} users`);
 
+    // ── Memberships ───────────────────────────────────────────────────────────
     for (const m of data.memberships) {
-      await prisma.membership.upsert({ where: { id: m.id }, update: m, create: m });
+      const { id, ...rest } = m;
+      await prisma.membership.upsert({
+        where: { id },
+        update: rest,
+        create: m,
+      });
     }
     console.log(`✅ Imported ${data.memberships.length} memberships`);
 
+    // ── Partner Codes ─────────────────────────────────────────────────────────
     for (const pc of data.partnerCodes) {
-      await prisma.partnerCode.upsert({ where: { id: pc.id }, update: pc, create: pc });
+      const { id, code, ...rest } = pc;
+      // PartnerCode has a unique constraint on `code` too — upsert by id only
+      // and exclude `code` from the update payload
+      await prisma.partnerCode.upsert({
+        where: { id },
+        update: rest,
+        create: pc,
+      });
     }
     console.log(`✅ Imported ${data.partnerCodes.length} partner codes`);
 
+    // ── Patient Profiles ──────────────────────────────────────────────────────
     for (const pp of data.patientProfiles) {
-      // Fix ISO date strings back to Date objects if needed by Prisma
       if (pp.dateOfBirth) pp.dateOfBirth = new Date(pp.dateOfBirth);
       if (pp.therapyStart) pp.therapyStart = new Date(pp.therapyStart);
       if (pp.lastReviewAt) pp.lastReviewAt = new Date(pp.lastReviewAt);
-      
-      await prisma.patientProfile.upsert({ where: { id: pp.id }, update: pp, create: pp });
+      const { id, userId, ...rest } = pp;
+      await prisma.patientProfile.upsert({
+        where: { id },
+        update: rest,
+        create: pp,
+      });
     }
     console.log(`✅ Imported ${data.patientProfiles.length} patient profiles`);
 
+    // ── Consents ──────────────────────────────────────────────────────────────
     for (const consent of data.consents) {
       if (consent.grantedAt) consent.grantedAt = new Date(consent.grantedAt);
       if (consent.revokedAt) consent.revokedAt = new Date(consent.revokedAt);
-      await prisma.consent.upsert({ where: { id: consent.id }, update: consent, create: consent });
+      const { id, ...rest } = consent;
+      await prisma.consent.upsert({
+        where: { id },
+        update: rest,
+        create: consent,
+      });
     }
     console.log(`✅ Imported ${data.consents.length} consents`);
 
+    // ── Clinical Notes ────────────────────────────────────────────────────────
     for (const note of data.clinicalNotes) {
-      await prisma.clinicalNote.upsert({ where: { id: note.id }, update: note, create: note });
+      const { id, ...rest } = note;
+      await prisma.clinicalNote.upsert({
+        where: { id },
+        update: rest,
+        create: note,
+      });
     }
     console.log(`✅ Imported ${data.clinicalNotes.length} clinical notes`);
 
+    // ── Therapy Logs ──────────────────────────────────────────────────────────
     for (const log of data.therapyLogs) {
       if (log.loggedAt) log.loggedAt = new Date(log.loggedAt);
-      await prisma.therapyLog.upsert({ where: { id: log.id }, update: log, create: log });
+      const { id, ...rest } = log;
+      await prisma.therapyLog.upsert({
+        where: { id },
+        update: rest,
+        create: log,
+      });
     }
     console.log(`✅ Imported ${data.therapyLogs.length} therapy logs`);
 
+    // ── Telemedicine Sessions ─────────────────────────────────────────────────
     for (const session of data.telemedicineSessions) {
       if (session.scheduledAt) session.scheduledAt = new Date(session.scheduledAt);
-      await prisma.telemedicineSession.upsert({ where: { id: session.id }, update: session, create: session });
+      const { id, ...rest } = session;
+      await prisma.telemedicineSession.upsert({
+        where: { id },
+        update: rest,
+        create: session,
+      });
     }
     console.log(`✅ Imported ${data.telemedicineSessions.length} telemedicine sessions`);
 
     console.log('🎉 Import complete!');
   } catch (err) {
     console.error('Import failed:', err);
+    process.exit(1);
   } finally {
     await prisma.$disconnect();
   }

@@ -8,11 +8,11 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "prisma db push --skip-generate && nest start",
+    "start": "prisma migrate deploy && nest start",
     "dev": "nest start --watch",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "prisma db push --skip-generate && npx tsx prisma/create-admin.ts && node dist/main",
+    "start:prod": "prisma migrate deploy && npx tsx prisma/create-admin.ts && node dist/main",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",

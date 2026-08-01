@@ -300,13 +300,17 @@ export class AuthService {
       }
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         this.logger.error(
-          `Registration database error ${error.code}: ${error.message}`,
+          `[register] Prisma error ${error.code} on model ${error.meta?.modelName ?? '?'}: ${error.message}`,
           error.stack,
         );
         if (error.code === 'P2002') {
           throw new ConflictException('EMAIL_TAKEN');
         }
         if (error.code === 'P2021' || error.code === 'P2022') {
+          // Table or column missing — migration not applied on this server
+          this.logger.error(
+            `[register] Database schema is outdated — run "prisma migrate deploy" on the server. Missing: ${JSON.stringify(error.meta)}`,
+          );
           throw new ServiceUnavailableException('DATABASE_SCHEMA_OUTDATED');
         }
         if (error.code === 'P1001' || error.code === 'P1002') {
@@ -317,19 +321,27 @@ export class AuthService {
         );
       } else if (error instanceof Prisma.PrismaClientInitializationError) {
         this.logger.error(
-          `Registration database connection failed: ${error.message}`,
+          `[register] Database connection failed: ${error.message}`,
           error.stack,
         );
         throw new ServiceUnavailableException('DATABASE_UNAVAILABLE');
+      } else if (error instanceof Prisma.PrismaClientValidationError) {
+        // Likely a schema/model mismatch between generated client and DB
+        this.logger.error(
+          `[register] Prisma validation error (schema mismatch?): ${error.message}`,
+          error.stack,
+        );
+        throw new ServiceUnavailableException('DATABASE_SCHEMA_OUTDATED');
       } else {
         this.logger.error(
-          `Registration failed: ${error instanceof Error ? error.message : String(error)}`,
+          `[register] Unexpected error: ${error instanceof Error ? error.message : String(error)}`,
           error instanceof Error ? error.stack : undefined,
         );
       }
       throw new ServiceUnavailableException('REGISTRATION_SERVICE_ERROR');
     }
   }
+
 
   /**
    * The security policy that governs this user: their organisation's, or a safe
