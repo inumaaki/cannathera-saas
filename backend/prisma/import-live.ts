@@ -13,6 +13,12 @@ async function importData() {
 
   console.log('Connected to Database. Starting import...');
 
+  // Tracks source-user-id -> live-user-id whenever an import merges a user into
+  // an existing row by email (the source id is discarded, so any child record
+  // referencing it must be remapped to the live id before insert).
+  const userIdMap: Record<string, string> = {};
+  const mapUserId = (userId: string) => userIdMap[userId] ?? userId;
+
   try {
     // ── Organizations ─────────────────────────────────────────────────────────
     for (const org of data.organizations) {
@@ -43,6 +49,9 @@ async function importData() {
           where: { email },
           data: mutableFields,
         });
+        // Remember the id swap so child records (profiles, memberships, consents)
+        // get pointed at the live user id instead of the discarded source id.
+        userIdMap[id] = existingByEmail.id;
         continue;
       }
 
@@ -58,11 +67,12 @@ async function importData() {
 
     // ── Memberships ───────────────────────────────────────────────────────────
     for (const m of data.memberships) {
-      const { id, ...rest } = m;
+      const { id, userId, ...rest } = m as any;
+      const correctUserId = mapUserId(userId);
       await prisma.membership.upsert({
         where: { id },
-        update: rest,
-        create: m,
+        update: { ...rest, userId: correctUserId },
+        create: { ...rest, id, userId: correctUserId },
       });
     }
     console.log(`✅ Imported ${data.memberships.length} memberships`);
@@ -99,11 +109,13 @@ async function importData() {
         hasActiveSubscription, 
         ...rest 
       } = pp as any;
-      
+
+      const correctUserId = mapUserId(userId);
+
       await prisma.patientProfile.upsert({
         where: { id },
-        update: rest,
-        create: { ...rest, id, userId },
+        update: { ...rest, userId: correctUserId },
+        create: { ...rest, id, userId: correctUserId },
       });
     }
     console.log(`✅ Imported ${data.patientProfiles.length} patient profiles`);
@@ -112,11 +124,12 @@ async function importData() {
     for (const consent of data.consents) {
       if (consent.grantedAt) consent.grantedAt = new Date(consent.grantedAt);
       if (consent.revokedAt) consent.revokedAt = new Date(consent.revokedAt);
-      const { id, ...rest } = consent;
+      const { id, userId, ...rest } = consent as any;
+      const correctUserId = mapUserId(userId);
       await prisma.consent.upsert({
         where: { id },
-        update: rest,
-        create: consent,
+        update: { ...rest, userId: correctUserId },
+        create: { ...rest, id, userId: correctUserId },
       });
     }
     console.log(`✅ Imported ${data.consents.length} consents`);
