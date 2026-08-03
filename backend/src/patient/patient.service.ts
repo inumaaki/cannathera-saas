@@ -7,6 +7,7 @@ import {
 import { Prisma } from '@prisma/client';
 import { NotificationsService } from '../notifications/notifications.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { isPaywallBypassed } from '../shared';
 
 const PLAN_DAYS = 90;
 
@@ -40,7 +41,11 @@ export class PatientService {
       },
     });
     if (!profile) throw new NotFoundException('NO_PATIENT_PROFILE');
-    if (requireSubscription && !profile.hasActiveSubscription) {
+    if (
+      requireSubscription &&
+      !profile.hasActiveSubscription &&
+      !isPaywallBypassed(profile.user.email)
+    ) {
       throw new ForbiddenException('SUBSCRIPTION_REQUIRED');
     }
     return profile;
@@ -187,7 +192,8 @@ export class PatientService {
       stats,
       nextAppointment,
       onboardingCompleted: profile.onboardingCompleted,
-      hasActiveSubscription: profile.hasActiveSubscription,
+      hasActiveSubscription:
+        profile.hasActiveSubscription || isPaywallBypassed(profile.user.email),
     };
   }
 

@@ -13,7 +13,7 @@ import { randomBytes, randomInt } from 'crypto';
 import * as nodemailer from 'nodemailer';
 import { lookup } from 'dns/promises';
 import { PrismaService } from '../prisma/prisma.service';
-import { ROLE_PRESETS } from '../shared';
+import { isPaywallBypassed, ROLE_PRESETS } from '../shared';
 import { twoFactorEmail } from '../shared/email-templates';
 import type {
   DoctorDataDto,
@@ -655,13 +655,15 @@ export class AuthService {
       },
     });
     const membership = user.memberships[0];
+    const hasActiveSub = membership?.org?.subscriptions.length ? true : false;
     return {
       ...user,
       memberships: undefined,
       orgId: membership?.orgId ?? null,
       orgRole: membership?.orgRole ?? null,
       permissions: membership?.permissions ?? [],
-      subscriptionActive: membership?.org?.subscriptions.length ? true : false,
+      // Pilot/test accounts bypass the paywall via env allowlist — see shared/paywall.ts
+      subscriptionActive: hasActiveSub || isPaywallBypassed(user.email),
     };
   }
 
