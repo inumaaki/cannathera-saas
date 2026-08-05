@@ -20,7 +20,6 @@ type Detail = {
     lastReviewAt: string | null;
     diffDays: number;
     overdue: boolean;
-    openFlags: number;
   }>;
 };
 
@@ -102,11 +101,6 @@ export default async function PartnerDetail({
                     <td className="px-6 py-4">
                       <p className="font-bold text-ink-strong">{p.name}</p>
                       <p className="font-mono text-xs text-muted">{p.patientRef}</p>
-                      {p.openFlags > 0 ? (
-                        <span className="mt-1 inline-block rounded-md bg-red-50 px-1.5 py-0.5 text-[10px] font-bold text-red-600">
-                          {t("flags", { count: p.openFlags })}
-                        </span>
-                      ) : null}
                     </td>
                     <td className="px-6 py-4">
                       <span className="rounded-md bg-[#eef2fe] px-2.5 py-1 text-xs font-bold text-info">

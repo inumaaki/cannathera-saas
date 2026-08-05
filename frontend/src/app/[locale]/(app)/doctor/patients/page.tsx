@@ -13,6 +13,7 @@ type Row = {
   adherence: number;
   lastLogAt: string | null;
   lastPain: number | null;
+  latestMonthlyReview: { id: string; submittedAt: string | null } | null;
 };
 
 /* Figma 5.2 — Patient Roster. ?q= = topbar search. */
@@ -121,7 +122,7 @@ export default async function DoctorRoster({
               <th className="px-5 py-3 text-start">{t("colDay")}</th>
               <th className="px-5 py-3 text-start">{t("colAdherence")}</th>
               <th className="px-5 py-3 text-start">{t("colLastLog")}</th>
-              <th className="px-5 py-3 text-start">{t("colNext")}</th>
+              <th className="px-5 py-3 text-start">Monatsreview</th>
             </tr>
           </thead>
           <tbody>
@@ -179,7 +180,19 @@ export default async function DoctorRoster({
                   {r.lastLogAt ? format.relativeTime(new Date(r.lastLogAt)) : t("never")}
                 </td>
                 <td className="px-5 py-4 font-mono text-ink-strong">
-                  {t("noAppointment")}
+                  {r.latestMonthlyReview ? (
+                    <Link
+                      href={`/doctor/submissions/${r.latestMonthlyReview.id}`}
+                      className="inline-flex items-center gap-1.5 font-bold text-pine-600 hover:underline"
+                    >
+                      <span aria-hidden className="msym text-[16px]">assignment</span>
+                      {format.dateTime(new Date(r.latestMonthlyReview.submittedAt ?? r.lastLogAt ?? Date.now()), {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      })}
+                    </Link>
+                  ) : t("noAppointment")}
                 </td>
               </tr>
             ))}

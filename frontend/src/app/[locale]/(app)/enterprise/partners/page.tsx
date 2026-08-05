@@ -25,7 +25,6 @@ type Data = {
 type Overview = {
   patients: number;
   overdueReviews: number;
-  criticalFlags: number;
 };
 type Available = Array<{ id: string; name: string; type: string }>;
 
@@ -71,7 +70,7 @@ export default async function EnterprisePartners({
         <PartnerActions available={available ?? []} />
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
         <Stat
           icon="hub"
           tint="bg-mint/30 text-pine-600"
@@ -90,12 +89,6 @@ export default async function EnterprisePartners({
           tint="bg-[#fdece0] text-accent-print"
           value={overview?.overdueReviews ?? 0}
           label={t("overdue")}
-        />
-        <Stat
-          icon="warning"
-          tint="bg-red-50 text-red-600"
-          value={overview?.criticalFlags ?? 0}
-          label={t("criticalFlags")}
         />
       </div>
 

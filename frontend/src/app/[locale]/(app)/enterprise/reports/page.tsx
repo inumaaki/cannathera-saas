@@ -17,7 +17,6 @@ type Overview = {
   patients: number;
   partners: { total: number };
   avgAdherence: number;
-  criticalFlags: number;
   topPartners: Partner[];
   months: Array<{ month: string; entries: number; avgQol: number | null }>;
 };

@@ -22,8 +22,6 @@ type Overview = {
   activePatients: number;
   reviewsThisMonth: number;
   overdueReviews: number;
-  openFlags: number;
-  criticalFlags: number;
   avgAdherence: number;
   billing: { unitPrice: number; projectedCost: number; tierLabel: string };
   topPartners: Partner[];

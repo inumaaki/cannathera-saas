@@ -8,7 +8,6 @@ import { PaywallModal } from "@/components/paywall/PaywallModal";
 type Overview = {
   enterpriseName: string;
   overdueReviews: number;
-  criticalFlags: number;
 };
 type Invoices = {
   rows: Array<{ id: string; number: string; amount: number; status: string }>;
@@ -49,16 +48,6 @@ export default async function EnterpriseLayout({
             icon: "assignment_late",
             text: t("noticeOverdue", { count: overview!.overdueReviews }),
             href: "/enterprise/partners",
-          },
-        ]
-      : []),
-    ...((overview?.criticalFlags ?? 0) > 0
-      ? [
-          {
-            id: "flags",
-            icon: "warning",
-            text: t("noticeFlags", { count: overview!.criticalFlags }),
-            href: "/enterprise/reports",
           },
         ]
       : []),

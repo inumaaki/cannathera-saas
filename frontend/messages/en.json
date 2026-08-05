@@ -1287,7 +1287,7 @@
       "portfolioHealth": "Network health",
       "optimalRange": "Optimal range",
       "belowRange": "Below benchmark",
-      "revenue": "Projected revenue",
+      "revenue": "Projected monthly billing",
       "perReview": "{price} per review",
       "distribution": "Location distribution",
       "distributionNote": "Active practices and pharmacies in the network.",
