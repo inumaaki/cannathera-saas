@@ -209,6 +209,122 @@ export class AdminService {
     return { orgId, isActive: newStatus };
   }
 
+  /**
+   * Assign (or clear) a per-partner pilot price. This is an admin-only override
+   * for individual commercial agreements — e.g. a €400 flat rate or a free
+   * first month — separate from the global per-tier plan price.
+   *
+   * Setting a price activates the org's subscription (so the partner is
+   * unlocked past the paywall) and stores customMonthlyPrice + optional end
+   * date + note for display. Passing price = null clears the override and
+   * reverts the displayed price to the plan's standard tier price.
+   *
+   * Display + access only — no Stripe charge or invoice is generated.
+   */
+  async setPilotPricing(
+    orgId: string,
+    dto: {
+      price: number | null;
+      endsAt?: string | null;
+      note?: string | null;
+      tier?: SubscriptionTier;
+    },
+  ) {
+    const org = await this.prisma.organization.findUnique({
+      where: { id: orgId },
+      include: {
+        subscriptions: true,
+        memberships: { include: { user: true } },
+      },
+    });
+    if (!org) throw new NotFoundException('ORGANIZATION_NOT_FOUND');
+
+    if (dto.price != null && dto.price < 0) {
+      throw new BadRequestException('INVALID_PRICE');
+    }
+
+    const endsAt =
+      dto.endsAt != null && dto.endsAt !== '' ? new Date(dto.endsAt) : null;
+    if (endsAt && Number.isNaN(endsAt.getTime())) {
+      throw new BadRequestException('INVALID_END_DATE');
+    }
+
+    const existingSub = org.subscriptions[0];
+
+    // Resolve a plan to attach the subscription to. Reuse the existing plan if
+    // there is one, otherwise resolve/create by tier (mirrors onboardPartner).
+    const tier = dto.tier ?? SubscriptionTier.PREMIUM;
+    let planId = existingSub?.planId;
+    if (!planId) {
+      let plan = await this.prisma.pricingPlan.findFirst({ where: { tier } });
+      if (!plan) {
+        plan = await this.prisma.pricingPlan.create({
+          data: {
+            tier,
+            name: tier.toString(),
+            monthlyPrice: tier === SubscriptionTier.PREMIUM ? 349 : 149,
+            reviewCap: 100,
+            features: { pdfExports: true },
+          },
+        });
+      }
+      planId = plan.id;
+    }
+
+    if (existingSub) {
+      await this.prisma.subscription.update({
+        where: { id: existingSub.id },
+        data: {
+          isActive: true,
+          customMonthlyPrice: dto.price,
+          endsAt,
+          pilotNote: dto.note ?? null,
+        },
+      });
+    } else {
+      await this.prisma.subscription.create({
+        data: {
+          orgId: org.id,
+          planId,
+          isActive: true,
+          customMonthlyPrice: dto.price,
+          endsAt,
+          pilotNote: dto.note ?? null,
+        },
+      });
+    }
+
+    // Activate member users so both the subscription gate and the per-user
+    // active check pass (mirrors togglePartner).
+    for (const membership of org.memberships) {
+      if (!membership.user.isActive) {
+        const updatedUser = await this.prisma.user.update({
+          where: { id: membership.userId },
+          data: { isActive: true },
+        });
+        void this.sendActivationEmail(updatedUser);
+      }
+    }
+
+    await this.prisma.auditLog.create({
+      data: {
+        action:
+          dto.price == null
+            ? 'PARTNER_PILOT_PRICE_CLEARED'
+            : 'PARTNER_PILOT_PRICE_SET',
+        entityType: 'Organization',
+        entityId: orgId,
+      },
+    });
+
+    return {
+      orgId,
+      customMonthlyPrice: dto.price,
+      endsAt,
+      pilotNote: dto.note ?? null,
+    };
+  }
+
   async issueTemporaryPassword(orgId: string) {
     const membership = await this.prisma.membership.findFirst({
       where: { orgId, orgRole: 'ADMIN' },
@@ -390,6 +506,86 @@ export class AdminService {
         },
       },
     });
+  }
+
+  /**
+   * Cross-org red-flag oversight for the admin. Unlike the doctor view (scoped
+   * to a single practice), this returns hits across ALL partner orgs, with the
+   * owning practice/pharmacy name so the admin can monitor compliance network-wide.
+   */
+  async listRedFlags(view: 'unreviewed' | 'reviewed' | 'all' = 'unreviewed') {
+    const hits = await this.prisma.redFlagHit.findMany({
+      where: {
+        ...(view === 'all' ? {} : { acknowledged: view === 'reviewed' }),
+      },
+      orderBy: [
+        { acknowledged: 'asc' },
+        { severity: 'desc' },
+        { createdAt: 'desc' },
+      ],
+      include: {
+        patient: {
+          include: {
+            user: { select: { firstName: true, lastName: true } },
+            org: { select: { id: true, name: true } },
+            pharmacy: { select: { id: true, name: true } },
+          },
+        },
+        submission: {
+          select: {
+            id: true,
+            submittedAt: true,
+            version: {
+              select: { questionnaire: { select: { key: true, title: true } } },
+            },
+          },
+        },
+      },
+    });
+    return hits.map((h) => ({
+      id: h.id,
+      severity: h.severity,
+      message: h.message,
+      createdAt: h.createdAt,
+      acknowledged: h.acknowledged,
+      source: h.source,
+      patientId: h.patientId,
+      patientName:
+        [h.patient.user.firstName, h.patient.user.lastName]
+          .filter(Boolean)
+          .join(' ') || '—',
+      patientRef: h.patient.patientRef,
+      practiceName: h.patient.org?.name ?? null,
+      pharmacyName: h.patient.pharmacy?.name ?? null,
+      submissionId: h.submissionId,
+      questionnaire:
+        h.submission?.version.questionnaire.title ?? 'Tageseintrag',
+      submittedAt: h.submission?.submittedAt ?? h.createdAt,
+    }));
+  }
+
+  /** Admin marks a red flag reviewed/processed (any org). */
+  async acknowledgeRedFlag(adminUserId: string, flagId: string) {
+    const existing = await this.prisma.redFlagHit.findUnique({
+      where: { id: flagId },
+      select: { id: true, patientId: true, acknowledged: true },
+    });
+    if (!existing) throw new NotFoundException('FLAG_NOT_FOUND');
+
+    const hit = await this.prisma.redFlagHit.update({
+      where: { id: flagId },
+      data: { acknowledged: true },
+    });
+    await this.prisma.auditLog.create({
+      data: {
+        userId: adminUserId,
+        action: 'RED_FLAG_ACKNOWLEDGED',
+        entityType: 'RedFlagHit',
+        entityId: flagId,
+        metadata: { patientId: hit.patientId, by: 'admin' },
+      },
+    });
+    return { ok: true };
   }
 
   async listUsers() {

@@ -29,12 +29,10 @@ type Detail = {
     strain: string | null;
     metrics: { pain?: number; sleep?: number; activity?: number; qol?: number } | null;
   }>;
-  redFlags: Array<{ id: string; severity: string; message: string; createdAt: string }>;
   submissions: Array<{
     id: string;
     submittedAt: string;
     questionnaire: string;
-    flags: number;
   }>;
   appointments: Array<{ id: string; scheduledAt: string; joinUrl: string | null }>;
 };
@@ -306,11 +304,6 @@ export default async function DoctorPatientDetail({
                         hour: "2-digit",
                         minute: "2-digit",
                       })}
-                      {item.data.flags > 0 ? (
-                        <span className="ms-2 font-bold text-red-600">
-                          {t("flags", { count: item.data.flags })}
-                        </span>
-                      ) : null}
                     </p>
                     <Link
                       href={`/doctor/submissions/${item.data.id}`}

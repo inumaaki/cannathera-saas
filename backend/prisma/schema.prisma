@@ -689,6 +689,12 @@ model Subscription {
   endsAt    DateTime?
   isActive  Boolean   @default(true)
 
+  // Per-partner pilot pricing (admin-configured). When customMonthlyPrice is
+  // set it overrides plan.monthlyPrice for display; null falls back to the
+  // plan price. Display + access only — no Stripe charge / invoice impact.
+  customMonthlyPrice Decimal? @db.Decimal(10, 2)
+  pilotNote          String?
+
   org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
   plan PricingPlan  @relation(fields: [planId], references: [id])
 

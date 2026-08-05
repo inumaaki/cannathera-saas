@@ -6,6 +6,7 @@ import { BrandMark } from "@/components/auth/BrandMark";
 import { AdminSidebarNav, type AdminSection } from "./AdminSidebarNav";
 
 import { LocaleSwitcher } from "@/components/auth/LocaleSwitcher";
+import { LiveNotifications } from "@/components/common/LiveNotifications";
 
 type AdminShellLabels = {
   systemControl: string;
@@ -122,6 +123,7 @@ export function AdminShell({
         </header>
         <div className="min-w-0 flex-1 p-3 sm:p-5 lg:p-8">{children}</div>
       </main>
+      <LiveNotifications />
     </div>
   );
 }

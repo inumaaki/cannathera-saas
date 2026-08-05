@@ -259,8 +259,8 @@ export class PatientService {
       });
     }
 
-    // Push the alert to the care team live — a CRITICAL pain score should not
-    // wait for the doctor to navigate. Goes to the practice AND the pharmacy.
+    // Publish the event once per associated organisation. The notification
+    // stream routes red flags exclusively to the platform administrator.
     const patientName =
       [profile.user.firstName, profile.user.lastName]
         .filter(Boolean)

@@ -39,7 +39,6 @@ export default async function SettingsNotifications({
             save: t("save"),
             saved: t("saved"),
             items: {
-              redFlags: { title: t("redFlagAlerts"), text: t("redFlagText") },
               newLogs: { title: t("newLogs"), text: t("newLogsText") },
               apptReminders: { title: t("apptReminders"), text: t("apptRemindersText") },
               dailySummaries: { title: t("dailySummaries"), text: t("dailySummariesText") },

@@ -6,8 +6,6 @@ export const PERMISSIONS = [
   'patients:view', // see roster + patient files
   'patients:create', // onboard new patients
   'patients:note', // write clinical notes
-  'alerts:view', // red-flag inbox
-  'alerts:acknowledge', // mark red-flags reviewed
   'appointments:manage', // reschedule consultations
   'reports:view', // clinical reports + exports
   'settings:practice', // practice profile, notifications, integrations
@@ -25,12 +23,10 @@ export const ROLE_PRESETS = {
     'patients:view',
     'patients:create',
     'patients:note',
-    'alerts:view',
-    'alerts:acknowledge',
     'appointments:manage',
     'reports:view',
   ],
-  ASSISTANT: ['patients:view', 'alerts:view', 'appointments:manage'],
+  ASSISTANT: ['patients:view', 'appointments:manage'],
   VIEWER: ['patients:view', 'reports:view'],
 } as const satisfies Record<string, readonly Permission[]>;
 

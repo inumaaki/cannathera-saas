@@ -11,6 +11,11 @@ type Usage = {
   activeTier: string;
   unitPrice: number;
   projectedCost: number;
+  pilot?: {
+    monthlyPrice: number;
+    endsAt: string | null;
+    note: string | null;
+  } | null;
   tiers: Array<{
     key: string;
     label: string;
@@ -82,6 +87,32 @@ export default async function EnterpriseBilling({
         </div>
         <GenerateInvoiceButton />
       </div>
+
+      {usage?.pilot ? (
+        <div className="mt-6 flex flex-wrap items-center gap-3 rounded-xl border border-amber-200 bg-amber-50 px-5 py-4">
+          <span aria-hidden className="msym text-[22px] text-amber-700">handshake</span>
+          <div className="flex-1">
+            <p className="text-sm font-bold text-amber-900">
+              {t("pilotAgreement")}
+              {usage.pilot.note ? ` · ${usage.pilot.note}` : ""}
+            </p>
+            <p className="text-xs text-amber-800/80">
+              {usage.pilot.monthlyPrice === 0
+                ? t("pilotFree")
+                : t("pilotMonthly", { price: money(usage.pilot.monthlyPrice) })}
+              {usage.pilot.endsAt
+                ? ` · ${t("pilotUntil", {
+                    date: format.dateTime(new Date(usage.pilot.endsAt), {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    }),
+                  })}`
+                : ""}
+            </p>
+          </div>
+        </div>
+      ) : null}
 
       <div className="mt-6 grid gap-6 xl:grid-cols-[7fr_4fr]">
         {/* Tiered usage */}

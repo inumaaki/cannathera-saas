@@ -210,20 +210,6 @@ export class DoctorController {
     return this.doctors.createPatient(user.sub, dto);
   }
 
-  @Get('red-flags')
-  @Perms('alerts:view')
-  redFlags(@CurrentUser() user: SessionPayload, @Query('view') view?: string) {
-    const v =
-      view === 'reviewed' || view === 'all' ? view : ('unreviewed' as const);
-    return this.doctors.redFlags(user.sub, v);
-  }
-
-  @Post('red-flags/:id/acknowledge')
-  @Perms('alerts:acknowledge')
-  acknowledge(@CurrentUser() user: SessionPayload, @Param('id') id: string) {
-    return this.doctors.acknowledgeFlag(user.sub, id);
-  }
-
   @Get('patients/:id')
   @Perms('patients:view')
   patientDetail(@CurrentUser() user: SessionPayload, @Param('id') id: string) {

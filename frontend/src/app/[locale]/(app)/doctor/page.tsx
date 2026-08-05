@@ -7,7 +7,6 @@ type Overview = {
   activePatients: number;
   appointmentsToday: number;
   nextAppointment: { scheduledAt: string } | null;
-  openRedFlags: number;
   avgAdherence: number | null;
   appointments: Array<{
     id: string;
@@ -15,14 +14,6 @@ type Overview = {
     patientName: string;
     scheduledAt: string;
     video: boolean;
-  }>;
-  alerts: Array<{
-    id: string;
-    severity: string;
-    message: string;
-    createdAt: string;
-    patientId: string;
-    patientName: string;
   }>;
 };
 
@@ -50,7 +41,7 @@ export default async function DoctorDashboard({
   return (
     <>
       {/* Stat cards */}
-      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-3">
         <div className="cw-watermark rounded-xl border border-hairline bg-white p-5">
           <p className="text-sm font-semibold text-ink-strong">{t("activePatients")}</p>
           <p className="mt-2 font-display text-4xl font-bold text-pine">
@@ -79,23 +70,6 @@ export default async function DoctorDashboard({
               : t("noneToday")}
           </p>
         </div>
-        <div className="rounded-xl border border-hairline border-s-4 border-s-red-600 bg-white p-5">
-          <div className="flex items-center justify-between">
-            <p className="text-sm font-semibold text-ink-strong">{t("openRedFlags")}</p>
-            <span className="rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-bold uppercase text-red-600">
-              {t("urgent")}
-            </span>
-          </div>
-          <p className="mt-2 font-display text-4xl font-bold text-red-600">
-            {data?.openRedFlags ?? "—"}
-          </p>
-          <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-red-600">
-            <span aria-hidden className="msym text-[18px]">
-              error
-            </span>
-            {t("requireReview")}
-          </p>
-        </div>
         <div className="cw-watermark rounded-xl border border-hairline bg-white p-5">
           <p className="text-sm font-semibold text-ink-strong">{t("avgAdherence")}</p>
           <p className="mt-2 font-display text-4xl font-bold text-pine">
@@ -110,7 +84,7 @@ export default async function DoctorDashboard({
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-[7fr_3fr]">
+      <div className="mt-6">
         {/* Today's appointments */}
         <section className="cw-watermark self-start overflow-hidden rounded-xl border border-hairline bg-white">
           <div className="flex items-center justify-between px-6 py-4">
@@ -170,56 +144,6 @@ export default async function DoctorDashboard({
           )}
         </section>
 
-        {/* Red-flag alerts */}
-        <section className="self-start rounded-xl border border-hairline bg-white p-5">
-          <h2 className="flex items-center gap-2 font-display text-2xl font-bold text-pine">
-            <span aria-hidden className="msym text-[24px] text-red-600">
-              warning
-            </span>
-            {t("redFlagAlerts")}
-          </h2>
-          <div className="mt-4 space-y-4">
-            {(data?.alerts.length ?? 0) === 0 ? (
-              <p className="text-muted">{t("noAlerts")}</p>
-            ) : (
-              data!.alerts.map((a) => (
-                <div
-                  key={a.id}
-                  className={`rounded-xl border p-4 ${
-                    a.severity === "CRITICAL"
-                      ? "border-red-200 bg-red-50/60"
-                      : "border-hairline bg-white"
-                  }`}
-                >
-                  <div className="flex items-start justify-between gap-2">
-                    <p className="font-bold text-ink-strong">{a.patientName}</p>
-                    <p className="shrink-0 text-xs text-muted">
-                      {format.relativeTime(new Date(a.createdAt))}
-                    </p>
-                  </div>
-                  <p className="mt-2 text-sm leading-relaxed text-ink-strong">
-                    {a.message}
-                  </p>
-                  <Link
-                    href={`/doctor/patients/${a.patientId}`}
-                    className="mt-3 block rounded-lg border border-red-400 px-4 py-2 text-center text-xs font-bold uppercase tracking-wide text-red-600 hover:bg-red-50"
-                  >
-                    {t("reviewData")}
-                  </Link>
-                </div>
-              ))
-            )}
-          </div>
-          <Link
-            href="/doctor/alerts"
-            className="mt-5 flex items-center justify-center gap-1.5 text-sm font-bold uppercase tracking-wide text-ink-strong hover:text-pine-600"
-          >
-            {t("viewAllAlerts")}
-            <span aria-hidden className="msym text-[18px] rtl:-scale-x-100">
-              arrow_forward
-            </span>
-          </Link>
-        </section>
       </div>
     </>
   );

@@ -11,7 +11,6 @@ type SubmissionView = {
   questionnaire: string;
   patientName: string;
   patientRef: string | null;
-  redFlags: Array<{ id: string; severity: string; message: string }>;
   sections: Array<{
     title: string;
     answers: Array<{ label: string; type: string; value: unknown }>;
@@ -66,26 +65,6 @@ export default async function SubmissionDetail({
             })
           : "—"}
       </p>
-
-      {s.redFlags.length > 0 ? (
-        <div className="mt-4 space-y-2">
-          {s.redFlags.map((f) => (
-            <p
-              key={f.id}
-              className={`flex items-center gap-2 rounded-lg px-4 py-2.5 text-sm font-semibold ${
-                f.severity === "CRITICAL"
-                  ? "bg-red-100 text-red-700"
-                  : "bg-[#fdf3d7] text-gold"
-              }`}
-            >
-              <span aria-hidden className="msym text-[18px]">
-                warning
-              </span>
-              {f.message}
-            </p>
-          ))}
-        </div>
-      ) : null}
 
       {s.sections.map((sec) => (
         <section

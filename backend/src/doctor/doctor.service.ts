@@ -6,7 +6,6 @@ import {
 } from '@nestjs/common';
 import {
   Prisma,
-  RedFlagSeverity,
   Role,
   SubmissionStatus,
 } from '@prisma/client';
@@ -54,16 +53,13 @@ export class DoctorService {
     return orgId;
   }
 
-  /** Dashboard overview: stat cards, today's appointments, top open alerts. */
+  /** Dashboard overview for clinical care. Compliance alerts are admin-only. */
   async overview(doctorUserId: string) {
     const orgId = await this.orgIdOf(doctorUserId);
     const scope: Prisma.PatientProfileWhereInput = { orgId };
 
-    const [patients, openFlags, todaysSessions, topAlerts] = await Promise.all([
+    const [patients, todaysSessions] = await Promise.all([
       this.patients(doctorUserId),
-      this.prisma.redFlagHit.count({
-        where: { acknowledged: false, patient: scope },
-      }),
       this.prisma.telemedicineSession.findMany({
         where: {
           patient: scope,
@@ -79,7 +75,6 @@ export class DoctorService {
           },
         },
       }),
-      this.redFlags(doctorUserId),
     ]);
 
     // Avg adherence: distinct logged days / therapy days (30-day window) per patient.
@@ -110,7 +105,6 @@ export class DoctorService {
       appointmentsToday: todaysSessions.length,
       nextAppointment:
         todaysSessions.find((s) => s.scheduledAt > new Date()) ?? null,
-      openRedFlags: openFlags,
       avgAdherence,
       appointments: todaysSessions.map((s) => ({
         id: s.id,
@@ -121,7 +115,6 @@ export class DoctorService {
         scheduledAt: s.scheduledAt,
         video: !!s.joinUrl,
       })),
-      alerts: topAlerts.slice(0, 3),
     };
   }
 
@@ -192,7 +185,6 @@ export class DoctorService {
         patient: {
           include: { user: { select: { firstName: true, lastName: true } } },
         },
-        redFlagHits: { select: { severity: true } },
         answers: { include: { question: { select: { key: true } } } },
       },
     });
@@ -200,7 +192,6 @@ export class DoctorService {
       const satisfaction = s.answers.find(
         (a) => a.question.key === 'satisfaction',
       )?.value as number | undefined;
-      const critical = s.redFlagHits.some((h) => h.severity === 'CRITICAL');
       return {
         id: s.id,
         patientId: s.patientId,
@@ -210,7 +201,6 @@ export class DoctorService {
         patientRef: s.patient.patientRef,
         submittedAt: s.submittedAt,
         compliance: satisfaction != null ? satisfaction * 10 : null,
-        risk: critical ? 'high' : s.redFlagHits.length ? 'moderate' : 'low',
       };
     });
 
@@ -260,8 +250,7 @@ export class DoctorService {
     return org;
   }
 
-  /** Roster: the patients of THIS doctor's practice only.
-      Includes latest metrics + open red-flag counts for triage. */
+  /** Roster: the patients of THIS doctor's practice only. */
   async patients(doctorUserId: string) {
     const orgId = await this.orgIdOf(doctorUserId);
 
@@ -270,10 +259,6 @@ export class DoctorService {
       include: {
         user: { select: { firstName: true, lastName: true, email: true } },
         therapyLogs: { orderBy: { loggedAt: 'desc' }, take: 1 },
-        redFlagHits: {
-          where: { acknowledged: false },
-          select: { severity: true },
-        },
         _count: { select: { submissions: true } },
       },
       orderBy: { createdAt: 'desc' },
@@ -294,9 +279,6 @@ export class DoctorService {
 
     return profiles.map((p) => {
       const metrics = (p.therapyLogs[0]?.metrics as LogMetrics | null) ?? null;
-      const critical = p.redFlagHits.filter(
-        (h) => h.severity === RedFlagSeverity.CRITICAL,
-      ).length;
       const start = p.therapyStart ?? p.createdAt;
       const day = Math.max(
         1,
@@ -318,62 +300,9 @@ export class DoctorService {
         day,
         lastLogAt: p.therapyLogs[0]?.loggedAt ?? null,
         lastPain: metrics?.pain ?? null,
-        openFlags: p.redFlagHits.length,
-        criticalFlags: critical,
         submissions: p._count.submissions,
       };
     });
-  }
-
-  /** Red-flag inbox for this practice. view: unreviewed (default) | reviewed | all. */
-  async redFlags(
-    doctorUserId: string,
-    view: 'unreviewed' | 'reviewed' | 'all' = 'unreviewed',
-  ) {
-    const orgId = await this.orgIdOf(doctorUserId);
-    const hits = await this.prisma.redFlagHit.findMany({
-      where: {
-        patient: { orgId },
-        ...(view === 'all' ? {} : { acknowledged: view === 'reviewed' }),
-      },
-      orderBy: [
-        { acknowledged: 'asc' },
-        { severity: 'desc' },
-        { createdAt: 'desc' },
-      ],
-      take: 100,
-      include: {
-        patient: {
-          include: { user: { select: { firstName: true, lastName: true } } },
-        },
-        submission: {
-          select: {
-            id: true,
-            submittedAt: true,
-            version: {
-              select: { questionnaire: { select: { key: true, title: true } } },
-            },
-          },
-        },
-      },
-    });
-    return hits.map((h) => ({
-      id: h.id,
-      severity: h.severity,
-      message: h.message,
-      createdAt: h.createdAt,
-      acknowledged: h.acknowledged,
-      source: h.source,
-      patientId: h.patientId,
-      patientName: [h.patient.user.firstName, h.patient.user.lastName]
-        .filter(Boolean)
-        .join(' '),
-      patientRef: h.patient.patientRef,
-      submissionId: h.submissionId,
-      questionnaire:
-        h.submission?.version.questionnaire.title ?? 'Tageseintrag',
-      submittedAt: h.submission?.submittedAt ?? h.createdAt,
-    }));
   }
 
   /** Doctor creates a patient account; patient completes setup via reset link. */
@@ -682,7 +611,7 @@ export class DoctorService {
     const { rows, painReduction, phases } =
       await this.reportsSummary(doctorUserId);
     const lines = [
-      'Patient;Patienten-ID;Eingereicht am;Zufriedenheit (%);Risikostufe',
+      'Patient;Patienten-ID;Eingereicht am;Zufriedenheit (%)',
       ...rows.map((r) =>
         [
           r.patientName,
@@ -691,7 +620,6 @@ export class DoctorService {
             ? new Date(r.submittedAt).toISOString().slice(0, 10)
             : '',
           r.compliance ?? '',
-          r.risk,
         ].join(';'),
       ),
       '',
@@ -708,7 +636,7 @@ export class DoctorService {
     const orgId = await this.orgIdOf(doctorUserId);
     const scope: Prisma.PatientProfileWhereInput = { orgId };
 
-    const [users, consents, auditEvents, flags, org] = await Promise.all([
+    const [users, consents, auditEvents, org] = await Promise.all([
       this.prisma.patientProfile.count({ where: scope }),
       this.prisma.consent.count({
         where: { revokedAt: null, user: { patientProfile: scope } },
@@ -717,7 +645,6 @@ export class DoctorService {
       this.prisma.auditLog.count({
         where: { user: { memberships: { some: { orgId } } } },
       }),
-      this.prisma.redFlagHit.count({ where: { patient: scope } }),
       this.practice(doctorUserId),
     ]);
     await this.prisma.auditLog.create({
@@ -736,33 +663,8 @@ export class DoctorService {
         users,
         activeConsents: consents,
         auditLogEvents: auditEvents,
-        redFlagHits: flags,
       },
     };
-  }
-
-  async acknowledgeFlag(doctorUserId: string, flagId: string) {
-    const existing = await this.prisma.redFlagHit.findUnique({
-      where: { id: flagId },
-      select: { patientId: true },
-    });
-    if (!existing) throw new NotFoundException('FLAG_NOT_FOUND');
-    await this.assertPatientInPractice(doctorUserId, existing.patientId);
-
-    const hit = await this.prisma.redFlagHit.update({
-      where: { id: flagId },
-      data: { acknowledged: true },
-    });
-    await this.prisma.auditLog.create({
-      data: {
-        userId: doctorUserId,
-        action: 'RED_FLAG_ACKNOWLEDGED',
-        entityType: 'RedFlagHit',
-        entityId: flagId,
-        metadata: { patientId: hit.patientId },
-      },
-    });
-    return { ok: true };
   }
 
   /** Full patient detail for the doctor view. */
@@ -781,7 +683,6 @@ export class DoctorService {
         },
         pharmacy: { select: { id: true, name: true } }, // dispensing pharmacy
         therapyLogs: { orderBy: { loggedAt: 'asc' } },
-        redFlagHits: { orderBy: { createdAt: 'desc' }, take: 20 },
         clinicalNotes: {
           orderBy: { createdAt: 'desc' },
           take: 20,
@@ -797,7 +698,6 @@ export class DoctorService {
             version: {
               select: { questionnaire: { select: { key: true, title: true } } },
             },
-            redFlagHits: { select: { severity: true } },
           },
         },
         teleSessions: { orderBy: { scheduledAt: 'desc' }, take: 5 },
@@ -848,13 +748,11 @@ export class DoctorService {
         strain: l.strain,
         metrics: l.metrics,
       })),
-      redFlags: p.redFlagHits,
       submissions: p.submissions.map((s) => ({
         id: s.id,
         submittedAt: s.submittedAt,
         questionnaire: s.version.questionnaire.title,
         key: s.version.questionnaire.key,
-        flags: s.redFlagHits.length,
       })),
       appointments: p.teleSessions,
     };
@@ -883,7 +781,6 @@ export class DoctorService {
           },
         },
         answers: true,
-        redFlagHits: true,
       },
     });
     if (!s) throw new NotFoundException('SUBMISSION_NOT_FOUND');
@@ -911,7 +808,6 @@ export class DoctorService {
         .filter(Boolean)
         .join(' '),
       patientRef: s.patient.patientRef,
-      redFlags: s.redFlagHits,
       sections: s.version.sections.map((sec) => ({
         title: sec.title,
         answers: sec.questions

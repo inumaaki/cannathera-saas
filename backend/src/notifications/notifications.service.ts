@@ -49,15 +49,25 @@ export class NotificationsService {
    * practice's alerts over the stream.
    */
   async stream(userId: string): Promise<Observable<Frame>> {
-    const membership = await this.prisma.membership.findFirst({
-      where: { userId },
-      select: { orgId: true },
-    });
+    const [membership, user] = await Promise.all([
+      this.prisma.membership.findFirst({
+        where: { userId },
+        select: { orgId: true },
+      }),
+      this.prisma.user.findUnique({
+        where: { id: userId },
+        select: { role: true },
+      }),
+    ]);
     const orgId = membership?.orgId ?? null;
+    const isSystemAdmin = user?.role === 'ADMIN';
 
     const isForMe = (e: NotificationEvent) =>
-      (!!e.target.userId && e.target.userId === userId) ||
-      (!!e.target.orgId && !!orgId && e.target.orgId === orgId);
+      (isSystemAdmin && e.kind === 'red_flag') ||
+      (!isSystemAdmin && e.kind !== 'red_flag' && (
+        (!!e.target.userId && e.target.userId === userId) ||
+        (!!e.target.orgId && !!orgId && e.target.orgId === orgId)
+      ));
 
     return new Observable<Frame>((subscriber) => {
       // A heartbeat stops proxies closing an idle connection and lets the client
@@ -68,7 +78,13 @@ export class NotificationsService {
       );
 
       const sub = this.events$.subscribe((event) => {
-        if (isForMe(event)) subscriber.next({ data: event });
+        if (isForMe(event)) {
+          subscriber.next({
+            data: isSystemAdmin && event.kind === 'red_flag'
+              ? { ...event, href: '/admin?tab=redflags' }
+              : event,
+          });
+        }
       });
 
       return () => {

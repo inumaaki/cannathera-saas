@@ -155,7 +155,7 @@ export class ReportsService {
             ),
           );
 
-    const [logs, submissions, redFlags] = await Promise.all([
+    const [logs, submissions] = await Promise.all([
       this.prisma.therapyLog.findMany({
         where: { patientId, loggedAt: { gte: periodStart, lte: periodEnd } },
         orderBy: { loggedAt: 'asc' },
@@ -170,11 +170,6 @@ export class ReportsService {
         include: {
           answers: { include: { question: { include: { options: true } } } },
         },
-      }),
-      this.prisma.redFlagHit.findMany({
-        where: { patientId, createdAt: { gte: periodStart, lte: periodEnd } },
-        orderBy: { createdAt: 'desc' },
-        take: 10,
       }),
     ]);
 
@@ -391,11 +386,9 @@ export class ReportsService {
       satisfaction,
       goalsReached,
       notes,
-      redFlags: redFlags.map((f) => ({
-        severity: f.severity,
-        message: f.message,
-        createdAt: f.createdAt,
-      })),
+      // Red-flag monitoring is intentionally admin-only. Clinical PDF reports
+      // remain focused on patient care and AI-generated therapy insights.
+      redFlags: [],
       nextAppointmentPrep: prep,
       summary,
     };

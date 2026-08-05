@@ -12,7 +12,6 @@ import { LiveNotifications } from "@/components/common/LiveNotifications";
 const NAV = [
   { href: "/doctor", key: "dashboard", icon: "dashboard", perm: "patients:view" },
   { href: "/doctor/patients", key: "patients", icon: "group", perm: "patients:view" },
-  { href: "/doctor/alerts", key: "alerts", icon: "warning", perm: "alerts:view" },
   { href: "/doctor/reports", key: "reports", icon: "monitoring", perm: "reports:view" },
   {
     href: "/doctor/settings/profile",
@@ -25,15 +24,7 @@ const NAV = [
   { href: "/doctor/help", key: "help", icon: "help", perm: null },
 ] as const;
 
-type Alert = {
-  id: string;
-  severity: string;
-  message: string;
-  patientId: string;
-  patientName: string;
-};
-
-/* Clinical Portal frame (Figma 5.x). Bell polls open red-flags every 30s. */
+/* Clinical Portal frame (Figma 5.x). */
 export function DoctorShell({
   children,
   userName,
@@ -49,8 +40,6 @@ export function DoctorShell({
   const can = (p: string | null) => p === null || permissions.includes(p);
   const pathname = usePathname();
   const router = useRouter();
-  const [alerts, setAlerts] = useState<Alert[]>([]);
-  const [bellOpen, setBellOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
@@ -61,27 +50,6 @@ export function DoctorShell({
       document.body.style.overflow = "";
     };
   }, [drawerOpen]);
-
-  // Near-realtime: poll open red-flags for the bell badge.
-  const canViewAlerts = permissions.includes("alerts:view");
-  useEffect(() => {
-    if (!canViewAlerts) return;
-    let active = true;
-    async function poll() {
-      try {
-        const data = await api<Alert[]>("/doctor/red-flags?view=unreviewed");
-        if (active) setAlerts(data.slice(0, 6));
-      } catch {
-        /* session may have expired — badge just stays stale */
-      }
-    }
-    void poll();
-    const id = setInterval(poll, 30_000);
-    return () => {
-      active = false;
-      clearInterval(id);
-    };
-  }, [pathname, canViewAlerts]);
 
   const isActive = (href: string) =>
     href === "/doctor"
@@ -212,77 +180,6 @@ export function DoctorShell({
             />
           </form>
           <div className="flex shrink-0 items-center gap-4">
-            {/* Bell */}
-            <div className="relative">
-              <button
-                type="button"
-                aria-label={t("notifications")}
-                onClick={() => setBellOpen((v) => !v)}
-                className="relative p-1"
-              >
-                <span aria-hidden className="msym text-[22px] text-ink-strong">
-                  notifications
-                </span>
-                {alerts.length > 0 ? (
-                  <span className="absolute -end-1 -top-1 flex size-4.5 min-w-4 items-center justify-center rounded-full bg-red-600 px-1 text-[10px] font-bold text-white">
-                    {alerts.length}
-                  </span>
-                ) : null}
-              </button>
-              {bellOpen ? (
-                <>
-                  <button
-                    type="button"
-                    aria-label={t("notifications")}
-                    onClick={() => setBellOpen(false)}
-                    className="fixed inset-0 z-30 cursor-default"
-                  />
-                  <div className="absolute end-0 top-10 z-40 w-[min(calc(100vw-1.5rem),24rem)] overflow-hidden rounded-xl border border-hairline bg-white shadow-lg">
-                    <p className="border-b border-hairline px-5 py-3 font-bold text-ink-strong">
-                      {t("notifications")}
-                    </p>
-                    {alerts.length === 0 ? (
-                      <p className="px-5 py-6 text-center text-sm text-muted">
-                        {t("noNotifications")}
-                      </p>
-                    ) : (
-                      alerts.map((a) => (
-                        <Link
-                          key={a.id}
-                          href={`/doctor/patients/${a.patientId}`}
-                          onClick={() => setBellOpen(false)}
-                          className="flex items-start gap-3 border-b border-hairline px-5 py-3 last:border-0 hover:bg-surface"
-                        >
-                          <span
-                            aria-hidden
-                            className={`msym mt-0.5 text-[20px] ${
-                              a.severity === "CRITICAL" ? "text-red-600" : "text-gold"
-                            }`}
-                          >
-                            warning
-                          </span>
-                          <span className="min-w-0">
-                            <span className="block truncate font-bold text-ink-strong">
-                              {a.patientName}
-                            </span>
-                            <span className="block text-xs leading-relaxed text-muted">
-                              {a.message}
-                            </span>
-                          </span>
-                        </Link>
-                      ))
-                    )}
-                    <Link
-                      href="/doctor/alerts"
-                      onClick={() => setBellOpen(false)}
-                      className="block bg-[#f6f8fc] px-5 py-3 text-center text-sm font-bold text-pine-600 hover:underline"
-                    >
-                      {t("openAlerts")}
-                    </Link>
-                  </div>
-                </>
-              ) : null}
-            </div>
             {/* Settings */}
             <Link href="/doctor/settings/profile" aria-label={t("settingsLabel")} className="hidden p-1 sm:block">
               <span aria-hidden className="msym text-[22px] text-ink-strong">

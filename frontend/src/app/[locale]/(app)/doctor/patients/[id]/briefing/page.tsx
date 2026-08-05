@@ -18,7 +18,6 @@ type Detail = {
     loggedAt: string;
     metrics: { pain?: number; sleep?: number; activity?: number; qol?: number } | null;
   }>;
-  redFlags: Array<{ severity: string; message: string }>;
   appointments: Array<{ id: string; scheduledAt: string; joinUrl: string | null }>;
 };
 
@@ -54,7 +53,6 @@ export default async function BriefingPage({
   const last = p.logs.at(-1)?.metrics ?? {};
   const satisfaction = last.qol != null ? Math.round(last.qol * 10) / 10 : null;
   const nextCall = p.appointments.find((a) => new Date(a.scheduledAt) > new Date());
-  const warning = p.redFlags[0];
 
   return (
     <div className="mx-auto max-w-4xl">
@@ -87,12 +85,6 @@ export default async function BriefingPage({
                 {p.name || p.email}
                 {age ? `, ${age}` : ""}
               </h1>
-              {warning ? (
-                <p className="mt-0.5 flex items-center gap-1.5 text-sm font-semibold text-ink-strong">
-                  <span aria-hidden className="size-2 rounded-full bg-accent" />
-                  {t("mainConcern", { concern: warning.message.split("—")[0] })}
-                </p>
-              ) : null}
             </div>
           </div>
           <div className="text-center">
@@ -157,26 +149,8 @@ export default async function BriefingPage({
           </div>
         </div>
 
-        {/* Side effects + questions */}
-        <div className="grid gap-3 px-5 pb-5 md:grid-cols-2">
-          <div className="rounded-xl border border-hairline p-4">
-            <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-sage-900">
-              <span aria-hidden className="msym text-[18px] text-accent">
-                warning
-              </span>
-              {t("sideEffects")}
-            </p>
-            {warning ? (
-              <>
-                <blockquote className="mt-3 rounded-lg border-s-4 border-accent bg-[#eef2fe] px-4 py-3 italic text-ink-strong">
-                  {warning.message}
-                </blockquote>
-                <p className="mt-3 text-sm text-muted">{t("clinicalNote")}</p>
-              </>
-            ) : (
-              <p className="mt-3 text-muted">{t("noSideEffects")}</p>
-            )}
-          </div>
+        {/* Patient questions */}
+        <div className="px-5 pb-5">
           <div className="rounded-xl border border-hairline p-4">
             <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-sage-900">
               <span aria-hidden className="msym text-[18px] text-info">

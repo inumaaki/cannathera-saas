@@ -7,6 +7,9 @@ import { useTranslations } from "next-intl";
 type Subscription = {
   id: string;
   isActive: boolean;
+  customMonthlyPrice?: string | number | null;
+  endsAt?: string | null;
+  pilotNote?: string | null;
   plan: {
     name: string;
     tier: string;
@@ -81,7 +84,24 @@ type AuditLog = {
   } | null;
 };
 
-type AdminSection = "partners" | "users" | "plans" | "logs" | "codes";
+type AdminSection = "partners" | "redflags" | "users" | "plans" | "logs" | "codes";
+
+type RedFlag = {
+  id: string;
+  severity: "INFO" | "WARNING" | "CRITICAL";
+  message: string;
+  createdAt: string;
+  acknowledged: boolean;
+  source: string;
+  patientId: string;
+  patientName: string;
+  patientRef: string | null;
+  practiceName: string | null;
+  pharmacyName: string | null;
+  submissionId: string | null;
+  questionnaire: string;
+  submittedAt: string;
+};
 
 type PartnerCode = {
   id: string;
@@ -218,6 +238,9 @@ export default function AdminDashboardPage() {
   const [globalUsers, setGlobalUsers] = useState<GlobalUser[]>([]);
   const [plans, setPlans] = useState<PricingPlan[]>([]);
   const [logs, setLogs] = useState<AuditLog[]>([]);
+  const [redFlags, setRedFlags] = useState<RedFlag[]>([]);
+  const [redFlagView, setRedFlagView] = useState<"unreviewed" | "reviewed" | "all">("unreviewed");
+  const [ackBusyId, setAckBusyId] = useState<string | null>(null);
   const [partnerCodes, setPartnerCodes] = useState<PartnerCode[]>([]);
   const [newCodeOrgId, setNewCodeOrgId] = useState("");
   const [newCodeLabel, setNewCodeLabel] = useState("");
@@ -236,6 +259,13 @@ export default function AdminDashboardPage() {
   // Edit Plan Price State
   const [editingPlanId, setEditingPlanId] = useState<string | null>(null);
   const [editPriceVal, setEditPriceVal] = useState("");
+
+  // Per-partner pilot pricing form (seeded when a partner row is expanded).
+  const [pilotPrice, setPilotPrice] = useState("");
+  const [pilotEndsAt, setPilotEndsAt] = useState("");
+  const [pilotNote, setPilotNote] = useState("");
+  const [pilotBusy, setPilotBusy] = useState(false);
+  const [pilotError, setPilotError] = useState("");
 
   const [onboardSuccessData, setOnboardSuccessData] = useState<{ name: string; email: string; tempPassword: string } | null>(null);
 
@@ -267,6 +297,9 @@ export default function AdminDashboardPage() {
       } else if (activeTab === "logs") {
         const res = await fetch(`${API_URL}/admin/audit-logs`, { credentials: "include" });
         if (res.ok) setLogs(await res.json());
+      } else if (activeTab === "redflags") {
+        const res = await fetch(`${API_URL}/admin/red-flags?view=${redFlagView}`, { credentials: "include" });
+        if (res.ok) setRedFlags(await res.json());
       } else if (activeTab === "codes") {
         const [codesRes, partnersRes] = await Promise.all([
           fetch(`${API_URL}/admin/partner-codes`, { credentials: "include" }),
@@ -280,7 +313,7 @@ export default function AdminDashboardPage() {
     } finally {
       setLoading(false);
     }
-  }, [activeTab]);
+  }, [activeTab, redFlagView]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => void loadTabData(), 0);
@@ -292,6 +325,7 @@ export default function AdminDashboardPage() {
       const section = new URLSearchParams(window.location.search).get("tab");
       if (
         section === "partners" ||
+        section === "redflags" ||
         section === "users" ||
         section === "plans" ||
         section === "logs" ||
@@ -334,6 +368,99 @@ export default function AdminDashboardPage() {
       }
     } catch (e) {
       console.error(e);
+    }
+  }
+
+  // Seed the pilot-pricing form from a partner's current subscription.
+  function seedPilotForm(p: Partner) {
+    const sub = p.subscriptions[0];
+    const cp = sub?.customMonthlyPrice;
+    setPilotPrice(cp === null || cp === undefined ? "" : String(cp));
+    setPilotEndsAt(sub?.endsAt ? String(sub.endsAt).slice(0, 10) : "");
+    setPilotNote(sub?.pilotNote ?? "");
+    setPilotError("");
+  }
+
+  async function acknowledgeRedFlag(flagId: string) {
+    setAckBusyId(flagId);
+    try {
+      const res = await fetch(`${API_URL}/admin/red-flags/${flagId}/acknowledge`, {
+        method: "PATCH",
+        credentials: "include",
+      });
+      if (res.ok) {
+        // In the unreviewed view the flag drops off the list; elsewhere just flip it.
+        setRedFlags((prev) =>
+          redFlagView === "unreviewed"
+            ? prev.filter((f) => f.id !== flagId)
+            : prev.map((f) => (f.id === flagId ? { ...f, acknowledged: true } : f)),
+        );
+      }
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setAckBusyId(null);
+    }
+  }
+
+  async function submitPilotPricing(orgId: string, clear = false) {
+    setPilotBusy(true);
+    setPilotError("");
+    try {
+      const price = clear ? null : Math.round(parseFloat(pilotPrice));
+      if (!clear && (pilotPrice.trim() === "" || Number.isNaN(price as number) || (price as number) < 0)) {
+        setPilotError(t("pilotPriceInvalid"));
+        setPilotBusy(false);
+        return;
+      }
+      const res = await fetch(`${API_URL}/admin/partners/${orgId}/pilot-pricing`, {
+        method: "PATCH",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          price,
+          endsAt: clear ? null : pilotEndsAt || null,
+          note: clear ? null : pilotNote || null,
+        }),
+      });
+      if (!res.ok) {
+        setPilotError(t("pilotPriceError"));
+        setPilotBusy(false);
+        return;
+      }
+      const data = await res.json();
+      setPartners((prev) =>
+        prev.map((p) => {
+          if (p.id !== orgId) return p;
+          const existing = p.subscriptions[0];
+          const nextSub: Subscription = {
+            id: existing?.id ?? "pending",
+            isActive: true,
+            customMonthlyPrice: data.customMonthlyPrice,
+            endsAt: data.endsAt,
+            pilotNote: data.pilotNote,
+            plan: existing?.plan ?? { name: "PREMIUM", tier: "PREMIUM" },
+          };
+          return {
+            ...p,
+            subscriptions: [nextSub, ...p.subscriptions.slice(1)],
+            memberships: p.memberships.map((m) => ({
+              ...m,
+              user: { ...m.user, isActive: true },
+            })),
+          };
+        })
+      );
+      if (clear) {
+        setPilotPrice("");
+        setPilotEndsAt("");
+        setPilotNote("");
+      }
+    } catch (e) {
+      console.error(e);
+      setPilotError(t("pilotPriceError"));
+    } finally {
+      setPilotBusy(false);
     }
   }
 
@@ -499,6 +626,20 @@ export default function AdminDashboardPage() {
     (l.user?.email || "").toLowerCase().includes(search.toLowerCase())
   );
 
+  const filteredRedFlags = redFlags.filter((f) => {
+    const q = search.toLowerCase();
+    return (
+      f.message.toLowerCase().includes(q) ||
+      f.patientName.toLowerCase().includes(q) ||
+      (f.patientRef || "").toLowerCase().includes(q) ||
+      (f.practiceName || "").toLowerCase().includes(q) ||
+      (f.pharmacyName || "").toLowerCase().includes(q)
+    );
+  });
+  const openCriticalCount = redFlags.filter(
+    (f) => !f.acknowledged && f.severity === "CRITICAL",
+  ).length;
+
   const partnersActive = partners.filter((p) => p.subscriptions.some((s) => s.isActive)).length;
   const globalUsersActive = globalUsers.filter((u) => u.isActive).length;
 
@@ -648,7 +789,14 @@ export default function AdminDashboardPage() {
                           <td className="px-6 py-4">
                             <button
                               type="button"
-                              onClick={() => setExpandedOrgId(isExpanded ? null : p.id)}
+                              onClick={() => {
+                                if (isExpanded) {
+                                  setExpandedOrgId(null);
+                                } else {
+                                  setExpandedOrgId(p.id);
+                                  seedPilotForm(p);
+                                }
+                              }}
                               className="flex items-center gap-2 font-bold text-pine hover:text-brand"
                             >
                               <span className="msym text-[18px] text-muted transition-transform duration-200" style={{ transform: isExpanded ? 'rotate(90deg)' : 'none' }}>
@@ -716,11 +864,27 @@ export default function AdminDashboardPage() {
                             )}
                           </td>
                           <td className="px-6 py-4">
-                            <div className="font-bold text-ink-strong">{sub?.plan?.name ?? t("noPlan")}</div>
+                            <div className="font-bold text-ink-strong flex items-center gap-1.5">
+                              {sub?.plan?.name ?? t("noPlan")}
+                              {sub?.customMonthlyPrice !== null && sub?.customMonthlyPrice !== undefined && (
+                                <span className="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-amber-800 border border-amber-200">
+                                  {t("pilot")}
+                                </span>
+                              )}
+                            </div>
                             <div className="text-xs text-muted mt-0.5">
-                              {sub?.plan?.monthlyPrice
+                              {sub?.customMonthlyPrice !== null && sub?.customMonthlyPrice !== undefined
+                                ? Number(sub.customMonthlyPrice) === 0
+                                  ? t("free")
+                                  : t("pricePerMonth", { price: `€${Number(sub.customMonthlyPrice)}.00` })
+                                : sub?.plan?.monthlyPrice
                                 ? t("pricePerMonth", { price: `€${sub.plan.monthlyPrice}.00` })
                                 : t("planInactive")}
+                              {sub?.endsAt && (
+                                <span className="ml-1 text-amber-700">
+                                  · {t("endsOn", { date: new Date(sub.endsAt).toLocaleDateString() })}
+                                </span>
+                              )}
                             </div>
                           </td>
                           <td className="px-6 py-4">
@@ -750,7 +914,7 @@ export default function AdminDashboardPage() {
 
                         {isExpanded && (
                           <tr className="bg-surface/30">
-                            <td colSpan={6} className="px-8 py-5 border-t border-b border-hairline">
+                            <td colSpan={7} className="px-8 py-5 border-t border-b border-hairline">
                               <div className="grid gap-6 sm:grid-cols-2">
                                 <div className="space-y-2">
                                   <h4 className="text-xs font-bold text-pine uppercase tracking-wider">{t("organizationDetails")}</h4>
@@ -793,6 +957,77 @@ export default function AdminDashboardPage() {
                                     ))}
                                   </div>
                                 </div>
+                              </div>
+
+                              {/* Pilot pricing — per-partner custom price (unlock + display) */}
+                              <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50/50 p-4">
+                                <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
+                                  <span aria-hidden className="msym text-[16px]">handshake</span>
+                                  {t("pilotPricing")}
+                                </h4>
+                                <p className="mt-1 text-[11px] text-amber-800/80">{t("pilotPricingHint")}</p>
+                                <div className="mt-3 flex flex-wrap items-end gap-3">
+                                  <label className="flex flex-col gap-1 text-[11px] font-semibold text-ink-strong">
+                                    {t("pilotPriceLabel")}
+                                    <div className="flex items-center gap-1">
+                                      <span className="text-muted text-sm">€</span>
+                                      <input
+                                        type="number"
+                                        min={0}
+                                        step={1}
+                                        value={pilotPrice}
+                                        onChange={(e) => setPilotPrice(e.target.value)}
+                                        placeholder="400"
+                                        className="w-28 rounded-lg border border-hairline bg-white px-2.5 py-1.5 text-sm"
+                                      />
+                                      <button
+                                        type="button"
+                                        onClick={() => setPilotPrice("0")}
+                                        className="rounded-lg border border-amber-300 px-2 py-1.5 text-[11px] font-bold text-amber-800 hover:bg-amber-100"
+                                      >
+                                        {t("free")}
+                                      </button>
+                                    </div>
+                                  </label>
+                                  <label className="flex flex-col gap-1 text-[11px] font-semibold text-ink-strong">
+                                    {t("pilotEndsLabel")}
+                                    <input
+                                      type="date"
+                                      value={pilotEndsAt}
+                                      onChange={(e) => setPilotEndsAt(e.target.value)}
+                                      className="rounded-lg border border-hairline bg-white px-2.5 py-1.5 text-sm"
+                                    />
+                                  </label>
+                                  <label className="flex flex-col gap-1 text-[11px] font-semibold text-ink-strong flex-1 min-w-[160px]">
+                                    {t("pilotNoteLabel")}
+                                    <input
+                                      type="text"
+                                      value={pilotNote}
+                                      onChange={(e) => setPilotNote(e.target.value)}
+                                      placeholder={t("pilotNotePlaceholder")}
+                                      className="w-full rounded-lg border border-hairline bg-white px-2.5 py-1.5 text-sm"
+                                    />
+                                  </label>
+                                  <div className="flex items-center gap-2">
+                                    <button
+                                      type="button"
+                                      disabled={pilotBusy}
+                                      onClick={() => void submitPilotPricing(p.id)}
+                                      className="rounded-lg bg-brand px-3.5 py-2 text-xs font-bold text-white hover:bg-pine disabled:opacity-50"
+                                    >
+                                      {t("save")}
+                                    </button>
+                                    <button
+                                      type="button"
+                                      disabled={pilotBusy}
+                                      onClick={() => void submitPilotPricing(p.id, true)}
+                                      className="rounded-lg border border-hairline px-3.5 py-2 text-xs font-bold text-muted hover:bg-surface disabled:opacity-50"
+                                    >
+                                      {t("pilotReset")}
+                                    </button>
+                                  </div>
+                                </div>
+                                {pilotError && <p className="mt-2 text-[11px] font-semibold text-red-600">{pilotError}</p>}
                               </div>
                             </td>
                           </tr>
@@ -1052,6 +1287,137 @@ export default function AdminDashboardPage() {
               );
             })}
           </div>
+        </div>
+      )}
+
+      {/* Red-Flag Oversight Tab — cross-org clinical alerts for admin compliance. */}
+      {activeTab === "redflags" && (
+        <div className="space-y-6">
+          <div className="flex flex-col gap-4 rounded-2xl border border-hairline bg-white p-4 shadow-sm sm:p-5 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <h3 className="flex items-center gap-2 font-display text-lg font-bold text-pine">
+                <span aria-hidden className="msym text-[22px] text-red-600">e911_emergency</span>
+                {t("redFlagOversight")}
+              </h3>
+              <p className="text-xs text-muted mt-0.5">{t("redFlagOversightDescription")}</p>
+            </div>
+            <div className="relative w-full max-w-md">
+              <span className="absolute inset-y-0 left-3 flex items-center text-muted">
+                <span className="msym text-[20px]">search</span>
+              </span>
+              <input
+                type="text"
+                placeholder={t("searchRedFlags")}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="w-full rounded-xl border border-hairline bg-surface py-2.5 pl-10 pr-4 text-sm focus:border-brand focus:outline-none"
+              />
+            </div>
+          </div>
+
+          {/* View filter + critical count */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-2">
+              {(["unreviewed", "reviewed", "all"] as const).map((v) => (
+                <button
+                  key={v}
+                  type="button"
+                  onClick={() => setRedFlagView(v)}
+                  className={`rounded-lg px-3.5 py-1.5 text-xs font-bold transition ${
+                    redFlagView === v
+                      ? "bg-brand text-white"
+                      : "border border-hairline text-muted hover:bg-surface hover:text-pine"
+                  }`}
+                >
+                  {t(`redFlagView_${v}`)}
+                </button>
+              ))}
+            </div>
+            {openCriticalCount > 0 ? (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-red-100 px-3 py-1 text-xs font-bold text-red-700">
+                <span aria-hidden className="msym text-[16px]">priority_high</span>
+                {t("redFlagCriticalOpen", { count: openCriticalCount })}
+              </span>
+            ) : null}
+          </div>
+
+          {loading ? (
+            <div className="rounded-2xl border border-hairline bg-white p-12 text-center text-sm text-muted shadow-sm">
+              {t("loadingRedFlags")}
+            </div>
+          ) : filteredRedFlags.length === 0 ? (
+            <div className="rounded-2xl border border-hairline bg-white p-12 text-center text-sm text-muted shadow-sm">
+              {t("noRedFlags")}
+            </div>
+          ) : (
+            <ul className="space-y-3">
+              {filteredRedFlags.map((f) => {
+                const tone =
+                  f.severity === "CRITICAL"
+                    ? { border: "border-red-200", bg: "bg-red-50", icon: "priority_high", text: "text-red-700", chip: "bg-red-100 text-red-700" }
+                    : f.severity === "WARNING"
+                      ? { border: "border-amber-200", bg: "bg-amber-50", icon: "trending_down", text: "text-amber-700", chip: "bg-amber-100 text-amber-800" }
+                      : { border: "border-sky-200", bg: "bg-sky-50", icon: "info", text: "text-sky-700", chip: "bg-sky-100 text-sky-800" };
+                const partnerName = f.practiceName || f.pharmacyName || t("redFlagNoPartner");
+                return (
+                  <li
+                    key={f.id}
+                    className={`rounded-2xl border ${f.acknowledged ? "border-hairline bg-white" : tone.border + " " + tone.bg} p-4 shadow-sm sm:p-5`}
+                  >
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="flex min-w-0 items-start gap-3">
+                        <span aria-hidden className={`msym mt-0.5 text-[22px] ${tone.text}`}>
+                          {tone.icon}
+                        </span>
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <span className={`rounded-md px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide ${tone.chip}`}>
+                              {t(`redFlagSeverity_${f.severity}`)}
+                            </span>
+                            {f.acknowledged ? (
+                              <span className="inline-flex items-center gap-1 rounded-md bg-mint/40 px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-pine">
+                                <span aria-hidden className="msym text-[13px]">check</span>
+                                {t("redFlagReviewed")}
+                              </span>
+                            ) : null}
+                            <span className="text-[11px] font-semibold text-muted">
+                              {new Date(f.createdAt).toLocaleString()}
+                            </span>
+                          </div>
+                          <p className="mt-1.5 font-semibold text-ink-strong">{f.message}</p>
+                          <div className="mt-1.5 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted">
+                            <span className="inline-flex items-center gap-1">
+                              <span aria-hidden className="msym text-[15px]">person</span>
+                              <span className="font-semibold text-ink-strong">{f.patientName}</span>
+                              {f.patientRef ? <span className="font-mono">· {f.patientRef}</span> : null}
+                            </span>
+                            <span className="inline-flex items-center gap-1">
+                              <span aria-hidden className="msym text-[15px]">corporate_fare</span>
+                              {partnerName}
+                            </span>
+                            <span className="inline-flex items-center gap-1">
+                              <span aria-hidden className="msym text-[15px]">description</span>
+                              {f.questionnaire}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      {!f.acknowledged ? (
+                        <button
+                          type="button"
+                          onClick={() => void acknowledgeRedFlag(f.id)}
+                          disabled={ackBusyId === f.id}
+                          className="shrink-0 rounded-xl bg-pine-600 px-4 py-2 text-xs font-bold uppercase tracking-wide text-white transition hover:bg-pine disabled:opacity-60"
+                        >
+                          {ackBusyId === f.id ? t("redFlagAcknowledging") : t("redFlagAcknowledge")}
+                        </button>
+                      ) : null}
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
+          )}
         </div>
       )}
 

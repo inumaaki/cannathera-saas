@@ -80,6 +80,20 @@ export class BillingService {
     const reviews = await this.reviewsBetween(orgIds, from, to);
     const active = tierFor(Math.max(1, reviews));
 
+    // Pilot agreement (admin-set custom price). Display only — surfaced here so
+    // partners on an individual deal see their agreed price, not just usage.
+    const sub = await this.prisma.subscription.findFirst({
+      where: { orgId: org.id, isActive: true },
+    });
+    const pilot =
+      sub?.customMonthlyPrice != null
+        ? {
+            monthlyPrice: Number(sub.customMonthlyPrice),
+            endsAt: sub.endsAt,
+            note: sub.pilotNote,
+          }
+        : null;
+
     const tiers = TIERS.map((t) => {
       // How much of THIS tier's band the volume has filled. Tier 3 is open-ended:
       // it has no capacity, so it shows the raw overflow instead of a percentage.
@@ -122,6 +136,7 @@ export class BillingService {
       activeTier: active.key,
       unitPrice: active.unitPrice,
       projectedCost: Math.round(reviews * active.unitPrice * 100) / 100,
+      pilot,
       tiers,
     };
   }

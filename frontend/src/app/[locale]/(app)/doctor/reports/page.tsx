@@ -16,7 +16,6 @@ type Reports = {
     patientRef: string | null;
     submittedAt: string;
     compliance: number | null;
-    risk: "low" | "moderate" | "high";
   }>;
   totalLogs: number;
 };
@@ -52,12 +51,6 @@ export default async function DoctorReports({
 
   const rangeLabel = { "30": t("last30"), "90": t("last90"), all: t("allTime") } as const;
 
-  const riskStyle = {
-    low: "bg-mint/40 text-pine",
-    moderate: "bg-[#fdf3d7] text-gold",
-    high: "bg-red-100 text-red-600",
-  } as const;
-  const riskLabel = { low: t("riskLow"), moderate: t("riskModerate"), high: t("riskHigh") };
 
   return (
     <>
@@ -233,7 +226,6 @@ export default async function DoctorReports({
               <tr className="bg-[#eef1f8] text-xs font-bold uppercase tracking-wide text-ink-strong">
                 <th className="px-6 py-3 text-start">{t("colPeriod")}</th>
                 <th className="px-6 py-3 text-start">{t("colCompliance")}</th>
-                <th className="px-6 py-3 text-start">{t("colRisk")}</th>
                 <th className="px-6 py-3 text-end">{t("colActions")}</th>
               </tr>
             </thead>
@@ -264,13 +256,6 @@ export default async function DoctorReports({
                       }`}
                     >
                       {r.compliance != null ? `${r.compliance}%` : "—"}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span
-                      className={`rounded-full px-3 py-1 text-[10px] font-bold uppercase ${riskStyle[r.risk]}`}
-                    >
-                      ● {riskLabel[r.risk]}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-end">

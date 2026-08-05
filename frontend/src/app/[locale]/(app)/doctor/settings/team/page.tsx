@@ -41,8 +41,6 @@ export default async function SettingsTeam({
         "patients:view",
         "patients:create",
         "patients:note",
-        "alerts:view",
-        "alerts:acknowledge",
         "appointments:manage",
         "reports:view",
         "settings:practice",

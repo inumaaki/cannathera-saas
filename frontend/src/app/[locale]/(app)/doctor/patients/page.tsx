@@ -13,20 +13,18 @@ type Row = {
   adherence: number;
   lastLogAt: string | null;
   lastPain: number | null;
-  openFlags: number;
-  criticalFlags: number;
 };
 
-/* Figma 5.2 — Patient Roster. ?flagged=1 = flagged only; ?q= = topbar search. */
+/* Figma 5.2 — Patient Roster. ?q= = topbar search. */
 export default async function DoctorRoster({
   params,
   searchParams,
 }: Readonly<{
   params: Promise<{ locale: string }>;
-  searchParams: Promise<{ flagged?: string; q?: string }>;
+  searchParams: Promise<{ q?: string }>;
 }>) {
   const { locale } = await params;
-  const { flagged, q } = await searchParams;
+  const { q } = await searchParams;
   setRequestLocale(locale);
 
 
@@ -43,17 +41,14 @@ export default async function DoctorRoster({
   const needle = q?.toLowerCase().trim();
   const rows = (all ?? []).filter(
     (r) =>
-      (flagged ? r.openFlags > 0 : true) &&
-      (!needle ||
+      !needle ||
         r.name.toLowerCase().includes(needle) ||
         r.email.toLowerCase().includes(needle) ||
-        (r.patientRef ?? "").toLowerCase().includes(needle)),
+        (r.patientRef ?? "").toLowerCase().includes(needle),
   );
   const avgAdherence = rows.length
     ? Math.round(rows.reduce((a, r) => a + r.adherence, 0) / rows.length)
     : 0;
-  const totalFlags = (all ?? []).reduce((a, r) => a + r.openFlags, 0);
-  const critical = (all ?? []).reduce((a, r) => a + r.criticalFlags, 0);
   const onTrack = (all ?? []).filter((r) => r.adherence >= 70).length;
 
   const badge = (adherence: number) =>
@@ -87,7 +82,7 @@ export default async function DoctorRoster({
         </Link>
       </div>
 
-      {/* Filters */}
+      {/* Search filter */}
       <div className="mt-5 flex flex-wrap items-center gap-3 rounded-xl border border-hairline bg-white px-5 py-3">
         <span className="text-xs font-bold uppercase tracking-wide text-muted">
           {t("filters")}
@@ -95,29 +90,14 @@ export default async function DoctorRoster({
         <Link
           href="/doctor/patients"
           className={`inline-flex h-9 items-center gap-1.5 rounded-full border px-4 text-sm font-semibold ${
-            !flagged
-              ? "border-pine-600 bg-mint/30 text-pine"
-              : "border-hairline bg-white text-muted hover:text-ink-strong"
+            "border-pine-600 bg-mint/30 text-pine"
           }`}
         >
           <span
             aria-hidden
-            className={`size-2 rounded-full ${!flagged ? "bg-pine-600" : "bg-hairline"}`}
+            className="size-2 rounded-full bg-pine-600"
           />
           {t("active")}
-        </Link>
-        <Link
-          href={{ pathname: "/doctor/patients", query: { flagged: "1" } }}
-          className={`inline-flex h-9 items-center gap-1.5 rounded-full border px-4 text-sm font-semibold ${
-            flagged
-              ? "border-red-400 bg-red-50 text-red-600"
-              : "border-hairline bg-white text-muted hover:text-ink-strong"
-          }`}
-        >
-          <span aria-hidden className="msym text-[16px] leading-none">
-            flag
-          </span>
-          {t("flaggedOnly")}
         </Link>
         <span className="ms-auto" />
         <Link
@@ -149,19 +129,13 @@ export default async function DoctorRoster({
               <tr key={r.id} className="border-t border-hairline hover:bg-surface/60">
                 <td className="px-5 py-4">
                   <Link href={`/doctor/patients/${r.id}`} className="flex items-center gap-3">
-                    <span className="relative flex size-11 shrink-0 items-center justify-center rounded-full bg-[#eef1f8] font-bold text-pine">
+                    <span className="flex size-11 shrink-0 items-center justify-center rounded-full bg-[#eef1f8] font-bold text-pine">
                       {r.name
                         .split(/\s+/)
                         .map((p) => p[0])
                         .slice(0, 2)
                         .join("")
                         .toUpperCase() || "?"}
-                      {r.openFlags > 0 ? (
-                        <span
-                          aria-hidden
-                          className="absolute -bottom-0.5 -end-0.5 size-3.5 rounded-full border-2 border-white bg-red-500"
-                        />
-                      ) : null}
                     </span>
                     <span>
                       <span className="block font-bold text-ink-strong hover:text-pine-600">
@@ -205,16 +179,7 @@ export default async function DoctorRoster({
                   {r.lastLogAt ? format.relativeTime(new Date(r.lastLogAt)) : t("never")}
                 </td>
                 <td className="px-5 py-4 font-mono text-ink-strong">
-                  {r.openFlags > 0 ? (
-                    <span className="flex items-center gap-1.5 text-gold">
-                      <span aria-hidden className="msym text-[16px]">
-                        history
-                      </span>
-                      {t("pendingReview")}
-                    </span>
-                  ) : (
-                    t("noAppointment")
-                  )}
+                  {t("noAppointment")}
                 </td>
               </tr>
             ))}
@@ -226,7 +191,7 @@ export default async function DoctorRoster({
       </section>
 
       {/* Summary cards */}
-      <div className="mt-6 grid gap-4 md:grid-cols-3">
+      <div className="mt-6 grid gap-4 md:grid-cols-2">
         <div className="rounded-xl border border-hairline bg-white p-5">
           <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-sage-900">
             <span aria-hidden className="msym text-[18px] text-pine-600">
@@ -237,22 +202,6 @@ export default async function DoctorRoster({
           <p className="mt-2 font-display text-3xl font-bold text-ink-strong">
             {avgAdherence}%
           </p>
-        </div>
-        <div className="rounded-xl border border-hairline bg-white p-5">
-          <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-sage-900">
-            <span aria-hidden className="msym text-[18px] text-red-600">
-              report
-            </span>
-            {t("activeFlags")}
-          </p>
-          <p className="mt-2 font-display text-3xl font-bold text-ink-strong">
-            {totalFlags}
-          </p>
-          {critical > 0 ? (
-            <p className="mt-1 text-sm font-semibold text-red-600">
-              {t("requireAction", { count: critical })}
-            </p>
-          ) : null}
         </div>
         <div className="rounded-xl bg-brand p-5 text-white">
           <p className="text-xs font-bold uppercase tracking-wide text-white/70">

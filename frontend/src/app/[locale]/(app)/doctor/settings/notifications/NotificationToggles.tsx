@@ -5,10 +5,9 @@ import { api } from "@/lib/api";
 
 type ItemLabels = Record<string, { title: string; text: string }>;
 
-const CLINICAL = ["redFlags", "newLogs", "apptReminders"] as const;
+const CLINICAL = ["newLogs", "apptReminders"] as const;
 const SYSTEM = ["dailySummaries", "securityAlerts"] as const;
 const DEFAULTS: Record<string, boolean> = {
-  redFlags: true,
   newLogs: true,
   apptReminders: false,
   dailySummaries: true,
