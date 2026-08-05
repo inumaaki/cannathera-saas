@@ -34,6 +34,23 @@ function bypassList(): Set<string> {
   return cachedList;
 }
 
+let cachedOtpList: Set<string> | null = null;
+let cachedOtpRaw: string | undefined;
+
+function otpBypassList(): Set<string> {
+  const raw = process.env.OTP_BYPASS_EMAILS;
+  if (raw !== cachedOtpRaw || cachedOtpList === null) {
+    cachedOtpRaw = raw;
+    cachedOtpList = new Set(
+      (raw ?? '')
+        .split(',')
+        .map((e) => e.trim().toLowerCase())
+        .filter(Boolean),
+    );
+  }
+  return cachedOtpList;
+}
+
 /** True when the whole paywall is switched off for this environment. */
 export function isPaywallDisabled(): boolean {
   return process.env.DISABLE_PAYWALL === 'true';
@@ -44,4 +61,10 @@ export function isPaywallBypassed(email?: string | null): boolean {
   if (isPaywallDisabled()) return true;
   if (!email) return false;
   return bypassList().has(email.toLowerCase());
+}
+
+/** True when this email should bypass OTP verification. */
+export function isOtpBypassed(email?: string | null): boolean {
+  if (!email) return false;
+  return otpBypassList().has(email.toLowerCase());
 }

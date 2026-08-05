@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  ForbiddenException,
   Get,
   Headers,
   HttpCode,
@@ -53,8 +54,10 @@ export class StripeController {
     );
   }
 
-  // Local development callback bypass to activate mock session locally
+  // Local development callback bypass to activate mock session locally.
+  // Requires an authenticated session and is blocked entirely in production.
   @Get('simulate-success')
+  @UseGuards(SessionGuard)
   async simulateSuccess(
     @Query('session_id') sessionId: string | undefined,
     @Query('orgId') orgId: string | undefined,
@@ -63,6 +66,10 @@ export class StripeController {
     @Query('returnUrl') returnUrl: string | undefined,
     @Res() res: Response,
   ) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new ForbiddenException('NOT_AVAILABLE_IN_PRODUCTION');
+    }
+
     const webOrigin =
       this.config.get<string>('WEB_ORIGIN') ?? 'http://localhost:3000';
 

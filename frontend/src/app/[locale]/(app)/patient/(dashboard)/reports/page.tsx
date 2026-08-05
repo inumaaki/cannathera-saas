@@ -1,7 +1,7 @@
 import { getFormatter, getTranslations, setRequestLocale } from "next-intl/server";
 import { apiServer } from "@/lib/api-server";
-import { API_URL } from "@/lib/api";
 import { ReportButtons } from "@/components/reports/ReportButtons";
+import { ReportHistoryRow } from "@/components/reports/ReportHistoryRow";
 
 type ReportRow = {
   id: string;
@@ -78,38 +78,7 @@ export default async function PatientReports({
                 </p>
               </div>
               {r.fileUrl ? (
-                <button
-                  type="button"
-                  onClick={async () => {
-                    try {
-                      const res = await fetch(`${API_URL}/documents/file/${r.id}`, { credentials: 'include' });
-                      if (!res.ok) {
-                        const data = await res.json().catch(() => ({}));
-                        if (res.status === 403 && data.message === "UPGRADE_REQUIRED") {
-                           window.location.href = "/patient/plan";
-                           return;
-                        }
-                        throw new Error("Download failed");
-                      }
-                      const blob = await res.blob();
-                      const href = URL.createObjectURL(blob);
-                      const a = document.createElement("a");
-                      a.href = href;
-                      a.download = `cannathera-report.pdf`;
-                      a.click();
-                      URL.revokeObjectURL(href);
-                    } catch (err: unknown) {
-                      const msg = err instanceof Error ? err.message : String(err);
-                      alert("Network error: " + msg);
-                    }
-                  }}
-                  className="flex shrink-0 items-center gap-1.5 rounded-lg border border-pine-600 px-3 py-2 text-xs font-bold text-pine-600 hover:bg-mint/20"
-                >
-                  <span aria-hidden className="msym text-[16px]">
-                    download
-                  </span>
-                  {t("download")}
-                </button>
+                <ReportHistoryRow reportId={r.id} downloadLabel={t("download")} />
               ) : null}
             </div>
           ))

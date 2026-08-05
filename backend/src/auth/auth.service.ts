@@ -13,7 +13,7 @@ import { randomBytes, randomInt } from 'crypto';
 import * as nodemailer from 'nodemailer';
 import { lookup } from 'dns/promises';
 import { PrismaService } from '../prisma/prisma.service';
-import { isPaywallBypassed, ROLE_PRESETS } from '../shared';
+import { isOtpBypassed, isPaywallBypassed, ROLE_PRESETS } from '../shared';
 import { twoFactorEmail } from '../shared/email-templates';
 import type {
   DoctorDataDto,
@@ -227,6 +227,8 @@ export class AuthService {
                   : undefined,
               },
             });
+            // ROLE_PRESETS.ADMIN includes all permissions (patients:view, reports:view, etc.)
+            // Explicitly spread so a future preset change doesn't silently remove access.
             await tx.membership.create({
               data: {
                 userId: created.id,
@@ -280,17 +282,18 @@ export class AuthService {
         return created;
       });
 
-      // TEMPORARY FOR TESTING: Force 2FA to be skipped for all accounts
-      const skip2fa = true;
+      const policy = await this.policyFor(user.id);
+      // Skip 2FA if the org has it disabled, or this account is on the OTP bypass list.
+      const skip2fa = !policy.mandatory2fa || isOtpBypassed(user.email);
 
       if (skip2fa) {
         await this.prisma.auditLog.create({
           data: { userId: user.id, action: 'LOGIN_2FA_SKIPPED', ipAddress: ip },
         });
-        const policy = await this.policyFor(user.id);
         return {
           user,
           session: this.signSession(user, policy.sessionTimeoutMin, false),
+          ttlMin: policy.sessionTimeoutMin,
         };
       }
 
@@ -414,9 +417,11 @@ export class AuthService {
 
     const policy = await this.policyFor(user.id);
 
-    // 2FA skipped for ADMIN role because they can't access the email
-    // TEMPORARY FOR TESTING: Force 2FA to be skipped for all accounts
-    const skip2fa = true; // !policy.mandatory2fa || user.role === 'ADMIN';
+    // Skip 2FA when: org has it disabled, account is on the OTP bypass list, or ADMIN role.
+    const skip2fa =
+      !policy.mandatory2fa ||
+      user.role === Role.ADMIN ||
+      isOtpBypassed(user.email);
 
     if (skip2fa) {
       await this.prisma.auditLog.create({
@@ -537,7 +542,9 @@ export class AuthService {
     // Always report success — never reveal whether an email exists.
     if (!user || !user.isActive) return { devToken: undefined };
 
-    const token = randomBytes(32).toString('base64url');
+    // Embed userId as a prefix so resetPassword() can scope the DB lookup.
+    const rawBytes = randomBytes(32).toString('base64url');
+    const token = `${user.id}.${rawBytes}`;
     await this.prisma.passwordResetToken.create({
       data: {
         userId: user.id,
@@ -562,10 +569,16 @@ export class AuthService {
   }
 
   async resetPassword(token: string, password: string, ip?: string) {
+    // Token format: "<userId>.<randomBytes>" — userId prefix scopes the DB lookup
+    // to one user's tokens, avoiding a full-table argon2 scan.
+    const dotIdx = token.indexOf('.');
+    if (dotIdx === -1) throw new UnauthorizedException('INVALID_RESET_TOKEN');
+    const userId = token.slice(0, dotIdx);
+
     const candidates = await this.prisma.passwordResetToken.findMany({
-      where: { consumedAt: null, expiresAt: { gt: new Date() } },
+      where: { userId, consumedAt: null, expiresAt: { gt: new Date() } },
       orderBy: { createdAt: 'desc' },
-      take: 50,
+      take: 5,
     });
 
     let match: (typeof candidates)[number] | null = null;

@@ -422,7 +422,17 @@ export class ReportsService {
         select: { packageTier: true },
       });
       if (!profile) throw new NotFoundException('PATIENT_NOT_FOUND');
-      if (profile.packageTier === SubscriptionTier.BASIC) {
+      // BASIC tier: only MONTHLY reports are included. QUARTERLY / YEARLY /
+      // LONG_TERM require a PLUS or PREMIUM subscription.
+      const advancedTypes: ReportType[] = [
+        ReportType.QUARTERLY,
+        ReportType.YEARLY,
+        ReportType.LONG_TERM,
+      ];
+      if (
+        profile.packageTier === SubscriptionTier.BASIC &&
+        advancedTypes.includes(type)
+      ) {
         throw new ForbiddenException('UPGRADE_REQUIRED');
       }
     } else {
@@ -541,7 +551,16 @@ export class ReportsService {
         where: { id: report.patientId },
         select: { packageTier: true },
       });
-      if (profile && profile.packageTier === 'BASIC') {
+      const advancedTypes: ReportType[] = [
+        ReportType.QUARTERLY,
+        ReportType.YEARLY,
+        ReportType.LONG_TERM,
+      ];
+      if (
+        profile &&
+        profile.packageTier === SubscriptionTier.BASIC &&
+        advancedTypes.includes(report.type)
+      ) {
         throw new ForbiddenException('UPGRADE_REQUIRED');
       }
     }
