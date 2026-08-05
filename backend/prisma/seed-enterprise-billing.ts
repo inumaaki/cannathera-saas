@@ -5,7 +5,11 @@ import { randomBytes } from "crypto";
 
 const prisma = new PrismaClient();
 
-const TIERS = { 1: 8, 2: 6.5, 3: 5 } as const;
+function tierFor(reviews: number) {
+  if (reviews <= 500) return { tier: 1, unitPrice: 8 } as const;
+  if (reviews <= 1500) return { tier: 2, unitPrice: 6.5 } as const;
+  return { tier: 3, unitPrice: 5 } as const;
+}
 
 async function main() {
   const org = await prisma.organization.findFirst({
@@ -19,12 +23,12 @@ async function main() {
   // Six months of closed invoices, most recent one still pending.
   const now = new Date();
   const history = [
-    { back: 1, reviews: 181, tier: 2 as const, status: InvoiceStatus.PENDING },
-    { back: 2, reviews: 223, tier: 2 as const, status: InvoiceStatus.PAID },
-    { back: 3, reviews: 196, tier: 2 as const, status: InvoiceStatus.PAID },
-    { back: 4, reviews: 112, tier: 1 as const, status: InvoiceStatus.PAID },
-    { back: 5, reviews: 98, tier: 1 as const, status: InvoiceStatus.PAID },
-    { back: 6, reviews: 74, tier: 1 as const, status: InvoiceStatus.OVERDUE },
+    { back: 1, reviews: 181, status: InvoiceStatus.PENDING },
+    { back: 2, reviews: 223, status: InvoiceStatus.PAID },
+    { back: 3, reviews: 196, status: InvoiceStatus.PAID },
+    { back: 4, reviews: 112, status: InvoiceStatus.PAID },
+    { back: 5, reviews: 98, status: InvoiceStatus.PAID },
+    { back: 6, reviews: 74, status: InvoiceStatus.OVERDUE },
   ];
 
   let created = 0;
@@ -34,16 +38,29 @@ async function main() {
     const exists = await prisma.invoice.findFirst({
       where: { orgId: org.id, periodStart },
     });
-    if (exists) continue;
+    const { tier, unitPrice } = tierFor(h.reviews);
+    if (exists) {
+      await prisma.invoice.update({
+        where: { id: exists.id },
+        data: {
+          tier: `Tier ${tier}`,
+          reviews: h.reviews,
+          unitPrice,
+          amount: Math.round(h.reviews * unitPrice * 100) / 100,
+          status: h.status,
+          paidAt: h.status === InvoiceStatus.PAID ? periodEnd : null,
+        },
+      });
+      continue;
+    }
 
-    const unitPrice = TIERS[h.tier];
     await prisma.invoice.create({
       data: {
         orgId: org.id,
         number: `INV-${periodStart.getFullYear()}-${String(900 + history.length - i).padStart(4, "0")}`,
         periodStart,
         periodEnd,
-        tier: `Tier ${h.tier}`,
+        tier: `Tier ${tier}`,
         reviews: h.reviews,
         unitPrice,
         amount: Math.round(h.reviews * unitPrice * 100) / 100,

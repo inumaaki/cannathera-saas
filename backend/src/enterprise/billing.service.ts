@@ -71,11 +71,10 @@ export class BillingService {
     const org = await this.orgOf(userId);
     const orgIds = await this.billedOrgIds(org.id, org.type);
 
-    // Current quarter — the Figma shows a quarterly billing cycle.
+    // Current calendar month, matching invoice generation and the overview.
     const now = new Date();
-    const qStartMonth = Math.floor(now.getMonth() / 3) * 3;
-    const from = new Date(now.getFullYear(), qStartMonth, 1);
-    const to = new Date(now.getFullYear(), qStartMonth + 3, 1);
+    const from = new Date(now.getFullYear(), now.getMonth(), 1);
+    const to = new Date(now.getFullYear(), now.getMonth() + 1, 1);
 
     const reviews = await this.reviewsBetween(orgIds, from, to);
     const active = tierFor(Math.max(1, reviews));
@@ -129,7 +128,7 @@ export class BillingService {
       cycle: {
         from,
         to,
-        label: `Q${Math.floor(qStartMonth / 3) + 1} ${now.getFullYear()}`,
+        label: `${String(now.getMonth() + 1).padStart(2, '0')}/${now.getFullYear()}`,
       },
       totalVolume: reviews,
       volumeLimit: 1500,

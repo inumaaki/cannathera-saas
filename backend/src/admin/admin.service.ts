@@ -422,8 +422,9 @@ export class AdminService {
               'patients:view',
               'patients:create',
               'patients:note',
-              'alerts:view',
-              'alerts:acknowledge',
+              ...(role === Role.PHARMACY
+                ? ['alerts:view', 'alerts:acknowledge']
+                : []),
               'appointments:manage',
               'reports:view',
               'settings:practice',

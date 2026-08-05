@@ -8,11 +8,11 @@
   "scripts": {
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "prisma migrate deploy && nest start",
+    "start": "nest start",
     "dev": "nest start --watch",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "prisma migrate deploy && npx --yes tsx prisma/create-admin.ts && node dist/main",
+    "start:prod": "node dist/main",
     "lint": "eslint \"src/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
@@ -20,7 +20,11 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "prisma:generate": "prisma generate",
-    "postinstall": "npx prisma migrate resolve --rolled-back 20260801110904_sync_onboarding_fields || exit 0"
+    "migrate:deploy": "prisma migrate deploy",
+    "migrate:status": "prisma migrate status",
+    "admin:bootstrap": "ts-node prisma/create-admin.ts",
+    "demo:repair-logins": "ts-node prisma/repair-demo-logins.ts",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",
@@ -36,7 +40,7 @@
     "cookie-parser": "^1.4.7",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^9.0.3",
-    "openai": "^7.0.0",
+    "openai": "^7.4.0",
     "puppeteer": "^25.3.0",
     "reflect-metadata": "^0.2.2",
     "rxjs": "^7.8.1",

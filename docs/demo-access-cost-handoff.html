@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cannathera Access, Source and Cost Handoff</title>
+  <style>
+    @page { size: A4; margin: 18mm; }
+    body { color: #173b2d; font: 14px/1.5 Arial, sans-serif; margin: 0; }
+    h1, h2 { color: #075f3d; margin: 0 0 10px; }
+    h1 { font-size: 26px; border-bottom: 3px solid #a8e5c1; padding-bottom: 10px; }
+    h2 { font-size: 18px; margin-top: 24px; }
+    p { margin: 6px 0; }
+    table { border-collapse: collapse; margin: 10px 0 18px; width: 100%; }
+    th, td { border: 1px solid #d6e2dc; padding: 8px; text-align: left; vertical-align: top; }
+    th { background: #edf7f1; }
+    code { background: #f1f5f3; padding: 1px 4px; }
+    .warning { background: #fff8e6; border-left: 4px solid #d99a00; padding: 10px 12px; }
+    .ok { color: #075f3d; font-weight: bold; }
+    .missing { color: #9b3d20; font-weight: bold; }
+    .small { color: #52675e; font-size: 12px; }
+  </style>
+</head>
+<body>
+  <h1>Cannathera Access, Source and Cost Handoff</h1>
+  <p class="small">Prepared from the source repository on 5 August 2026. Secrets are intentionally excluded.</p>
+
+  <h2>1. Complete source access</h2>
+  <p>The complete application source is the repository rooted at <code>cannathera-saas/</code>.</p>
+  <table>
+    <tr><th>Area</th><th>Location</th></tr>
+    <tr><td>Web application</td><td><code>frontend/</code></td></tr>
+    <tr><td>API and business logic</td><td><code>backend/src/</code></td></tr>
+    <tr><td>Database schema and migrations</td><td><code>backend/prisma/</code></td></tr>
+    <tr><td>Translations</td><td><code>frontend/messages/</code></td></tr>
+    <tr><td>Architecture documentation</td><td><code>cannathera_saas_documentation.md</code> and <code>docs/</code></td></tr>
+  </table>
+  <p class="warning">Do not distribute <code>backend/.env</code>, database exports, password hashes, API keys, or live patient data with a source archive. Transfer those through a password manager and rotate them after handoff.</p>
+
+  <h2>2. Verified demo accounts found in source</h2>
+  <table>
+    <tr><th>Portal</th><th>Email</th><th>Demo password</th><th>Source</th></tr>
+    <tr><td>Enterprise</td><td>enterprise@example.com</td><td>testpass123</td><td><code>backend/prisma/seed-enterprise.ts</code></td></tr>
+    <tr><td>Pharmacy</td><td>apotheke@example.com</td><td>testpass123</td><td><code>backend/prisma/seed-pharmacy.ts</code></td></tr>
+  </table>
+  <p><span class="missing">Not verified in source:</span> a physician demo password and a patient demo password. These should be reset through the application rather than guessed or copied from password hashes.</p>
+
+  <h2>3. External account ownership checklist</h2>
+  <table>
+    <tr><th>Service</th><th>Application configuration</th><th>What must be handed over securely</th></tr>
+    <tr><td>PostgreSQL</td><td><code>DATABASE_URL</code> is configured locally</td><td>Provider account, project/database name, billing owner, backup policy, recovery codes</td></tr>
+    <tr><td>SMTP / email</td><td>SMTP host, user and password variables are configured</td><td>Mailbox/provider login, billing owner, DNS records, recovery codes</td></tr>
+    <tr><td>Zoom</td><td>Account ID, client ID and client secret variables are configured</td><td>Zoom Marketplace owner, app ownership transfer, billing plan, recovery codes</td></tr>
+    <tr><td>Stripe</td><td><span class="missing">No Stripe keys are configured in the inspected environment</span></td><td>Stripe account owner, team invitation, live/test mode access, webhook endpoints, bank/payout ownership, recovery codes</td></tr>
+    <tr><td>OpenAI</td><td><span class="missing">No OpenAI API key is configured in the inspected environment</span></td><td>Organization/project owner, project key rotation, budget and usage limits</td></tr>
+    <tr><td>Hosting / DNS</td><td><span class="missing">No deploy manifest or verified provider account is present</span></td><td>Cloud/Vercel/Railway account, domain registrar, DNS provider, deployment project, billing owner, recovery codes</td></tr>
+  </table>
+
+  <h2>4. Server and operating-cost overview</h2>
+  <p>The repository alone does not contain invoices or a verified production topology, so an exact monthly total cannot be responsibly stated.</p>
+  <table>
+    <tr><th>Cost centre</th><th>Billing driver</th><th>Evidence currently available</th></tr>
+    <tr><td>Frontend hosting</td><td>Build minutes, bandwidth, server rendering</td><td>No provider/project verified</td></tr>
+    <tr><td>Backend compute</td><td>Always-on instance size, CPU/RAM, outbound traffic</td><td>Node/NestJS API; no deployed instance verified</td></tr>
+    <tr><td>PostgreSQL</td><td>Compute, storage, backups, data transfer</td><td>Database connection exists; provider and plan not identified</td></tr>
+    <tr><td>File/PDF storage</td><td>Stored reports, backups and download traffic</td><td>Local protected storage in code; production object storage not verified</td></tr>
+    <tr><td>Email</td><td>Mailbox/SMTP plan and message volume</td><td>SMTP configured; contract price absent</td></tr>
+    <tr><td>Zoom</td><td>Host licences and meeting usage</td><td>OAuth integration configured; contract price absent</td></tr>
+    <tr><td>Stripe</td><td>Transaction and payment-method fees</td><td>Code integration exists; live account not configured here</td></tr>
+    <tr><td>OpenAI</td><td>Tokens used for AI report summaries</td><td>Integration exists; key/budget not configured here</td></tr>
+    <tr><td>Domain/DNS</td><td>Annual domain renewal and optional DNS services</td><td>No registrar invoice available</td></tr>
+    <tr><td>Monitoring/backups</td><td>Retention, logs, alerts, snapshots</td><td>No paid monitoring provider verified</td></tr>
+  </table>
+  <p><strong>Required for an exact total:</strong> the latest invoice or billing-page export from every provider above. Monthly total = fixed subscriptions + metered infrastructure + payment fees + AI usage + annual costs divided by 12 + applicable VAT.</p>
+
+  <h2>5. Security handoff rule</h2>
+  <p>Invite the founder as owner/admin in each external service, transfer billing ownership, place recovery codes in a shared password-manager vault, rotate all application secrets, and then revoke the previous developer’s access. A PDF must never be the system of record for live passwords or secret keys.</p>
+</body>
+</html>

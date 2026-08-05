@@ -24,7 +24,7 @@ export class AiService {
     logsData: any,
   ): Promise<string> {
     if (!this.openai) {
-      return `AI-generierte Zusammenfassung konnte nicht erstellt werden, da der API-Schlüssel fehlt.`;
+      return this.fallbackSummary(logsData);
     }
 
     const systemPrompt = `
@@ -61,11 +61,64 @@ Bitte verfasse nun die klinische Zusammenfassung basierend auf diesen Daten.
 
       return (
         response.choices[0]?.message?.content ||
-        'Fehler bei der Generierung der KI-Zusammenfassung.'
+        this.fallbackSummary(logsData)
       );
     } catch (error: any) {
       this.logger.error('Error generating AI clinical summary', error);
-      return `Fehler bei der Kommunikation mit dem KI-Dienst: ${error.message}`;
+      return this.fallbackSummary(logsData);
     }
+  }
+
+  /** Keeps medical reports useful when the external AI service is unavailable. */
+  private fallbackSummary(data: {
+    adherence?: { loggedDays?: number; totalDays?: number; pct?: number };
+    dosage?: { avgDailyG?: number | null; totalG?: number };
+    metrics?: Array<{
+      label?: string;
+      start?: number | null;
+      end?: number | null;
+    }>;
+    monthlyReviewAnswers?: {
+      sideEffects?: string[];
+      improvementsDetail?: string | null;
+      unresolvedIssues?: string | null;
+      satisfaction?: number | null;
+      goalsReached?: string | null;
+    };
+  }): string {
+    const adherence = data.adherence?.pct ?? 0;
+    const logged = data.adherence?.loggedDays ?? 0;
+    const total = data.adherence?.totalDays ?? 0;
+    const metricText = (data.metrics ?? [])
+      .filter((m) => m.start != null && m.end != null)
+      .map((m) => `${m.label ?? 'Messwert'}: ${m.start} auf ${m.end}`)
+      .join(', ');
+    const review = data.monthlyReviewAnswers ?? {};
+    const effects = review.sideEffects ?? [];
+    const tolerability =
+      effects.length === 0 || effects.some((x) => /keine|none/i.test(x))
+        ? 'Im Monatsreview wurden keine relevanten Nebenwirkungen angegeben.'
+        : `Im Monatsreview wurden folgende Nebenwirkungen dokumentiert: ${effects.join(', ')}.`;
+
+    const first = `Im Berichtszeitraum wurden ${logged} von ${total} möglichen Tagen dokumentiert (Adhärenz ${adherence} %).${
+      data.dosage?.avgDailyG != null
+        ? ` Die durchschnittlich dokumentierte Tagesdosis betrug ${data.dosage.avgDailyG} g.`
+        : ''
+    }${metricText ? ` Der Verlauf der Kernparameter war: ${metricText}.` : ''}`;
+
+    const details = [
+      tolerability,
+      review.improvementsDetail
+        ? `Als Verbesserung wurde angegeben: ${review.improvementsDetail}`
+        : null,
+      review.unresolvedIssues
+        ? `Weiterhin bestehende Beschwerden: ${review.unresolvedIssues}`
+        : null,
+      review.satisfaction != null
+        ? `Die Gesamtzufriedenheit wurde mit ${review.satisfaction}/10 bewertet.`
+        : null,
+    ].filter(Boolean);
+
+    return `${first}\n\n${details.join(' ')}`;
   }
 }

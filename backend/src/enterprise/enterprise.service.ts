@@ -8,7 +8,6 @@ import 'multer';
 import {
   OrgType,
   Prisma,
-  RedFlagSeverity,
   SubmissionStatus,
   SubscriptionTier,
 } from '@prisma/client';
@@ -93,8 +92,6 @@ export class EnterpriseService {
         activePatients: 0,
         reviewsThisMonth: 0,
         overdueReviews: 0,
-        openFlags: 0,
-        criticalFlags: 0,
         avgAdherence: 0,
         billing: {
           reviewsThisMonth: 0,
@@ -115,7 +112,7 @@ export class EnterpriseService {
     );
     const scope = this.patientScope(memberIds);
 
-    const [patients, reviewsThisMonth, flags, logs] = await Promise.all([
+    const [patients, reviewsThisMonth, logs] = await Promise.all([
       this.prisma.patientProfile.findMany({
         where: scope,
         select: {
@@ -134,10 +131,6 @@ export class EnterpriseService {
           submittedAt: { gte: monthStart },
           version: { questionnaire: { key: 'monthly_review' } },
         },
-      }),
-      this.prisma.redFlagHit.findMany({
-        where: { patient: scope, acknowledged: false },
-        select: { severity: true },
       }),
       this.prisma.therapyLog.findMany({
         where: { patient: scope, loggedAt: { gte: since30 } },
@@ -249,10 +242,6 @@ export class EnterpriseService {
       activePatients: [...daysByPatient.keys()].length,
       reviewsThisMonth,
       overdueReviews,
-      openFlags: flags.length,
-      criticalFlags: flags.filter(
-        (f) => f.severity === RedFlagSeverity.CRITICAL,
-      ).length,
       avgAdherence,
       billing: {
         reviewsThisMonth,
@@ -292,10 +281,6 @@ export class EnterpriseService {
       where: { OR: [{ orgId: partner.id }, { pharmacyId: partner.id }] },
       include: {
         user: { select: { firstName: true, lastName: true } },
-        redFlagHits: {
-          where: { acknowledged: false },
-          select: { severity: true },
-        },
       },
       orderBy: { createdAt: 'desc' },
     });
@@ -327,7 +312,6 @@ export class EnterpriseService {
           lastReviewAt: p.lastReviewAt,
           diffDays,
           overdue: diffDays < 0,
-          openFlags: p.redFlagHits.length,
         };
       }),
     };

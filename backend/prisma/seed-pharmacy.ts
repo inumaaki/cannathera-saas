@@ -3,9 +3,12 @@
    Run: pnpm exec tsx prisma/seed-pharmacy.ts */
 import {
   OrgType,
+  Locale,
+  Prisma,
   PrismaClient,
   RedFlagSeverity,
   Role,
+  SubmissionStatus,
   SubscriptionTier,
 } from "@prisma/client";
 import * as argon2 from "argon2";
@@ -37,6 +40,18 @@ async function main() {
   const practice = await prisma.organization.findFirst({
     where: { type: OrgType.PRACTICE, name: "Praxis Dr. Weber" },
   });
+
+  const monthlyVersion = await prisma.questionnaireVersion.findFirst({
+    where: {
+      isPublished: true,
+      questionnaire: { key: "monthly_review", isActive: true },
+    },
+    orderBy: { version: "desc" },
+    include: { sections: { include: { questions: true } } },
+  });
+  const monthlyQuestions = new Map(
+    monthlyVersion?.sections.flatMap((s) => s.questions).map((q) => [q.key, q.id]) ?? [],
+  );
 
   // --- Pharmacy org + pharmacist -------------------------------------------
   let org = await prisma.organization.findFirst({
@@ -190,6 +205,55 @@ async function main() {
             source: "daily_log",
             createdAt: new Date(Date.now() - d * DAY + 9 * 3_600_000),
           })),
+        });
+      }
+    }
+
+    // Give every physician-demo patient a real monthly review that can be
+    // opened directly from the doctor dashboard and patient roster.
+    if (monthlyVersion) {
+      const existingMonthly = await prisma.submission.count({
+        where: {
+          patientId: profileId,
+          versionId: monthlyVersion.id,
+          status: SubmissionStatus.SUBMITTED,
+        },
+      });
+      if (existingMonthly === 0) {
+        const answers: Record<string, Prisma.InputJsonValue> = {
+          painNrs: p.crisisDays.length ? 7 : 4,
+          painDescription: "Im Monatsverlauf insgesamt stabiler mit weniger Schmerzspitzen.",
+          sleepHours: 6.5,
+          sleepQualityDetails: "Schlafqualität hat sich gegenüber dem Vormonat verbessert.",
+          activity: 6,
+          qol: 7,
+          strainUsed: "Balanced Harmony 10:10",
+          intakeMethod: "vaporizer",
+          dosageChanges: "Keine wesentliche Dosisänderung.",
+          sideEffects: ["none"],
+          goalsReached: "partial",
+          improvementsDetail: "Bessere Schlafkontinuität und mehr Aktivität im Alltag.",
+          unresolvedIssues: "Gelegentliche Beschwerden am späten Nachmittag.",
+          satisfaction: 8,
+          notes: "Keine besonderen Ereignisse.",
+          doctorQuestions: "Aktuelle Dosierung beim nächsten Termin gemeinsam prüfen.",
+        };
+        await prisma.submission.create({
+          data: {
+            patientId: profileId,
+            versionId: monthlyVersion.id,
+            status: SubmissionStatus.SUBMITTED,
+            locale: Locale.de,
+            submittedAt: new Date(Date.now() - Math.min(p.lastReviewDaysAgo, 28) * DAY),
+            answers: {
+              create: Object.entries(answers)
+                .filter(([key]) => monthlyQuestions.has(key))
+                .map(([key, value]) => ({
+                  questionId: monthlyQuestions.get(key)!,
+                  value,
+                })),
+            },
+          },
         });
       }
     }

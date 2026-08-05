@@ -139,19 +139,7 @@ export class SettingsService {
             orgId: me.orgId,
             roleInOrg: Role.ENTERPRISE,
             orgRole: data.orgRole,
-            permissions:
-              data.orgRole === 'SUPER_ADMIN'
-                ? [
-                    'patients:view',
-                    'alerts:view',
-                    'reports:view',
-                    'settings:practice',
-                    'settings:team',
-                    'compliance:view',
-                  ]
-                : data.orgRole === 'BILLING'
-                  ? ['reports:view', 'compliance:view']
-                  : ['patients:view', 'reports:view'],
+            permissions: data.orgRole === 'SUPER_ADMIN' ? ['*'] : [],
           },
         },
       },

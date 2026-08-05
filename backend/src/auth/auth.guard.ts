@@ -67,7 +67,7 @@ export class SessionGuard implements CanActivate {
     const res = ctx.switchToHttp().getResponse<Response>();
     res.cookie(SESSION_COOKIE, renewed, {
       httpOnly: true,
-      sameSite: 'lax',
+      sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       secure: process.env.NODE_ENV === 'production',
       maxAge: ttlMin * 60 * 1000,
       path: '/',

@@ -29,10 +29,14 @@ async function bootstrap() {
   app.useStaticAssets(join(process.cwd(), 'uploads', 'public'), {
     prefix: '/uploads/',
   });
-  const rawOrigin = process.env.WEB_ORIGIN ?? 'http://localhost:3000';
-  const allowedOrigins = rawOrigin.endsWith('/')
-    ? [rawOrigin, rawOrigin.slice(0, -1)]
-    : [rawOrigin, rawOrigin + '/'];
+  const configuredOrigins = (process.env.WEB_ORIGIN ?? 'http://localhost:3000')
+    .split(',')
+    .map((origin) => origin.trim().replace(/\/$/, ''))
+    .filter(Boolean);
+  const allowedOrigins = configuredOrigins.flatMap((origin) => [
+    origin,
+    `${origin}/`,
+  ]);
 
   app.enableCors({
     origin: allowedOrigins,

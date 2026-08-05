@@ -233,25 +233,10 @@ export function reportHtml(d: ReportData, logoDataUri: string | null): string {
     </div>
     ${d.notes ? `<div class="card" style="margin-top:8px"><h3>Bemerkungen der Patient:in</h3><em>„${esc(d.notes)}"</em></div>` : ''}
 
-    ${
-      d.redFlags.length
-        ? `<h2>6. Ärztlich zu prüfende Hinweise</h2>
-           ${d.redFlags
-             .map(
-               (f) =>
-                 `<div class="flag ${f.severity === 'CRITICAL' ? '' : 'warn'}">
-                    <strong>${f.severity === 'CRITICAL' ? 'Kritisch' : 'Warnung'}:</strong> ${esc(f.message)}
-                    <span style="color:#707973"> (${de(f.createdAt)})</span>
-                  </div>`,
-             )
-             .join('')}`
-        : ''
-    }
-
-    <h2>${d.redFlags.length ? '7' : '6'}. Vorbereitung für den nächsten Arzttermin</h2>
+    <h2>6. Vorbereitung für den nächsten Arzttermin</h2>
     <ul>${d.nextAppointmentPrep.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>
 
-    <h2>${d.redFlags.length ? '8' : '7'}. Cannathera-Zusammenfassung</h2>
+    <h2>7. Cannathera-Zusammenfassung</h2>
     <div class="summary">${esc(d.summary)}</div>
 
     <p class="disclaimer">

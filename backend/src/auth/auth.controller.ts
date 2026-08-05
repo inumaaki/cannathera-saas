@@ -220,33 +220,4 @@ export class AuthController {
     });
     return { ok: true };
   }
-
-  // TEMP: Easy way to seed the admin account on a live production server.
-  // Visit https://your-backend-url/auth/setup-admin in the browser.
-  @Get('setup-admin')
-  async setupAdmin() {
-    const argon2 = require('argon2');
-    const { PrismaClient, Role } = require('@prisma/client');
-    const prisma = new PrismaClient();
-
-    const email = 'd.larkin@cannathera-report.de';
-    const passwordHash = await argon2.hash('ct-admin-2026-secure!');
-
-    const admin = await prisma.user.upsert({
-      where: { email },
-      update: { role: Role.ADMIN, passwordHash, isActive: true },
-      create: {
-        email,
-        passwordHash,
-        role: Role.ADMIN,
-        firstName: 'System',
-        lastName: 'Administrator',
-        isActive: true,
-      },
-    });
-    return {
-      message: 'Admin user created successfully in production!',
-      email: admin.email,
-    };
-  }
 }

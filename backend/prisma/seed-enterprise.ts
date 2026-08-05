@@ -43,14 +43,7 @@ async function main() {
             roleInOrg: Role.ENTERPRISE,
             // Enterprise org roles: SUPER_ADMIN | SUPPORT | BILLING | VIEWER
             orgRole: "SUPER_ADMIN",
-            permissions: [
-              "patients:view",
-              "alerts:view",
-              "reports:view",
-              "settings:practice",
-              "settings:team",
-              "compliance:view",
-            ],
+            permissions: ["*"],
           },
         },
       },

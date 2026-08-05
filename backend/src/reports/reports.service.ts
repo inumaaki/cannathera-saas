@@ -55,7 +55,6 @@ export type ReportData = {
   satisfaction: number | null;
   goalsReached: string | null;
   notes: string | null;
-  redFlags: Array<{ severity: string; message: string; createdAt: Date }>;
   nextAppointmentPrep: string[];
   summary: string;
 };
@@ -386,9 +385,6 @@ export class ReportsService {
       satisfaction,
       goalsReached,
       notes,
-      // Red-flag monitoring is intentionally admin-only. Clinical PDF reports
-      // remain focused on patient care and AI-generated therapy insights.
-      redFlags: [],
       nextAppointmentPrep: prep,
       summary,
     };

@@ -115,6 +115,7 @@ export class DoctorService {
         scheduledAt: s.scheduledAt,
         video: !!s.joinUrl,
       })),
+      recentPatients: patients.slice(0, 6),
     };
   }
 
@@ -259,6 +260,15 @@ export class DoctorService {
       include: {
         user: { select: { firstName: true, lastName: true, email: true } },
         therapyLogs: { orderBy: { loggedAt: 'desc' }, take: 1 },
+        submissions: {
+          where: {
+            status: SubmissionStatus.SUBMITTED,
+            version: { questionnaire: { key: 'monthly_review' } },
+          },
+          orderBy: { submittedAt: 'desc' },
+          take: 1,
+          select: { id: true, submittedAt: true },
+        },
         _count: { select: { submissions: true } },
       },
       orderBy: { createdAt: 'desc' },
@@ -301,6 +311,7 @@ export class DoctorService {
         lastLogAt: p.therapyLogs[0]?.loggedAt ?? null,
         lastPain: metrics?.pain ?? null,
         submissions: p._count.submissions,
+        latestMonthlyReview: p.submissions[0] ?? null,
       };
     });
   }
