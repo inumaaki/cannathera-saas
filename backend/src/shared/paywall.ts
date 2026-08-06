@@ -63,8 +63,14 @@ export function isPaywallBypassed(email?: string | null): boolean {
   return bypassList().has(email.toLowerCase());
 }
 
+/** True when OTP is disabled globally. */
+export function isOtpDisabled(): boolean {
+  return process.env.DISABLE_OTP === 'true';
+}
+
 /** True when this email should bypass OTP verification. */
 export function isOtpBypassed(email?: string | null): boolean {
+  if (isOtpDisabled()) return true;
   if (!email) return false;
   return otpBypassList().has(email.toLowerCase());
 }

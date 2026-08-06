@@ -51,6 +51,7 @@ export class ReportsController {
         'Content-Disposition',
         `attachment; filename="${filename}"`,
       );
+      res.setHeader('Content-Length', buffer.length);
       res.end(buffer);
     } catch (err: any) {
       console.error(
@@ -94,6 +95,7 @@ export class ReportsController {
         'Content-Disposition',
         `attachment; filename="${filename}"`,
       );
+      res.setHeader('Content-Length', buffer.length);
       res.end(buffer);
     } catch (err: any) {
       console.error('[ReportsController] file error:', err?.message ?? err);
@@ -132,18 +134,21 @@ export class ReportsController {
         'Content-Disposition',
         `attachment; filename="${filename}"`,
       );
+      res.setHeader('Content-Length', buffer.length);
       res.end(buffer);
     } catch (err: any) {
       console.error(
         '[ReportsController] Fatal error during PDF generation:',
         err,
       );
-      res.status(500).json({
-        statusCode: 500,
-        message: 'Internal Server Error',
-        error: err.message,
-        stack: err.stack,
-      });
+      if (!res.headersSent) {
+        res.status(500).json({
+          statusCode: 500,
+          message: 'Internal Server Error',
+          error: err.message,
+          stack: err.stack,
+        });
+      }
     }
   }
 
