@@ -309,7 +309,7 @@ export async function renderReportPdf(d: ReportData): Promise<Buffer> {
   try {
     const page = await browser.newPage();
     await page.setContent(reportHtml(d, logoDataUri), { waitUntil: 'load' });
-    const pdf = await page.pdf({
+    const pdfBytes = await page.pdf({
       format: 'A4',
       printBackground: true,
       displayHeaderFooter: true,
@@ -317,7 +317,16 @@ export async function renderReportPdf(d: ReportData): Promise<Buffer> {
       footerTemplate: footerTemplate(d),
       margin: { top: '16mm', bottom: '22mm', left: '14mm', right: '14mm' },
     });
-    return Buffer.from(pdf);
+    
+    const buffer = Buffer.from(pdfBytes);
+    
+    console.log(
+      `[ReportsService] generate: PDF rendered, size=${buffer.length}, header=${buffer
+        .subarray(0, 5)
+        .toString()}`,
+    );
+    
+    return buffer;
   } finally {
     await browser.close();
   }

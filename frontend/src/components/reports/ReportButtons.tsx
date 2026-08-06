@@ -30,9 +30,16 @@ export function ReportButtons({
       const url = patientId
         ? `${API_URL}/documents/patient/${patientId}?type=${type}`
         : `${API_URL}/documents/mine?type=${type}`;
+      
       let res: Response;
       try {
-        res = await fetch(url, { credentials: "include" });
+        res = await fetch(url, {
+          method: 'GET',
+          credentials: "include",
+          headers: {
+            Accept: 'application/pdf',
+          },
+        });
       } catch (err: unknown) {
         const msg = err instanceof Error ? err.message : String(err);
         alert(`Fetch blocked! URL: ${url}. Error: ${msg}. If you have an Adblocker or Edge Tracking Prevention, please disable it!`);
@@ -57,17 +64,41 @@ export function ReportButtons({
         const text = await res.text().catch(() => "no body");
         throw new Error(`Report fetch failed: ${res.status} - ${text}`);
       }
+      
+      const contentType = res.headers.get('content-type') || '';
+      if (!contentType.includes('application/pdf')) {
+        const body = await res.text();
+        throw new Error(`Expected application/pdf but received ${contentType}: ${body}`);
+      }
+
       const blob = await res.blob();
+      if (blob.size < 1000) {
+        throw new Error(`Received an invalid PDF: ${blob.size} bytes`);
+      }
+
       const disposition = res.headers.get("Content-Disposition") ?? "";
       const name =
-        /filename="([^"]+)"/.exec(disposition)?.[1] ?? `cannathera-${type}.pdf`;
+        /filename="([^"]+)"/.exec(disposition)?.[1] ?? `cannathera-${type.toLowerCase()}-report.pdf`;
 
-      const href = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = href;
-      a.download = name;
-      a.click();
-      URL.revokeObjectURL(href);
+      const pdfUrl = URL.createObjectURL(
+        new Blob([blob], { type: 'application/pdf' })
+      );
+
+      const newWindow = window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+
+      if (!newWindow) {
+        const a = document.createElement("a");
+        a.href = pdfUrl;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+
+      window.setTimeout(() => {
+        URL.revokeObjectURL(pdfUrl);
+      }, 60_000);
+
       router.refresh(); // report history gains a row
     } finally {
       setBusy(null);

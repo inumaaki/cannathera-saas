@@ -21,7 +21,13 @@ export function DownloadReportButton({
     setBusy(true);
     try {
       const url = `${API_URL}/documents/patient/${patientId}?type=MONTHLY`;
-      const res = await fetch(url, { credentials: "include" });
+      const res = await fetch(url, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          Accept: 'application/pdf',
+        },
+      });
       if (!res.ok) {
         if (res.status === 403) {
           const data = await res.json().catch(() => ({}));
@@ -38,17 +44,39 @@ export function DownloadReportButton({
         alert(t("actionFailed"));
         return;
       }
+      
+      const contentType = res.headers.get('content-type') || '';
+      if (!contentType.includes('application/pdf')) {
+        throw new Error(`Expected application/pdf but received ${contentType}`);
+      }
+
       const blob = await res.blob();
+      if (blob.size < 1000) {
+        throw new Error(`Received an invalid PDF: ${blob.size} bytes`);
+      }
+
       const disposition = res.headers.get("Content-Disposition") ?? "";
       const name =
         /filename="([^"]+)"/.exec(disposition)?.[1] ?? `cannathera-monthly-${patientId}.pdf`;
 
-      const href = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = href;
-      a.download = name;
-      a.click();
-      URL.revokeObjectURL(href);
+      const pdfUrl = URL.createObjectURL(
+        new Blob([blob], { type: 'application/pdf' })
+      );
+
+      const newWindow = window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+
+      if (!newWindow) {
+        const a = document.createElement("a");
+        a.href = pdfUrl;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+
+      window.setTimeout(() => {
+        URL.revokeObjectURL(pdfUrl);
+      }, 60_000);
     } catch {
       alert(t("actionFailed"));
     } finally {

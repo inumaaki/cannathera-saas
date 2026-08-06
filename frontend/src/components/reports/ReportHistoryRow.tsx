@@ -16,32 +16,60 @@ export function ReportHistoryRow({
     setBusy(true);
     try {
       const res = await fetch(`${API_URL}/documents/file/${reportId}`, {
-        credentials: "include",
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          Accept: 'application/pdf',
+        },
       });
       if (!res.ok) {
         const data = await res.json().catch(() => ({}));
-        if (res.status === 403 && data.message === "UPGRADE_REQUIRED") {
-          setPaywallType("patient");
+        if (res.status === 403 && data.message === 'UPGRADE_REQUIRED') {
+          setPaywallType('patient');
           setPaywallOpen(true);
           return;
         }
-        if (res.status === 403 && data.message === "PARTNER_INACTIVE") {
-          setPaywallType("partner");
+        if (res.status === 403 && data.message === 'PARTNER_INACTIVE') {
+          setPaywallType('partner');
           setPaywallOpen(true);
           return;
         }
         throw new Error(`Download failed: ${res.status}`);
       }
+
+      const contentType = res.headers.get('content-type') || '';
+      if (!contentType.includes('application/pdf')) {
+        const body = await res.text();
+        throw new Error(`Expected application/pdf but received ${contentType}: ${body}`);
+      }
+
       const blob = await res.blob();
-      const disposition = res.headers.get("Content-Disposition") ?? "";
+      if (blob.size < 1000) {
+        throw new Error(`Received an invalid PDF: ${blob.size} bytes`);
+      }
+
+      const disposition = res.headers.get('Content-Disposition') ?? '';
       const name =
         /filename="([^"]+)"/.exec(disposition)?.[1] ?? `cannathera-report.pdf`;
-      const href = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = href;
-      a.download = name;
-      a.click();
-      URL.revokeObjectURL(href);
+      
+      const pdfUrl = URL.createObjectURL(
+        new Blob([blob], { type: 'application/pdf' })
+      );
+
+      const newWindow = window.open(pdfUrl, '_blank', 'noopener,noreferrer');
+
+      if (!newWindow) {
+        const a = document.createElement('a');
+        a.href = pdfUrl;
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+
+      window.setTimeout(() => {
+        URL.revokeObjectURL(pdfUrl);
+      }, 60_000);
     } catch (err: unknown) {
       const msg = err instanceof Error ? err.message : String(err);
       alert("Download error: " + msg);

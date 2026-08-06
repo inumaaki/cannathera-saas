@@ -38,32 +38,51 @@ export class ReportsController {
     @CurrentUser() user: SessionPayload,
     @Param('patientId') patientId: string,
     @Query('type') type: string,
-    @Res({ passthrough: true }) res: Response,
-  ) {
+    @Res() res: Response,
+  ): Promise<void> {
     try {
       await this.reports.assertCanAccessPatient(user.sub, patientId);
-      const { buffer, filename } = await this.reports.generate(
+      const { buffer: generatedBuffer, filename } = await this.reports.generate(
         user.sub,
         patientId,
         toType(type),
       );
+      
+      const buffer = Buffer.isBuffer(generatedBuffer)
+        ? generatedBuffer
+        : Buffer.from(generatedBuffer);
+
+      const pdfHeader = buffer.subarray(0, 5).toString();
+
+      if (buffer.length < 1000 || pdfHeader !== '%PDF-') {
+        throw new Error(
+          `Invalid PDF generated: size=${buffer.length}, header=${pdfHeader}`,
+        );
+      }
+
+      res.status(200);
       res.set({
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Length': String(buffer.length),
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'X-Content-Type-Options': 'nosniff',
       });
-      return buffer;
-    } catch (err: any) {
-      console.error(
-        '[ReportsController] doctorReport error:',
-        err?.message ?? err,
-      );
+      res.end(buffer);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown PDF error';
+      console.error('[ReportsController] doctorReport error:', err);
+      
       if (!res.headersSent) {
-        const status = Number(err?.status ?? err?.statusCode ?? 500);
+        const status = Number((err as any)?.status ?? (err as any)?.statusCode ?? 500);
         res.status(status).json({
           statusCode: status,
-          message: err?.message ?? 'Internal Server Error',
+          message: (err as any)?.message ?? 'Internal Server Error',
+          error: message,
         });
+        return;
       }
+      res.end();
     }
   }
 
@@ -82,27 +101,49 @@ export class ReportsController {
   async file(
     @CurrentUser() user: SessionPayload,
     @Param('reportId') reportId: string,
-    @Res({ passthrough: true }) res: Response,
-  ) {
+    @Res() res: Response,
+  ): Promise<void> {
     try {
-      const { buffer, filename } = await this.reports.fileById(
+      const { buffer: generatedBuffer, filename } = await this.reports.fileById(
         user.sub,
         reportId,
       );
+      
+      const buffer = Buffer.isBuffer(generatedBuffer)
+        ? generatedBuffer
+        : Buffer.from(generatedBuffer);
+
+      const pdfHeader = buffer.subarray(0, 5).toString();
+
+      if (buffer.length < 1000 || pdfHeader !== '%PDF-') {
+        throw new Error(
+          `Invalid PDF generated: size=${buffer.length}, header=${pdfHeader}`,
+        );
+      }
+
+      res.status(200);
       res.set({
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Length': String(buffer.length),
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'X-Content-Type-Options': 'nosniff',
       });
-      return buffer;
-    } catch (err: any) {
-      console.error('[ReportsController] file error:', err?.message ?? err);
+      res.end(buffer);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Unknown PDF error';
+      console.error('[ReportsController] file error:', err);
+      
       if (!res.headersSent) {
-        const status = Number(err?.status ?? err?.statusCode ?? 500);
+        const status = Number((err as any)?.status ?? (err as any)?.statusCode ?? 500);
         res.status(status).json({
           statusCode: status,
-          message: err?.message ?? 'Internal Server Error',
+          message: (err as any)?.message ?? 'Internal Server Error',
+          error: message,
         });
+        return;
       }
+      res.end();
     }
   }
 
@@ -111,39 +152,74 @@ export class ReportsController {
   async myReport(
     @CurrentUser() user: SessionPayload,
     @Query('type') type: string,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    if (user.role !== Role.PATIENT) throw new ForbiddenException();
+    @Res() res: Response,
+  ): Promise<void> {
+    if (user.role !== Role.PATIENT) {
+      throw new ForbiddenException();
+    }
 
     console.log(
       `[ReportsController] Received request for myReport (type: ${type}) from user ${user.sub}`,
     );
 
     const patientId = await this.reports.patientIdOfUser(user.sub);
+
     try {
-      const { buffer, filename } = await this.reports.generate(
-        user.sub,
-        patientId,
-        toType(type),
+      const { buffer: generatedBuffer, filename } =
+        await this.reports.generate(
+          user.sub,
+          patientId,
+          toType(type),
+        );
+
+      const buffer = Buffer.isBuffer(generatedBuffer)
+        ? generatedBuffer
+        : Buffer.from(generatedBuffer);
+
+      const pdfHeader = buffer.subarray(0, 5).toString();
+
+      console.log(
+        `[ReportsController] Sending PDF: filename=${filename}, size=${buffer.length}, header=${pdfHeader}`,
       );
+
+      if (buffer.length < 1000 || pdfHeader !== '%PDF-') {
+        throw new Error(
+          `Invalid PDF generated: size=${buffer.length}, header=${pdfHeader}`,
+        );
+      }
+
+      res.status(200);
+
       res.set({
         'Content-Type': 'application/pdf',
         'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Length': String(buffer.length),
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'X-Content-Type-Options': 'nosniff',
       });
-      return buffer;
-    } catch (err: any) {
+
+      res.end(buffer);
+    } catch (err: unknown) {
+      const message =
+        err instanceof Error
+          ? err.message
+          : 'Unknown PDF generation error';
+
       console.error(
         '[ReportsController] Fatal error during PDF generation:',
         err,
       );
+
       if (!res.headersSent) {
         res.status(500).json({
           statusCode: 500,
-          message: 'Internal Server Error',
-          error: err.message,
-          stack: err.stack,
+          message: 'PDF generation failed',
+          error: message,
         });
+        return;
       }
+
+      res.end();
     }
   }
 
