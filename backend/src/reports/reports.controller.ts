@@ -9,6 +9,7 @@ import {
 } from '@nestjs/common';
 import { ReportType, Role } from '@prisma/client';
 import type { Response } from 'express';
+import { Readable } from 'stream';
 import {
   CurrentUser,
   Perms,
@@ -51,8 +52,7 @@ export class ReportsController {
         'Content-Disposition',
         `attachment; filename="${filename}"`,
       );
-      res.setHeader('Content-Length', buffer.length);
-      res.end(buffer);
+      Readable.from(buffer).pipe(res);
     } catch (err: any) {
       console.error(
         '[ReportsController] doctorReport error:',
@@ -95,8 +95,7 @@ export class ReportsController {
         'Content-Disposition',
         `attachment; filename="${filename}"`,
       );
-      res.setHeader('Content-Length', buffer.length);
-      res.end(buffer);
+      Readable.from(buffer).pipe(res);
     } catch (err: any) {
       console.error('[ReportsController] file error:', err?.message ?? err);
       if (!res.headersSent) {
@@ -134,8 +133,7 @@ export class ReportsController {
         'Content-Disposition',
         `attachment; filename="${filename}"`,
       );
-      res.setHeader('Content-Length', buffer.length);
-      res.end(buffer);
+      Readable.from(buffer).pipe(res);
     } catch (err: any) {
       console.error(
         '[ReportsController] Fatal error during PDF generation:',
