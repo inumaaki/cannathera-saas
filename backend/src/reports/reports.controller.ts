@@ -38,7 +38,7 @@ export class ReportsController {
     @CurrentUser() user: SessionPayload,
     @Param('patientId') patientId: string,
     @Query('type') type: string,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
   ) {
     try {
       await this.reports.assertCanAccessPatient(user.sub, patientId);
@@ -47,12 +47,11 @@ export class ReportsController {
         patientId,
         toType(type),
       );
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader(
-        'Content-Disposition',
-        `attachment; filename="${filename}"`,
-      );
-      Readable.from(buffer).pipe(res);
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${filename}"`,
+      });
+      return buffer;
     } catch (err: any) {
       console.error(
         '[ReportsController] doctorReport error:',
@@ -83,19 +82,18 @@ export class ReportsController {
   async file(
     @CurrentUser() user: SessionPayload,
     @Param('reportId') reportId: string,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
   ) {
     try {
       const { buffer, filename } = await this.reports.fileById(
         user.sub,
         reportId,
       );
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader(
-        'Content-Disposition',
-        `attachment; filename="${filename}"`,
-      );
-      Readable.from(buffer).pipe(res);
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${filename}"`,
+      });
+      return buffer;
     } catch (err: any) {
       console.error('[ReportsController] file error:', err?.message ?? err);
       if (!res.headersSent) {
@@ -113,7 +111,7 @@ export class ReportsController {
   async myReport(
     @CurrentUser() user: SessionPayload,
     @Query('type') type: string,
-    @Res() res: Response,
+    @Res({ passthrough: true }) res: Response,
   ) {
     if (user.role !== Role.PATIENT) throw new ForbiddenException();
 
@@ -128,12 +126,11 @@ export class ReportsController {
         patientId,
         toType(type),
       );
-      res.setHeader('Content-Type', 'application/pdf');
-      res.setHeader(
-        'Content-Disposition',
-        `attachment; filename="${filename}"`,
-      );
-      Readable.from(buffer).pipe(res);
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${filename}"`,
+      });
+      return buffer;
     } catch (err: any) {
       console.error(
         '[ReportsController] Fatal error during PDF generation:',
