@@ -966,13 +966,13 @@ export default function AdminDashboardPage() {
                               <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50/50 p-4">
                                 <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
                                   <span aria-hidden className="msym text-[16px]">handshake</span>
-                                  Plan Assignment & Pilot Pricing
+                                  {t("planAssignment")}
                                 </h4>
-                                <p className="mt-1 text-[11px] text-amber-800/80">Configure which plan applies to this account or set a custom pilot rate.</p>
+                                <p className="mt-1 text-[11px] text-amber-800/80">{t("planAssignmentHint")}</p>
                                 <div className="mt-3 flex flex-wrap items-end gap-3">
                                   <div className="flex-1 min-w-[120px] pb-1">
                                     <StyledSelect
-                                      label="Plan Tier"
+                                      label={t("planTier")}
                                       value={pilotTier}
                                       onChange={setPilotTier}
                                       options={[
@@ -1000,11 +1000,11 @@ export default function AdminDashboardPage() {
                                         type="button"
                                         onClick={() => {
                                           setPilotPrice("0");
-                                          setPilotNote("Demo / Free Account");
+                                          setPilotNote(t("demoFreeAccount"));
                                         }}
                                         className="rounded-lg border border-brand/30 bg-brand/10 px-2 py-1.5 text-[11px] font-bold text-brand hover:bg-brand/20 whitespace-nowrap"
                                       >
-                                        Set as Demo / Free
+                                        {t("setDemoFree")}
                                       </button>
                                     </div>
                                   </label>
