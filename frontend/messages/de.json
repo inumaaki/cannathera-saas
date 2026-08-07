@@ -297,7 +297,7 @@
   },
   "doctor": {
     "shell": {
-      "portal": "Clinical Portal",
+      "portal": "KLINISCHES PORTAL",
       "search": "Patienten, Medikation oder Einträge suchen …",
       "doctorRole": "Ärztin / Arzt",
       "nav": {
@@ -1935,7 +1935,7 @@
       "title": "Flexible, skalierbare & transparente Preise",
       "subtitle": "Wählen Sie das passende Modell für Ihre Anforderungen. Vom Selbstzahler-Tarif für Patient:innen bis zur Enterprise-Anbindung für Telemedizin-Plattformen.",
       "patients": "Patienten",
-      "pharmacies": "Apotheken",
+      "pharmacies": "Apotheken / Ärzte",
       "enterprise": "Telemedizin / Enterprise",
       "basic": "CANNATHERA BASIC",
       "basicDesc": "Wesentliche Begleitung und tägliche Struktur.",

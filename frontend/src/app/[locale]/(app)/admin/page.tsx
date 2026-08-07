@@ -264,6 +264,7 @@ export default function AdminDashboardPage() {
   const [pilotPrice, setPilotPrice] = useState("");
   const [pilotEndsAt, setPilotEndsAt] = useState("");
   const [pilotNote, setPilotNote] = useState("");
+  const [pilotTier, setPilotTier] = useState("PREMIUM");
   const [pilotBusy, setPilotBusy] = useState(false);
   const [pilotError, setPilotError] = useState("");
 
@@ -378,6 +379,7 @@ export default function AdminDashboardPage() {
     setPilotPrice(cp === null || cp === undefined ? "" : String(cp));
     setPilotEndsAt(sub?.endsAt ? String(sub.endsAt).slice(0, 10) : "");
     setPilotNote(sub?.pilotNote ?? "");
+    setPilotTier(sub?.plan?.tier ?? "PREMIUM");
     setPilotError("");
   }
 
@@ -421,6 +423,7 @@ export default function AdminDashboardPage() {
           price,
           endsAt: clear ? null : pilotEndsAt || null,
           note: clear ? null : pilotNote || null,
+          tier: clear ? undefined : pilotTier,
         }),
       });
       if (!res.ok) {
@@ -439,7 +442,7 @@ export default function AdminDashboardPage() {
             customMonthlyPrice: data.customMonthlyPrice,
             endsAt: data.endsAt,
             pilotNote: data.pilotNote,
-            plan: existing?.plan ?? { name: "PREMIUM", tier: "PREMIUM" },
+            plan: { ...existing?.plan, tier: clear ? existing?.plan?.tier : pilotTier, name: clear ? existing?.plan?.name : pilotTier } as any,
           };
           return {
             ...p,
@@ -963,10 +966,23 @@ export default function AdminDashboardPage() {
                               <div className="mt-6 rounded-xl border border-amber-200 bg-amber-50/50 p-4">
                                 <h4 className="text-xs font-bold text-amber-900 uppercase tracking-wider flex items-center gap-1.5">
                                   <span aria-hidden className="msym text-[16px]">handshake</span>
-                                  {t("pilotPricing")}
+                                  Plan Assignment & Pilot Pricing
                                 </h4>
-                                <p className="mt-1 text-[11px] text-amber-800/80">{t("pilotPricingHint")}</p>
+                                <p className="mt-1 text-[11px] text-amber-800/80">Configure which plan applies to this account or set a custom pilot rate.</p>
                                 <div className="mt-3 flex flex-wrap items-end gap-3">
+                                  <div className="flex-1 min-w-[120px] pb-1">
+                                    <StyledSelect
+                                      label="Plan Tier"
+                                      value={pilotTier}
+                                      onChange={setPilotTier}
+                                      options={[
+                                        { value: "BASIC", label: "BASIC" },
+                                        { value: "PLUS", label: "PLUS" },
+                                        { value: "PREMIUM", label: "PREMIUM" },
+                                        { value: "ENTERPRISE", label: "ENTERPRISE" },
+                                      ]}
+                                    />
+                                  </div>
                                   <label className="flex flex-col gap-1 text-[11px] font-semibold text-ink-strong">
                                     {t("pilotPriceLabel")}
                                     <div className="flex items-center gap-1">
@@ -978,14 +994,17 @@ export default function AdminDashboardPage() {
                                         value={pilotPrice}
                                         onChange={(e) => setPilotPrice(e.target.value)}
                                         placeholder="400"
-                                        className="w-28 rounded-lg border border-hairline bg-white px-2.5 py-1.5 text-sm"
+                                        className="w-24 rounded-lg border border-hairline bg-white px-2.5 py-1.5 text-sm"
                                       />
                                       <button
                                         type="button"
-                                        onClick={() => setPilotPrice("0")}
-                                        className="rounded-lg border border-amber-300 px-2 py-1.5 text-[11px] font-bold text-amber-800 hover:bg-amber-100"
+                                        onClick={() => {
+                                          setPilotPrice("0");
+                                          setPilotNote("Demo / Free Account");
+                                        }}
+                                        className="rounded-lg border border-brand/30 bg-brand/10 px-2 py-1.5 text-[11px] font-bold text-brand hover:bg-brand/20 whitespace-nowrap"
                                       >
-                                        {t("free")}
+                                        Set as Demo / Free
                                       </button>
                                     </div>
                                   </label>
@@ -998,7 +1017,7 @@ export default function AdminDashboardPage() {
                                       className="rounded-lg border border-hairline bg-white px-2.5 py-1.5 text-sm"
                                     />
                                   </label>
-                                  <label className="flex flex-col gap-1 text-[11px] font-semibold text-ink-strong flex-1 min-w-[160px]">
+                                  <label className="flex flex-col gap-1 text-[11px] font-semibold text-ink-strong flex-1 min-w-[120px]">
                                     {t("pilotNoteLabel")}
                                     <input
                                       type="text"

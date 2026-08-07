@@ -233,7 +233,7 @@ export class AdminService {
     const org = await this.prisma.organization.findUnique({
       where: { id: orgId },
       include: {
-        subscriptions: true,
+        subscriptions: { include: { plan: true } },
         memberships: { include: { user: true } },
       },
     });
@@ -251,30 +251,28 @@ export class AdminService {
 
     const existingSub = org.subscriptions[0];
 
-    // Resolve a plan to attach the subscription to. Reuse the existing plan if
-    // there is one, otherwise resolve/create by tier (mirrors onboardPartner).
-    const tier = dto.tier ?? SubscriptionTier.PREMIUM;
-    let planId = existingSub?.planId;
-    if (!planId) {
-      let plan = await this.prisma.pricingPlan.findFirst({ where: { tier } });
-      if (!plan) {
-        plan = await this.prisma.pricingPlan.create({
-          data: {
-            tier,
-            name: tier.toString(),
-            monthlyPrice: tier === SubscriptionTier.PREMIUM ? 349 : 149,
-            reviewCap: 100,
-            features: { pdfExports: true },
-          },
-        });
-      }
-      planId = plan.id;
+    // Resolve a plan to attach the subscription to. If dto.tier is provided,
+    // we use that tier and update the subscription. Otherwise use the existing tier or default.
+    const tier = dto.tier ?? existingSub?.plan?.tier ?? SubscriptionTier.PREMIUM;
+    let plan = await this.prisma.pricingPlan.findFirst({ where: { tier } });
+    if (!plan) {
+      plan = await this.prisma.pricingPlan.create({
+        data: {
+          tier,
+          name: tier.toString(),
+          monthlyPrice: tier === SubscriptionTier.PREMIUM ? 349 : 149,
+          reviewCap: tier === SubscriptionTier.ENTERPRISE ? null : 100,
+          features: { pdfExports: true },
+        },
+      });
     }
+    const planId = plan.id;
 
     if (existingSub) {
       await this.prisma.subscription.update({
         where: { id: existingSub.id },
         data: {
+          planId,
           isActive: true,
           customMonthlyPrice: dto.price,
           endsAt,
@@ -629,6 +627,26 @@ export class AdminService {
   }
 
   async listPricingPlans() {
+    const tiers = [
+      SubscriptionTier.BASIC,
+      SubscriptionTier.PLUS,
+      SubscriptionTier.PREMIUM,
+      SubscriptionTier.ENTERPRISE,
+    ];
+    for (const tier of tiers) {
+      const exists = await this.prisma.pricingPlan.findFirst({ where: { tier } });
+      if (!exists) {
+        await this.prisma.pricingPlan.create({
+          data: {
+            tier,
+            name: tier.toString(),
+            monthlyPrice: tier === SubscriptionTier.PREMIUM ? 349 : 149,
+            reviewCap: tier === SubscriptionTier.ENTERPRISE ? null : 100,
+            features: { pdfExports: true },
+          },
+        });
+      }
+    }
     return this.prisma.pricingPlan.findMany({
       orderBy: { monthlyPrice: 'asc' },
     });
