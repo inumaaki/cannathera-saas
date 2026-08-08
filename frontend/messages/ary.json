@@ -92,7 +92,7 @@
       "day": "يوم {day}",
       "ofDays": "من {total} أيام",
       "nextMilestone": "المرحلة التالية",
-      "adherence": "الالتزام",
+      "adherence": "معدل التوثيق",
       "adherencePerfect": "مثالي",
       "dailyLogDue": "سجل اليومي مستحق",
       "dailyLogDone": "سجل اليومي مسجل",
@@ -114,7 +114,8 @@
         "activity": "/10",
         "qol": "/10"
       },
-      "stable": "مستقر"
+      "stable": "مستقر",
+      "adherenceInfo": "معدل التسجيل خلال آخر 30 يومًا. يساعدنا في تتبع تقدمك بدقة."
     },
     "quickLog": {
       "title": "إدخال سجل سريع",
@@ -175,7 +176,7 @@
       "history": "التاريخ",
       "efficacy": "معدل الفعالية",
       "totalDosage": "إجمالي الجرعة",
-      "adherence": "الالتزام",
+      "adherence": "معدل التوثيق",
       "cycleProgress": "تقدم الدورة",
       "ofPlan": "من خطة 90 يومًا",
       "correlationTitle": "العلاقة بين الجرعة والأعراض",
@@ -183,7 +184,8 @@
       "legendDosage": "الجرعة (ملغ)",
       "legendRelief": "مستوى التخفيف",
       "noData": "لا توجد بيانات بعد.",
-      "days": "{count} أيام"
+      "days": "{count} أيام",
+      "adherenceInfo": "يوضح مدى انتظامك في توثيق الجرعات."
     },
     "appointments": {
       "title": "المواعيد القادمة",

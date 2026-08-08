@@ -96,6 +96,9 @@ export default async function PatientHome({
               {summary?.adherence ?? 0}%{" "}
               {summary && summary.adherence >= 95 ? t("adherencePerfect") : ""}
             </p>
+            <p className="mt-2 text-[10px] leading-tight text-sage-900/70">
+              {t("adherenceInfo")}
+            </p>
           </div>
         </div>
       </section>

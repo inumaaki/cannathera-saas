@@ -92,7 +92,7 @@
       "day": "Ziua {day}",
       "ofDays": "din {total} zile",
       "nextMilestone": "Următorul obiectiv",
-      "adherence": "Aderență",
+      "adherence": "Rata de Documentare",
       "adherencePerfect": "Perfect",
       "dailyLogDue": "Jurnal zilnic datorat",
       "dailyLogDone": "Jurnalul zilnic a fost înregistrat",
@@ -114,7 +114,8 @@
         "activity": "/10",
         "qol": "/10"
       },
-      "stable": "Stabil"
+      "stable": "Stabil",
+      "adherenceInfo": "Rata de înregistrare în ultimele 30 de zile. Ne ajută să vă urmărim progresul cu precizie."
     },
     "quickLog": {
       "title": "Înregistrare rapidă în jurnal",
@@ -175,7 +176,7 @@
       "history": "Istoric",
       "efficacy": "Rata de eficacitate",
       "totalDosage": "Doza totală",
-      "adherence": "Respectarea tratamentului",
+      "adherence": "Rata de Documentare",
       "cycleProgress": "Progresul ciclului",
       "ofPlan": "din planul de 90 de zile",
       "correlationTitle": "Corelația doză-simptom",
@@ -183,7 +184,8 @@
       "legendDosage": "Doză (mg)",
       "legendRelief": "Scor de ușurare",
       "noData": "Încă nu există date.",
-      "days": "{count} zile"
+      "days": "{count} zile",
+      "adherenceInfo": "Arată cât de consecvent vă documentați consumul."
     },
     "appointments": {
       "title": "Consultații viitoare",

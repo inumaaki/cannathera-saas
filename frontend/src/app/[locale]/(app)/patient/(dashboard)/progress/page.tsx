@@ -87,7 +87,7 @@ export default async function PatientProgress({
             <Sparkline values={dosageSeries} color="#2563eb" step />
           </StatCard>
 
-          <StatCard label={t("adherence")} value={`${stats?.adherence ?? 0}%`}>
+          <StatCard label={t("adherence")} value={`${stats?.adherence ?? 0}%`} info={t("adherenceInfo")}>
             <Sparkline
               values={series.map((s) => (s.pain !== null ? 10 - s.pain : 0))}
               color="#ca8a04"
@@ -147,13 +147,15 @@ export default async function PatientProgress({
 function StatCard({
   label,
   value,
+  info,
   children,
-}: Readonly<{ label: string; value: string; children: React.ReactNode }>) {
+}: Readonly<{ label: string; value: string; info?: string; children: React.ReactNode }>) {
   return (
     <section className="mt-4 rounded-2xl border border-hairline bg-white p-5">
       <p className="text-xs font-bold uppercase tracking-[0.12em] text-sage-900">{label}</p>
       <p className="mt-1 font-display text-3xl font-bold text-ink-strong">{value}</p>
-      <div className="mt-2">{children}</div>
+      {info && <p className="mt-1.5 text-[10px] leading-tight text-sage-900/70">{info}</p>}
+      <div className="mt-3">{children}</div>
     </section>
   );
 }

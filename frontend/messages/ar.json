@@ -92,7 +92,7 @@
       "day": "اليوم {day}",
       "ofDays": "من {total} يومًا",
       "nextMilestone": "المرحلة التالية",
-      "adherence": "الالتزام",
+      "adherence": "معدل التوثيق",
       "adherencePerfect": "ممتاز",
       "dailyLogDue": "التسجيل اليومي مستحق",
       "dailyLogDone": "تم التسجيل اليومي",
@@ -114,7 +114,8 @@
         "activity": "/10",
         "qol": "/10"
       },
-      "stable": "مستقر"
+      "stable": "مستقر",
+      "adherenceInfo": "معدل التسجيل خلال آخر 30 يومًا. يساعدنا في تتبع تقدمك بدقة."
     },
     "quickLog": {
       "title": "تسجيل سريع",
@@ -175,7 +176,7 @@
       "history": "السجل",
       "efficacy": "معدل الفعالية",
       "totalDosage": "إجمالي الجرعات",
-      "adherence": "الالتزام",
+      "adherence": "معدل التوثيق",
       "cycleProgress": "تقدم الدورة",
       "ofPlan": "من خطة 90 يومًا",
       "correlationTitle": "العلاقة بين الجرعة والأعراض",
@@ -183,7 +184,8 @@
       "legendDosage": "الجرعة (ملغ)",
       "legendRelief": "درجة الراحة",
       "noData": "لا توجد بيانات بعد.",
-      "days": "{count} أيام"
+      "days": "{count} أيام",
+      "adherenceInfo": "يوضح مدى انتظامك في توثيق الجرعات."
     },
     "appointments": {
       "title": "الاستشارات القادمة",
@@ -1475,7 +1477,11 @@
       "contact": "التواصل مع الدعم",
       "taxTitle": "المستندات الضريبية",
       "taxText": "نزّل الملخص السنوي ومستندات ضريبة القيمة المضافة.",
-      "taxLink": "فتح الأرشيف"
+      "taxLink": "فتح الأرشيف",
+      "pilotAgreement": "اتفاق تجريبي",
+      "pilotMonthly": "{السعر} / شهر",
+      "pilotFree": "حر",
+      "pilotUntil": "حتى {التاريخ}"
     },
     "reports": {
       "title": "تقارير عبر الشركاء",
@@ -1742,7 +1748,41 @@
     "unlimitedCap": "غير محدود",
     "user": "المستخدم",
     "usersRegistry": "سجل المستخدمين",
-    "yes": "نعم"
+    "yes": "نعم",
+    "redFlags": "أعلام حمراء",
+    "redFlagOversight": "مراقبة العلم الأحمر",
+    "redFlagOversightDescription": "التنبيهات السريرية عبر جميع الشركاء - تحكم مركزي للامتثال وعمليات التدقيق.",
+    "searchRedFlags": "تنبيهات البحث، المريض أو الشريك...",
+    "redFlagView_unreviewed": "يفتح",
+    "redFlagView_reviewed": "تمت المراجعة",
+    "redFlagView_all": "الجميع",
+    "redFlagCriticalOpen": "{count} مفتوح حرج",
+    "loadingRedFlags": "جارٍ تحميل التنبيهات…",
+    "noRedFlags": "لم يتم العثور على أعلام حمراء.",
+    "redFlagNoPartner": "لم يتم تعيين شريك",
+    "redFlagReviewed": "تمت المراجعة",
+    "redFlagSeverity_CRITICAL": "شديد الأهمية",
+    "redFlagSeverity_WARNING": "تحذير",
+    "redFlagSeverity_INFO": "معلومات",
+    "redFlagAcknowledge": "وضع علامة كمراجعة",
+    "redFlagAcknowledging": "جارٍ الحفظ…",
+    "pilot": "طيار",
+    "free": "حر",
+    "endsOn": "ينتهي {تاريخ}",
+    "pilotPricing": "التسعير التجريبي",
+    "pilotPricingHint": "قم بتعيين سعر شهري مخصص لاتفاقية فردية. يؤدي هذا إلى فتح الوصول إلى البوابة ويتم عرضه للعرض فقط - لا يتم إنشاء أي رسوم أو فاتورة.",
+    "pilotPriceLabel": "السعر الشهري",
+    "pilotEndsLabel": "تاريخ الانتهاء (اختياري)",
+    "pilotNoteLabel": "ملاحظة (اختياري)",
+    "pilotNotePlaceholder": "على سبيل المثال طبيب عام مجاني في الشهر الأول",
+    "pilotReset": "إعادة التعيين إلى المعيار",
+    "pilotPriceInvalid": "أدخل سعرًا صالحًا (0 أو أكثر).",
+    "pilotPriceError": "تعذر حفظ التسعير التجريبي. يرجى المحاولة مرة أخرى.",
+    "planAssignment": "تعيين الخطة والتسعير التجريبي",
+    "planAssignmentHint": "قم بتكوين الخطة التي تنطبق على هذا الحساب أو قم بتعيين معدل تجريبي مخصص.",
+    "planTier": "طبقة الخطة",
+    "setDemoFree": "تعيين كعرض تجريبي / مجاني",
+    "demoFreeAccount": "حساب تجريبي / مجاني"
   },
   "paywall": {
     "checkoutFailed": "تعذر بدء الدفع عبر Stripe.",

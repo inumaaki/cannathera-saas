@@ -92,7 +92,7 @@
       "day": "Gün {day}",
       "ofDays": "{total} günden",
       "nextMilestone": "Sonraki kilometre taşı",
-      "adherence": "Tedaviye uyum",
+      "adherence": "Belgelendirme Oranı",
       "adherencePerfect": "Mükemmel",
       "dailyLogDue": "Günlük kayıt bekliyor",
       "dailyLogDone": "Günlük kayıt tamamlandı",
@@ -114,7 +114,8 @@
         "activity": "/10",
         "qol": "/10"
       },
-      "stable": "Stabil"
+      "stable": "Stabil",
+      "adherenceInfo": "Son 30 gündeki kayıt oranı. İlerlemenizi doğru bir şekilde takip etmemize yardımcı olur."
     },
     "quickLog": {
       "title": "Hızlı Kayıt",
@@ -175,7 +176,7 @@
       "history": "Geçmiş",
       "efficacy": "Etkinlik oranı",
       "totalDosage": "Toplam doz",
-      "adherence": "Tedaviye uyum",
+      "adherence": "Belgelendirme Oranı",
       "cycleProgress": "Döngü ilerlemesi",
       "ofPlan": "90 günlük plandan",
       "correlationTitle": "Doz ve Semptom Korelasyonu",
@@ -183,7 +184,8 @@
       "legendDosage": "Dozaj (mg)",
       "legendRelief": "Rahatlama skoru",
       "noData": "Henüz veri yok.",
-      "days": "{count} gün"
+      "days": "{count} gün",
+      "adherenceInfo": "Alımlarınızı ne kadar tutarlı bir şekilde belgelendirdiğinizi gösterir."
     },
     "appointments": {
       "title": "Yaklaşan Konsültasyonlar",

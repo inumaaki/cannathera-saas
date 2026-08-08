@@ -92,7 +92,7 @@
       "day": "Dzień {day}",
       "ofDays": "z {total} dni",
       "nextMilestone": "Następny kamień milowy",
-      "adherence": "Przestrzeganie",
+      "adherence": "Wskaźnik Dokumentacji",
       "adherencePerfect": "Idealnie",
       "dailyLogDue": "Dzienny zapis wymagany",
       "dailyLogDone": "Dzienny zapis zarejestrowany",
@@ -114,7 +114,8 @@
         "activity": "/10",
         "qol": "/10"
       },
-      "stable": "Stabilny"
+      "stable": "Stabilny",
+      "adherenceInfo": "Wskaźnik rejestracji w ciągu ostatnich 30 dni. Pomaga nam dokładnie śledzić Twoje postępy."
     },
     "quickLog": {
       "title": "Szybki wpis do dziennika",
@@ -175,7 +176,7 @@
       "history": "Historia",
       "efficacy": "Skuteczność",
       "totalDosage": "Łączna dawka",
-      "adherence": "Przestrzeganie zaleceń",
+      "adherence": "Wskaźnik Dokumentacji",
       "cycleProgress": "Postęp cyklu",
       "ofPlan": "z planu 90-dniowego",
       "correlationTitle": "Korelacja dawkowania i objawów",
@@ -183,7 +184,8 @@
       "legendDosage": "Dawka (mg)",
       "legendRelief": "Wynik ulgi",
       "noData": "Brak danych",
-      "days": "{count} dni"
+      "days": "{count} dni",
+      "adherenceInfo": "Pokazuje, jak konsekwentnie dokumentujesz swoje spożycie."
     },
     "appointments": {
       "title": "Nadchodzące konsultacje",
