@@ -184,7 +184,8 @@
       "legendDosage": "Dosierung (mg)",
       "legendRelief": "Linderungswert",
       "noData": "Noch keine Daten vorhanden.",
-      "days": "{count} Tage"
+      "days": "{count} Tage",
+      "adherenceInfo": "Zeigt, wie konsequent Sie Ihre Einnahme dokumentieren."
     },
     "appointments": {
       "title": "Anstehende Konsultationen",

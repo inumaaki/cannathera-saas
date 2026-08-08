@@ -1477,7 +1477,11 @@
       "contact": "Skontaktuj się z pomocą",
       "taxTitle": "Dokumenty podatkowe",
       "taxText": "Pobierz roczne podsumowanie oraz dokumenty VAT.",
-      "taxLink": "Otwórz archiwum"
+      "taxLink": "Otwórz archiwum",
+      "pilotAgreement": "Umowa pilotażowa",
+      "pilotMonthly": "{cena} / miesiąc",
+      "pilotFree": "Bezpłatny",
+      "pilotUntil": "do {data}"
     },
     "reports": {
       "title": "Raporty między partnerami",
@@ -1744,7 +1748,41 @@
     "unlimitedCap": "Nieograniczony",
     "user": "Użytkownik",
     "usersRegistry": "Rejestr użytkowników",
-    "yes": "Tak"
+    "yes": "Tak",
+    "redFlags": "Czerwone flagi",
+    "redFlagOversight": "Przeoczenie pod czerwoną flagą",
+    "redFlagOversightDescription": "Alerty kliniczne u wszystkich partnerów — scentralizowana kontrola zgodności i audyty.",
+    "searchRedFlags": "Wyszukaj alerty, pacjent lub partner…",
+    "redFlagView_unreviewed": "Otwarte",
+    "redFlagView_reviewed": "Recenzję",
+    "redFlagView_all": "Wszystko",
+    "redFlagCriticalOpen": "{count} krytyczne otwarcie",
+    "loadingRedFlags": "Ładowanie alertów…",
+    "noRedFlags": "Nie znaleziono czerwonych flag.",
+    "redFlagNoPartner": "Nie przypisano żadnego partnera",
+    "redFlagReviewed": "Recenzję",
+    "redFlagSeverity_CRITICAL": "Krytyczny",
+    "redFlagSeverity_WARNING": "Ostrzeżenie",
+    "redFlagSeverity_INFO": "Informacje",
+    "redFlagAcknowledge": "Oznacz jako sprawdzone",
+    "redFlagAcknowledging": "Zapisywanie…",
+    "pilot": "Pilot",
+    "free": "Bezpłatny",
+    "endsOn": "kończy się {data}",
+    "pilotPricing": "Ceny pilotażowe",
+    "pilotPricingHint": "Przypisz niestandardową cenę miesięczną do indywidualnej umowy. Spowoduje to odblokowanie dostępu do portalu i będzie widoczne tylko w celach informacyjnych — nie będą generowane żadne opłaty ani faktury.",
+    "pilotPriceLabel": "Cena miesięczna",
+    "pilotEndsLabel": "Data zakończenia (opcjonalnie)",
+    "pilotNoteLabel": "Uwaga (opcjonalnie)",
+    "pilotNotePlaceholder": "np. Pierwszy miesiąc za darmo u lekarza pierwszego kontaktu",
+    "pilotReset": "Zresetuj do standardu",
+    "pilotPriceInvalid": "Wprowadź prawidłową cenę (0 lub więcej).",
+    "pilotPriceError": "Nie udało się zapisać cen pilotażowych. Spróbuj ponownie.",
+    "planAssignment": "Przypisanie planu i ceny pilotażowe",
+    "planAssignmentHint": "Skonfiguruj plan mający zastosowanie do tego konta lub ustaw niestandardową stawkę pilotażową.",
+    "planTier": "Poziom planu",
+    "setDemoFree": "Ustaw jako wersję demonstracyjną / bezpłatną",
+    "demoFreeAccount": "Konto demonstracyjne / darmowe"
   },
   "paywall": {
     "checkoutFailed": "Nie udało się uruchomić Stripe checkout.",
@@ -1819,23 +1857,23 @@
       "title": "Kompletny ekosystem do towarzyszenia terapii",
       "subtitle": "Cannathera wypełnia lukę między klinicystami, aptekami a pacjentami, przekształcając skomplikowane schematy terapii w uporządkowane, bezpieczne, oparte na danych przepływy postępu.",
       "patientBullets": [
-        "Uporządkowany 90-dniowy plan",
-        "Dzienniki dziennej dawki",
-        "Analiza przestrzegania zaleceń"
+        "Bieżąca dokumentacja",
+        "Dzienniki dziennego dawkowania",
+        "Analiza przyczepności"
       ],
       "doctorBullets": [
-        "Zautomatyzowane alerty",
+        "Zautomatyzowane czerwone flagi",
         "Zarządzanie listą pacjentów",
-        "Eksporty PDF dla klinik"
+        "Eksporty kliniczne do plików PDF"
       ],
       "pharmacyBullets": [
         "Śledzenie zapasów",
-        "Przeglądy zgodności",
-        "Audyt zapisów billingowych"
+        "Recenzje zgodności",
+        "Audyt dzienników rozliczeniowych"
       ],
       "enterpriseBullets": [
-        "Niestandardowe oznakowanie najemcy",
-        "Dostęp do Webhook i API",
+        "Niestandardowy branding najemcy",
+        "Dostęp do webhooka i API",
         "Kompleksowa polityka bezpieczeństwa"
       ],
       "patientDescSuffix": "Bezpieczne rejestrowanie objawów, dawek i codziennej aktywności. Śledzenie wskaźników przestrzegania zaleceń w czasie rzeczywistym.",

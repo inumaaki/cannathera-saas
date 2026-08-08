@@ -1477,7 +1477,11 @@
       "contact": "Contactați suportul",
       "taxTitle": "Documente fiscale",
       "taxText": "Descarcă rezumatul anual și documentele TVA.",
-      "taxLink": "Deschide arhiva"
+      "taxLink": "Deschide arhiva",
+      "pilotAgreement": "Acord pilot",
+      "pilotMonthly": "{price}/lună",
+      "pilotFree": "Gratuit",
+      "pilotUntil": "până la {data}"
     },
     "reports": {
       "title": "Rapoarte cruzate între parteneri",
@@ -1744,7 +1748,41 @@
     "unlimitedCap": "Nelimitat",
     "user": "Utilizator",
     "usersRegistry": "Registru utilizatori",
-    "yes": "Da"
+    "yes": "Da",
+    "redFlags": "Steaguri roșii",
+    "redFlagOversight": "Red-flag oversight",
+    "redFlagOversightDescription": "Alerte clinice pentru toți partenerii — control centralizat pentru conformitate și auditare.",
+    "searchRedFlags": "Căutați alerte, pacient sau partener...",
+    "redFlagView_unreviewed": "Deschide",
+    "redFlagView_reviewed": "Revizuit",
+    "redFlagView_all": "Toate",
+    "redFlagCriticalOpen": "{count} deschis critic",
+    "loadingRedFlags": "Se încarcă alertele…",
+    "noRedFlags": "Nu s-au găsit semnale roșii.",
+    "redFlagNoPartner": "Niciun partener desemnat",
+    "redFlagReviewed": "Revizuit",
+    "redFlagSeverity_CRITICAL": "Critic",
+    "redFlagSeverity_WARNING": "Avertizare",
+    "redFlagSeverity_INFO": "Info",
+    "redFlagAcknowledge": "Marcați ca revizuit",
+    "redFlagAcknowledging": "Se salvează…",
+    "pilot": "Pilot",
+    "free": "Gratuit",
+    "endsOn": "se încheie {data}",
+    "pilotPricing": "Prețuri pilot",
+    "pilotPricingHint": "Atribuiți un preț lunar personalizat pentru un acord individual. Acest lucru deblochează accesul la portal și este afișat doar pentru afișare - nu se generează nicio taxă sau factură.",
+    "pilotPriceLabel": "Pret lunar",
+    "pilotEndsLabel": "Data de încheiere (opțional)",
+    "pilotNoteLabel": "Notă (opțional)",
+    "pilotNotePlaceholder": "de ex. GP gratuit prima lună",
+    "pilotReset": "Resetați la standard",
+    "pilotPriceInvalid": "Introduceți un preț valid (0 sau mai mult).",
+    "pilotPriceError": "Nu s-a putut salva prețul pilot. Vă rugăm să încercați din nou.",
+    "planAssignment": "Atribuirea planului și prețul pilot",
+    "planAssignmentHint": "Configurați planul care se aplică acestui cont sau setați o rată pilot personalizată.",
+    "planTier": "Nivelul de plan",
+    "setDemoFree": "Setați ca Demo / Gratuit",
+    "demoFreeAccount": "Cont Demo / Gratuit"
   },
   "paywall": {
     "checkoutFailed": "Eșec la inițierea Stripe checkout.",
@@ -1819,24 +1857,24 @@
       "title": "Un Ecosistem Complet pentru Însoțirea Terapiei",
       "subtitle": "Cannathera umple golul dintre clinicieni, farmacii și pacienți prin traducerea regimurilor complexe de terapie în fluxuri de progres structurate, securizate și bazate pe date.",
       "patientBullets": [
-        "Plan Structurat de 90 de Zile",
-        "Jurnale Zilnice de Dozare",
-        "Analize de Conformitate"
+        "Documentare in curs de desfasurare",
+        "Jurnalele de dozare zilnică",
+        "Analiza aderentei"
       ],
       "doctorBullets": [
-        "Semnale Roșii Automatizate",
-        "Gestionarea Listei de Pacienți",
-        "Exporturi PDF Clinice"
+        "Semnale roșii automate",
+        "Managementul listei de pacienți",
+        "Exporturi clinice PDF"
       ],
       "pharmacyBullets": [
-        "Monitorizarea Inventarului",
-        "Revizuiri de Conformitate",
-        "Audit al Jurnalelor de Facturare"
+        "Urmărirea inventarului",
+        "Evaluări de conformitate",
+        "Auditul jurnalelor de facturare"
       ],
       "enterpriseBullets": [
-        "Branding Personalizat pentru Chiriaș",
-        "Acces Webhook & API",
-        "Politică de Securitate Cuprinzătoare"
+        "Branding personalizat pentru chiriași",
+        "Acces webhook și API",
+        "Politică de securitate cuprinzătoare"
       ],
       "patientDescSuffix": "Înregistrează în siguranță simptome, doze și activități zilnice. Monitorizează indicatorii de conformitate în timp real.",
       "doctorDescSuffix": "Protocoalele de triere automatizate monitorizează valorile pacienților. Generează rapoarte structurate PDF despre curs cu un singur clic.",
