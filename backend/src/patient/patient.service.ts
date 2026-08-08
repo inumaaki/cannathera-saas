@@ -9,7 +9,7 @@ import { NotificationsService } from '../notifications/notifications.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { isPaywallBypassed } from '../shared';
 
-const PLAN_DAYS = 90;
+const PLAN_DAYS = 30;
 
 type LogMetrics = {
   pain?: number;
@@ -129,10 +129,8 @@ export class PatientService {
   async summary(userId: string) {
     const profile = await this.profileOf(userId);
     const start = profile.therapyStart ?? profile.createdAt;
-    const day = Math.min(
-      PLAN_DAYS,
-      Math.max(1, Math.floor((Date.now() - start.getTime()) / 86_400_000) + 1),
-    );
+    const absoluteDay = Math.max(1, Math.floor((Date.now() - start.getTime()) / 86_400_000) + 1);
+    const day = ((absoluteDay - 1) % PLAN_DAYS) + 1;
 
     const since = new Date(Date.now() - 30 * 86_400_000);
     const logs = await this.prisma.therapyLog.findMany({
@@ -141,7 +139,7 @@ export class PatientService {
     });
 
     // Adherence: distinct days with a log in the last 30 (or since start) days.
-    const windowDays = Math.min(30, day);
+    const windowDays = Math.min(30, absoluteDay);
     const loggedDays = new Set(
       logs.map((l) => l.loggedAt.toISOString().slice(0, 10)),
     );
@@ -472,10 +470,10 @@ export class PatientService {
     const summary = await this.summary(userId);
     const phases = [
       { key: 'initialAssessment', day: 1 },
-      { key: 'titrationCommencement', day: 14 },
-      { key: 'doseAdjustmentReview', day: 45 },
-      { key: 'monthlyClinicalReview', day: 60 },
-      { key: 'cycleCompletion', day: 90 },
+      { key: 'titrationCommencement', day: 7 },
+      { key: 'doseAdjustmentReview', day: 14 },
+      { key: 'monthlyClinicalReview', day: 21 },
+      { key: 'cycleCompletion', day: 30 },
     ].map((p, i, arr) => {
       const next = arr[i + 1]?.day ?? PLAN_DAYS + 1;
       let status: 'achieved' | 'inProgress' | 'pending';

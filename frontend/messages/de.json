@@ -182,7 +182,8 @@
       "correlationSubtitle": "Verlauf des therapeutischen Fensters der letzten 7 Tage",
       "legendDosage": "Dosierung (mg)",
       "legendRelief": "Linderungswert",
-      "noData": "Noch keine Daten vorhanden."
+      "noData": "Noch keine Daten vorhanden.",
+      "days": "{count} Tage"
     },
     "appointments": {
       "title": "Anstehende Konsultationen",
@@ -231,7 +232,7 @@
         },
         "doseAdjustmentReview": {
           "title": "Dosisanpassungs-Überprüfung",
-          "description": "Klinische Analyse der ersten 30 Tage der Titration zur Ermittlung der optimalen Dauerdosierung."
+          "description": "Klinische Analyse der Titration zur Ermittlung der optimalen Dauerdosierung."
         },
         "monthlyClinicalReview": {
           "title": "Monatliche klinische Überprüfung",
@@ -364,7 +365,7 @@
       "colAdherence": "Therapietreue",
       "colLastLog": "Letzter Eintrag",
       "colNext": "Nächster Termin",
-      "dayOf": "Tag {day}/90",
+      "dayOf": "Tag {day}/30",
       "achieved": "Erreicht",
       "low": "Niedrig",
       "pendingReview": "Prüfung ausstehend",
@@ -390,7 +391,7 @@
       "ageSex": "Alter / Geschlecht",
       "diagnosis": "Hauptdiagnose",
       "enrollment": "Therapietag",
-      "dayOf": "Tag {day}/90",
+      "dayOf": "Tag {day}/30",
       "pharmacy": "Betreuende Apotheke",
       "package": "Paket",
       "lastReview": "Letztes Review",

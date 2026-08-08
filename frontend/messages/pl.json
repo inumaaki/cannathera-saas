@@ -182,7 +182,8 @@
       "correlationSubtitle": "Śledzenie skuteczności terapeutycznej w ciągu ostatnich 7 dni",
       "legendDosage": "Dawka (mg)",
       "legendRelief": "Wynik ulgi",
-      "noData": "Brak danych"
+      "noData": "Brak danych",
+      "days": "{count} dni"
     },
     "appointments": {
       "title": "Nadchodzące konsultacje",
@@ -364,7 +365,7 @@
       "colAdherence": "Zgodność",
       "colLastLog": "Ostatni wpis",
       "colNext": "Następna wizyta",
-      "dayOf": "Dzień {day}/90",
+      "dayOf": "Dzień {day}/30",
       "achieved": "Osiągnięto",
       "low": "Niski",
       "pendingReview": "Przegląd oczekuje",
@@ -390,7 +391,7 @@
       "ageSex": "Wiek / płeć",
       "diagnosis": "Rozpoznanie główne",
       "enrollment": "Dzień terapii",
-      "dayOf": "Dzień {day}/90",
+      "dayOf": "Dzień {day}/30",
       "pharmacy": "Apteka wydająca",
       "package": "Opakowanie",
       "lastReview": "Ostatni przegląd",

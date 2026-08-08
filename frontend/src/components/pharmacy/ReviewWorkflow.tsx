@@ -113,8 +113,8 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
     i % Math.max(1, Math.ceil(data.series.length / 6)) === 0 ? s.date.slice(5) : "",
   );
 
-  // 90-day plan progress (client's Phase 1/2/3 model).
-  const planPct = Math.min(100, Math.round((data.day / 90) * 100));
+  // 30-day plan progress (client's Phase 1/2/3 model).
+  const planPct = Math.min(100, Math.round((data.day / 30) * 100));
 
   async function complete() {
     setBusy(true);

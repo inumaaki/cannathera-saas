@@ -182,7 +182,8 @@
       "correlationSubtitle": "Monitorizarea performanței ferestrei terapeutice în ultimele 7 zile",
       "legendDosage": "Doză (mg)",
       "legendRelief": "Scor de ușurare",
-      "noData": "Încă nu există date."
+      "noData": "Încă nu există date.",
+      "days": "{count} zile"
     },
     "appointments": {
       "title": "Consultații viitoare",
@@ -364,7 +365,7 @@
       "colAdherence": "Adherență",
       "colLastLog": "Ultima înregistrare",
       "colNext": "Următoarea programare",
-      "dayOf": "Ziua {day}/90",
+      "dayOf": "Ziua {day}/30",
       "achieved": "Realizat",
       "low": "Scăzut",
       "pendingReview": "Revizuire în așteptare",
@@ -390,7 +391,7 @@
       "ageSex": "Vârstă / sex",
       "diagnosis": "Diagnostic primar",
       "enrollment": "Ziua terapiei",
-      "dayOf": "Ziua {day}/90",
+      "dayOf": "Ziua {day}/30",
       "pharmacy": "Farmacia de distribuție",
       "package": "Pachet",
       "lastReview": "Ultima revizuire",

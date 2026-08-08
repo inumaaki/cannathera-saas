@@ -30,8 +30,8 @@ export default async function PatientProgress({
   const { tab } = await searchParams;
   setRequestLocale(locale);
 
-  const isHistory = tab === "history";
-  const days = isHistory ? 90 : 7;
+  const daysStr = tab || "7";
+  const days = ["7", "30", "60", "90"].includes(daysStr) ? Number(daysStr) : 7;
 
   const [t, tplan, format, stats] = await Promise.all([
     getTranslations("patient.progress"),
@@ -46,7 +46,7 @@ export default async function PatientProgress({
   // 7-day view: weekday labels; history: thin out to ~6 date labels.
   const labelEvery = Math.max(1, Math.ceil(series.length / 6));
   const labels = series.map((s, i) =>
-    isHistory
+    days > 7
       ? i % labelEvery === 0
         ? format.dateTime(new Date(s.date), { day: "numeric", month: "numeric" })
         : ""
@@ -61,15 +61,15 @@ export default async function PatientProgress({
   return (
     <>
       <div className="flex gap-6 border-b border-hairline">
-        <Link href="/patient/progress" className={tabClass(!isHistory)}>
-          {t("thisPeriod")}
-        </Link>
-        <Link
-          href={{ pathname: "/patient/progress", query: { tab: "history" } }}
-          className={tabClass(isHistory)}
-        >
-          {t("history")}
-        </Link>
+        {[7, 30, 60, 90].map((d) => (
+          <Link
+            key={d}
+            href={{ pathname: "/patient/progress", query: d === 7 ? {} : { tab: String(d) } }}
+            className={tabClass(days === d)}
+          >
+            {d === 7 ? t("thisPeriod") : t("days", { count: d })}
+          </Link>
+        ))}
       </div>
 
       {series.length < 2 ? (

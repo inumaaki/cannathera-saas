@@ -190,7 +190,8 @@
       "correlationSubtitle": "Tracking therapeutic window performance over the last 7 days",
       "legendDosage": "Dosage (mg)",
       "legendRelief": "Relief score",
-      "noData": "No data yet."
+      "noData": "No data yet.",
+      "days": "{count} days"
     },
     "appointments": {
       "title": "Upcoming Consultations",
@@ -372,7 +373,7 @@
       "colAdherence": "Adherence",
       "colLastLog": "Last entry",
       "colNext": "Next appointment",
-      "dayOf": "Day {day}/90",
+      "dayOf": "Day {day}/30",
       "achieved": "Achieved",
       "low": "Low",
       "pendingReview": "Review pending",
@@ -398,7 +399,7 @@
       "ageSex": "Age / sex",
       "diagnosis": "Primary diagnosis",
       "enrollment": "Therapy day",
-      "dayOf": "Day {day}/90",
+      "dayOf": "Day {day}/30",
       "pharmacy": "Dispensing pharmacy",
       "package": "Package",
       "lastReview": "Last review",

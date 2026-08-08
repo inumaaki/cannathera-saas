@@ -182,7 +182,8 @@
       "correlationSubtitle": "تتبع أداء نافذة العلاج خلال آخر 7 أيام",
       "legendDosage": "الجرعة (ملغ)",
       "legendRelief": "مستوى التخفيف",
-      "noData": "لا توجد بيانات بعد."
+      "noData": "لا توجد بيانات بعد.",
+      "days": "{count} أيام"
     },
     "appointments": {
       "title": "المواعيد القادمة",
@@ -364,7 +365,7 @@
       "colAdherence": "الالتزام",
       "colLastLog": "آخر إدخال",
       "colNext": "الموعد التالي",
-      "dayOf": "اليوم {day}/90",
+      "dayOf": "اليوم {day}/30",
       "achieved": "تم الإنجاز",
       "low": "منخفض",
       "pendingReview": "انتظر المراجعة",
@@ -390,7 +391,7 @@
       "ageSex": "العمر / الجنس",
       "diagnosis": "التشخيص الأساسي",
       "enrollment": "يوم العلاج",
-      "dayOf": "اليوم {day}/90",
+      "dayOf": "اليوم {day}/30",
       "pharmacy": "صيدلية الصرف",
       "package": "العبوة",
       "lastReview": "آخر مراجعة",
