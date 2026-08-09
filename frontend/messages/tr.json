@@ -282,7 +282,8 @@
       "save": "Profil değişikliklerini kaydet",
       "saved": "Profil kaydedildi",
       "gdprTitle": "GDPR uyumlu",
-      "gdprText": "Tıbbi verileriniz AB yüksek güvenlik standartlarına göre şifrelenmektedir."
+      "gdprText": "Tıbbi verileriniz AB yüksek güvenlik standartlarına göre şifrelenmektedir.",
+      "safeguardWarning": "Önemli: Harici bir eczaneye veya doktora geçmek, planınızın sübvanse edilmiş avantajlarını geçersiz kılar."
     },
     "reports": {
       "title": "Raporlarım",
@@ -296,6 +297,11 @@
       "noHistory": "Henüz rapor oluşturulmadı.",
       "download": "İndir",
       "generating": "Oluşturuluyor …"
+    },
+    "safeguardModal": {
+      "title": "Planınızla İlgili Önemli Bilgilendirme",
+      "description": "Planınıza bağlı olmayan harici bir eczane veya harici bir doktor kullanmak, sübvanse edilmiş avantajlarınızı geçersiz kılacaktır. Bu durumda, aylık platform maliyetlerinden siz sorumlu olacaksınız.",
+      "confirm": "Anlıyor ve kabul ediyorum"
     }
   },
   "doctor": {

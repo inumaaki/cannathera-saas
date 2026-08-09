@@ -5,6 +5,7 @@ import { apiServer } from "@/lib/api-server";
 import { getSessionUser } from "@/lib/session";
 import { ProgressRing } from "@/components/patient/charts";
 import { HomeLogButton } from "./HomeLogButton";
+import { SafeguardModal } from "@/components/patient/SafeguardModal";
 
 type Summary = {
   firstName: string | null;
@@ -16,6 +17,8 @@ type Summary = {
   nextAppointment: { scheduledAt: string; joinUrl: string | null } | null;
   onboardingCompleted?: boolean;
   hasActiveSubscription: boolean;
+  safeguardAcknowledged?: boolean;
+  packageTier?: string;
 };
 
 type Plan = {
@@ -53,6 +56,10 @@ export default async function PatientHome({
 
   return (
     <>
+      {!summary?.safeguardAcknowledged && summary?.packageTier !== "ENTERPRISE" ? (
+        <SafeguardModal />
+      ) : null}
+      
       <p className="text-xs font-semibold uppercase tracking-[0.15em] text-sage-900">
         {t("welcomeBack")}
       </p>

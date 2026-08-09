@@ -192,6 +192,8 @@ export class PatientService {
       onboardingCompleted: profile.onboardingCompleted,
       hasActiveSubscription:
         profile.hasActiveSubscription || isPaywallBypassed(profile.user.email),
+      safeguardAcknowledged: profile.safeguardAcknowledged,
+      packageTier: profile.packageTier,
     };
   }
 
@@ -404,6 +406,7 @@ export class PatientService {
       pharmacyOrgId: p.pharmacyId,
       address: p.address,
       phone: p.phone,
+      packageTier: p.packageTier,
       pharmacies,
     };
   }
@@ -416,6 +419,7 @@ export class PatientService {
       pharmacyOrgId?: string | null;
       address?: string;
       phone?: string;
+      safeguardAcknowledged?: boolean;
     },
   ) {
     const p = await this.profileOf(userId, true);
@@ -431,7 +435,8 @@ export class PatientService {
     if (
       data.pharmacyOrgId !== undefined ||
       data.address !== undefined ||
-      data.phone !== undefined
+      data.phone !== undefined ||
+      data.safeguardAcknowledged !== undefined
     ) {
       // Guard the choice: it must be a real PHARMACY org, so a crafted request
       // can't reassign the patient to a practice or an enterprise partner.
@@ -450,6 +455,7 @@ export class PatientService {
           }),
           ...(data.address !== undefined && { address: data.address }),
           ...(data.phone !== undefined && { phone: data.phone }),
+          ...(data.safeguardAcknowledged !== undefined && { safeguardAcknowledged: data.safeguardAcknowledged }),
         },
       });
     }

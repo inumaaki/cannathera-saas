@@ -282,7 +282,8 @@
       "save": "Salvează modificările profilului",
       "saved": "Profil salvat",
       "gdprTitle": "Conform regulamentului GDPR",
-      "gdprText": "Datele tale medicale sunt criptate conform standardelor UE de securitate înaltă."
+      "gdprText": "Datele tale medicale sunt criptate conform standardelor UE de securitate înaltă.",
+      "safeguardWarning": "Important: Trecerea la o farmacie sau medic extern anulează beneficiile subvenționate ale planului dvs."
     },
     "reports": {
       "title": "Rapoartele mele",
@@ -296,6 +297,11 @@
       "noHistory": "Nu au fost generate rapoarte încă.",
       "download": "Descarcă",
       "generating": "Se generează …"
+    },
+    "safeguardModal": {
+      "title": "Notificare importantă privind planul dvs.",
+      "description": "Utilizarea unei farmacii externe sau a unui medic extern care nu este legat de planul dvs. va anula beneficiile subvenționate. În acest caz, veți fi responsabil pentru costurile lunare ale platformei.",
+      "confirm": "Înțeleg și sunt de acord"
     }
   },
   "doctor": {

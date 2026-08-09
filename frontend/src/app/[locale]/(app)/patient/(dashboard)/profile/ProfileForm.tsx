@@ -14,6 +14,7 @@ type Profile = {
   address?: string;
   phone?: string;
   pharmacies: Array<{ id: string; name: string }>;
+  packageTier?: string;
 };
 
 const label = "block text-sm font-semibold uppercase tracking-wide text-muted";
@@ -130,6 +131,14 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
           placeholder={t("noPharmacy")}
           className={box}
         />
+        {profile.packageTier !== "ENTERPRISE" ? (
+          <div className="mt-3 flex gap-2 rounded-xl bg-gold/10 p-4 text-sm font-medium text-gold-900 border border-gold/20">
+            <span aria-hidden className="msym text-[20px] text-gold">
+              info
+            </span>
+            <p className="leading-snug">{t("safeguardWarning")}</p>
+          </div>
+        ) : null}
       </div>
 
       <div className="flex justify-end">

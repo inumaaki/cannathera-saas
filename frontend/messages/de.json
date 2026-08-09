@@ -282,7 +282,8 @@
       "save": "Profiländerungen speichern",
       "saved": "Profil gespeichert",
       "gdprTitle": "DSGVO-konform",
-      "gdprText": "Ihre medizinischen Daten werden nach EU-Hochsicherheitsstandards verschlüsselt."
+      "gdprText": "Ihre medizinischen Daten werden nach EU-Hochsicherheitsstandards verschlüsselt.",
+      "safeguardWarning": "Wichtiger Hinweis: Bei einem Wechsel zu einer externen Apotheke / ärztlichen Betreuung entfällt die Kostenübernahme durch Ihren Tarif."
     },
     "reports": {
       "title": "Meine Berichte",
@@ -296,6 +297,11 @@
       "noHistory": "Noch keine Berichte erstellt.",
       "download": "Herunterladen",
       "generating": "Wird erstellt …"
+    },
+    "safeguardModal": {
+      "title": "Wichtiger Hinweis zur Tarifbindung",
+      "description": "Die Nutzung von externen Apotheken oder behandelnden Ärzt:innen, die nicht an Ihren Plan angebunden sind, führt zum Verlust der subventionierten Tarifvorteile. In diesem Fall müssen Sie die monatlichen Plattformkosten selbst tragen.",
+      "confirm": "Ich habe verstanden"
     }
   },
   "doctor": {

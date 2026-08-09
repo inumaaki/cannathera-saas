@@ -282,7 +282,8 @@
       "save": "Zapisz zmiany w profilu",
       "saved": "Profil zapisany",
       "gdprTitle": "Zgodność z RODO",
-      "gdprText": "Twoje dane medyczne są szyfrowane zgodnie z europejskimi standardami wysokiego bezpieczeństwa."
+      "gdprText": "Twoje dane medyczne są szyfrowane zgodnie z europejskimi standardami wysokiego bezpieczeństwa.",
+      "safeguardWarning": "Ważne: Przejście do zewnętrznej apteki lub lekarza unieważnia dotowane świadczenia Twojego planu."
     },
     "reports": {
       "title": "Moje raporty",
@@ -296,6 +297,11 @@
       "noHistory": "Brak wygenerowanych raportów.",
       "download": "Pobierz",
       "generating": "Generowanie …"
+    },
+    "safeguardModal": {
+      "title": "Ważna informacja dotycząca Twojego planu",
+      "description": "Korzystanie z zewnętrznej apteki lub zewnętrznego lekarza niezwiązanego z Twoim planem unieważni Twoje dotowane świadczenia. W takim przypadku będziesz odpowiedzialny za miesięczne koszty platformy.",
+      "confirm": "Rozumiem i zgadzam się"
     }
   },
   "doctor": {

@@ -3,6 +3,7 @@ import {
   IsNumber,
   IsOptional,
   IsString,
+  IsBoolean,
   Max,
   MaxLength,
   Min,
@@ -133,6 +134,10 @@ export class UpdateProfileDto {
   @IsString()
   @MaxLength(50)
   phone?: string;
+
+  @IsOptional()
+  @IsBoolean()
+  safeguardAcknowledged?: boolean;
 }
 
 export class CompleteOnboardingDto {

@@ -290,7 +290,8 @@
       "save": "Save profile changes",
       "saved": "Profile saved",
       "gdprTitle": "GDPR compliant",
-      "gdprText": "Your medical data is encrypted according to EU high-security standards."
+      "gdprText": "Your medical data is encrypted according to EU high-security standards.",
+      "safeguardWarning": "Important: Switching to an external pharmacy or physician voids the subsidized benefits of your plan."
     },
     "reports": {
       "title": "My reports",
@@ -304,6 +305,11 @@
       "noHistory": "No reports generated yet.",
       "download": "Download",
       "generating": "Generating …"
+    },
+    "safeguardModal": {
+      "title": "Important Notice Regarding Your Plan",
+      "description": "Using an external pharmacy or an external physician not linked to your plan will void your subsidized benefits. In this case, you will be responsible for the monthly platform costs.",
+      "confirm": "I understand and agree"
     }
   },
   "doctor": {
