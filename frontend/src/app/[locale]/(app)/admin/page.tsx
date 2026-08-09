@@ -720,7 +720,7 @@ export default function AdminDashboardPage() {
 
             <div className="flex w-full flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center lg:w-auto">
               <div className="flex max-w-full overflow-x-auto rounded-lg border border-hairline bg-surface p-1 text-xs font-semibold [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-                {["ALL", "PRACTICE", "PHARMACY", "ENTERPRISE"].map((t) => (
+                {["ALL", "PRACTICE", "PHARMACY", "ENTERPRISE", "PATIENT"].map((t) => (
                   <button
                     key={t}
                     type="button"
@@ -1806,6 +1806,7 @@ export default function AdminDashboardPage() {
                       { value: "PRACTICE", label: t("practiceClinic") },
                       { value: "PHARMACY", label: t("pharmacy") },
                       { value: "ENTERPRISE", label: t("enterprise") },
+                      { value: "PATIENT", label: t("patient") },
                     ]}
                   />
                   <StyledSelect

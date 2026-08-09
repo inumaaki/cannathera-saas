@@ -28,6 +28,7 @@ enum OrgType {
   PRACTICE
   ENTERPRISE
   CLINIC
+  PATIENT
 }
 
 enum Locale {
