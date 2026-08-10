@@ -565,7 +565,10 @@ export default function AdminDashboardPage() {
       const res = await fetch(`${API_URL}/admin/partners`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          ...formData,
+          name: formData.type === "PATIENT" ? `${formData.adminFirstName} ${formData.adminLastName}` : formData.name,
+        }),
         credentials: "include",
       });
       if (res.ok) {
@@ -1785,17 +1788,19 @@ export default function AdminDashboardPage() {
               </div>
             ) : (
               <form onSubmit={handleOnboard} className="mt-4 space-y-4">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-sage-950">{t("organizationName")}</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    placeholder={t("organizationPlaceholder")}
-                    className="mt-1.5 w-full rounded-xl border border-hairline bg-surface px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none"
-                  />
-                </div>
+                {formData.type !== "PATIENT" && (
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-sage-950">{t("organizationName")}</label>
+                    <input
+                      type="text"
+                      required={formData.type !== "PATIENT"}
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder={t("organizationPlaceholder")}
+                      className="mt-1.5 w-full rounded-xl border border-hairline bg-surface px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none"
+                    />
+                  </div>
+                )}
 
                 <div className="grid gap-4 sm:grid-cols-2">
                   <StyledSelect

@@ -371,6 +371,7 @@ export class AdminService {
     let role: Role = Role.DOCTOR;
     if (dto.type === OrgType.PHARMACY) role = Role.PHARMACY;
     if (dto.type === OrgType.ENTERPRISE) role = Role.ENTERPRISE;
+    if (dto.type === OrgType.PATIENT) role = Role.PATIENT;
 
     // Get pricing plan
     let plan = await this.prisma.pricingPlan.findFirst({
@@ -433,6 +434,17 @@ export class AdminService {
         },
       },
     });
+
+    if (role === Role.PATIENT) {
+      await this.prisma.patientProfile.create({
+        data: {
+          userId: user.id,
+          orgId: org.id,
+          packageTier: dto.planTier,
+          hasActiveSubscription: true,
+        },
+      });
+    }
 
     // Send onboarding email logic
     if (
