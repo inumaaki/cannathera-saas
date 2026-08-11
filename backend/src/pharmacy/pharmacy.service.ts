@@ -984,11 +984,12 @@ export class PharmacyService {
      numbers survive a re-import. */
   private toCsv(header: string, rows: Array<Array<string | number>>) {
     const escape = (v: string | number) =>
-      typeof v === 'string' && /[;"\r\n]/.test(v)
+      typeof v === 'string' && /[,"\r\n]/.test(v)
         ? `"${v.replace(/"/g, '""')}"`
         : v;
     return (
-      '﻿' + [header, ...rows.map((r) => r.map(escape).join(';'))].join('\r\n')
+      '\uFEFF' +
+      [header, ...rows.map((r) => r.map(escape).join(','))].join('\r\n')
     );
   }
 
@@ -996,7 +997,7 @@ export class PharmacyService {
   async exportLogsCsv(userId: string) {
     const { rows } = await this.treatmentLogs(userId, { days: 90 });
     return this.toCsv(
-      'Datum;Patient;Patienten-ID;Sorte;Dosis (g);Schmerz;Schlaf;Status',
+      'Datum,Patient,Patienten-ID,Sorte,Dosis (g),Schmerz,Schlaf,Status',
       rows.map((r) => [
         r.loggedAt.toISOString().slice(0, 16).replace('T', ' '),
         r.patientName,
@@ -1019,7 +1020,7 @@ export class PharmacyService {
       onTrack: 'Im Plan',
     };
     return this.toCsv(
-      'Patient;Patienten-ID;Paket;Letztes Review;Nächste Fälligkeit;Tage bis Fälligkeit;Status',
+      'Patient,Patienten-ID,Paket,Letztes Review,Nächste Fälligkeit,Tage bis Fälligkeit,Status',
       rows.map((r) => [
         r.name,
         r.patientRef ?? '',
@@ -1041,7 +1042,7 @@ export class PharmacyService {
       inStock: 'Verfügbar',
     };
     return this.toCsv(
-      'SKU;Produkt;Kategorie;THC (%);CBD (%);Bestand;Einheit;Sicherheitsbestand;Status;Bestellung offen;Bestellmenge;Bestellt am;Letzter Wareneingang',
+      'SKU,Produkt,Kategorie,THC (%),CBD (%),Bestand,Einheit,Sicherheitsbestand,Status,Bestellung offen,Bestellmenge,Bestellt am,Letzter Wareneingang',
       items.map((i) => [
         i.sku,
         i.name,
@@ -1078,6 +1079,6 @@ export class PharmacyService {
       ['Monat', 'Einträge', 'Ø Lebensqualität'],
       ...a.months.map((m) => [m.month, m.entries, m.avgQol ?? '']),
     ];
-    return this.toCsv('Kennzahl;Wert', rows);
+    return this.toCsv('Kennzahl,Wert', rows);
   }
 }
