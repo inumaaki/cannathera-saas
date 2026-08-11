@@ -78,7 +78,7 @@ export default async function DoctorReports({
             ))}
           </div>
           <a
-            href={`${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"}/doctor/reports/export`}
+            href={`/api/doctor/reports/export`}
             className="flex h-11 items-center gap-2 rounded-lg bg-brand px-5 text-sm font-bold text-white hover:bg-pine"
           >
             <span aria-hidden className="msym text-[18px]">

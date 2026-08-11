@@ -70,7 +70,7 @@ export default async function EnterpriseOverview({
         </div>
         <div className="flex flex-wrap gap-3">
           <a
-            href={`${API_URL}/enterprise/export`}
+            href={`/api/enterprise/export`}
             className="flex items-center gap-2 rounded-lg border border-hairline bg-white px-4 py-2.5 text-sm font-bold text-ink-strong hover:bg-surface"
           >
             <span aria-hidden className="msym text-[18px]">

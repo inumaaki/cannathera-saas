@@ -240,7 +240,7 @@ export default async function EnterpriseBilling({
             </h2>
             <p className="mt-1 text-sm leading-relaxed text-muted">{t("taxText")}</p>
             <a
-              href={`${API_URL}/enterprise/billing/invoices/export`}
+              href={`/api/enterprise/billing/invoices/export`}
               className="mt-3 inline-block text-sm font-bold text-pine-600 hover:underline"
             >
               {t("taxLink")}
@@ -274,7 +274,7 @@ export default async function EnterpriseBilling({
               </Link>
             ))}
             <a
-              href={`${API_URL}/enterprise/billing/invoices/export`}
+              href={`/api/enterprise/billing/invoices/export`}
               className="flex items-center gap-1.5 rounded-lg bg-pine-600 px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-pine"
             >
               <span aria-hidden className="msym text-[16px]">

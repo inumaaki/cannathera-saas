@@ -54,7 +54,7 @@ export default async function EnterpriseReports({
           </p>
         </div>
         <a
-          href={`${API_URL}/enterprise/export`}
+          href={`/api/enterprise/export`}
           className="flex items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-bold text-white hover:bg-pine"
         >
           <span aria-hidden className="msym text-[18px]">

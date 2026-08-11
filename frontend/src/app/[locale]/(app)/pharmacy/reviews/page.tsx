@@ -75,7 +75,7 @@ export default async function PharmacyReviews({
           <p className="mt-1 max-w-2xl text-muted">{t("subtitle")}</p>
         </div>
         <a
-          href={`${API_URL}/pharmacy/reviews/export`}
+          href={`/api/pharmacy/reviews/export`}
           className="flex items-center gap-2 rounded-lg border border-pine-600 px-4 py-2.5 text-sm font-bold text-pine-600 hover:bg-mint/20"
         >
           <span aria-hidden className="msym text-[18px]">

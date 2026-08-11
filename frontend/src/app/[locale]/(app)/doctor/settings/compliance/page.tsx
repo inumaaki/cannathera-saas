@@ -44,7 +44,7 @@ export default async function SettingsCompliance({
           <p className="mt-1 text-muted">{t("complianceSub")}</p>
         </div>
         <a
-          href={`${process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000"}/doctor/compliance/audit`}
+          href={`/api/doctor/compliance/audit`}
           className="flex h-11 items-center gap-2 rounded-lg bg-brand px-5 font-bold text-white hover:bg-pine"
         >
           <span aria-hidden className="msym text-[18px]">

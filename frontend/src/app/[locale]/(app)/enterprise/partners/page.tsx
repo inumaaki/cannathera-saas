@@ -219,7 +219,7 @@ export default async function EnterprisePartners({
 
         <div className="flex items-center justify-between border-t border-hairline px-6 py-3">
           <a
-            href={`${API_URL}/enterprise/export`}
+            href={`/api/enterprise/export`}
             className="flex items-center gap-1.5 text-xs font-bold text-pine-600 hover:underline"
           >
             <span aria-hidden className="msym text-[16px]">
