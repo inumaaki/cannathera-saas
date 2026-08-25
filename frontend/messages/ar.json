@@ -961,7 +961,8 @@
         "reviews": "مراجعات المرضى",
         "logs": "سجلات العلاج",
         "analytics": "التحليلات",
-        "inventory": "المخزون"
+        "inventory": "المخزون",
+        "settings": "Settings"
       }
     },
     "dashboard": {
@@ -1248,6 +1249,19 @@
         "VALIDATION_ERROR": "يرجى تعبئة جميع الحقول بشكل صحيح.",
         "ERROR": "فشل الإجراء. يرجى المحاولة مرة أخرى."
       }
+    },
+    "settings": {
+      "title": "Pharmacy Settings",
+      "subtitle": "Manage your pharmacy's master data, location, and product focus.",
+      "masterData": "Master Data",
+      "name": "Pharmacy Name",
+      "street": "Street Address",
+      "postalCode": "Postal Code",
+      "city": "City",
+      "productFocus": "Product Focus & Specializations",
+      "productFocusHint": "Briefly describe your focus (e.g. extracts, specific strains, consultation). This will be shown to patients.",
+      "save": "Save Changes",
+      "savedSuccess": "Settings saved successfully."
     }
   },
   "enterprise": {

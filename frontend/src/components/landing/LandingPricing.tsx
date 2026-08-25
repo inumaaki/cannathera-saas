@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
-type PricingTab = "patients" | "pharmacies" | "enterprise";
+type PricingTab = "patients" | "pharmacies" | "doctors" | "enterprise";
 
 export function LandingPricing() {
   const [activeTab, setActiveTab] = useState<PricingTab>("patients");
@@ -32,10 +32,9 @@ export function LandingPricing() {
           </p>
         </div>
 
-        {/* Tab Selectors */}
         <div className="mt-8 flex justify-center sm:mt-10">
-          <div className="grid w-full max-w-xl grid-cols-3 rounded-xl border border-hairline bg-white p-1 shadow-sm">
-            {(["patients", "pharmacies", "enterprise"] as const).map((tab) => (
+          <div className="grid w-full max-w-3xl grid-cols-4 rounded-xl border border-hairline bg-white p-1 shadow-sm">
+            {(["patients", "pharmacies", "doctors", "enterprise"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -45,9 +44,10 @@ export function LandingPricing() {
                     : "text-muted hover:text-ink-strong"
                 }`}
               >
-                {tab === "patients" && t("patients")}
-                {tab === "pharmacies" && t("pharmacies")}
-                {tab === "enterprise" && t("enterprise")}
+                {tab === "patients" && (t("patients") || "Patients")}
+                {tab === "pharmacies" && (t("pharmacies") || "Pharmacies")}
+                {tab === "doctors" && "Doctors"}
+                {tab === "enterprise" && (t("enterprise") || "Telemedicine / Enterprise")}
               </button>
             ))}
           </div>
@@ -209,23 +209,23 @@ export function LandingPricing() {
               {/* Flex */}
               <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">{t("flex")}</h3>
-                  <p className="mt-2 text-sm text-muted">{t("flexDesc")}</p>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("flex") || "CRM Starter"}</h3>
+                  <p className="mt-2 text-sm text-muted">{t("flexDesc") || "For independent local pharmacies starting out with digital prescriptions."}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    449 € <span className="text-sm font-semibold text-muted">{t("netto")} / {t("month")}</span>
+                    149 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyFlex0")}
+                      {t("bulletPharmacyFlex0") || "Basic Prescription Inbox"}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyFlex1")}
+                      {t("bulletPharmacyFlex1") || "Radius Search Listing (30km)"}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyFlex2")}
+                      {t("bulletPharmacyFlex2") || "Status Management"}
                     </li>
                   </ul>
                 </div>
@@ -233,33 +233,33 @@ export function LandingPricing() {
                   href="/signup/pharmacy"
                   className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
                 >
-                  {t("selectFlex")}
+                  {t("selectFlex") || "Start CRM Starter"}
                 </Link>
               </div>
 
               {/* S Pack */}
               <div className="relative rounded-2xl border-2 border-pine-600 bg-white p-8 shadow-xl flex flex-col justify-between">
                 <span className="absolute -top-3.5 right-6 rounded-full bg-pine-600 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
-                  {t("growth")}
+                  {t("popular") || "Popular"}
                 </span>
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">{t("flashbackS")}</h3>
-                  <p className="mt-2 text-sm text-muted">{t("flashbackSDesc")}</p>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("flashbackS") || "CRM Pro"}</h3>
+                  <p className="mt-2 text-sm text-muted">{t("flashbackSDesc") || "The full operating system for growing cannabis pharmacies."}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    899 € <span className="text-sm font-semibold text-muted">{t("netto")} / {t("month")}</span>
+                    299 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyS0")}
+                      {t("bulletPharmacyS0") || "Everything in Starter"}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyS1")}
+                      {t("bulletPharmacyS1") || "Priority Routing in Network"}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyS2")}
+                      {t("bulletPharmacyS2") || "Analytics & Inventory Sync"}
                     </li>
                   </ul>
                 </div>
@@ -267,30 +267,30 @@ export function LandingPricing() {
                   href="/signup/pharmacy"
                   className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
                 >
-                  {t("selectS")}
+                  {t("selectS") || "Start CRM Pro"}
                 </Link>
               </div>
 
               {/* M Pack */}
               <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">{t("flashbackM")}</h3>
-                  <p className="mt-2 text-sm text-muted">{t("flashbackMDesc")}</p>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("flashbackM") || "CRM Scale"}</h3>
+                  <p className="mt-2 text-sm text-muted">{t("flashbackMDesc") || "For high-volume pharmacies with custom integrations."}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    1.599 € <span className="text-sm font-semibold text-muted">{t("netto")} / {t("month")}</span>
+                    599 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyM0")}
+                      {t("bulletPharmacyM0") || "Everything in Pro"}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyM1")}
+                      {t("bulletPharmacyM1") || "Custom ERP Integrations"}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyM2")}
+                      {t("bulletPharmacyM2") || "Dedicated Account Manager"}
                     </li>
                   </ul>
                 </div>
@@ -299,17 +299,86 @@ export function LandingPricing() {
                     href="/signup/pharmacy"
                     className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
                   >
-                    {t("selectM")}
+                    {t("selectM") || "Start CRM Scale"}
                   </Link>
                   <button
                     type="button"
                     onClick={() => setActiveTab("enterprise")}
                     className="mt-4 flex items-center justify-center gap-1 w-full text-center text-xs font-semibold text-pine-600 hover:text-pine hover:underline transition-colors cursor-pointer"
                   >
-                    <span>{t("flashbackMEnterpriseNote")}</span>
+                    <span>{t("flashbackMEnterpriseNote") || "Looking for Telemedicine Enterprise?"}</span>
                     <span aria-hidden className="msym text-[14px]">arrow_forward</span>
                   </button>
                 </div>
+              </div>
+            </div>
+          )}
+
+          {activeTab === "doctors" && (
+            <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
+              {/* Doctor Basic */}
+              <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
+                <div>
+                  <h3 className="text-lg font-bold text-ink-strong">Practice Starter</h3>
+                  <p className="mt-2 text-sm text-muted">For single practitioners adopting digital prescriptions.</p>
+                  <p className="mt-6 font-display text-4xl font-extrabold text-pine">
+                    99 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
+                  </p>
+                  <ul className="mt-6 space-y-3 text-sm text-ink-strong">
+                    <li className="flex gap-2.5 items-center font-semibold">
+                      <span className="msym text-[18px] text-pine-600">check_circle</span>
+                      Secure E-Prescriptions
+                    </li>
+                    <li className="flex gap-2.5 items-center font-semibold">
+                      <span className="msym text-[18px] text-pine-600">check_circle</span>
+                      Local Pharmacy Routing
+                    </li>
+                    <li className="flex gap-2.5 items-center font-semibold">
+                      <span className="msym text-[18px] text-pine-600">check_circle</span>
+                      Basic Patient Tracking
+                    </li>
+                  </ul>
+                </div>
+                <Link
+                  href="/signup/doctor"
+                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                >
+                  Start Practice Starter
+                </Link>
+              </div>
+
+              {/* Doctor Pro */}
+              <div className="relative rounded-2xl border-2 border-pine-600 bg-white p-8 shadow-xl flex flex-col justify-between">
+                <span className="absolute -top-3.5 right-6 rounded-full bg-pine-600 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
+                  {t("popular") || "Popular"}
+                </span>
+                <div>
+                  <h3 className="text-lg font-bold text-ink-strong">Practice Pro</h3>
+                  <p className="mt-2 text-sm text-muted">Full CRM and reporting for multi-doctor practices.</p>
+                  <p className="mt-6 font-display text-4xl font-extrabold text-pine">
+                    249 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
+                  </p>
+                  <ul className="mt-6 space-y-3 text-sm text-ink-strong">
+                    <li className="flex gap-2.5 items-center font-semibold">
+                      <span className="msym text-[18px] text-pine-600">check_circle</span>
+                      Everything in Starter
+                    </li>
+                    <li className="flex gap-2.5 items-center font-semibold">
+                      <span className="msym text-[18px] text-pine-600">check_circle</span>
+                      Multi-Doctor Management
+                    </li>
+                    <li className="flex gap-2.5 items-center font-semibold">
+                      <span className="msym text-[18px] text-pine-600">check_circle</span>
+                      Advanced Therapy Outcomes
+                    </li>
+                  </ul>
+                </div>
+                <Link
+                  href="/signup/doctor"
+                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
+                >
+                  Start Practice Pro
+                </Link>
               </div>
             </div>
           )}

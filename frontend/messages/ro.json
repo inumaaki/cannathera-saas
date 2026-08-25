@@ -961,7 +961,8 @@
         "reviews": "Recenzii pacienți",
         "logs": "Jurnale de tratament",
         "analytics": "Analize",
-        "inventory": "Inventar"
+        "inventory": "Inventar",
+        "settings": "Settings"
       }
     },
     "dashboard": {
@@ -1248,6 +1249,19 @@
         "VALIDATION_ERROR": "Vă rugăm să completați toate câmpurile corect.",
         "ERROR": "Acțiune eșuată. Vă rugăm să încercați din nou."
       }
+    },
+    "settings": {
+      "title": "Pharmacy Settings",
+      "subtitle": "Manage your pharmacy's master data, location, and product focus.",
+      "masterData": "Master Data",
+      "name": "Pharmacy Name",
+      "street": "Street Address",
+      "postalCode": "Postal Code",
+      "city": "City",
+      "productFocus": "Product Focus & Specializations",
+      "productFocusHint": "Briefly describe your focus (e.g. extracts, specific strains, consultation). This will be shown to patients.",
+      "save": "Save Changes",
+      "savedSuccess": "Settings saved successfully."
     }
   },
   "enterprise": {

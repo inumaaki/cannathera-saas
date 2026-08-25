@@ -30,6 +30,7 @@ const NAV = [
   { href: "/patient", key: "home", icon: "explore" },
   { href: "/patient/progress", key: "progress", icon: "monitoring" },
   { href: "/patient/appointments", key: "appointments", icon: "calendar_month" },
+  { href: "/patient/prescriptions", key: "prescriptions", icon: "receipt_long" },
   { href: "/patient/profile", key: "profile", icon: "person" },
 ] as const;
 
@@ -281,20 +282,16 @@ export function PatientShell({
             type="button"
             onClick={() => setSheetOpen(true)}
             aria-label={t("quickLog")}
-            className="absolute -top-6 left-1/2 z-10 flex size-14 -translate-x-1/2 items-center
+            className="absolute -top-16 right-0 z-10 flex size-14 items-center
                        justify-center rounded-full bg-accent text-white shadow-lg
-                       ring-4 ring-surface transition-transform hover:scale-105"
+                       transition-transform hover:scale-105"
           >
             <span aria-hidden className="msym text-[28px]">
               add
             </span>
           </button>
           <div className="flex items-center justify-between rounded-full bg-[#0c3527] px-6 py-2.5">
-            {NAV.slice(0, 2).map(({ key, ...item }) => (
-              <NavItem key={key} {...item} label={t(key)} active={pathname === item.href} />
-            ))}
-            <span className="w-12" aria-hidden />
-            {NAV.slice(2).map(({ key, ...item }) => (
+            {NAV.map(({ key, ...item }) => (
               <NavItem key={key} {...item} label={t(key)} active={pathname === item.href} />
             ))}
           </div>

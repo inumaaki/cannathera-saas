@@ -105,10 +105,7 @@ export class AdminController {
 
   @Get('red-flags')
   async listRedFlags(@Query('view') view?: string) {
-    const v =
-      view === 'reviewed' || view === 'all'
-        ? (view as 'reviewed' | 'all')
-        : 'unreviewed';
+    const v = view === 'reviewed' || view === 'all' ? view : 'unreviewed';
     return this.adminService.listRedFlags(v);
   }
 

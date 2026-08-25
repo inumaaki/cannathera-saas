@@ -115,11 +115,80 @@ class CompleteReviewDto {
   note?: string;
 }
 
+class UpdatePharmacySettingsDto {
+  @IsString()
+  @MaxLength(120)
+  name!: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(120)
+  street?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(10)
+  postalCode?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(60)
+  city?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(60)
+  productFocus?: string;
+}
+
+class UpdatePrescriptionStatusDto {
+  @IsString()
+  @IsIn(['RECEIVED', 'PREPARING', 'READY', 'COMPLETED', 'CANCELLED'])
+  status!: any;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  rejectionReason?: string;
+}
+
 @Controller('pharmacy')
 @UseGuards(SessionGuard, RolesGuard, SubscriptionGuard)
 @Roles(Role.PHARMACY)
 export class PharmacyController {
   constructor(private readonly pharmacy: PharmacyService) {}
+
+  @Get('prescriptions')
+  prescriptions(@CurrentUser() user: SessionPayload) {
+    return this.pharmacy.prescriptions(user.sub);
+  }
+
+  @Patch('prescriptions/:id')
+  updatePrescriptionStatus(
+    @Param('id') id: string,
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: UpdatePrescriptionStatusDto,
+  ) {
+    return this.pharmacy.updatePrescriptionStatus(
+      user.sub,
+      id,
+      dto.status,
+      dto.rejectionReason,
+    );
+  }
+
+  @Get('settings')
+  getSettings(@CurrentUser() user: SessionPayload) {
+    return this.pharmacy.getSettings(user.sub);
+  }
+
+  @Patch('settings')
+  updateSettings(
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: UpdatePharmacySettingsDto,
+  ) {
+    return this.pharmacy.updateSettings(user.sub, dto);
+  }
 
   @Get('overview')
   overview(@CurrentUser() user: SessionPayload) {

@@ -23,6 +23,18 @@ enum Role {
   ADMIN
 }
 
+enum AccountStatus {
+  ACTIVE
+  INACTIVE
+  SUSPENDED
+}
+
+enum VerificationStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
 enum OrgType {
   PHARMACY
   PRACTICE
@@ -60,6 +72,14 @@ enum SubmissionStatus {
   DRAFT
   SUBMITTED
   REVIEWED
+}
+
+enum PrescriptionStatus {
+  RECEIVED
+  PREPARING
+  READY
+  COMPLETED
+  CANCELLED
 }
 
 enum RedFlagSeverity {
@@ -131,6 +151,25 @@ model Organization {
   // enterprise overview aggregates everything below it.
   parentOrgId String?
   joinedAt    DateTime? // when this org joined the enterprise
+  
+  // Local network / radius search fields
+  postalCode  String?
+  city        String?
+  street      String?
+  lat         Float?
+  lng         Float?
+
+  // Pharmacy CRM / Public Profile fields
+  email              String?
+  phone              String?
+  website            String?
+  operatingHours     Json?
+  description        String?
+  productFocus       String? // Restored
+  source             String? // Restored
+  accountStatus      AccountStatus @default(ACTIVE) // Restored
+  verificationStatus VerificationStatus @default(PENDING) // Restored
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -139,6 +178,7 @@ model Organization {
   memberships      Membership[]
   patients         PatientProfile[] @relation("PracticePatients")
   pharmacyPatients PatientProfile[] @relation("PharmacyPatients")
+  favoritedByPatients PatientProfile[] @relation("PatientFavoritePharmacies")
   subscriptions    Subscription[]
   inventory        InventoryItem[]
   apiKeys          ApiKey[]
@@ -146,6 +186,7 @@ model Organization {
   invoices         Invoice[]
   settings         OrgSettings?
   partnerCodes     PartnerCode[]
+  prescriptions    Prescription[]
 
   @@index([type])
   @@index([parentOrgId])
@@ -220,12 +261,14 @@ model PatientProfile {
   user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
   org                Organization?        @relation("PracticePatients", fields: [orgId], references: [id])
   pharmacy           Organization?        @relation("PharmacyPatients", fields: [pharmacyId], references: [id])
+  favoritePharmacies Organization[]       @relation("PatientFavoritePharmacies")
   submissions        Submission[]
   therapyLogs        TherapyLog[]
   reports            Report[]
   redFlagHits        RedFlagHit[]
   teleSessions       TelemedicineSession[]
   clinicalNotes      ClinicalNote[]
+  prescriptions      Prescription[]
 
   @@index([orgId])
   @@index([pharmacyId])
@@ -701,4 +744,26 @@ model Subscription {
   plan PricingPlan  @relation(fields: [planId], references: [id])
 
   @@index([orgId])
+}
+
+// ---------------------------------------------------------------------------
+// Prescription routing
+// ---------------------------------------------------------------------------
+
+model Prescription {
+  id           String             @id @default(cuid())
+  patientId    String
+  pharmacyId   String
+  status       PrescriptionStatus @default(RECEIVED)
+  fileUrl      String? // uploaded prescription image/pdf
+  note         String?
+  rejectionReason String? // filled if status is CANCELLED
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  patient      PatientProfile     @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  pharmacy     Organization       @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+
+  @@index([patientId])
+  @@index([pharmacyId])
 }

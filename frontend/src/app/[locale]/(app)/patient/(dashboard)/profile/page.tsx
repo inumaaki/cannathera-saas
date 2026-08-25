@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { apiServer } from "@/lib/api-server";
 import { ProfileForm } from "./ProfileForm";
+import { FavoritePharmacies } from "./FavoritePharmacies";
 
 type Profile = {
   fullName: string;
@@ -8,6 +9,7 @@ type Profile = {
   email: string;
   pharmacyOrgId: string | null;
   pharmacies: Array<{ id: string; name: string }>;
+  favoritePharmacies: Array<{ id: string; name: string; city: string | null }>;
 };
 
 /* Patient profile (Figma 6-1168). */
@@ -32,6 +34,12 @@ export default async function PatientProfilePage({
           {profile ? <ProfileForm profile={profile} /> : null}
         </div>
       </section>
+
+      {profile && (
+        <section className="mt-5 rounded-2xl border border-hairline bg-white p-5">
+          <FavoritePharmacies initialFavorites={profile.favoritePharmacies || []} />
+        </section>
+      )}
 
       <section className="mt-5 rounded-2xl bg-[#e8ece9] p-6 text-center">
         <span className="mx-auto flex size-12 items-center justify-center rounded-xl text-[34px] text-pine-600">

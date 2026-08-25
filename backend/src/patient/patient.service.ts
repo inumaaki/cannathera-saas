@@ -8,6 +8,7 @@ import { Prisma } from '@prisma/client';
 import { NotificationsService } from '../notifications/notifications.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { isPaywallBypassed } from '../shared';
+import { getDistanceKm, getCoordinatesForPostalCode } from '../shared/geocode';
 
 const PLAN_DAYS = 30;
 
@@ -490,6 +491,156 @@ export class PatientService {
     });
     const progressPct = Math.round((summary.day / PLAN_DAYS) * 100);
     return { day: summary.day, planDays: PLAN_DAYS, progressPct, phases };
+  }
+
+  /** Fetch a unique list of strains the patient has recently used. */
+  async setPharmacy(userId: string, pharmacyOrgId: string | null) {
+    const profile = await this.profileOf(userId, true);
+    await this.prisma.patientProfile.update({
+      where: { id: profile.id },
+      data: { pharmacyId: pharmacyOrgId },
+    });
+    return { ok: true };
+  }
+
+  /**
+   * Search for pharmacies within a radius of the patient's postal code.
+   */
+  async searchPharmacies(userId: string, postalCode: string, radiusKm: number = 30) {
+    const coords = await getCoordinatesForPostalCode(postalCode);
+    if (!coords) {
+      throw new BadRequestException('INVALID_POSTAL_CODE');
+    }
+
+    const pharmacies = await this.prisma.organization.findMany({
+      where: {
+        type: 'PHARMACY',
+        accountStatus: 'ACTIVE',
+      },
+      select: {
+        id: true,
+        name: true,
+        postalCode: true,
+        city: true,
+        street: true,
+        lat: true,
+        lng: true,
+        description: true,
+        operatingHours: true,
+        inventory: {
+          where: { active: true, category: 'Flower', stockLevel: { gt: 0 } },
+          select: { id: true },
+        },
+      },
+    });
+
+    const results: any[] = [];
+
+    for (const p of pharmacies) {
+      if (p.lat == null || p.lng == null) continue;
+
+      const distance = getDistanceKm(coords.lat, coords.lng, p.lat, p.lng);
+
+      if (distance <= radiusKm) {
+        results.push({
+          id: p.id,
+          name: p.name,
+          postalCode: p.postalCode,
+          city: p.city,
+          street: p.street,
+          description: p.description,
+          operatingHours: p.operatingHours,
+          distanceKm: parseFloat(distance.toFixed(2)),
+          availableStrainsCount: p.inventory.length,
+        });
+      }
+    }
+
+    results.sort((a, b) => {
+      if (a.distanceKm !== b.distanceKm) return a.distanceKm - b.distanceKm;
+      return b.availableStrainsCount - a.availableStrainsCount;
+    });
+
+    return results;
+  }
+
+  /**
+   * Update the patient's "Favorites Pool" (2-3 pharmacies).
+   */
+  async updateFavoritePharmacies(userId: string, pharmacyIds: string[]) {
+    const profile = await this.profileOf(userId);
+
+    if (pharmacyIds.length > 3) {
+      throw new BadRequestException('MAX_FAVORITES_EXCEEDED');
+    }
+
+    return this.prisma.patientProfile.update({
+      where: { id: profile.id },
+      data: {
+        favoritePharmacies: {
+          set: pharmacyIds.map((id) => ({ id })),
+        },
+      },
+      include: {
+        favoritePharmacies: {
+          select: { id: true, name: true, city: true },
+        },
+      },
+    });
+  }
+
+  /**
+   * Route a prescription to a favorite pharmacy.
+   */
+  async createPrescription(
+    userId: string,
+    pharmacyId: string,
+    fileUrl?: string,
+    note?: string,
+  ) {
+    const profile = await this.profileOf(userId);
+
+    const hasFavorite = await this.prisma.patientProfile.findFirst({
+      where: {
+        id: profile.id,
+        favoritePharmacies: {
+          some: { id: pharmacyId },
+        },
+      },
+    });
+
+    if (!hasFavorite) {
+      throw new ForbiddenException('PHARMACY_NOT_IN_FAVORITES');
+    }
+
+    const prescription = await this.prisma.prescription.create({
+      data: {
+        patientId: profile.id,
+        pharmacyId,
+        fileUrl,
+        note,
+        status: 'RECEIVED',
+      },
+    });
+
+    this.notifications.notifyPharmacyNewPrescription(pharmacyId, prescription.id);
+
+    return prescription;
+  }
+
+  /**
+   * List patient's prescriptions.
+   */
+  async listPrescriptions(userId: string) {
+    const profile = await this.profileOf(userId);
+
+    return this.prisma.prescription.findMany({
+      where: { patientId: profile.id },
+      include: {
+        pharmacy: { select: { id: true, name: true } },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
   /** Fetch a unique list of strains the patient has recently used. */

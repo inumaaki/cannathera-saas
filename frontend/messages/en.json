@@ -62,6 +62,7 @@
   "patient": {
     "nav": {
       "home": "Home",
+      "prescriptions": "Prescriptions",
       "progress": "Progress",
       "appointments": "Appts",
       "profile": "Profile",
@@ -969,7 +970,9 @@
         "reviews": "Patient checks",
         "logs": "Treatment logs",
         "analytics": "Analytics",
-        "inventory": "Inventory"
+        "inventory": "Inventory",
+        "prescriptions": "Prescriptions",
+        "settings": "Settings"
       }
     },
     "dashboard": {
@@ -1259,6 +1262,19 @@
     },
     "nav": {
       "reviews": "Patient checks"
+    },
+    "settings": {
+      "title": "Pharmacy Settings",
+      "subtitle": "Manage your pharmacy's master data, location, and product focus.",
+      "masterData": "Master Data",
+      "name": "Pharmacy Name",
+      "street": "Street Address",
+      "postalCode": "Postal Code",
+      "city": "City",
+      "productFocus": "Product Focus & Specializations",
+      "productFocusHint": "Briefly describe your focus (e.g. extracts, specific strains, consultation). This will be shown to patients.",
+      "save": "Save Changes",
+      "savedSuccess": "Settings saved successfully."
     }
   },
   "enterprise": {
@@ -1847,7 +1863,7 @@
     "hero": {
       "certified": "Certified Clinical Software",
       "title": "Your Therapy.\nMeticulously Structured.",
-      "v2_subtitle": "Whether it's questions about dosage, confusing notes, or the missing link between patient, doctor's office, and pharmacy: successful cannabinoid therapy often fails in everyday practice due to coordination issues. Cannathera closes this gap as your intelligent, clinically supported digital hub. We seamlessly connect practitioners and patients, automate progress documentation, and create the valid database necessary for true therapy safety. Become part of Cannathera – for transparent, legally compliant, and structured support from day one.",
+      "v2_subtitle": "Cannathera is the ultimate CRM for structured therapy documentation. Forget anonymous online giants and directory scrapers — we connect patients and doctors with a verified, local-first pharmacy network, ensuring compliant, structured therapy and reliable regional care from day one.",
       "v2_ctaStart": "Start your therapy support",
       "ctaPortal": "Access Portal",
       "gdpr": "GDPR Compliant",
@@ -2089,31 +2105,31 @@
     "compliance_title": "GDPR & Medical Certified",
     "compliance_text": "Fully GDPR compliant, AES-256 encrypted, and certified as a Class I Medical Device.",
     "cta": "Request practice access",
-    "hero_title": "Structured progress data, absolute therapy safety, and noticeable relief in everyday practice",
-    "hero_intro": "As physicians in private practice, pain therapists, and prescribing specialists, you bear medical responsibility for the treatment of your patients. Especially with cannabinoid therapies, close monitoring and continuous adjustments are crucial for therapeutic success. However, everyday practice is characterized by a lack of time, unstructured patient notes on scraps of paper or in emails, and a lack of valid measurements between quarterly appointments. Cannathera closes this dangerous information gap and provides you with the precise, clinically structured data basis you need for efficient and safe prescribing.",
-    "f1_title": "Complete and physician-friendly progress reports",
-    "f1_text": "No more messy notes. With just one click, you receive structured PDF reports that depict the precise course of symptoms, validated pain scales, and everyday tolerability.",
-    "f2_title": "Automated triage logic & real-time alerts",
-    "f2_text": "Our system monitors defined thresholds in the background. In the event of unexpected side effects or deviations from the prescribed therapy, our validated triage logic kicks in, ensuring you are alerted promptly and in compliance with legal requirements.",
+    "hero_title": "Modern Care Needs a Strong Network",
+    "hero_intro": "Cannathera connects your practice with local pharmacies and patients through a secure, structured medical-cannabis therapy network. Ensure compliance, track patient outcomes, and route prescriptions seamlessly.",
+    "f1_title": "Integrated Local Pharmacy Routing",
+    "f1_text": "No more guessing where prescriptions go. Route E-Prescriptions directly to a patient's favorite local pharmacy within a 30km radius, ensuring reliable and fast fulfillment.",
+    "f2_title": "Automated Progress & Outcomes Tracking",
+    "f2_text": "Receive structured progress reports that depict the precise course of symptoms, validated pain scales, and everyday tolerability directly linked to specific cannabis strains dispensed by our partner network.",
     "f3_title": "Maximum data security & compliance",
     "f3_text": "The platform meets the strictest legal requirements. It operates in full GDPR compliance, uses secure AES-256 encryption, and is based on its status as a certified Class I medical device.",
-    "f4_title": "Focus on what matters",
-    "f4_text": "We do not replace medical diagnosis or treatment decisions. Instead, we create the organizational structure that relieves you of administrative burdens and allows you to fully concentrate on patient care."
+    "f4_title": "Faster Repeat Prescriptions",
+    "f4_text": "We eliminate the friction of follow-ups and repeat prescriptions. Cannathera automatically handles prescription status updates and legally compliant documentation, drastically reducing the administrative burden on your practice."
   },
   "pharmacies": {
     "title": "For Pharmacies",
     "subtitle": "Targeting pharmacies that supply and care for cannabis patients.",
     "cta": "Start a pharmacy partnership",
-    "hero_title": "Transparency in strain selection, support in determining the dosage, and legally compliant processes",
-    "hero_intro": "Pharmacies make an indispensable and highly sensitive contribution to the care of cannabis patients. The challenge begins with the initial prescription, extends to the individual, nuanced determination of the dosage, and requires ongoing support in daily practice. A smooth process often fails due to communication barriers between the patient, the prescribing practice, and the dispensing pharmacy. Cannathera connects all parties involved via a closed, digital platform to a secure ecosystem.",
-    "f1_title": "Support in Dosage Finding & Product Selection",
-    "f1_text": "Track documented tolerances, feedback loops, and therapy reports to provide pharmacy customers with well-founded and transparent support.",
-    "f2_title": "Streamlined Processes & Seamless Inventory Management",
-    "f2_text": "Record dispensing, inventory, and side effects in a standardized, secure process that significantly simplifies interdisciplinary collaboration.",
-    "f3_title": "Expertise at the Level",
-    "f3_text": "Our system was developed based on real-world practical experience. It takes into account the high standards of professional qualifications, certified consultation, and legally compliant documentation requirements.",
-    "f4_title": "A Strong, Three-Way Partnership",
-    "f4_text": "Position your pharmacy as a modern, digitally networked point of contact that relieves the burden on medical practices through seamless data transfer and offers patients the highest level of care security.",
+    "hero_title": "The Operating System for Cannabis Pharmacies",
+    "hero_intro": "Cannathera connects local cannabis pharmacies with patients and prescribing physicians through strict 30km hyper-local routing. With our strict 'no scraping' rule, you become an exclusive, verified partner—securing a loyal patient base rather than just being listed in a directory.",
+    "f1_title": "Hyper-Local Patient Funnel",
+    "f1_text": "Become a top-tier provider in your region. Our 30km radius search and 'Favorites Pool' logic guarantees that local patients are routed directly to your pharmacy.",
+    "f2_title": "Prescription Inbox & CRM Dashboard",
+    "f2_text": "Manage your entire medical cannabis workflow from one screen. Receive prescriptions, update statuses (Received, Preparing, Ready, Completed), and communicate securely with patients and prescribing physicians.",
+    "f3_title": "No Scraping. True Partnerships.",
+    "f3_text": "Unlike directory scrapers, Cannathera builds active, verified partnerships. We don't just list you; we provide the operating system to manage your cannabis inventory and patient orders securely.",
+    "f4_title": "Streamlined E-Prescription Processing",
+    "f4_text": "Eliminate manual data entry. Receive validated, compliant E-Prescriptions directly from the physician's practice, complete with required medical documentation and dosage instructions.",
     "val_title": "Added value for pharmacies",
     "val_text": "Transparency in strain selection, support for patients in determining the correct dosage, and documentation of side effects as part of ongoing support.",
     "comm_title": "Streamlined process & Communication",
@@ -2125,10 +2141,10 @@
     "title": "For Telemedicine Providers",
     "subtitle": "Integration of digital, ongoing therapy support into fully digital treatment processes and remote consultations.",
     "cta": "Request telemedicine integration",
-    "v2_hero_title": "Seamless integration into fully digital treatment processes, maximum scalability, and legally compliant Remote Monitoring",
-    "v2_hero_intro": "Telemedicine platforms, medical care centers, and digital healthcare providers stand for maximum efficiency, scalability, and purely digital treatment pathways. When physical practice rooms are replaced by digital consultations, seamless, automated follow-up care for patients in their home environment is the decisive factor for quality and patient safety. Cannathera offers the ideal infrastructure to perfectly complement digital remote treatments with structured, ongoing therapy support.",
-    "v2_f1_title": "Minimizing liability risks in remote treatments",
-    "v2_f1_text": "In remote treatment, platforms operate in complex regulatory territory. With our validated triage logic and automated threshold alerts, your telemedicine physicians have complete documentation at their fingertips at all times that the patient was closely monitored and that any abnormalities could be addressed immediately – demonstrably protecting against claims for damages and liability gaps.",
+    "v2_hero_title": "Enterprise Telemedicine, Powered by Local Fulfillment",
+    "v2_hero_intro": "Scale your telemedicine clinic with Cannathera's structured workflows. By pre-filtering patient feedback and digitizing therapy support, doctors see only the clinical signals they need—cutting through the noise to see more patients in less time.",
+    "v2_f1_title": "Enterprise-Grade API Integration",
+    "v2_f1_text": "Connect your existing clinical software directly into Cannathera's local pharmacy network. Automate prescription routing at scale.",
     "v2_f2_title": "Increased patient retention instead of one-off consultations",
     "v2_f2_text": "Say goodbye to fleeting, one-time users who just pick up their prescription and then leave. Cannathera's integrated, ongoing therapy support keeps patients engaged with your platform long-term, encouraging daily logins and a consistent anchor for their health.",
     "v2_f3_title": "Relieve the burden on physicians through structured pre-filtering",

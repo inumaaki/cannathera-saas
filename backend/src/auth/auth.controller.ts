@@ -77,7 +77,10 @@ export class AuthController {
     }
 
     res.cookie(PRE_AUTH_COOKIE, result.preAuthToken, preAuthCookieOpts);
-    return { requires2fa: true, ...(result.devCode ? { devCode: result.devCode } : {}) };
+    return {
+      requires2fa: true,
+      ...(result.devCode ? { devCode: result.devCode } : {}),
+    };
   }
 
   @Post('login')

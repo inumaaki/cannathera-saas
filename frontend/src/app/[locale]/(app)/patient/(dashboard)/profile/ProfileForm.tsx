@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { api } from "@/lib/api";
-import { CustomSelect } from "./CustomSelect";
+
 
 type Profile = {
   fullName: string;
@@ -27,7 +27,7 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
   const [fullName, setFullName] = useState(profile.fullName);
   const [address, setAddress] = useState(profile.address ?? "");
   const [phone, setPhone] = useState(profile.phone ?? "");
-  const [pharmacy, setPharmacy] = useState(profile.pharmacyOrgId ?? "");
+
   const [pending, setPending] = useState(false);
   const [saved, setSaved] = useState(false);
 
@@ -42,7 +42,6 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
         body: {
           firstName,
           lastName: rest.join(" "),
-          pharmacyOrgId: pharmacy || null,
           address,
           phone,
         },
@@ -119,28 +118,6 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
           className={`${box} outline-none focus:border-pine-600`}
         />
       </div>
-
-      <div>
-        <label htmlFor="pharmacy" className={label}>
-          {t("pharmacy")}
-        </label>
-        <CustomSelect
-          value={pharmacy}
-          onChange={setPharmacy}
-          options={profile.pharmacies.map((p) => ({ value: p.id, label: p.name }))}
-          placeholder={t("noPharmacy")}
-          className={box}
-        />
-        {profile.packageTier !== "ENTERPRISE" ? (
-          <div className="mt-3 flex gap-2 rounded-xl bg-gold/10 p-4 text-sm font-medium text-gold-900 border border-gold/20">
-            <span aria-hidden className="msym text-[20px] text-gold">
-              info
-            </span>
-            <p className="leading-snug">{t("safeguardWarning")}</p>
-          </div>
-        ) : null}
-      </div>
-
       <div className="flex justify-end">
         <button
           type="submit"

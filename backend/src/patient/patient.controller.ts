@@ -22,6 +22,8 @@ import {
   RescheduleDto,
   UpdateProfileDto,
   CompleteOnboardingDto,
+  UpdateFavoritesDto,
+  CreatePrescriptionDto,
 } from './patient.dto';
 
 @Controller('patient')
@@ -112,9 +114,49 @@ export class PatientController {
     return this.patients.plan(user.sub);
   }
 
-  /** Co-branding of the patient's practice / pharmacy / enterprise network. */
   @Get('branding')
   branding(@CurrentUser() user: SessionPayload) {
     return this.patients.branding(user.sub);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Pharmacy Network & Prescriptions
+  // ---------------------------------------------------------------------------
+
+  @Get('pharmacies/search')
+  searchPharmacies(
+    @CurrentUser() user: SessionPayload,
+    @Query('postalCode') postalCode: string,
+    @Query('radius') radius?: string,
+  ) {
+    const requestedRadius = radius ? parseInt(radius, 10) : 30;
+    const radiusKm = Math.min(requestedRadius || 30, 30); // Hard cap at 30km to maintain local focus
+    return this.patients.searchPharmacies(user.sub, postalCode, radiusKm);
+  }
+
+  @Patch('profile/favorites')
+  updateFavorites(
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: UpdateFavoritesDto,
+  ) {
+    return this.patients.updateFavoritePharmacies(user.sub, dto.pharmacyIds);
+  }
+
+  @Post('prescriptions')
+  createPrescription(
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: CreatePrescriptionDto,
+  ) {
+    return this.patients.createPrescription(
+      user.sub,
+      dto.pharmacyId,
+      dto.fileUrl,
+      dto.note,
+    );
+  }
+
+  @Get('prescriptions')
+  listPrescriptions(@CurrentUser() user: SessionPayload) {
+    return this.patients.listPrescriptions(user.sub);
   }
 }

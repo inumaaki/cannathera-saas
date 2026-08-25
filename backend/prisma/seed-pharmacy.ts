@@ -53,18 +53,36 @@ async function main() {
     monthlyVersion?.sections.flatMap((s) => s.questions).map((q) => [q.key, q.id]) ?? [],
   );
 
-  // --- Pharmacy org + pharmacist -------------------------------------------
+  // --- Pharmacy orgs + pharmacist -------------------------------------------
+  const pharmaciesToCreate = [
+    { name: "Adler-Apotheke Berlin", address: "Kurfürstendamm 112, 10711 Berlin", postalCode: "10711", city: "Berlin" },
+    { name: "St. Antonius Apotheke", address: "Osterfelder Str. 136, 46242 Bottrop/Oberhausen", postalCode: "46242", city: "Bottrop" },
+    { name: "Süd Apotheke", address: "Bebelstraße 31, 46049 Oberhausen", postalCode: "46049", city: "Oberhausen" }
+  ];
+
   let org = await prisma.organization.findFirst({
-    where: { name: "Adler-Apotheke Berlin", type: OrgType.PHARMACY },
+    where: { name: pharmaciesToCreate[0].name, type: OrgType.PHARMACY },
   });
-  if (!org) {
-    org = await prisma.organization.create({
-      data: {
-        name: "Adler-Apotheke Berlin",
-        type: OrgType.PHARMACY,
-        branding: { contactPerson: "Dr. Elena Vance", address: "Kurfürstendamm 112, 10711 Berlin" },
-      },
-    });
+
+  for (const p of pharmaciesToCreate) {
+    const exists = await prisma.organization.findFirst({ where: { name: p.name, type: OrgType.PHARMACY } });
+    if (!exists) {
+      const created = await prisma.organization.create({
+        data: {
+          name: p.name,
+          type: OrgType.PHARMACY,
+          postalCode: p.postalCode,
+          city: p.city,
+          street: p.address,
+          lat: p.city === "Berlin" ? 52.5 : 51.47, // rough coords
+          lng: p.city === "Berlin" ? 13.4 : 6.85,
+          branding: { contactPerson: "Management", address: p.address },
+        },
+      });
+      if (p.name === pharmaciesToCreate[0].name) {
+        org = created;
+      }
+    }
   }
 
   const email = "apotheke@example.com";

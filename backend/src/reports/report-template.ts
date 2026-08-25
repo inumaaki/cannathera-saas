@@ -317,15 +317,15 @@ export async function renderReportPdf(d: ReportData): Promise<Buffer> {
       footerTemplate: footerTemplate(d),
       margin: { top: '16mm', bottom: '22mm', left: '14mm', right: '14mm' },
     });
-    
+
     const buffer = Buffer.from(pdfBytes);
-    
+
     console.log(
       `[ReportsService] generate: PDF rendered, size=${buffer.length}, header=${buffer
         .subarray(0, 5)
         .toString()}`,
     );
-    
+
     return buffer;
   } finally {
     await browser.close();

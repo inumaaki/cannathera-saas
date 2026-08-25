@@ -253,7 +253,8 @@ export class AdminService {
 
     // Resolve a plan to attach the subscription to. If dto.tier is provided,
     // we use that tier and update the subscription. Otherwise use the existing tier or default.
-    const tier = dto.tier ?? existingSub?.plan?.tier ?? SubscriptionTier.PREMIUM;
+    const tier =
+      dto.tier ?? existingSub?.plan?.tier ?? SubscriptionTier.PREMIUM;
     let plan = await this.prisma.pricingPlan.findFirst({ where: { tier } });
     if (!plan) {
       plan = await this.prisma.pricingPlan.create({
@@ -646,7 +647,9 @@ export class AdminService {
       SubscriptionTier.ENTERPRISE,
     ];
     for (const tier of tiers) {
-      const exists = await this.prisma.pricingPlan.findFirst({ where: { tier } });
+      const exists = await this.prisma.pricingPlan.findFirst({
+        where: { tier },
+      });
       if (!exists) {
         await this.prisma.pricingPlan.create({
           data: {

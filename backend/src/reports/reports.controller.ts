@@ -47,7 +47,7 @@ export class ReportsController {
         patientId,
         toType(type),
       );
-      
+
       const buffer = Buffer.isBuffer(generatedBuffer)
         ? generatedBuffer
         : Buffer.from(generatedBuffer);
@@ -72,9 +72,11 @@ export class ReportsController {
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Unknown PDF error';
       console.error('[ReportsController] doctorReport error:', err);
-      
+
       if (!res.headersSent) {
-        const status = Number((err as any)?.status ?? (err as any)?.statusCode ?? 500);
+        const status = Number(
+          (err as any)?.status ?? (err as any)?.statusCode ?? 500,
+        );
         res.status(status).json({
           statusCode: status,
           message: (err as any)?.message ?? 'Internal Server Error',
@@ -108,7 +110,7 @@ export class ReportsController {
         user.sub,
         reportId,
       );
-      
+
       const buffer = Buffer.isBuffer(generatedBuffer)
         ? generatedBuffer
         : Buffer.from(generatedBuffer);
@@ -133,9 +135,11 @@ export class ReportsController {
     } catch (err: unknown) {
       const message = err instanceof Error ? err.message : 'Unknown PDF error';
       console.error('[ReportsController] file error:', err);
-      
+
       if (!res.headersSent) {
-        const status = Number((err as any)?.status ?? (err as any)?.statusCode ?? 500);
+        const status = Number(
+          (err as any)?.status ?? (err as any)?.statusCode ?? 500,
+        );
         res.status(status).json({
           statusCode: status,
           message: (err as any)?.message ?? 'Internal Server Error',
@@ -165,12 +169,11 @@ export class ReportsController {
     const patientId = await this.reports.patientIdOfUser(user.sub);
 
     try {
-      const { buffer: generatedBuffer, filename } =
-        await this.reports.generate(
-          user.sub,
-          patientId,
-          toType(type),
-        );
+      const { buffer: generatedBuffer, filename } = await this.reports.generate(
+        user.sub,
+        patientId,
+        toType(type),
+      );
 
       const buffer = Buffer.isBuffer(generatedBuffer)
         ? generatedBuffer
@@ -201,9 +204,7 @@ export class ReportsController {
       res.end(buffer);
     } catch (err: unknown) {
       const message =
-        err instanceof Error
-          ? err.message
-          : 'Unknown PDF generation error';
+        err instanceof Error ? err.message : 'Unknown PDF generation error';
 
       console.error(
         '[ReportsController] Fatal error during PDF generation:',

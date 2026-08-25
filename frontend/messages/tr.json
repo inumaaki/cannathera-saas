@@ -961,7 +961,8 @@
         "reviews": "Hasta kontrolleri",
         "logs": "Tedavi Günlükleri",
         "analytics": "Analitik",
-        "inventory": "Envanter"
+        "inventory": "Envanter",
+        "settings": "Settings"
       }
     },
     "dashboard": {
@@ -1251,6 +1252,19 @@
     },
     "nav": {
       "reviews": "Hasta kontrolleri"
+    },
+    "settings": {
+      "title": "Pharmacy Settings",
+      "subtitle": "Manage your pharmacy's master data, location, and product focus.",
+      "masterData": "Master Data",
+      "name": "Pharmacy Name",
+      "street": "Street Address",
+      "postalCode": "Postal Code",
+      "city": "City",
+      "productFocus": "Product Focus & Specializations",
+      "productFocusHint": "Briefly describe your focus (e.g. extracts, specific strains, consultation). This will be shown to patients.",
+      "save": "Save Changes",
+      "savedSuccess": "Settings saved successfully."
     }
   },
   "enterprise": {

@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   ForbiddenException,
   Injectable,
@@ -12,6 +13,7 @@ import {
 } from '@prisma/client';
 import { NotificationsService } from '../notifications/notifications.service';
 import { PrismaService } from '../prisma/prisma.service';
+import { getCoordinatesForPostalCode } from '../shared/geocode';
 
 type Metrics = {
   pain?: number;
@@ -41,6 +43,63 @@ export class PharmacyService {
     });
     if (!membership) throw new NotFoundException('NO_ORGANIZATION');
     return membership.org;
+  }
+
+  async getSettings(userId: string) {
+    const org = await this.orgOf(userId);
+    return {
+      name: org.name,
+      street: org.street,
+      postalCode: org.postalCode,
+      city: org.city,
+      productFocus: org.productFocus,
+    };
+  }
+
+  async updateSettings(
+    userId: string,
+    data: {
+      name: string;
+      street?: string;
+      postalCode?: string;
+      city?: string;
+      productFocus?: string;
+    },
+  ) {
+    const org = await this.orgOf(userId);
+    let { lat, lng } = org;
+
+    if (
+      data.postalCode &&
+      (data.postalCode !== org.postalCode || data.city !== org.city)
+    ) {
+      const coords = await getCoordinatesForPostalCode(data.postalCode);
+      if (coords) {
+        lat = coords.lat;
+        lng = coords.lng;
+      }
+    }
+
+    const updated = await this.prisma.organization.update({
+      where: { id: org.id },
+      data: {
+        name: data.name,
+        street: data.street,
+        postalCode: data.postalCode,
+        city: data.city,
+        productFocus: data.productFocus,
+        lat,
+        lng,
+      },
+    });
+
+    return {
+      name: updated.name,
+      street: updated.street,
+      postalCode: updated.postalCode,
+      city: updated.city,
+      productFocus: updated.productFocus,
+    };
   }
 
   /** Review status per patient, derived from the last review + 30-day cycle. */
@@ -1080,5 +1139,65 @@ export class PharmacyService {
       ...a.months.map((m) => [m.month, m.entries, m.avgQol ?? '']),
     ];
     return this.toCsv('Kennzahl,Wert', rows);
+  }
+
+  // ---------------------------------------------------------------------------
+  // Prescriptions Inbox
+  // ---------------------------------------------------------------------------
+
+  /**
+   * List all prescriptions routed to this pharmacy.
+   */
+  async prescriptions(userId: string) {
+    const org = await this.orgOf(userId);
+
+    return this.prisma.prescription.findMany({
+      where: { pharmacyId: org.id },
+      include: {
+        patient: {
+          select: {
+            user: { select: { firstName: true, lastName: true, email: true } },
+            dateOfBirth: true,
+          },
+        },
+      },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  /**
+   * Update the status of a prescription (e.g. RECEIVED -> PREPARING -> READY).
+   */
+  async updatePrescriptionStatus(
+    userId: string,
+    prescriptionId: string,
+    status: any,
+    rejectionReason?: string,
+  ) {
+    const org = await this.orgOf(userId);
+
+    const prescription = await this.prisma.prescription.findUnique({
+      where: { id: prescriptionId },
+    });
+
+    if (!prescription || prescription.pharmacyId !== org.id) {
+      throw new NotFoundException('PRESCRIPTION_NOT_FOUND');
+    }
+
+    if (status === 'CANCELLED' && !rejectionReason) {
+      throw new BadRequestException('REJECTION_REASON_REQUIRED');
+    }
+
+    const updated = await this.prisma.prescription.update({
+      where: { id: prescriptionId },
+      data: {
+        status,
+        ...(status === 'CANCELLED'
+          ? { rejectionReason }
+          : { rejectionReason: null }),
+      },
+    });
+
+    return updated;
   }
 }

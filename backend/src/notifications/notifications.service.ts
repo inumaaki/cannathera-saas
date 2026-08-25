@@ -11,7 +11,8 @@ export type NotificationEvent = {
     | 'review_due'
     | 'stock_low'
     | 'appointment'
-    | 'report_ready';
+    | 'report_ready'
+    | 'prescription_received';
   severity: 'info' | 'warning' | 'critical';
   title: string;
   text: string;
@@ -43,6 +44,17 @@ export class NotificationsService {
     this.events$.next({ ...event, at: new Date().toISOString() });
   }
 
+  notifyPharmacyNewPrescription(pharmacyId: string, prescriptionId: string) {
+    this.publish({
+      target: { orgId: pharmacyId },
+      kind: 'prescription_received',
+      severity: 'info',
+      title: 'New Prescription Received',
+      text: 'A patient has routed a new prescription to your pharmacy.',
+      href: `/pharmacy/prescriptions`,
+    });
+  }
+
   /**
    * Live stream for one connected user. Delivers ONLY events addressed to them
    * personally or to their organisation — a doctor must never receive another
@@ -64,10 +76,10 @@ export class NotificationsService {
 
     const isForMe = (e: NotificationEvent) =>
       (isSystemAdmin && e.kind === 'red_flag') ||
-      (!isSystemAdmin && e.kind !== 'red_flag' && (
-        (!!e.target.userId && e.target.userId === userId) ||
-        (!!e.target.orgId && !!orgId && e.target.orgId === orgId)
-      ));
+      (!isSystemAdmin &&
+        e.kind !== 'red_flag' &&
+        ((!!e.target.userId && e.target.userId === userId) ||
+          (!!e.target.orgId && !!orgId && e.target.orgId === orgId)));
 
     return new Observable<Frame>((subscriber) => {
       // A heartbeat stops proxies closing an idle connection and lets the client
@@ -80,9 +92,10 @@ export class NotificationsService {
       const sub = this.events$.subscribe((event) => {
         if (isForMe(event)) {
           subscriber.next({
-            data: isSystemAdmin && event.kind === 'red_flag'
-              ? { ...event, href: '/admin?tab=redflags' }
-              : event,
+            data:
+              isSystemAdmin && event.kind === 'red_flag'
+                ? { ...event, href: '/admin?tab=redflags' }
+                : event,
           });
         }
       });

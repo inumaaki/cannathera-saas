@@ -60,8 +60,7 @@ Bitte verfasse nun die klinische Zusammenfassung basierend auf diesen Daten.
       });
 
       return (
-        response.choices[0]?.message?.content ||
-        this.fallbackSummary(logsData)
+        response.choices[0]?.message?.content || this.fallbackSummary(logsData)
       );
     } catch (error: any) {
       this.logger.error('Error generating AI clinical summary', error);

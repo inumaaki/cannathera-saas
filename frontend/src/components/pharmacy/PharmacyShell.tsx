@@ -10,10 +10,12 @@ import { LiveNotifications } from "@/components/common/LiveNotifications";
 
 const NAV = [
   { href: "/pharmacy", key: "dashboard", icon: "dashboard" },
+  { href: "/pharmacy/prescriptions", key: "prescriptions", icon: "receipt_long" },
   { href: "/pharmacy/reviews", key: "reviews", icon: "rate_review" },
   { href: "/pharmacy/logs", key: "logs", icon: "clinical_notes" },
   { href: "/pharmacy/analytics", key: "analytics", icon: "monitoring" },
   { href: "/pharmacy/inventory", key: "inventory", icon: "inventory_2" },
+  { href: "/pharmacy/settings", key: "settings", icon: "settings" },
 ] as const;
 
 export type Notice = {

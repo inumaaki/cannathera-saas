@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/purity */
+ 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 

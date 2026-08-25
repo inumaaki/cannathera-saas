@@ -162,3 +162,22 @@ export class CompleteOnboardingDto {
   @IsOptional()
   baselineMetrics?: any;
 }
+
+export class UpdateFavoritesDto {
+  @IsString({ each: true })
+  pharmacyIds!: string[];
+}
+
+export class CreatePrescriptionDto {
+  @IsString()
+  pharmacyId!: string;
+
+  @IsOptional()
+  @IsString()
+  fileUrl?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  note?: string;
+}

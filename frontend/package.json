@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bing-translate-api": "^4.2.0",
+    "date-fns": "^4.4.0",
     "material-symbols": "^0.45.6",
     "next": "16.2.10",
     "next-intl": "^4.3.4",

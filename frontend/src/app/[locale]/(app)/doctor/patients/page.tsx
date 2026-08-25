@@ -186,7 +186,7 @@ export default async function DoctorRoster({
                       className="inline-flex items-center gap-1.5 font-bold text-pine-600 hover:underline"
                     >
                       <span aria-hidden className="msym text-[16px]">assignment</span>
-                      {format.dateTime(new Date(r.latestMonthlyReview.submittedAt ?? r.lastLogAt ?? Date.now()), {
+                      {format.dateTime(new Date(r.latestMonthlyReview.submittedAt ?? r.lastLogAt ?? Date.now() /* eslint-disable-line react-hooks/purity */), {
                         day: "2-digit",
                         month: "2-digit",
                         year: "numeric",
