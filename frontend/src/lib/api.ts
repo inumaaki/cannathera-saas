@@ -29,9 +29,14 @@ export async function api<T>(
   if (!res.ok) {
     let code = `HTTP_${res.status}`;
     try {
-      const data = (await res.json()) as { message?: string | string[] };
-      if (typeof data.message === "string") code = data.message;
-      else if (Array.isArray(data.message)) code = "VALIDATION_ERROR";
+      const data = (await res.json()) as { message?: string | string[], error?: string };
+      if (typeof data.message === "string") {
+        code = data.message;
+      } else if (Array.isArray(data.message)) {
+        code = data.message.join(", ");
+      } else if (typeof data.error === "string") {
+        code = data.error;
+      }
     } catch {
       // keep generic code
     }
