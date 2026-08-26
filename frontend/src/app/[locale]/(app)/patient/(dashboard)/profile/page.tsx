@@ -36,7 +36,7 @@ export default async function PatientProfilePage({
       </section>
 
       {profile && (
-        <section className="mt-5 rounded-2xl border border-hairline bg-white p-5">
+        <section id="network" className="mt-5 rounded-2xl border border-hairline bg-white p-5 scroll-mt-24">
           <FavoritePharmacies initialFavorites={profile.favoritePharmacies || []} />
         </section>
       )}

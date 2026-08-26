@@ -70,7 +70,7 @@ export function PrescriptionUpload({
           You must add at least one pharmacy to your favorites before you can upload a prescription.
         </p>
         <button
-          onClick={() => router.push("/patient/profile")}
+          onClick={() => router.push("/patient/profile#network")}
           className="mt-4 h-10 rounded-lg bg-pine-600 px-5 font-bold text-white"
         >
           Manage Network
