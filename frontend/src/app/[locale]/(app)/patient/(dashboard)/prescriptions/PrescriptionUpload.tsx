@@ -48,7 +48,7 @@ export function PrescriptionUpload({
           setPharmacyId("");
           setFile(null);
           router.refresh();
-        } catch (err: unknown) {
+        } catch (err: any) {
           setError(err.message || "Failed to upload prescription");
         } finally {
           setPending(false);

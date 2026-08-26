@@ -45,8 +45,8 @@ export function PrescriptionStatusEditor({
       });
       setIsEditing(false);
       router.refresh();
-    } catch (err: unknown) {
-      setError(err.message || "Failed to update status");
+    } catch (err: any) {
+      setError(err.message || "Failed to update prescription status");
       setPending(false);
     }
   }

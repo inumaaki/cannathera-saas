@@ -46,7 +46,7 @@ export function FavoritePharmacies({
         )}&radius=${encodeURIComponent(radius)}`
       );
       setResults(res);
-    } catch (err: unknown) {
+    } catch (err: any) {
       setError(err.message || "Search failed");
     } finally {
       setSearching(false);
@@ -78,8 +78,8 @@ export function FavoritePharmacies({
       });
       setSaved(true);
       router.refresh();
-    } catch (err: unknown) {
-      setError(err.message || "Failed to save favorites");
+    } catch (err: any) {
+      setError(err.message || "Failed to remove favorite");
     } finally {
       setSaving(false);
     }
