@@ -1015,7 +1015,20 @@
       "average": "Average",
       "onTrack": "On track",
       "supportNeeded": "Support needed",
-      "criticalWarning": "Critical"
+      "criticalWarning": "Critical",
+      "metrics": "METRICS",
+      "monthlyVolume": "Monthly Volume",
+      "activeRegulars": "Active Regulars",
+      "returningPatients": "{pct}% returning",
+      "inventory": "INVENTORY",
+      "stockOk": "Stock Optimal",
+      "lowStock": "Low Stock",
+      "liveOrderTicker": "Live Order Ticker",
+      "viewAllOrders": "View All Orders",
+      "noNewOrders": "No new orders received.",
+      "newPrescriptionReceived": "New prescription received – {name}",
+      "processOrder": "PROCESS",
+      "aiExtracted": "AI Data Extracted"
     },
     "reviews": {
       "title": "Patient checks",
@@ -1258,7 +1271,16 @@
         "ITEM_NOT_FOUND": "Product not found.",
         "VALIDATION_ERROR": "Please complete all fields correctly.",
         "ERROR": "Action failed. Please try again."
-      }
+      },
+      "logTransaction": "Log Transaction",
+      "inbound": "INBOUND",
+      "outflow": "OUTFLOW",
+      "batch": "Batch",
+      "patient": "Patient",
+      "logTitle": "Log {name}",
+      "transactionType": "Transaction Type",
+      "batchOptional": "Batch (optional)",
+      "noteOptional": "Note (optional)"
     },
     "nav": {
       "reviews": "Patient checks"

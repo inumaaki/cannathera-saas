@@ -9,6 +9,7 @@ import { NotificationsService } from '../notifications/notifications.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { isPaywallBypassed } from '../shared';
 import { getDistanceKm, getCoordinatesForPostalCode } from '../shared/geocode';
+import OpenAI from 'openai';
 
 const PLAN_DAYS = 30;
 
@@ -613,6 +614,65 @@ export class PatientService {
       throw new ForbiddenException('PHARMACY_NOT_IN_FAVORITES');
     }
 
+    // --- Real AI OCR Integration ---
+    let parsedData: any = null;
+
+    if (fileUrl && process.env.OPENAI_API_KEY) {
+      try {
+        const inventory = await this.prisma.inventoryItem.findMany({
+          where: { orgId: pharmacyId, active: true },
+          select: { id: true, name: true, unit: true },
+        });
+
+        const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+        
+        const response = await openai.chat.completions.create({
+          model: "gpt-4o",
+          messages: [
+            {
+              role: "system",
+              content: `You are an AI assistant that reads cannabis prescriptions and strictly matches them to a pharmacy's inventory catalog.
+Catalog: ${JSON.stringify(inventory)}
+Return a JSON array of objects representing the prescribed items found in the image.
+Each object MUST HAVE exactly these fields: "inventoryId" (string, strictly matched from the Catalog), "name" (string, the name from the Catalog), "quantity" (number, extracted from the prescription), "unit" (string, from the Catalog). 
+If you cannot confidently match a prescribed strain to the Catalog, or cannot read the image, return an empty array [].
+Respond ONLY with raw JSON array. Do not include markdown formatting like \`\`\`json.`
+            },
+            {
+              role: "user",
+              content: [
+                { type: "text", text: "Extract the prescribed items from this prescription." },
+                {
+                  type: "image_url",
+                  image_url: {
+                    url: fileUrl,
+                    detail: "high"
+                  },
+                },
+              ],
+            },
+          ],
+        });
+
+        const content = response.choices[0]?.message?.content;
+        if (content) {
+          try {
+             // clean up potential markdown formatting just in case
+             const cleanContent = content.replace(/```json/g, '').replace(/```/g, '').trim();
+             const parsed = JSON.parse(cleanContent);
+             if (Array.isArray(parsed) && parsed.length > 0) {
+               parsedData = parsed;
+             }
+          } catch (e) {
+             console.error("Failed to parse AI response:", content);
+          }
+        }
+      } catch (err) {
+        console.error("OpenAI OCR failed:", err);
+      }
+    }
+    // --- End AI OCR Integration ---
+
     const prescription = await this.prisma.prescription.create({
       data: {
         patientId: profile.id,
@@ -620,6 +680,7 @@ export class PatientService {
         fileUrl,
         note,
         status: 'RECEIVED',
+        parsedData: parsedData?.length > 0 ? parsedData : null,
       },
     });
 

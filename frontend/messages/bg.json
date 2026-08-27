@@ -58,7 +58,8 @@
       "appointments": "Прегледи",
       "profile": "Профил",
       "quickLog": "Отвори бърз запис",
-      "navigation": "Навигация"
+      "navigation": "Навигация",
+      "prescriptions": "Prescriptions"
     },
     "header": {
       "notifications": "Известия",
@@ -962,7 +963,8 @@
         "logs": "Терапевтични записи",
         "analytics": "Анализи",
         "inventory": "Инвентар",
-        "settings": "Settings"
+        "settings": "Settings",
+        "prescriptions": "Prescriptions"
       }
     },
     "dashboard": {
@@ -1005,7 +1007,20 @@
       "average": "Средно",
       "onTrack": "По план",
       "supportNeeded": "Нужна е подкрепа",
-      "criticalWarning": "Критично"
+      "criticalWarning": "Критично",
+      "metrics": "METRICS",
+      "monthlyVolume": "Monthly Volume",
+      "activeRegulars": "Active Regulars",
+      "returningPatients": "{pct}% returning",
+      "inventory": "INVENTORY",
+      "stockOk": "Stock Optimal",
+      "lowStock": "Low Stock",
+      "liveOrderTicker": "Live Order Ticker",
+      "viewAllOrders": "View All Orders",
+      "noNewOrders": "No new orders received.",
+      "newPrescriptionReceived": "New prescription received – {name}",
+      "processOrder": "PROCESS",
+      "aiExtracted": "AI Data Extracted"
     },
     "reviews": {
       "title": "Прегледи на пациенти",
@@ -1248,7 +1263,16 @@
         "ITEM_NOT_FOUND": "Продуктът не е намерен.",
         "VALIDATION_ERROR": "Моля, попълнете всички полета правилно.",
         "ERROR": "Действието е неуспешно. Моля, опитайте отново."
-      }
+      },
+      "logTransaction": "Log Transaction",
+      "inbound": "INBOUND",
+      "outflow": "OUTFLOW",
+      "batch": "Batch",
+      "patient": "Patient",
+      "logTitle": "Log {name}",
+      "transactionType": "Transaction Type",
+      "batchOptional": "Batch (optional)",
+      "noteOptional": "Note (optional)"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1262,6 +1286,9 @@
       "productFocusHint": "Briefly describe your focus (e.g. extracts, specific strains, consultation). This will be shown to patients.",
       "save": "Save Changes",
       "savedSuccess": "Settings saved successfully."
+    },
+    "nav": {
+      "reviews": "Patient checks"
     }
   },
   "enterprise": {
@@ -1999,7 +2026,8 @@
       "api": "API",
       "webhooks": "Webhooks",
       "automation": "Make.com/Zapier",
-      "coBranding": "Съвместно брандиране"
+      "coBranding": "Съвместно брандиране",
+      "physicians": "Physicians"
     },
     "founder": {
       "tag": "Основател и клинична насоченост",

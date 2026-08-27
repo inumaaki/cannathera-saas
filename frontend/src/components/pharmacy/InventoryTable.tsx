@@ -24,10 +24,12 @@ export type Item = {
 
 type HistoryEvent = {
   id: string;
-  action: string;
+  type: string;
+  quantity: number;
+  batch: string | null;
+  prescriptionRef: string | null;
+  note: string | null;
   at: string;
-  by: string;
-  metadata: Record<string, unknown> | null;
 };
 
 const STATUS_STYLE: Record<Item["status"], string> = {
@@ -46,6 +48,7 @@ type Dialog =
   | { kind: "receive"; item: Item }
   | { kind: "archive"; item: Item }
   | { kind: "history"; item: Item; events: HistoryEvent[] }
+  | { kind: "log"; item: Item }
   | null;
 
 /* Figma 6.6 — Product ledger: reorder → receive → stock trail, plus full editing. */
@@ -491,10 +494,19 @@ export function InventoryTable({ items }: Readonly<{ items: Item[] }>) {
           title={t("historyTitle", { name: dialog.item.name })}
           onClose={() => setDialog(null)}
         >
+          <div className="mb-4 flex justify-end">
+            <button
+              type="button"
+              onClick={() => setDialog({ kind: "log", item: dialog.item })}
+              className="rounded-lg bg-pine px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-pine-600"
+            >
+              {t("logTransaction")}
+            </button>
+          </div>
           {dialog.events.length === 0 ? (
             <p className="py-6 text-center text-sm text-muted">{t("historyEmpty")}</p>
           ) : (
-            <ol className="space-y-3">
+            <ol className="space-y-3 max-h-[60vh] overflow-y-auto">
               {dialog.events.map((e) => (
                 <li
                   key={e.id}
@@ -502,36 +514,75 @@ export function InventoryTable({ items }: Readonly<{ items: Item[] }>) {
                 >
                   <span
                     aria-hidden
-                    className="msym mt-0.5 text-[18px] text-pine-600"
+                    className={`msym mt-0.5 text-[18px] ${e.type === 'INBOUND' ? 'text-pine-600' : 'text-accent-print'}`}
                   >
-                    {e.action === "INVENTORY_RECEIVED"
-                      ? "local_shipping"
-                      : e.action === "INVENTORY_REORDERED"
-                        ? "shopping_cart"
-                        : e.action === "INVENTORY_STOCK_CORRECTED"
-                          ? "edit"
-                          : "history"}
+                    {e.type === 'INBOUND' ? 'login' : 'logout'}
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-bold text-ink-strong">
-                      {t(`event.${e.action}`)}
-                      <Delta metadata={e.metadata} unit={dialog.item.unit} />
+                      {e.type === 'INBOUND' ? t("inbound") : t("outflow")}
+                      <span className={`ms-2 font-mono text-xs font-bold ${e.type === 'INBOUND' ? 'text-pine-600' : 'text-accent-print'}`}>
+                        {e.type === 'INBOUND' ? '+' : '-'}{e.quantity} {dialog.item.unit}
+                      </span>
                     </p>
-                    <p className="text-xs text-muted">
+                    <p className="text-xs text-muted mt-1">
                       {format.dateTime(new Date(e.at), {
                         day: "2-digit",
                         month: "2-digit",
                         year: "numeric",
                         hour: "2-digit",
                         minute: "2-digit",
-                      })}{" "}
-                      · {t("by", { name: e.by })}
+                      })}
                     </p>
+                    {e.batch && <p className="text-xs text-muted mt-0.5">{t("batch")}: {e.batch}</p>}
+                    {e.prescriptionRef && <p className="text-xs text-muted mt-0.5">{t("patient")}: {e.prescriptionRef}</p>}
+                    {e.note && <p className="text-xs text-muted mt-0.5">{e.note}</p>}
                   </div>
                 </li>
               ))}
             </ol>
           )}
+        </Dialog>
+      ) : null}
+
+      {dialog?.kind === "log" ? (
+        <Dialog
+          title={t("logTitle", { name: dialog.item.name })}
+          onClose={() => setDialog(null)}
+        >
+          <form
+            action={(form) =>
+              run(() =>
+                api(`/pharmacy/inventory/${dialog.item.id}/transactions`, {
+                  method: "POST",
+                  body: {
+                    type: String(form.get("type")),
+                    quantity: Number(form.get("quantity")),
+                    batch: form.get("batch") ? String(form.get("batch")) : undefined,
+                    note: form.get("note") ? String(form.get("note")) : undefined,
+                  },
+                }),
+              )
+            }
+            className="space-y-4"
+          >
+            <Select
+              label={t("transactionType")}
+              name="type"
+              options={["INBOUND", "OUTFLOW"]}
+              optionLabel={(val) => val === "INBOUND" ? t("inbound") : t("outflow")}
+            />
+            <Field label={t("quantity", { unit: dialog.item.unit })} name="quantity" type="number" required />
+            <Field label={t("batchOptional")} name="batch" type="text" />
+            <Field label={t("noteOptional")} name="note" type="text" />
+            <Actions
+              busy={busy}
+              error={error && errorText(error)}
+              submit={t("save")}
+              cancel={t("cancel")}
+              onCancel={() => setDialog(null)}
+            />
+          </form>
         </Dialog>
       ) : null}
     </>

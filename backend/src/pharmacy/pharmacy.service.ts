@@ -112,89 +112,34 @@ export class PharmacyService {
     return { dueAt: due, diffDays, status };
   }
 
-  /** Figma 6.1 — Pharmacy Dashboard. */
+  /** Figma 6.1 — Pharmacy Dashboard (Overhaul). */
   async overview(userId: string) {
     const org = await this.orgOf(userId);
 
-    const patients = await this.prisma.patientProfile.findMany({
-      where: { pharmacyId: org.id },
-      include: {
-        user: { select: { firstName: true, lastName: true } },
-        redFlagHits: {
-          where: { acknowledged: false },
-          select: { severity: true },
-        },
-      },
-    });
-
-    const rows = patients.map((p) => {
-      const start = p.therapyStart ?? p.createdAt;
-      const state = this.reviewState(p.lastReviewAt, start);
-      return {
-        id: p.id,
-        name: [p.user.firstName, p.user.lastName].filter(Boolean).join(' '),
-        patientRef: p.patientRef,
-        condition: p.condition,
-        tier: p.packageTier,
-        lastReviewAt: p.lastReviewAt,
-        ...state,
-        criticalFlags: p.redFlagHits.filter(
-          (f) => f.severity === RedFlagSeverity.CRITICAL,
-        ).length,
-        openFlags: p.redFlagHits.length,
-      };
-    });
-
-    // Reviews completed this month (submissions of the monthly review).
-    const monthStart = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      1,
-    );
-    const completedThisMonth = await this.prisma.submission.count({
+    // 1. Monthly Volume (Completed prescriptions this month)
+    const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const monthlyVolume = await this.prisma.prescription.count({
       where: {
-        status: SubmissionStatus.SUBMITTED,
-        submittedAt: { gte: monthStart },
-        patient: { pharmacyId: org.id },
-        version: { questionnaire: { key: 'monthly_review' } },
+        pharmacyId: org.id,
+        status: 'COMPLETED',
+        updatedAt: { gte: monthStart },
       },
     });
 
-    // Adherence buckets (Figma "Patient Adherence" ring).
-    const since = new Date(Date.now() - 30 * 86_400_000);
-    const logs = await this.prisma.therapyLog.findMany({
-      where: { patient: { pharmacyId: org.id }, loggedAt: { gte: since } },
-      select: { patientId: true, loggedAt: true },
+    // 2. Active Regulars & Returning Patients
+    const presGroups = await this.prisma.prescription.groupBy({
+      by: ['patientId'],
+      where: { pharmacyId: org.id, status: 'COMPLETED' },
+      _count: { _all: true },
     });
-    const daysByPatient = new Map<string, Set<string>>();
-    for (const l of logs) {
-      const set = daysByPatient.get(l.patientId) ?? new Set<string>();
-      set.add(l.loggedAt.toISOString().slice(0, 10));
-      daysByPatient.set(l.patientId, set);
-    }
-    const adherences = patients.map((p) => {
-      const start = p.therapyStart ?? p.createdAt;
-      const days = Math.max(
-        1,
-        Math.min(
-          30,
-          Math.floor((Date.now() - start.getTime()) / 86_400_000) + 1,
-        ),
-      );
-      return Math.min(
-        100,
-        Math.round(((daysByPatient.get(p.id)?.size ?? 0) / days) * 100),
-      );
-    });
-    const avgAdherence = adherences.length
-      ? Math.round(adherences.reduce((a, b) => a + b, 0) / adherences.length)
-      : 0;
-    const buckets = {
-      onTrack: adherences.filter((a) => a >= 80).length,
-      supportNeeded: adherences.filter((a) => a >= 50 && a < 80).length,
-      critical: adherences.filter((a) => a < 50).length,
-    };
 
+    const activeRegulars = presGroups.filter((g) => g._count._all > 1).length;
+    const totalPatientsWithPrescriptions = presGroups.length;
+    const returningPatientsPercentage = totalPatientsWithPrescriptions > 0
+      ? Math.round((activeRegulars / totalPatientsWithPrescriptions) * 100)
+      : 0;
+
+    // 3. Stock Alert
     const inventory = await this.prisma.inventoryItem.findMany({
       where: { orgId: org.id },
     });
@@ -205,32 +150,31 @@ export class PharmacyService {
           a.stockLevel / a.safetyThreshold - b.stockLevel / b.safetyThreshold,
       )[0];
 
-    const subscription = await this.prisma.subscription.findFirst({
-      where: { orgId: org.id, isActive: true },
-      include: { plan: true },
+    // 4. Live Order Ticker (Recent Prescriptions)
+    const recentPrescriptionsRaw = await this.prisma.prescription.findMany({
+      where: { pharmacyId: org.id, status: { in: ['RECEIVED', 'PREPARING'] } },
+      orderBy: { createdAt: 'desc' },
+      take: 5,
+      include: {
+        patient: {
+          include: { user: { select: { firstName: true, lastName: true } } }
+        }
+      }
     });
+
+    const recentPrescriptions = recentPrescriptionsRaw.map((p) => ({
+      id: p.id,
+      patientName: [p.patient.user.firstName, p.patient.user.lastName].filter(Boolean).join(' '),
+      status: p.status,
+      parsedData: p.parsedData,
+      createdAt: p.createdAt.toISOString(),
+    }));
 
     return {
       pharmacyName: org.name,
-      dueThisMonth: rows.filter((r) => r.status !== 'onTrack').length,
-      criticalPending: rows.filter((r) => r.criticalFlags > 0).length,
-      completedThisMonth,
-      tier: subscription?.plan.tier ?? SubscriptionTier.BASIC,
-      planUsage: {
-        used: completedThisMonth,
-        cap: subscription?.plan.reviewCap ?? null,
-      },
-      retention: patients.length
-        ? Math.round(
-            (patients.filter((p) => (p.lastReviewAt ?? p.createdAt) > since)
-              .length /
-              patients.length) *
-              100,
-          )
-        : 0,
-      avgAdherence,
-      adherenceBuckets: buckets,
-      reviewsDueSoon: rows.sort((a, b) => a.diffDays - b.diffDays).slice(0, 6),
+      monthlyVolume,
+      activeRegulars,
+      returningPatientsPercentage,
       stockAlert: shortage
         ? {
             id: shortage.id,
@@ -239,6 +183,7 @@ export class PharmacyService {
             unit: shortage.unit,
           }
         : null,
+      recentPrescriptions,
     };
   }
 
@@ -1011,31 +956,53 @@ export class PharmacyService {
     });
     return { ok: true };
   }
-
-  /** Stock movement history for one SKU, straight from the audit trail. */
+  /** Stock movement history for one SKU using the new ledger. */
   async itemHistory(userId: string, itemId: string) {
     const item = await this.itemOf(userId, itemId);
-    const rows = await this.prisma.auditLog.findMany({
-      where: { entityType: 'InventoryItem', entityId: itemId },
+    const rows = await this.prisma.inventoryTransaction.findMany({
+      where: { inventoryId: itemId },
       orderBy: { createdAt: 'desc' },
-      take: 50,
-      include: {
-        user: { select: { firstName: true, lastName: true, email: true } },
-      },
+      include: { prescription: { include: { patient: { include: { user: true } } } } }
     });
     return {
-      item: { id: item.id, sku: item.sku, name: item.name, unit: item.unit },
+      item: { id: item.id, sku: item.sku, name: item.name, unit: item.unit, stockLevel: item.stockLevel },
       events: rows.map((r) => ({
         id: r.id,
-        action: r.action,
-        at: r.createdAt,
-        by:
-          [r.user?.firstName, r.user?.lastName].filter(Boolean).join(' ') ||
-          r.user?.email ||
-          '—',
-        metadata: r.metadata,
+        type: r.type,
+        quantity: r.quantity,
+        batch: r.batch,
+        prescriptionRef: r.prescription ? [r.prescription.patient.user.firstName, r.prescription.patient.user.lastName].filter(Boolean).join(' ') : null,
+        note: r.note,
+        at: r.createdAt.toISOString(),
       })),
     };
+  }
+
+  async addInventoryTransaction(userId: string, itemId: string, dto: { type: string; quantity: number; batch?: string; prescriptionId?: string; note?: string; }) {
+    const item = await this.itemOf(userId, itemId);
+    const newStock = dto.type === 'INBOUND' ? item.stockLevel + dto.quantity : item.stockLevel - dto.quantity;
+    
+    const [tx, updatedItem] = await this.prisma.$transaction([
+      this.prisma.inventoryTransaction.create({
+        data: {
+          inventoryId: itemId,
+          type: dto.type,
+          quantity: dto.quantity,
+          batch: dto.batch,
+          prescriptionId: dto.prescriptionId,
+          note: dto.note,
+        }
+      }),
+      this.prisma.inventoryItem.update({
+        where: { id: itemId },
+        data: {
+          stockLevel: newStock,
+          ...(dto.type === 'INBOUND' ? { lastRestockAt: new Date() } : {})
+        }
+      })
+    ]);
+    
+    return tx;
   }
 
   // --------------------------------------------------------------- Exports ---
@@ -1199,5 +1166,65 @@ export class PharmacyService {
     });
 
     return updated;
+  }
+
+  /**
+   * 1-Click order processing: deducts stock based on parsed AI data and completes the prescription.
+   */
+  async processPrescription(userId: string, prescriptionId: string) {
+    const org = await this.orgOf(userId);
+
+    const prescription = await this.prisma.prescription.findUnique({
+      where: { id: prescriptionId },
+    });
+
+    if (!prescription || prescription.pharmacyId !== org.id) {
+      throw new NotFoundException('PRESCRIPTION_NOT_FOUND');
+    }
+    if (prescription.status === 'COMPLETED' || prescription.status === 'CANCELLED') {
+      throw new BadRequestException('PRESCRIPTION_ALREADY_PROCESSED');
+    }
+
+    const parsedData: any = prescription.parsedData;
+    if (!parsedData || !Array.isArray(parsedData) || parsedData.length === 0) {
+      // If no AI data, just mark as completed.
+      return this.prisma.prescription.update({
+        where: { id: prescriptionId },
+        data: { status: 'COMPLETED' },
+      });
+    }
+
+    // Process the inventory deductions and mark as completed in a transaction
+    const transactionOperations: any[] = [];
+    
+    for (const item of parsedData) {
+      if (item.inventoryId && item.quantity) {
+        transactionOperations.push(
+          this.prisma.inventoryItem.update({
+            where: { id: item.inventoryId },
+            data: { stockLevel: { decrement: item.quantity } }
+          }),
+          this.prisma.inventoryTransaction.create({
+            data: {
+              inventoryId: item.inventoryId,
+              type: 'OUTFLOW',
+              quantity: item.quantity,
+              prescriptionId: prescriptionId,
+              note: 'Auto-processed via 1-click workflow',
+            }
+          })
+        );
+      }
+    }
+
+    transactionOperations.push(
+      this.prisma.prescription.update({
+        where: { id: prescriptionId },
+        data: { status: 'COMPLETED' }
+      })
+    );
+
+    const results = await this.prisma.$transaction(transactionOperations);
+    return results[results.length - 1]; // return the updated prescription
   }
 }

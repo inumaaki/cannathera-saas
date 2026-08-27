@@ -709,9 +709,27 @@ model InventoryItem {
   updatedAt      DateTime @updatedAt
 
   org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  transactions InventoryTransaction[]
 
   @@unique([orgId, sku])
   @@index([orgId])
+}
+
+model InventoryTransaction {
+  id             String        @id @default(cuid())
+  inventoryId    String
+  type           String        // "INBOUND" | "OUTFLOW"
+  quantity       Float         
+  batch          String?       // Batch number for inbound
+  prescriptionId String?       // Link to prescription if outflow
+  note           String?       
+  createdAt      DateTime      @default(now())
+
+  inventory      InventoryItem @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  prescription   Prescription? @relation(fields: [prescriptionId], references: [id])
+
+  @@index([inventoryId])
+  @@index([prescriptionId])
 }
 
 model PricingPlan {
@@ -757,12 +775,14 @@ model Prescription {
   status       PrescriptionStatus @default(RECEIVED)
   fileUrl      String? // uploaded prescription image/pdf
   note         String?
+  parsedData   Json? // mock AI parsed data: Array<{ inventoryId: string, name: string, quantity: number, unit: string }>
   rejectionReason String? // filled if status is CANCELLED
   createdAt    DateTime           @default(now())
   updatedAt    DateTime           @updatedAt
 
   patient      PatientProfile     @relation(fields: [patientId], references: [id], onDelete: Cascade)
   pharmacy     Organization       @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  inventoryTransactions InventoryTransaction[]
 
   @@index([patientId])
   @@index([pharmacyId])

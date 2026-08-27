@@ -58,7 +58,8 @@
       "appointments": "Randevular",
       "profile": "Profil",
       "quickLog": "Hızlı kayıt aç",
-      "navigation": "Navigasyon"
+      "navigation": "Navigasyon",
+      "prescriptions": "Prescriptions"
     },
     "header": {
       "notifications": "Bildirimler",
@@ -962,7 +963,8 @@
         "logs": "Tedavi Günlükleri",
         "analytics": "Analitik",
         "inventory": "Envanter",
-        "settings": "Settings"
+        "settings": "Settings",
+        "prescriptions": "Prescriptions"
       }
     },
     "dashboard": {
@@ -1005,7 +1007,20 @@
       "average": "Ortalama",
       "onTrack": "Planlamada",
       "supportNeeded": "Destek gerekiyor",
-      "criticalWarning": "Kritik"
+      "criticalWarning": "Kritik",
+      "metrics": "METRICS",
+      "monthlyVolume": "Monthly Volume",
+      "activeRegulars": "Active Regulars",
+      "returningPatients": "{pct}% returning",
+      "inventory": "INVENTORY",
+      "stockOk": "Stock Optimal",
+      "lowStock": "Low Stock",
+      "liveOrderTicker": "Live Order Ticker",
+      "viewAllOrders": "View All Orders",
+      "noNewOrders": "No new orders received.",
+      "newPrescriptionReceived": "New prescription received – {name}",
+      "processOrder": "PROCESS",
+      "aiExtracted": "AI Data Extracted"
     },
     "reviews": {
       "title": "Hasta kontrolleri",
@@ -1248,7 +1263,16 @@
         "ITEM_NOT_FOUND": "Ürün bulunamadı.",
         "VALIDATION_ERROR": "Lütfen tüm alanları doğru doldurun.",
         "ERROR": "İşlem başarısız oldu. Lütfen tekrar deneyin."
-      }
+      },
+      "logTransaction": "Log Transaction",
+      "inbound": "INBOUND",
+      "outflow": "OUTFLOW",
+      "batch": "Batch",
+      "patient": "Patient",
+      "logTitle": "Log {name}",
+      "transactionType": "Transaction Type",
+      "batchOptional": "Batch (optional)",
+      "noteOptional": "Note (optional)"
     },
     "nav": {
       "reviews": "Hasta kontrolleri"
@@ -2002,7 +2026,8 @@
       "api": "API",
       "webhooks": "Webhook'lar",
       "automation": "Make.com/Zapier",
-      "coBranding": "Ortak Markalama"
+      "coBranding": "Ortak Markalama",
+      "physicians": "Physicians"
     },
     "founder": {
       "tag": "Kurucu ve Klinik Uyum",

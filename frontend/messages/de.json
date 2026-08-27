@@ -58,7 +58,8 @@
       "appointments": "Termine",
       "profile": "Profil",
       "quickLog": "Schnelleintrag öffnen",
-      "navigation": "Navigation"
+      "navigation": "Navigation",
+      "prescriptions": "Prescriptions"
     },
     "header": {
       "notifications": "Benachrichtigungen",
@@ -962,7 +963,8 @@
         "logs": "Behandlungslogs",
         "analytics": "Analytik",
         "inventory": "Warenbestand",
-        "settings": "Einstellungen"
+        "settings": "Einstellungen",
+        "prescriptions": "Prescriptions"
       }
     },
     "dashboard": {
@@ -1005,7 +1007,20 @@
       "average": "Durchschnitt",
       "onTrack": "Im Plan",
       "supportNeeded": "Unterstützung nötig",
-      "criticalWarning": "Kritisch"
+      "criticalWarning": "Kritisch",
+      "metrics": "METRICS",
+      "monthlyVolume": "Monthly Volume",
+      "activeRegulars": "Active Regulars",
+      "returningPatients": "{pct}% returning",
+      "inventory": "INVENTORY",
+      "stockOk": "Stock Optimal",
+      "lowStock": "Low Stock",
+      "liveOrderTicker": "Live Order Ticker",
+      "viewAllOrders": "View All Orders",
+      "noNewOrders": "No new orders received.",
+      "newPrescriptionReceived": "New prescription received – {name}",
+      "processOrder": "PROCESS",
+      "aiExtracted": "AI Data Extracted"
     },
     "reviews": {
       "title": "Patienten-Checks",
@@ -1248,7 +1263,16 @@
         "ITEM_NOT_FOUND": "Produkt nicht gefunden.",
         "VALIDATION_ERROR": "Bitte alle Felder korrekt ausfüllen.",
         "ERROR": "Aktion fehlgeschlagen. Bitte erneut versuchen."
-      }
+      },
+      "logTransaction": "Log Transaction",
+      "inbound": "INBOUND",
+      "outflow": "OUTFLOW",
+      "batch": "Batch",
+      "patient": "Patient",
+      "logTitle": "Log {name}",
+      "transactionType": "Transaction Type",
+      "batchOptional": "Batch (optional)",
+      "noteOptional": "Note (optional)"
     },
     "nav": {
       "reviews": "Patienten-Checks"
@@ -2002,7 +2026,8 @@
       "api": "API",
       "webhooks": "Webhooks",
       "automation": "Make.com/Zapier",
-      "coBranding": "Co-Branding"
+      "coBranding": "Co-Branding",
+      "physicians": "Physicians"
     },
     "founder": {
       "tag": "Klinisch geführte Therapieunterstützung",

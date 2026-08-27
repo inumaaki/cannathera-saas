@@ -58,7 +58,8 @@
       "appointments": "Wizyty",
       "profile": "Profil",
       "quickLog": "Otwórz szybki dziennik",
-      "navigation": "Nawigacja"
+      "navigation": "Nawigacja",
+      "prescriptions": "Prescriptions"
     },
     "header": {
       "notifications": "Powiadomienia",
@@ -962,7 +963,8 @@
         "logs": "Dzienniki leczenia",
         "analytics": "Analizy",
         "inventory": "Inwentaryzacja",
-        "settings": "Settings"
+        "settings": "Settings",
+        "prescriptions": "Prescriptions"
       }
     },
     "dashboard": {
@@ -1005,7 +1007,20 @@
       "average": "Średnie",
       "onTrack": "Na bieżąco",
       "supportNeeded": "Wymagana pomoc",
-      "criticalWarning": "Krytyczne"
+      "criticalWarning": "Krytyczne",
+      "metrics": "METRICS",
+      "monthlyVolume": "Monthly Volume",
+      "activeRegulars": "Active Regulars",
+      "returningPatients": "{pct}% returning",
+      "inventory": "INVENTORY",
+      "stockOk": "Stock Optimal",
+      "lowStock": "Low Stock",
+      "liveOrderTicker": "Live Order Ticker",
+      "viewAllOrders": "View All Orders",
+      "noNewOrders": "No new orders received.",
+      "newPrescriptionReceived": "New prescription received – {name}",
+      "processOrder": "PROCESS",
+      "aiExtracted": "AI Data Extracted"
     },
     "reviews": {
       "title": "Opinie pacjentów",
@@ -1248,7 +1263,16 @@
         "ITEM_NOT_FOUND": "Produkt nie znaleziony.",
         "VALIDATION_ERROR": "Proszę poprawnie wypełnić wszystkie pola.",
         "ERROR": "Operacja nie powiodła się. Proszę spróbować ponownie."
-      }
+      },
+      "logTransaction": "Log Transaction",
+      "inbound": "INBOUND",
+      "outflow": "OUTFLOW",
+      "batch": "Batch",
+      "patient": "Patient",
+      "logTitle": "Log {name}",
+      "transactionType": "Transaction Type",
+      "batchOptional": "Batch (optional)",
+      "noteOptional": "Note (optional)"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1262,6 +1286,9 @@
       "productFocusHint": "Briefly describe your focus (e.g. extracts, specific strains, consultation). This will be shown to patients.",
       "save": "Save Changes",
       "savedSuccess": "Settings saved successfully."
+    },
+    "nav": {
+      "reviews": "Patient checks"
     }
   },
   "enterprise": {
@@ -1999,7 +2026,8 @@
       "api": "API",
       "webhooks": "Webhooki",
       "automation": "Make.com/Zapier",
-      "coBranding": "Co-branding"
+      "coBranding": "Co-branding",
+      "physicians": "Physicians"
     },
     "founder": {
       "tag": "Terapia wspierana klinicznie",

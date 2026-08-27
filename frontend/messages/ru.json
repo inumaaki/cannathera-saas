@@ -58,7 +58,8 @@
       "appointments": "Встречи",
       "profile": "Профиль",
       "quickLog": "Открыть быстрый журнал",
-      "navigation": "Навигация"
+      "navigation": "Навигация",
+      "prescriptions": "Prescriptions"
     },
     "header": {
       "notifications": "Уведомления",
@@ -962,7 +963,8 @@
         "logs": "Журналы лечения",
         "analytics": "Аналитика",
         "inventory": "Инвентарь",
-        "settings": "Settings"
+        "settings": "Settings",
+        "prescriptions": "Prescriptions"
       }
     },
     "dashboard": {
@@ -1005,7 +1007,20 @@
       "average": "Средняя",
       "onTrack": "В графике",
       "supportNeeded": "Требуется поддержка",
-      "criticalWarning": "Критическая"
+      "criticalWarning": "Критическая",
+      "metrics": "METRICS",
+      "monthlyVolume": "Monthly Volume",
+      "activeRegulars": "Active Regulars",
+      "returningPatients": "{pct}% returning",
+      "inventory": "INVENTORY",
+      "stockOk": "Stock Optimal",
+      "lowStock": "Low Stock",
+      "liveOrderTicker": "Live Order Ticker",
+      "viewAllOrders": "View All Orders",
+      "noNewOrders": "No new orders received.",
+      "newPrescriptionReceived": "New prescription received – {name}",
+      "processOrder": "PROCESS",
+      "aiExtracted": "AI Data Extracted"
     },
     "reviews": {
       "title": "Обзоры пациентов",
@@ -1248,7 +1263,16 @@
         "ITEM_NOT_FOUND": "Продукт не найден.",
         "VALIDATION_ERROR": "Пожалуйста, заполните все поля правильно.",
         "ERROR": "Действие не удалось. Пожалуйста, попробуйте снова."
-      }
+      },
+      "logTransaction": "Log Transaction",
+      "inbound": "INBOUND",
+      "outflow": "OUTFLOW",
+      "batch": "Batch",
+      "patient": "Patient",
+      "logTitle": "Log {name}",
+      "transactionType": "Transaction Type",
+      "batchOptional": "Batch (optional)",
+      "noteOptional": "Note (optional)"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1262,6 +1286,9 @@
       "productFocusHint": "Briefly describe your focus (e.g. extracts, specific strains, consultation). This will be shown to patients.",
       "save": "Save Changes",
       "savedSuccess": "Settings saved successfully."
+    },
+    "nav": {
+      "reviews": "Patient checks"
     }
   },
   "enterprise": {
@@ -1999,7 +2026,8 @@
       "api": "API",
       "webhooks": "Вебхуки",
       "automation": "Make.com/Zapier",
-      "coBranding": "Сo-брендинг"
+      "coBranding": "Сo-брендинг",
+      "physicians": "Physicians"
     },
     "founder": {
       "tag": "Клинически-ведемая поддержка терапии",

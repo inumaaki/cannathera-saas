@@ -58,7 +58,8 @@
       "appointments": "المواعيد",
       "profile": "الملف الشخصي",
       "quickLog": "فتح السجل السريع",
-      "navigation": "التنقل"
+      "navigation": "التنقل",
+      "prescriptions": "Prescriptions"
     },
     "header": {
       "notifications": "الإشعارات",
@@ -962,7 +963,8 @@
         "logs": "سجلات العلاج",
         "analytics": "التحليلات",
         "inventory": "المخزون",
-        "settings": "Settings"
+        "settings": "Settings",
+        "prescriptions": "Prescriptions"
       }
     },
     "dashboard": {
@@ -1005,7 +1007,20 @@
       "average": "المتوسط",
       "onTrack": "على المسار الصحيح",
       "supportNeeded": "بحاجة إلى دعم",
-      "criticalWarning": "حرج"
+      "criticalWarning": "حرج",
+      "metrics": "METRICS",
+      "monthlyVolume": "Monthly Volume",
+      "activeRegulars": "Active Regulars",
+      "returningPatients": "{pct}% returning",
+      "inventory": "INVENTORY",
+      "stockOk": "Stock Optimal",
+      "lowStock": "Low Stock",
+      "liveOrderTicker": "Live Order Ticker",
+      "viewAllOrders": "View All Orders",
+      "noNewOrders": "No new orders received.",
+      "newPrescriptionReceived": "New prescription received – {name}",
+      "processOrder": "PROCESS",
+      "aiExtracted": "AI Data Extracted"
     },
     "reviews": {
       "title": "مراجعات المرضى",
@@ -1248,7 +1263,16 @@
         "ITEM_NOT_FOUND": "المنتج غير موجود.",
         "VALIDATION_ERROR": "الرجاء إكمال جميع الحقول بشكل صحيح.",
         "ERROR": "فشل الإجراء. الرجاء المحاولة مرة أخرى."
-      }
+      },
+      "logTransaction": "Log Transaction",
+      "inbound": "INBOUND",
+      "outflow": "OUTFLOW",
+      "batch": "Batch",
+      "patient": "Patient",
+      "logTitle": "Log {name}",
+      "transactionType": "Transaction Type",
+      "batchOptional": "Batch (optional)",
+      "noteOptional": "Note (optional)"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1262,6 +1286,9 @@
       "productFocusHint": "Briefly describe your focus (e.g. extracts, specific strains, consultation). This will be shown to patients.",
       "save": "Save Changes",
       "savedSuccess": "Settings saved successfully."
+    },
+    "nav": {
+      "reviews": "Patient checks"
     }
   },
   "enterprise": {
@@ -1999,7 +2026,8 @@
       "api": "واجهة برمجة التطبيقات (API)",
       "webhooks": "الويب هوكس (Webhooks)",
       "automation": "Make.com/Zapier",
-      "coBranding": "التعاون بعلامة تجارية مشتركة"
+      "coBranding": "التعاون بعلامة تجارية مشتركة",
+      "physicians": "Physicians"
     },
     "founder": {
       "tag": "دعم العلاج بقيادة طبية",

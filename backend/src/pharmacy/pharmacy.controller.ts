@@ -115,6 +115,29 @@ class CompleteReviewDto {
   note?: string;
 }
 
+class CreateInventoryTransactionDto {
+  @IsString()
+  @IsIn(['INBOUND', 'OUTFLOW'])
+  type!: string;
+
+  @IsNumber()
+  quantity!: number;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(120)
+  batch?: string;
+
+  @IsOptional()
+  @IsString()
+  prescriptionId?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  note?: string;
+}
+
 class UpdatePharmacySettingsDto {
   @IsString()
   @MaxLength(120)
@@ -175,6 +198,14 @@ export class PharmacyController {
       dto.status,
       dto.rejectionReason,
     );
+  }
+
+  @Post('prescriptions/:id/process')
+  processPrescription(
+    @Param('id') id: string,
+    @CurrentUser() user: SessionPayload,
+  ) {
+    return this.pharmacy.processPrescription(user.sub, id);
   }
 
   @Get('settings')
@@ -311,6 +342,15 @@ export class PharmacyController {
   @Get('inventory/:id/history')
   itemHistory(@CurrentUser() user: SessionPayload, @Param('id') id: string) {
     return this.pharmacy.itemHistory(user.sub, id);
+  }
+
+  @Post('inventory/:id/transactions')
+  addInventoryTransaction(
+    @CurrentUser() user: SessionPayload,
+    @Param('id') id: string,
+    @Body() dto: CreateInventoryTransactionDto,
+  ) {
+    return this.pharmacy.addInventoryTransaction(user.sub, id, dto);
   }
 
   @Patch('inventory/:id')
