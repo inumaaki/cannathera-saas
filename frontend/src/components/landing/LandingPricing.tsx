@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 
-type PricingTab = "patients" | "pharmacies" | "doctors" | "enterprise";
+type PricingTab = "patients" | "pharmacies" | "physicians" | "enterprise";
 
 export function LandingPricing() {
   const [activeTab, setActiveTab] = useState<PricingTab>("patients");
@@ -34,7 +34,7 @@ export function LandingPricing() {
 
         <div className="mt-8 flex justify-center sm:mt-10">
           <div className="grid w-full max-w-3xl grid-cols-4 rounded-xl border border-hairline bg-white p-1 shadow-sm">
-            {(["patients", "pharmacies", "doctors", "enterprise"] as const).map((tab) => (
+            {(["patients", "pharmacies", "physicians", "enterprise"] as const).map((tab) => (
               <button
                 key={tab}
                 onClick={() => setActiveTab(tab)}
@@ -46,7 +46,7 @@ export function LandingPricing() {
               >
                 {tab === "patients" && (t("patients") || "Patients")}
                 {tab === "pharmacies" && (t("pharmacies") || "Pharmacies")}
-                {tab === "doctors" && "Doctors"}
+                {tab === "physicians" && (t("physicians") || "Physicians")}
                 {tab === "enterprise" && (t("enterprise") || "Telemedicine / Enterprise")}
               </button>
             ))}
@@ -209,10 +209,10 @@ export function LandingPricing() {
               {/* Flex */}
               <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">{t("flex") || "CRM Starter"}</h3>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("flex") || "Flex Package"}</h3>
                   <p className="mt-2 text-sm text-muted">{t("flexDesc") || "For independent local pharmacies starting out with digital prescriptions."}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    149 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
+                    299 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
@@ -243,10 +243,10 @@ export function LandingPricing() {
                   {t("popular") || "Popular"}
                 </span>
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">{t("flashbackS") || "CRM Pro"}</h3>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("flashbackS") || "Flashback S"}</h3>
                   <p className="mt-2 text-sm text-muted">{t("flashbackSDesc") || "The full operating system for growing cannabis pharmacies."}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    299 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
+                    499 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
@@ -274,10 +274,10 @@ export function LandingPricing() {
               {/* M Pack */}
               <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">{t("flashbackM") || "CRM Scale"}</h3>
+                  <h3 className="text-lg font-bold text-ink-strong">{t("flashbackM") || "Flashback M"}</h3>
                   <p className="mt-2 text-sm text-muted">{t("flashbackMDesc") || "For high-volume pharmacies with custom integrations."}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    599 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
+                    699 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
@@ -314,15 +314,14 @@ export function LandingPricing() {
             </div>
           )}
 
-          {activeTab === "doctors" && (
-            <div className="grid gap-8 md:grid-cols-2 max-w-4xl mx-auto">
-              {/* Doctor Basic */}
-              <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
+          {activeTab === "physicians" && (
+            <div className="mx-auto max-w-2xl">
+              <div className="rounded-2xl border-2 border-pine-600 bg-white p-8 shadow-xl flex flex-col justify-between">
                 <div>
-                  <h3 className="text-lg font-bold text-ink-strong">Practice Starter</h3>
-                  <p className="mt-2 text-sm text-muted">For single practitioners adopting digital prescriptions.</p>
+                  <h3 className="text-lg font-bold text-ink-strong">Physician License (B2B)</h3>
+                  <p className="mt-2 text-sm text-muted">Automated, legally compliant cannabis documentation & a practical interface for local patient care.</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    99 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
+                    399 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
@@ -335,49 +334,15 @@ export function LandingPricing() {
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Basic Patient Tracking
-                    </li>
-                  </ul>
-                </div>
-                <Link
-                  href="/signup/doctor"
-                  className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
-                >
-                  Start Practice Starter
-                </Link>
-              </div>
-
-              {/* Doctor Pro */}
-              <div className="relative rounded-2xl border-2 border-pine-600 bg-white p-8 shadow-xl flex flex-col justify-between">
-                <span className="absolute -top-3.5 right-6 rounded-full bg-pine-600 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-white">
-                  {t("popular") || "Popular"}
-                </span>
-                <div>
-                  <h3 className="text-lg font-bold text-ink-strong">Practice Pro</h3>
-                  <p className="mt-2 text-sm text-muted">Full CRM and reporting for multi-doctor practices.</p>
-                  <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    249 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
-                  </p>
-                  <ul className="mt-6 space-y-3 text-sm text-ink-strong">
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Everything in Starter
-                    </li>
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      Multi-Doctor Management
-                    </li>
-                    <li className="flex gap-2.5 items-center font-semibold">
-                      <span className="msym text-[18px] text-pine-600">check_circle</span>
                       Advanced Therapy Outcomes
                     </li>
                   </ul>
                 </div>
                 <Link
-                  href="/signup/doctor"
+                  href="/signup/physician"
                   className="mt-8 flex h-11 w-full items-center justify-center rounded-xl bg-pine-600 font-bold text-white transition-colors hover:bg-pine"
                 >
-                  Start Practice Pro
+                  Start Practice License
                 </Link>
               </div>
             </div>
@@ -385,59 +350,56 @@ export function LandingPricing() {
 
           {activeTab === "enterprise" && (
             <div className="mx-auto max-w-3xl rounded-2xl border border-hairline bg-white p-4 shadow-sm sm:p-8">
-              <h3 className="text-xl font-bold text-ink-strong text-center">{t("enterpriseTitle")}</h3>
+              <h3 className="text-xl font-bold text-ink-strong text-center">Enterprise – from 350 monthly reviews</h3>
               <p className="mt-2 text-sm text-muted text-center max-w-md mx-auto">
-                {t("enterpriseDesc")}
+                Base price: 699 € net / month (includes the first 350 reviews). Volume-based billing applies exclusively to any reviews exceeding this number.
               </p>
 
-              <div className="mt-6 divide-y divide-hairline overflow-hidden rounded-xl border border-hairline sm:hidden">
-                {[
-                  { volume: `1 – 500 ${t("reviews")}`, price: `8,00 € ${t("netto")}` },
-                  { volume: `501 – 1.500 ${t("reviews")}`, price: `6,50 € ${t("netto")}` },
-                  { volume: `1.501+ ${t("reviews")}`, price: `5,00 € ${t("netto")}`, capped: true },
-                ].map((tier) => (
-                  <div key={tier.volume} className={`p-4 ${tier.capped ? "bg-mint/10" : ""}`}>
-                    <div className="flex items-start justify-between gap-3">
-                      <span className="min-w-0 font-semibold text-ink-strong">{tier.volume}</span>
-                      <span className="shrink-0 text-end font-bold text-pine-600">{tier.price}</span>
-                    </div>
-                    {tier.capped ? (
-                      <span className="mt-2 inline-flex rounded-full bg-pine-600 px-2 py-0.5 text-[9px] font-bold uppercase text-white">
-                        {t("priceCapLimit")}
-                      </span>
-                    ) : null}
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-8 hidden overflow-hidden rounded-xl border border-hairline sm:block">
+              <div className="mt-6 overflow-hidden rounded-xl border border-hairline">
                 <table className="w-full text-start text-sm">
                   <thead className="bg-surface text-ink-strong uppercase tracking-wider text-xs font-bold border-b border-hairline">
                     <tr>
-                      <th className="px-6 py-4">{t("enterpriseVol")}</th>
-                      <th className="px-6 py-4 text-right">{t("enterprisePrice")}</th>
+                      <th className="px-6 py-4">Volume (Monthly Reviews)</th>
+                      <th className="px-6 py-4 text-right">Price per additional review</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-hairline">
                     <tr>
-                      <td className="px-6 py-4 font-semibold">1 – 500 {t("reviews")}</td>
-                      <td className="px-6 py-4 text-right font-bold text-pine-600">8,00 € {t("netto")}</td>
+                      <td className="px-6 py-4 font-semibold">351 – 500 reviews</td>
+                      <td className="px-6 py-4 text-right font-bold text-pine-600">8,00 € {t("netto") || "net"}</td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 font-semibold">501 – 1.500 {t("reviews")}</td>
-                      <td className="px-6 py-4 text-right font-bold text-pine-600">6,50 € {t("netto")}</td>
+                      <td className="px-6 py-4 font-semibold">501 – 1,500 reviews</td>
+                      <td className="px-6 py-4 text-right font-bold text-pine-600">6,50 € {t("netto") || "net"}</td>
                     </tr>
-                    <tr className="bg-mint/10">
-                      <td className="px-6 py-4 font-semibold flex items-center gap-2">
-                        1.501+ {t("reviews")}
-                        <span className="rounded-full bg-pine-600 px-2 py-0.5 text-[9px] font-bold uppercase text-white">
-                          {t("priceCapLimit")}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 text-right font-bold text-pine-600">5,00 € {t("netto")}</td>
+                    <tr>
+                      <td className="px-6 py-4 font-semibold">From 1,501 reviews</td>
+                      <td className="px-6 py-4 text-right font-bold text-pine-600">5,00 € {t("netto") || "net"}</td>
                     </tr>
                   </tbody>
                 </table>
+              </div>
+
+              <div className="mt-8">
+                <h4 className="text-sm font-bold text-ink-strong mb-4">Illustrative Examples:</h4>
+                <div className="space-y-3 text-sm text-muted">
+                  <div className="flex justify-between items-center bg-surface/50 p-3 rounded-lg border border-hairline">
+                    <span className="font-semibold text-ink-strong">500 reviews</span>
+                    <span className="text-right">699 € + (150 × 8,00 €) = <strong className="text-pine-600">1.899 € net</strong></span>
+                  </div>
+                  <div className="flex justify-between items-center bg-surface/50 p-3 rounded-lg border border-hairline">
+                    <span className="font-semibold text-ink-strong">1,000 reviews</span>
+                    <span className="text-right">699 € + (150 × 8,00 €) + (500 × 6,50 €) = <strong className="text-pine-600">5.149 € net</strong></span>
+                  </div>
+                  <div className="flex justify-between items-center bg-surface/50 p-3 rounded-lg border border-hairline">
+                    <span className="font-semibold text-ink-strong">1,500 reviews</span>
+                    <span className="text-right">699 € + (150 × 8,00 €) + (1,000 × 6,50 €) = <strong className="text-pine-600">8.399 € net</strong></span>
+                  </div>
+                  <div className="flex justify-between items-center bg-surface/50 p-3 rounded-lg border border-hairline">
+                    <span className="font-semibold text-ink-strong">2,000 reviews</span>
+                    <span className="text-right">699 € + (150 × 8,00 €) + (1,000 × 6,50 €) + (500 × 5,00 €) = <strong className="text-pine-600">10.899 € net</strong></span>
+                  </div>
+                </div>
               </div>
 
               <div className="mt-6 rounded-xl bg-[#eef2fe] border border-info/20 p-4 text-xs leading-relaxed text-info">

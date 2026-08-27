@@ -57,77 +57,78 @@ function PhysiciansContent() {
               </div>
             </div>
 
-            {/* Graphic */}
+            {/* Monthly Review Graphic */}
             <div className="relative w-full rounded-2xl border border-white/10 bg-[#00120a] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col mt-8 lg:mt-0">
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-              
-              <div className="h-12 border-b border-white/5 bg-white/[0.02] flex items-center px-4 gap-4">
+
+              {/* Browser chrome */}
+              <div className="h-12 border-b border-white/5 bg-white/[0.02] flex items-center px-4 gap-4 shrink-0">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f56]"/>
                   <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"/>
                   <div className="w-3 h-3 rounded-full bg-[#27c93f]"/>
                 </div>
-                <div className="h-5 w-48 bg-white/5 rounded flex items-center px-2">
-                  <span className="text-[10px] text-white/30 font-mono tracking-widest">cannathera-portal</span>
+                <div className="h-5 w-56 bg-white/5 rounded flex items-center px-2">
+                  <span className="text-[10px] text-white/30 font-mono tracking-widest">cannathera · Monthly Review</span>
                 </div>
               </div>
 
-              <div className="p-4 sm:p-6 flex flex-col gap-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/5 rounded-xl border border-white/5 p-4 flex flex-col justify-center">
-                    <span className="text-white/50 text-xs font-bold uppercase tracking-wider mb-1">Active Patients</span>
-                    <span className="text-2xl font-bold text-white">124</span>
+              <div className="p-4 sm:p-5 flex flex-col gap-4">
+                {/* Header row */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Monthly Review</div>
+                    <div className="text-base font-bold text-white mt-0.5">August 2026</div>
                   </div>
-                  <div className="bg-red-500/10 rounded-xl border border-red-500/20 p-4 flex flex-col justify-center relative overflow-hidden">
-                    <span className="text-red-300/70 text-xs font-bold uppercase tracking-wider mb-1">Triage Alerts</span>
-                    <span className="text-2xl font-bold text-red-400">3</span>
-                    <span className="absolute top-4 right-4 msym text-red-400/50">warning</span>
+                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-mint/15 border border-mint/25 text-mint text-[10px] font-bold uppercase tracking-wide">
+                    <span className="msym text-[12px]">check_circle</span> Report Ready
+                  </span>
+                </div>
+
+                {/* Stats row */}
+                <div className="grid grid-cols-3 gap-2.5">
+                  <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-1">
+                    <span className="text-white/40 text-[9px] font-bold uppercase tracking-wider">Avg. Pain Score</span>
+                    <span className="text-xl font-bold text-white">3.2 <span className="text-xs text-mint font-semibold">↓ 1.4</span></span>
+                  </div>
+                  <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-1">
+                    <span className="text-white/40 text-[9px] font-bold uppercase tracking-wider">Sleep Quality</span>
+                    <span className="text-xl font-bold text-mint-bright">Good</span>
+                  </div>
+                  <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-1">
+                    <span className="text-white/40 text-[9px] font-bold uppercase tracking-wider">Tolerance</span>
+                    <span className="text-xl font-bold text-white">Stable</span>
                   </div>
                 </div>
-                
-                <div className="bg-white/5 rounded-xl border border-white/5 p-4 flex flex-col gap-3">
-                  <div className="text-sm font-bold text-white/80 mb-2">Recent Monitoring</div>
-                  <div className="space-y-2">
-                  {/* Row 1 */}
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/5">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-mint/20 text-mint flex items-center justify-center"><span className="msym text-sm">person</span></div>
-                      <div>
-                        <div className="text-xs font-bold text-white">ID: #9842-AX</div>
-                        <div className="text-[10px] text-white/40">Stable progress</div>
-                      </div>
-                    </div>
-                    <div className="w-16 h-4 bg-gradient-to-r from-mint to-transparent rounded opacity-50" />
-                  </div>
 
-                  {/* Row 2 */}
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-red-500/10 border border-red-500/20">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-red-500/20 text-red-400 flex items-center justify-center"><span className="msym text-sm">monitor_heart</span></div>
-                      <div>
-                        <div className="text-xs font-bold text-white">ID: #7712-BY</div>
-                        <div className="text-[10px] text-red-300">Dizziness reported</div>
-                      </div>
-                    </div>
-                    <div className="text-xs font-bold text-red-400">Review</div>
+                {/* Calendar heatmap */}
+                <div className="bg-white/5 rounded-xl border border-white/5 p-3">
+                  <div className="text-[10px] text-white/50 font-bold uppercase tracking-wider mb-2.5">Daily Activity — August</div>
+                  <div className="grid grid-cols-7 gap-1">
+                    {["M","T","W","T","F","S","S"].map((d, i) => (
+                      <div key={i} className="text-[8px] text-white/30 text-center font-bold">{d}</div>
+                    ))}
+                    {[
+                      "bg-white/5","bg-mint/20","bg-mint/35","bg-mint/50","bg-mint/35","bg-white/5","bg-white/5",
+                      "bg-mint/25","bg-mint/40","bg-mint/55","bg-mint/70","bg-mint/55","bg-white/5","bg-white/5",
+                      "bg-mint/20","bg-mint/45","bg-red-500/30","bg-mint/30","bg-mint/50","bg-white/5","bg-white/5",
+                      "bg-mint/30","bg-mint/45","bg-mint/60","bg-mint/40","bg-white/5","bg-white/5","bg-white/10",
+                    ].map((cls, i) => (
+                      <div key={i} className={`h-4 rounded-sm ${cls}`} />
+                    ))}
                   </div>
+                </div>
 
-                  {/* Row 3 */}
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-white/5 border border-white/5">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-white/10 text-white/50 flex items-center justify-center"><span className="msym text-sm">person</span></div>
-                      <div>
-                        <div className="text-xs font-bold text-white">ID: #4431-CX</div>
-                        <div className="text-[10px] text-white/40">Titration phase</div>
-                      </div>
-                    </div>
-                    <div className="w-16 h-4 bg-gradient-to-r from-white/20 to-transparent rounded opacity-50" />
+                {/* Triage alert */}
+                <div className="flex items-start gap-2.5 p-3 rounded-xl bg-red-500/10 border border-red-500/20">
+                  <span className="msym text-red-400 text-base mt-0.5 shrink-0">warning</span>
+                  <div>
+                    <div className="text-[10px] font-bold text-red-300 uppercase tracking-wide">Triage Alert · Aug 17</div>
+                    <div className="text-[10px] text-white/50 mt-0.5">Pain spike NRS 7 — Dizziness reported. Review recommended.</div>
                   </div>
-
-                  {/* Removed Row 4 to save space */}
+                  <span className="ml-auto shrink-0 text-[9px] font-bold text-red-400 border border-red-400/30 rounded px-1.5 py-0.5">Review</span>
                 </div>
               </div>
-            </div>
             </div>
 
           </div>

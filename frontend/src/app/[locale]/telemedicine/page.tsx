@@ -57,63 +57,89 @@ function TelemedicineContent() {
               </div>
             </div>
 
-            {/* Graphic */}
+            {/* Enterprise Dashboard Graphic */}
             <div className="relative w-full rounded-2xl border border-white/10 bg-[#00120a] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col mt-8 lg:mt-0">
               <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-              
-              <div className="h-12 border-b border-white/5 bg-white/[0.02] flex items-center px-4 gap-4">
+
+              {/* Browser chrome */}
+              <div className="h-12 border-b border-white/5 bg-white/[0.02] flex items-center px-4 gap-4 shrink-0">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-[#ff5f56]"/>
                   <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"/>
                   <div className="w-3 h-3 rounded-full bg-[#27c93f]"/>
                 </div>
-                <div className="h-5 w-48 bg-white/5 rounded flex items-center px-2">
-                  <span className="text-[10px] text-white/30 font-mono tracking-widest">api.cannathera.com</span>
+                <div className="h-5 w-56 bg-white/5 rounded flex items-center px-2">
+                  <span className="text-[10px] text-white/30 font-mono tracking-widest">cannathera · Enterprise Admin</span>
                 </div>
               </div>
 
-              <div className="p-4 sm:p-6 flex flex-col gap-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/5 rounded-xl border border-white/5 p-4 flex flex-col justify-center">
-                    <span className="text-white/50 text-xs font-bold uppercase tracking-wider mb-1">Endpoints Online</span>
-                    <span className="text-2xl font-bold text-white">99.99%</span>
+              <div className="p-4 sm:p-5 flex flex-col gap-3.5">
+                {/* Header */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Enterprise Overview</div>
+                    <div className="text-base font-bold text-white mt-0.5">Telemedicine Platform</div>
                   </div>
-                  <div className="bg-mint/10 rounded-xl border border-mint/20 p-4 flex flex-col justify-center relative overflow-hidden">
-                    <span className="text-mint/70 text-xs font-bold uppercase tracking-wider mb-1">Webhook Latency</span>
-                    <span className="text-2xl font-bold text-mint-bright">12ms</span>
-                    <span className="absolute top-4 right-4 msym text-mint/50">speed</span>
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-mint/10 border border-mint/20">
+                    <div className="w-1.5 h-1.5 rounded-full bg-mint animate-pulse" />
+                    <span className="text-[9px] font-bold text-mint uppercase tracking-wide">SLA 99.99%</span>
                   </div>
                 </div>
-                
-                <div className="bg-[#0a0a0a] rounded-xl border border-white/10 p-4 flex flex-col gap-1 font-mono text-[10px] sm:text-xs overflow-hidden relative">
-                  <div className="text-white/40 mb-2">Terminal logs - v1.0.4</div>
-                  
-                  <div className="flex gap-2">
-                    <span className="text-mint-bright">➜</span>
-                    <span className="text-white">POST /v1/patients/sync</span>
-                    <span className="text-[#a8c7b8] ml-auto">200 OK</span>
-                  </div>
-                  <div className="text-white/30 pl-5">{`{ "status": "success", "synced_records": 1 }`}</div>
-                  
-                  <div className="flex gap-2 mt-2">
-                    <span className="text-mint-bright">➜</span>
-                    <span className="text-white">GET /v1/triage/alerts</span>
-                    <span className="text-[#a8c7b8] ml-auto">200 OK</span>
-                  </div>
-                  <div className="text-white/30 pl-5">{`{ "alerts": [], "active": true }`}</div>
 
-                  <div className="flex gap-2 mt-2">
-                    <span className="text-mint-bright">➜</span>
-                    <span className="text-white">POST /v1/telemed/session</span>
-                    <span className="text-[#a8c7b8] ml-auto">201 Created</span>
+                {/* Top KPI strip */}
+                <div className="grid grid-cols-3 gap-2">
+                  <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-0.5">
+                    <span className="text-white/40 text-[9px] font-bold uppercase tracking-wider">Active Clinics</span>
+                    <span className="text-xl font-bold text-white">14</span>
                   </div>
-                  <div className="text-white/30 pl-5">{`{ "session_id": "sess_81x", "room_url": "..." }`}</div>
-                  
-                  <div className="flex gap-2 mt-2">
-                    <span className="text-mint-bright animate-pulse">_</span>
+                  <div className="bg-mint/10 rounded-xl border border-mint/20 p-3 flex flex-col gap-0.5">
+                    <span className="text-mint/70 text-[9px] font-bold uppercase tracking-wider">Patients / Mo</span>
+                    <span className="text-xl font-bold text-mint-bright">8,240</span>
                   </div>
-                  
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
+                  <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-0.5">
+                    <span className="text-white/40 text-[9px] font-bold uppercase tracking-wider">Avg. Latency</span>
+                    <span className="text-xl font-bold text-white">11ms</span>
+                  </div>
+                </div>
+
+                {/* Physician workload triage */}
+                <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-2.5">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[10px] text-white/60 font-bold uppercase tracking-wide">Physician Workload — Triage Distribution</span>
+                    <span className="text-[9px] text-white/30">This month</span>
+                  </div>
+                  {[
+                    { label: "Stable / Routine", pct: 68, color: "bg-mint/60" },
+                    { label: "Watchlist Review", pct: 23, color: "bg-amber-400/60" },
+                    { label: "Immediate Alert", pct: 9, color: "bg-red-400/70" },
+                  ].map((row) => (
+                    <div key={row.label} className="flex items-center gap-2">
+                      <span className="text-[9px] text-white/40 w-28 shrink-0">{row.label}</span>
+                      <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
+                        <div className={`h-full rounded-full ${row.color}`} style={{ width: `${row.pct}%` }} />
+                      </div>
+                      <span className="text-[9px] font-bold text-white/50 w-6 text-right">{row.pct}%</span>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Session pipeline */}
+                <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-2">
+                  <span className="text-[10px] text-white/60 font-bold uppercase tracking-wide">Live Session Pipeline</span>
+                  {[
+                    { id: "sess_9A2", clinic: "Clinic Berlin", status: "Active", statusColor: "text-mint bg-mint/10 border-mint/20" },
+                    { id: "sess_7C1", clinic: "Clinic Hamburg", status: "Scheduled", statusColor: "text-white/50 bg-white/5 border-white/10" },
+                    { id: "sess_3F8", clinic: "Clinic München", status: "Completed", statusColor: "text-white/30 bg-white/5 border-white/5" },
+                  ].map((s) => (
+                    <div key={s.id} className="flex items-center gap-2.5 p-2 rounded-lg bg-white/[0.03] border border-white/5">
+                      <span className="msym text-white/30 text-sm shrink-0">videocam</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="text-[10px] font-bold text-white/70 font-mono">{s.id}</div>
+                        <div className="text-[9px] text-white/30 truncate">{s.clinic}</div>
+                      </div>
+                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${s.statusColor}`}>{s.status}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
