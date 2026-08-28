@@ -24,7 +24,9 @@ lang_map = {
 def translate_value(val, lang_code):
     if isinstance(val, str):
         try:
-            return GoogleTranslator(source='en', target=lang_code).translate(val)
+            result = GoogleTranslator(source='en', target=lang_code).translate(val)
+            time.sleep(0.3)
+            return result
         except Exception as e:
             print(f"Error translating: {e}")
             return val
@@ -63,7 +65,48 @@ def sync_keys(source, target, lang_code, path=""):
                 "landing.features.title", "landing.features.subtitle",
                 "physicians.hero_title", "physicians.hero_intro", "physicians.f1_text", "physicians.f2_text",
                 "pharmacies.hero_title", "pharmacies.hero_intro", 
-                "telemedicine.v2_hero_intro", "telemedicine.v2_f1_text"
+                "telemedicine.v2_hero_intro", "telemedicine.v2_f1_text",
+                # Pharmacy portal overhaul – nav labels
+                "pharmacy.shell.nav.reviews",
+                "pharmacy.shell.nav.logs",
+                "pharmacy.shell.nav.analytics",
+                "pharmacy.shell.nav.prescriptions",
+                "pharmacy.shell.nav.network",
+                "pharmacy.shell.noticeOverdue",
+                # Pharmacy dashboard labels
+                "pharmacy.dashboard.title",
+                "pharmacy.dashboard.subtitle",
+                "pharmacy.dashboard.monthlyVolume",
+                "pharmacy.dashboard.activeRegulars",
+                "pharmacy.dashboard.returningPatients",
+                "pharmacy.dashboard.liveOrderTicker",
+                "pharmacy.dashboard.viewAllOrders",
+                "pharmacy.dashboard.noNewOrders",
+                "pharmacy.dashboard.newPrescriptionReceived",
+                "pharmacy.dashboard.lowStock",
+                "pharmacy.dashboard.noStockAlert",
+                "pharmacy.dashboard.colLastReview",
+                "pharmacy.dashboard.start",
+                "pharmacy.dashboard.noneDue",
+                "pharmacy.dashboard.reviewsDue",
+                "pharmacy.dashboard.dueThisMonth",
+                "pharmacy.dashboard.completed",
+                # Pharmacy reviews page
+                "pharmacy.reviews.title",
+                "pharmacy.reviews.subtitle",
+                "pharmacy.reviews.overdue",
+                "pharmacy.reviews.tabAll",
+                "pharmacy.reviews.tabOverdue",
+                "pharmacy.reviews.tabDueSoon",
+                "pharmacy.reviews.tabOnTrack",
+                "pharmacy.reviews.tabFlagged",
+                "pharmacy.reviews.viewLogs",
+                "pharmacy.reviews.colLast",
+                "pharmacy.reviews.colDue",
+                "pharmacy.reviews.startReview",
+                "pharmacy.reviews.exportRecords",
+                # Pharmacy network
+                "pharmacy.network.doctors",
             ]
             if curr_path in force_keys:
                 print(f"[{lang_code}] Forcing update of string: {curr_path}")
