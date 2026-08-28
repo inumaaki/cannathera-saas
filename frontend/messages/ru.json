@@ -979,17 +979,17 @@
       "nav": {
         "dashboard": "Панель управления",
         "reviews": "Monthly Reviews",
-        "logs": "Treatment Logs",
-        "analytics": "Analytics & Billing",
+        "logs": "Клинические журналы",
+        "analytics": "Сетевая аналитика",
         "inventory": "Инвентарь",
         "settings": "Settings",
-        "prescriptions": "Prescription Inbox",
-        "network": "Physician Network"
+        "prescriptions": "Электронные рецепты",
+        "network": "Сеть врачей"
       }
     },
     "dashboard": {
-      "title": "Pharmacy Dashboard",
-      "subtitle": "Daily operations overview for {name}.",
+      "title": "Панель управления аптекой",
+      "subtitle": "С возвращением, {имя}",
       "cycleProgress": "Прогресс цикла",
       "completion": "Завершение",
       "dueThisMonth": "Monthly Reviews due",
@@ -1029,24 +1029,24 @@
       "supportNeeded": "Требуется поддержка",
       "criticalWarning": "Критическая",
       "metrics": "METRICS",
-      "monthlyVolume": "Completed This Month",
-      "activeRegulars": "Regular Patients",
-      "returningPatients": "{pct}% locally retained",
+      "monthlyVolume": "Ежемесячный объем",
+      "activeRegulars": "Активные регуляры",
+      "returningPatients": "{pct} % возвращается",
       "inventory": "INVENTORY",
       "stockOk": "Stock Optimal",
-      "lowStock": "Low Stock – Action Required",
-      "liveOrderTicker": "Prescription Inbox",
-      "viewAllOrders": "View All",
-      "noNewOrders": "No pending prescriptions.",
-      "newPrescriptionReceived": "New prescription – {name}",
+      "lowStock": "Низкий запас",
+      "liveOrderTicker": "Тикер текущих заказов",
+      "viewAllOrders": "Просмотреть все заказы",
+      "noNewOrders": "Нет новых заказов",
+      "newPrescriptionReceived": "Новый рецепт для {name}",
       "processOrder": "PROCESS",
       "aiExtracted": "AI Data Extracted",
       "prescriptionsToday": "Новые рецепты сегодня",
       "todayActivity": "СЕГОДНЯ"
     },
     "reviews": {
-      "title": "Monthly Reviews",
-      "subtitle": "Manage and document monthly therapy reviews for your patient cohort.",
+      "title": "Отзывы о терапии",
+      "subtitle": "Оценка и утверждение ежемесячных отчетов о терапии.",
       "overdue": "Overdue",
       "completedToday": "Завершено сегодня",
       "pending": "Открытые действия",
@@ -1184,7 +1184,10 @@
       "unitPrice": "Цена за обзор",
       "projected": "Прогнозируемая стоимость",
       "tierNote": "Ценовой диапазон: 1–500 обзоров €8.00 · 501–1,500 €6.50 · от 1,501 €5.00 (нетто).",
-      "exportCsv": "Экспорт CSV"
+      "exportCsv": "Экспорт CSV",
+      "clinicalContext": "Клинический контекст",
+      "contextAdherence": "Уровень приверженности выше 80% указывает на строгое соблюдение терапии и снижает риск неконтролируемых побочных эффектов.",
+      "contextReviews": "Regular completion of monthly reviews ensures gapless and legally compliant documentation for health insurers."
     },
     "inventory": {
       "title": "Инвентарь",
@@ -1294,7 +1297,9 @@
       "logTitle": "Log {name}",
       "transactionType": "Transaction Type",
       "batchOptional": "Batch (optional)",
-      "noteOptional": "Note (optional)"
+      "noteOptional": "Note (optional)",
+      "addStock": "Добавить акции",
+      "lowStockAlert": "Предупреждение: низкий запас"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1319,6 +1324,16 @@
       "noResults": "Никаких практик не обнаружено.",
       "doctors": "Physicians",
       "physicians": "Врачи"
+    },
+    "prescriptions": {
+      "title": "Электронный ящик для рецептов",
+      "subtitle": "Все входящие рецепты и статус их обработки в режиме реального времени.",
+      "status_RECEIVED": "Полученный",
+      "status_PREPARING": "Подготовка",
+      "status_READY": "Готов к самовывозу/доставке",
+      "status_COMPLETED": "Завершенный",
+      "processPrescription": "Подтвердить и обработать рецепт",
+      "noPrescriptions": "Никаких открытых рецептов."
     }
   },
   "enterprise": {
@@ -1906,7 +1921,7 @@
     },
     "hero": {
       "certified": "Сертифицированное клиническое ПО",
-      "title": "The Medical OS for\nCannabis Therapy.",
+      "title": "Медицинская ОС для\nКаннабисовая терапия.",
       "subtitle": "Присоединяйтесь к тысячам пациентов, которые оптимизировали свой терапевтический прогресс с помощью нашей клинически управляемой адаптивной платформы на 90 дней. Выполняйте ежедневные оценки, просматривайте физиологические временные линии и оставайтесь на связи с вашей клинической командой.",
       "ctaStart": "Начать бесплатный 90-дневный план",
       "ctaPortal": "Доступ к порталу",
@@ -1926,7 +1941,7 @@
       "last7": "Последние 7 дней",
       "compliance": "Соответствие: предупреждения не выявлены",
       "trust": "Индекс доверия",
-      "v2_subtitle": "Cannathera is the definitive clinical operating system for medical cannabis. We transform fragmented, unstructured patient treatments into a fully closed-loop, data-driven ecosystem. By connecting patients, regional physicians, and verified local pharmacies through secure, structured monitoring, we ensure maximum therapeutic safety, unparalleled documentation precision, and sustainable medical outcomes from day one.",
+      "v2_subtitle": "Cannathera — это идеальная клиническая операционная система для медицинского каннабиса. Мы преобразуем фрагментированное, неструктурированное лечение пациентов в полностью замкнутую экосистему, управляемую данными. Объединяя пациентов, региональных врачей и проверенные местные аптеки посредством безопасного структурированного мониторинга, мы обеспечиваем максимальную терапевтическую безопасность, беспрецедентную точность документации и устойчивые медицинские результаты с первого дня.",
       "v2_ctaStart": "Начните свою терапевтическую поддержку"
     },
     "features": {
@@ -1934,24 +1949,24 @@
       "title": "An Architected Ecosystem for Complete Therapy Compliance",
       "subtitle": "Cannathera bridges the critical gap between prescribing physicians, dispensing pharmacies, and daily patient reality. By translating complex, highly individualized therapy regimes into structured, secure, and data-driven clinical workflows, we elevate cannabis treatment to the highest medical standards.",
       "patientBullets": [
-        "Ongoing documentation",
-        "Daily Dosage Logs",
-        "Adherence Analytics"
+        "Текущая документация",
+        "Журналы ежедневных дозировок",
+        "Аналитика приверженности"
       ],
       "doctorBullets": [
-        "Automated Red-Flags",
+        "Автоматизированные тревожные сигналы",
         "Patient Roster Management",
         "Clinical PDF Exports"
       ],
       "pharmacyBullets": [
         "Inventory Tracking",
         "Compliance Reviews",
-        "Billing Logs Audit"
+        "Аудит журналов выставления счетов"
       ],
       "enterpriseBullets": [
         "Custom Tenant Branding",
         "Webhook & API access",
-        "Comprehensive Security Policy"
+        "Комплексная политика безопасности"
       ],
       "patientDescSuffix": "Безопасная запись симптомов, дозировок и ежедневной активности. Отслеживание метрик соблюдения режима в реальном времени.",
       "doctorDescSuffix": "Автоматизированные протоколы сортировки мониторят показатели пациентов. Генерация структурированных PDF-отчетов курса одним кликом.",
@@ -2153,7 +2168,7 @@
     "compliance_text": "Полное соответствие GDPR, шифрование AES-256.",
     "cta": "Запросить доступ",
     "hero_title": "The Monthly Review That Writes Itself — Automated Clinical Precision",
-    "hero_intro": "Medical cannabis therapy demands continuous, structured, and legally defensible documentation — not retrospective guesswork or unstructured patient notes. Cannathera's active accompaniment engine automatically aggregates every patient's daily symptom logs, validated pain scale metrics, tolerability ratings, and strain-specific responses into a highly detailed, clinical-grade monthly review. When your patient arrives for their follow-up consultation, the clinical picture is already synthesized, structured, and ready for your immediate assessment. You regain hours of administrative time while eliminating the blind spots between scheduled appointments.",
+    "hero_intro": "Медицинская терапия каннабисом требует постоянной, структурированной и юридически защищенной документации, а не ретроспективных догадок или неструктурированных записей пациентов. Механизм активного сопровождения Cannathera автоматически объединяет ежедневные журналы симптомов каждого пациента, проверенные показатели шкалы боли, рейтинги переносимости и реакции на конкретные штаммы в очень подробный ежемесячный обзор клинического уровня. Когда ваш пациент приходит на повторную консультацию, клиническая картина уже синтезирована, структурирована и готова к вашей немедленной оценке. Вы экономите часы административного времени, устраняя при этом «слепые зоны» между запланированными встречами.",
     "f1_title": "Автоматизированные отчеты",
     "f1_text": "At the end of each month, Cannathera automatically compiles a structured, physician-facing therapy summary ready for export. It includes day-by-day symptom progression, validated NRS pain scale scores, PSQI sleep quality trends, and critical tolerability flags — all seamlessly generated from the patient's daily entries. You receive a legally sound clinical document, not a raw, uninterpretable data dump.",
     "f2_title": "Триаж в реальном времени",
@@ -2178,7 +2193,7 @@
     "subtitle": "Станьте центром проверенной локальной сети каннабис-терапии.",
     "cta": "Стать партнером",
     "hero_title": "Your Pharmacy at the Core of a Closed-Loop Regional Care Network",
-    "hero_intro": "Cannathera does not merely list your pharmacy in a passive directory — it integrates you as an active, indispensable dispensing node in a verified, closed-loop local therapy ecosystem. We actively reject the model of scraping pharmacies and redirecting patients anonymously to national mail-order giants. Instead, patients actively select your pharmacy as their permanent, trusted local partner. E-prescriptions from regional physicians route exclusively to your inbox, and crucial therapy outcomes flow back to the prescribing practice after dispensation. You transcend the role of a passive point of sale to become the dispensing anchor of a medically structured, fully accountable, and highly profitable local care loop.",
+    "hero_intro": "Cannathera не просто размещает вашу аптеку в пассивном каталоге — она интегрирует вас как активный, незаменимый узел выдачи лекарств в проверенную замкнутую экосистему местной терапии. Мы активно отвергаем модель парсинга аптек и анонимного перенаправления пациентов к национальным гигантам доставки по почте. Вместо этого пациенты активно выбирают вашу аптеку в качестве постоянного и надежного местного партнера. Электронные рецепты от региональных врачей направляются исключительно в ваш почтовый ящик, а важные результаты лечения возвращаются в практику назначения после выписки. Вы преодолеете роль пассивной точки продаж и станете распределительным якорем медицинского структурированного, полностью подотчетного и высокодоходного местного контура оказания медицинской помощи.",
     "f1_title": "Радиус 30 км",
     "f1_text": "Мы гарантируем маршрутизацию пациентов в радиусе 30 км именно к вам, формируя настоящую лояльность.",
     "f2_title": "Панель управления рецептами",
@@ -2214,9 +2229,9 @@
     "integration_title": "Бесшовная интеграция",
     "integration_text": "Подключите свою инфраструктуру за дни, а не месяцы, с помощью наших хорошо документированных REST API.",
     "v2_hero_title": "Масштабируйте телемедицину",
-    "v2_hero_intro": "The primary bottleneck in telemedicine is physician capacity. Unstructured patient messages, ad-hoc follow-ups, and undocumented complaints consume valuable clinical time that should be dedicated exclusively to medical decision-making. Cannathera shatters this bottleneck. Our enterprise platform pre-filters, standardizes, and clinically stratifies all patient-generated therapy data before it ever reaches a physician's dashboard. Your medical team operates at maximum clinical throughput with near-zero administrative drag, allowing you to serve exponentially more patients per physician per month without compromising therapeutic safety or outcomes.",
+    "v2_hero_intro": "Основным узким местом в телемедицине являются возможности врачей. Неструктурированные сообщения пациентов, специальные наблюдения и недокументированные жалобы отнимают драгоценное клиническое время, которое должно быть посвящено исключительно принятию медицинских решений. Каннатера устраняет это узкое место. Наша корпоративная платформа предварительно фильтрует, стандартизирует и клинически стратифицирует все данные о терапии, полученные от пациентов, прежде чем они попадут на панель управления врача. Ваша медицинская команда работает с максимальной клинической производительностью с почти нулевым административным сопротивлением, что позволяет вам обслуживать экспоненциально больше пациентов на одного врача в месяц без ущерба для терапевтической безопасности или результатов.",
     "v2_f1_title": "API & White-Label",
-    "v2_f1_text": "Cannathera's RESTful API embeds seamlessly into your existing clinical software stack—whether you deploy a proprietary EMR, a third-party telehealth platform, or a bespoke patient app. Prescription routing, triage alerts, and therapy outcomes sync bidirectionally via secure, versioned endpoints with full webhook telemetry. For enterprise clients, we deliver full white-label deployment: your branding, your patient interface, powered by our certified clinical infrastructure. SLA-backed 99.99% uptime guarantees and a dedicated integration engineering team are standard.",
+    "v2_f1_text": "RESTful API Cannathera легко встраивается в существующий стек клинического программного обеспечения — независимо от того, развертываете ли вы собственную EMR, стороннюю платформу телемедицины или специальное приложение для пациентов. Маршрутизация рецептов, оповещения о сортировке и результаты терапии синхронизируются в двух направлениях через безопасные конечные точки с версионированием и полной телеметрией веб-перехватчика. Корпоративным клиентам мы предлагаем полное развертывание по принципу «white-label»: ваш брендинг, ваш интерфейс для пациентов на базе нашей сертифицированной клинической инфраструктуры. Гарантии безотказной работы в течение 99,99 % времени, поддерживаемые соглашением об уровне обслуживания, и выделенная команда инженеров по интеграции входят в стандартную комплектацию.",
     "v2_f2_title": "Удержание пациентов",
     "v2_f2_text": "Превращаем пациентов с разовыми рецептами в постоянных пользователей платформы.",
     "v2_f3_title": "Клиническая фильтрация",

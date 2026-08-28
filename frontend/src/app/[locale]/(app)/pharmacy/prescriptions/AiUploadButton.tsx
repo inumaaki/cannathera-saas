@@ -20,8 +20,9 @@ export function AiUploadButton() {
       });
       router.refresh();
       alert("Prescription successfully processed and matched by AI!");
-    } catch (err: any) {
-      alert(err.message || "AI matching failed. Red flag raised.");
+    } catch (err) {
+          const error = err as Error;
+      alert(error.message || "AI matching failed. Red flag raised.");
     } finally {
       setIsUploading(false);
     }

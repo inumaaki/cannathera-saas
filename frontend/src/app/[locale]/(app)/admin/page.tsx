@@ -442,6 +442,7 @@ export default function AdminDashboardPage() {
             customMonthlyPrice: data.customMonthlyPrice,
             endsAt: data.endsAt,
             pilotNote: data.pilotNote,
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             plan: { ...existing?.plan, tier: clear ? existing?.plan?.tier : pilotTier, name: clear ? existing?.plan?.name : pilotTier } as any,
           };
           return {

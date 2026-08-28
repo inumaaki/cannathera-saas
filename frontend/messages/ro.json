@@ -978,18 +978,18 @@
       "logout": "Deconectare",
       "nav": {
         "dashboard": "Tablou de bord",
-        "reviews": "Monthly Reviews",
-        "logs": "Treatment Logs",
-        "analytics": "Analytics & Billing",
+        "reviews": "Recenzii lunare",
+        "logs": "Jurnalele clinice",
+        "analytics": "Analiza rețelei",
         "inventory": "Inventar",
         "settings": "Settings",
-        "prescriptions": "Prescription Inbox",
-        "network": "Physician Network"
+        "prescriptions": "Rețete electronice",
+        "network": "Rețeaua de medici"
       }
     },
     "dashboard": {
-      "title": "Pharmacy Dashboard",
-      "subtitle": "Daily operations overview for {name}.",
+      "title": "Tabloul de bord al farmaciei",
+      "subtitle": "Welcome back, {name}",
       "cycleProgress": "Progres ciclu",
       "completion": "Finalizare",
       "dueThisMonth": "Monthly Reviews due",
@@ -1029,24 +1029,24 @@
       "supportNeeded": "Necesită suport",
       "criticalWarning": "Critic",
       "metrics": "METRICS",
-      "monthlyVolume": "Completed This Month",
-      "activeRegulars": "Regular Patients",
-      "returningPatients": "{pct}% locally retained",
+      "monthlyVolume": "Volumul lunar",
+      "activeRegulars": "Obișnuiți activi",
+      "returningPatients": "{pct}% revenind",
       "inventory": "INVENTORY",
       "stockOk": "Stock Optimal",
-      "lowStock": "Low Stock – Action Required",
-      "liveOrderTicker": "Prescription Inbox",
-      "viewAllOrders": "View All",
-      "noNewOrders": "No pending prescriptions.",
-      "newPrescriptionReceived": "New prescription – {name}",
+      "lowStock": "Stoc redus",
+      "liveOrderTicker": "Live Order Ticker",
+      "viewAllOrders": "Vezi toate comenzile",
+      "noNewOrders": "Fără comenzi noi",
+      "newPrescriptionReceived": "Rețetă nouă pentru {name}",
       "processOrder": "PROCESS",
       "aiExtracted": "AI Data Extracted",
       "prescriptionsToday": "Rețete noi astăzi",
       "todayActivity": "ASTĂZI"
     },
     "reviews": {
-      "title": "Monthly Reviews",
-      "subtitle": "Manage and document monthly therapy reviews for your patient cohort.",
+      "title": "Recenzii de terapie",
+      "subtitle": "Evaluation and approval of monthly therapy reports.",
       "overdue": "Overdue",
       "completedToday": "Finalizate astăzi",
       "pending": "Acțiuni deschise",
@@ -1184,7 +1184,10 @@
       "unitPrice": "Preț pe recenzie",
       "projected": "Cost proiectat",
       "tierNote": "Prețuri în volum: 1–500 recenzii €8,00 · 501–1,500 €6,50 · de la 1,501 €5,00 (net).",
-      "exportCsv": "Exportă CSV"
+      "exportCsv": "Exportă CSV",
+      "clinicalContext": "Context clinic",
+      "contextAdherence": "O rată de aderență de peste 80% indică o conformitate puternică la terapie și reduce riscul de reacții adverse necontrolate.",
+      "contextReviews": "Finalizarea regulată a evaluărilor lunare asigură documentația fără lacune și conformă legal pentru asigurătorii de sănătate."
     },
     "inventory": {
       "title": "Inventar",
@@ -1294,7 +1297,9 @@
       "logTitle": "Log {name}",
       "transactionType": "Transaction Type",
       "batchOptional": "Batch (optional)",
-      "noteOptional": "Note (optional)"
+      "noteOptional": "Note (optional)",
+      "addStock": "Adăugați stoc",
+      "lowStockAlert": "Avertisment: Stoc scăzut"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1319,6 +1324,16 @@
       "noResults": "Nu s-au găsit practici.",
       "doctors": "Medicii",
       "physicians": "Medicii"
+    },
+    "prescriptions": {
+      "title": "Inbox cu rețete electronice",
+      "subtitle": "Toate rețetele primite și starea lor de procesare în timp real.",
+      "status_RECEIVED": "Primit",
+      "status_PREPARING": "Pregătirea",
+      "status_READY": "Gata pentru ridicare/livrare",
+      "status_COMPLETED": "Completed",
+      "processPrescription": "Validate & Process Prescription",
+      "noPrescriptions": "No open prescriptions."
     }
   },
   "enterprise": {
@@ -2177,8 +2192,8 @@
     "title": "Pentru Farmacii",
     "subtitle": "Deveniți pilonul central al unei rețele locale închise.",
     "cta": "Începeți parteneriatul",
-    "hero_title": "Your Pharmacy at the Core of a Closed-Loop Regional Care Network",
-    "hero_intro": "Cannathera does not merely list your pharmacy in a passive directory — it integrates you as an active, indispensable dispensing node in a verified, closed-loop local therapy ecosystem. We actively reject the model of scraping pharmacies and redirecting patients anonymously to national mail-order giants. Instead, patients actively select your pharmacy as their permanent, trusted local partner. E-prescriptions from regional physicians route exclusively to your inbox, and crucial therapy outcomes flow back to the prescribing practice after dispensation. You transcend the role of a passive point of sale to become the dispensing anchor of a medically structured, fully accountable, and highly profitable local care loop.",
+    "hero_title": "Farmacia dvs. în centrul unei rețele regionale de îngrijire în buclă închisă",
+    "hero_intro": "Cannathera nu doar listează farmacia dvs. într-un director pasiv - vă integrează ca un nod de distribuire activ, indispensabil într-un ecosistem de terapie local verificat, în buclă închisă. Respingem în mod activ modelul de eliminare a farmaciilor și redirecționare anonimă a pacienților către giganții naționali de comandă prin corespondență. În schimb, pacienții își selectează în mod activ farmacia ca partener local permanent și de încredere. Rețetele electronice de la medicii regionali sunt direcționate exclusiv către căsuța dvs. de e-mail, iar rezultatele cruciale ale terapiei revin la practica de prescriere după eliberare. Transcendeți rolul unui punct de vânzare pasiv pentru a deveni ancora de distribuire a unui circuit de îngrijire local structurat din punct de vedere medical, pe deplin responsabil și extrem de profitabil.",
     "f1_title": "Retea hiperlocală - Exclusivitate 30km",
     "f1_text": "Routarea noastră hiperlocală pe 30km garantează că pacienții din zona ta sunt direcționați către farmacia ta, generând loialitate autentică.",
     "f2_title": "Panou CRM pentru Rețete",
@@ -2214,9 +2229,9 @@
     "integration_title": "Integrare perfectă",
     "integration_text": "Conectați-vă infrastructura în zile, nu în luni, cu API-urile noastre REST bine documentate.",
     "v2_hero_title": "Scalați Telemedicina, fără a suprasolicita medicii",
-    "v2_hero_intro": "The primary bottleneck in telemedicine is physician capacity. Unstructured patient messages, ad-hoc follow-ups, and undocumented complaints consume valuable clinical time that should be dedicated exclusively to medical decision-making. Cannathera shatters this bottleneck. Our enterprise platform pre-filters, standardizes, and clinically stratifies all patient-generated therapy data before it ever reaches a physician's dashboard. Your medical team operates at maximum clinical throughput with near-zero administrative drag, allowing you to serve exponentially more patients per physician per month without compromising therapeutic safety or outcomes.",
+    "v2_hero_intro": "Principalul blocaj în telemedicină este capacitatea medicului. Mesajele nestructurate ale pacienților, urmăririle ad-hoc și plângerile nedocumentate consumă timp clinic valoros care ar trebui să fie dedicat exclusiv luării deciziilor medicale. Cannathera sparge acest blocaj. Platforma noastră de întreprindere prefiltrează, standardizează și stratifică clinic toate datele de terapie generate de pacient înainte ca acestea să ajungă vreodată în tabloul de bord al unui medic. Echipa dumneavoastră medicală operează la un debit clinic maxim, cu o frecvență administrativă aproape de zero, permițându-vă să deserviți exponențial mai mulți pacienți per medic pe lună, fără a compromite siguranța sau rezultatele terapeutice.",
     "v2_f1_title": "API Enterprise & Integrare White-Label",
-    "v2_f1_text": "Cannathera's RESTful API embeds seamlessly into your existing clinical software stack—whether you deploy a proprietary EMR, a third-party telehealth platform, or a bespoke patient app. Prescription routing, triage alerts, and therapy outcomes sync bidirectionally via secure, versioned endpoints with full webhook telemetry. For enterprise clients, we deliver full white-label deployment: your branding, your patient interface, powered by our certified clinical infrastructure. SLA-backed 99.99% uptime guarantees and a dedicated integration engineering team are standard.",
+    "v2_f1_text": "API-ul RESTful de la Cannathera se integrează perfect în stiva dvs. de software clinică existentă, indiferent dacă implementați un EMR proprietar, o platformă de telesănătate terță parte sau o aplicație personalizată pentru pacient. Dirijarea prescripției, alertele de triaj și rezultatele terapiei se sincronizează bidirecțional prin puncte finale securizate, versiuni cu telemetrie webhook completă. Pentru clienții întreprinderi, oferim o implementare completă cu etichetă albă: brandingul dvs., interfața pacientului dvs., alimentată de infrastructura noastră clinică certificată. Garanții de funcționare de 99,99% susținute de SLA și o echipă dedicată de inginerie de integrare sunt standard.",
     "v2_f2_title": "Fidelizarea pe termen lung a pacienților",
     "v2_f2_text": "Transformați pacienții unici în utilizatori constanți prin instrumente digitale de acompaniere activă în terapie.",
     "v2_f3_title": "Filtrare Clinică: Medicii văd doar esențialul",

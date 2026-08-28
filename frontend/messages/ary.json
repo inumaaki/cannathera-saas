@@ -979,17 +979,17 @@
       "nav": {
         "dashboard": "لوحة التحكم",
         "reviews": "المراجعات الشهرية",
-        "logs": "سجلات العلاج",
-        "analytics": "التحليلات والفواتير",
+        "logs": "السجلات السريرية",
+        "analytics": "تحليلات الشبكة",
         "inventory": "المخزون",
         "settings": "Settings",
-        "prescriptions": "صندوق الوصفات الطبية",
+        "prescriptions": "الوصفات الطبية الإلكترونية",
         "network": "شبكة الأطباء"
       }
     },
     "dashboard": {
       "title": "لوحة تحكم الصيدلية",
-      "subtitle": "نظرة عامة على العمليات اليومية لـ {name}.",
+      "subtitle": "مرحبًا بعودتك، {الاسم}",
       "cycleProgress": "تقدم الدورة",
       "completion": "الاكتمال",
       "dueThisMonth": "المراجعات الشهرية المستحقة",
@@ -1029,24 +1029,24 @@
       "supportNeeded": "بحاجة إلى دعم",
       "criticalWarning": "حرج",
       "metrics": "METRICS",
-      "monthlyVolume": "اكتمل هذا الشهر",
-      "activeRegulars": "المرضى المنتظمين",
-      "returningPatients": "{pct}% تم الاحتفاظ بها محليًا",
+      "monthlyVolume": "الحجم الشهري",
+      "activeRegulars": "النظاميون النشطون",
+      "returningPatients": "{pct}٪ عائدون",
       "inventory": "INVENTORY",
       "stockOk": "Stock Optimal",
-      "lowStock": "مخزون منخفض - الإجراء مطلوب",
-      "liveOrderTicker": "صندوق الوصفات الطبية",
-      "viewAllOrders": "عرض الكل",
-      "noNewOrders": "لا وصفات طبية معلقة.",
-      "newPrescriptionReceived": "وصفة طبية جديدة - {name}",
+      "lowStock": "مخزون منخفض",
+      "liveOrderTicker": "شريط الطلب المباشر",
+      "viewAllOrders": "عرض جميع الطلبات",
+      "noNewOrders": "لا أوامر جديدة",
+      "newPrescriptionReceived": "وصفة طبية جديدة لـ {name}",
       "processOrder": "PROCESS",
       "aiExtracted": "AI Data Extracted",
       "prescriptionsToday": "وصفات جديدة اليوم",
       "todayActivity": "اليوم"
     },
     "reviews": {
-      "title": "المراجعات الشهرية",
-      "subtitle": "إدارة وتوثيق مراجعات العلاج الشهرية لمجموعة المرضى لديك.",
+      "title": "مراجعات العلاج",
+      "subtitle": "تقييم واعتماد تقارير العلاج الشهرية.",
       "overdue": "تأخرت",
       "completedToday": "المكتملة اليوم",
       "pending": "الإجراءات المفتوحة",
@@ -1184,7 +1184,10 @@
       "unitPrice": "السعر لكل مراجعة",
       "projected": "التكلفة المتوقعة",
       "tierNote": "تسعير حسب الحجم: 1–500 مراجعة 8.00 يورو · 501–1,500 6.50 يورو · من 1,501 5.00 يورو (صافي).",
-      "exportCsv": "تصدير CSV"
+      "exportCsv": "تصدير CSV",
+      "clinicalContext": "السياق السريري",
+      "contextAdherence": "يشير معدل الالتزام الذي يزيد عن 80% إلى التزام قوي بالعلاج ويقلل من خطر الآثار الجانبية غير المنضبطة.",
+      "contextReviews": "Regular completion of monthly reviews ensures gapless and legally compliant documentation for health insurers."
     },
     "inventory": {
       "title": "المخزون",
@@ -1294,7 +1297,9 @@
       "logTitle": "Log {name}",
       "transactionType": "Transaction Type",
       "batchOptional": "Batch (optional)",
-      "noteOptional": "Note (optional)"
+      "noteOptional": "Note (optional)",
+      "addStock": "إضافة مخزون",
+      "lowStockAlert": "تحذير: مخزون منخفض"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1319,6 +1324,16 @@
       "noResults": "لم يتم العثور على ممارسات.",
       "doctors": "الأطباء",
       "physicians": "الأطباء"
+    },
+    "prescriptions": {
+      "title": "E-Prescription Inbox",
+      "subtitle": "All incoming prescriptions and their real-time processing status.",
+      "status_RECEIVED": "تلقى",
+      "status_PREPARING": "تحضير",
+      "status_READY": "جاهز للاستلام/الشحن",
+      "status_COMPLETED": "مكتمل",
+      "processPrescription": "التحقق من صحة ومعالجة الوصفة الطبية",
+      "noPrescriptions": "لا وصفات طبية مفتوحة."
     }
   },
   "enterprise": {
@@ -1946,7 +1961,7 @@
       "pharmacyBullets": [
         "تتبع المخزون",
         "مراجعات الامتثال",
-        "تدقيق سجلات الفواتير"
+        "Billing Logs Audit"
       ],
       "enterpriseBullets": [
         "العلامة التجارية المخصصة للمستأجر",
@@ -2178,7 +2193,7 @@
     "subtitle": "كن الركيزة الأساسية لشبكة علاج محلية مغلقة وموثوقة.",
     "cta": "بدء شراكة صيدلانية",
     "hero_title": "صيدليتك في قلب شبكة رعاية إقليمية مغلقة",
-    "hero_intro": "لا تقوم Cannathera بإدراج الصيدلية الخاصة بك في دليل سلبي فحسب، بل إنها تدمجك كعقدة صرف نشطة لا غنى عنها في نظام بيئي علاجي محلي مغلق الحلقة ومعتمد. نحن نرفض بشدة نموذج الصيدليات القديمة وإعادة توجيه المرضى بشكل مجهول إلى عمالقة الطلب عبر البريد الوطني. وبدلاً من ذلك، يقوم المرضى باختيار الصيدلية الخاصة بك كشريك محلي دائم وموثوق لهم. يتم توجيه الوصفات الطبية الإلكترونية من الأطباء الإقليميين حصريًا إلى صندوق الوارد الخاص بك، وتعود نتائج العلاج الحاسمة إلى ممارسة الوصفات الطبية بعد صرفها. أنت تتجاوز دور نقطة البيع السلبية لتصبح مرساة التوزيع لحلقة رعاية محلية منظمة طبيًا وخاضعة للمساءلة بالكامل ومربحة للغاية.",
+    "hero_intro": "Cannathera does not merely list your pharmacy in a passive directory — it integrates you as an active, indispensable dispensing node in a verified, closed-loop local therapy ecosystem. We actively reject the model of scraping pharmacies and redirecting patients anonymously to national mail-order giants. Instead, patients actively select your pharmacy as their permanent, trusted local partner. E-prescriptions from regional physicians route exclusively to your inbox, and crucial therapy outcomes flow back to the prescribing practice after dispensation. You transcend the role of a passive point of sale to become the dispensing anchor of a medically structured, fully accountable, and highly profitable local care loop.",
     "f1_title": "نطاق محلي حصري (30 كم)",
     "f1_text": "نضمن توجيه المرضى في منطقتك إلى صيدليتك فقط.",
     "f2_title": "لوحة تحكم الوصفات الطبية",
@@ -2216,7 +2231,7 @@
     "v2_hero_title": "توسيع نطاق الطب عن بعد بدون زيادة عبء الأطباء",
     "v2_hero_intro": "إن عنق الزجاجة الأساسي في التطبيب عن بعد هو قدرة الطبيب. تستهلك رسائل المرضى غير المنظمة والمتابعات المخصصة والشكاوى غير الموثقة وقتًا سريريًا ثمينًا يجب تخصيصه حصريًا لاتخاذ القرارات الطبية. كاناثيرا يكسر عنق الزجاجة هذا. تقوم منصة مؤسستنا بتصفية جميع بيانات العلاج التي أنشأها المريض وتوحيدها وتقسيمها سريريًا إلى طبقات قبل أن تصل إلى لوحة معلومات الطبيب. يعمل فريقك الطبي بأقصى قدر من الإنتاجية السريرية مع إعاقة إدارية تقترب من الصفر، مما يسمح لك بخدمة عدد أكبر من المرضى بشكل كبير لكل طبيب شهريًا دون المساس بالسلامة العلاجية أو النتائج.",
     "v2_f1_title": "واجهة برمجة التطبيقات للمؤسسات",
-    "v2_f1_text": "يتم تضمين RESTful API من Cannathera بسلاسة في مجموعة البرامج السريرية الحالية لديك - سواء كنت تنشر سجلًا طبيًا إلكترونيًا خاصًا، أو منصة رعاية صحية عن بعد تابعة لجهة خارجية، أو تطبيقًا مخصصًا للمرضى. تتم مزامنة توجيه الوصفات الطبية وتنبيهات الفرز ونتائج العلاج بشكل ثنائي الاتجاه عبر نقاط نهاية آمنة ومُصدرة مع قياس عن بعد كامل للخطاف عبر الويب. بالنسبة لعملاء المؤسسات، نقدم نشرًا كاملاً للعلامة البيضاء: علامتك التجارية، وواجهة المريض الخاصة بك، والمدعومة بالبنية التحتية السريرية المعتمدة لدينا. تُعد ضمانات وقت التشغيل بنسبة 99.99% المدعومة باتفاقية مستوى الخدمة (SLA) وفريق هندسة التكامل المخصص أمرًا قياسيًا.",
+    "v2_f1_text": "Cannathera's RESTful API embeds seamlessly into your existing clinical software stack—whether you deploy a proprietary EMR, a third-party telehealth platform, or a bespoke patient app. Prescription routing, triage alerts, and therapy outcomes sync bidirectionally via secure, versioned endpoints with full webhook telemetry. For enterprise clients, we deliver full white-label deployment: your branding, your patient interface, powered by our certified clinical infrastructure. SLA-backed 99.99% uptime guarantees and a dedicated integration engineering team are standard.",
     "v2_f2_title": "الاحتفاظ بالمرضى",
     "v2_f2_text": "تحويل المرضى لمرة واحدة إلى مستخدمين نشطين دائمين.",
     "v2_f3_title": "التصفية السريرية",

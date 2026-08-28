@@ -55,8 +55,9 @@ export function IntakeReminders({
       });
       setSaved(true);
       router.refresh();
-    } catch (err: any) {
-      setError(err.message || "Failed to save reminders");
+    } catch (err) {
+          const error = err as Error;
+      setError(error.message || "Failed to save reminders");
     } finally {
       setSaving(false);
     }

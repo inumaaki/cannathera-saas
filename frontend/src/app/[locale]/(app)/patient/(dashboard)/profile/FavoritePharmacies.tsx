@@ -41,8 +41,9 @@ export function FavoritePharmacies({
       try {
         const res = await api<PharmacyResult[]>("/patient/pharmacies/search");
         setResults(res);
-      } catch (err: any) {
-        setError(err.message || "Failed to load local pharmacies");
+      } catch (err) {
+          const error = err as Error;
+        setError(error.message || "Failed to load local pharmacies");
       } finally {
         setSearching(false);
       }
@@ -75,8 +76,9 @@ export function FavoritePharmacies({
       });
       setSaved(true);
       router.refresh();
-    } catch (err: any) {
-      setError(err.message || "Failed to save network");
+    } catch (err) {
+          const error = err as Error;
+      setError(error.message || "Failed to save network");
     } finally {
       setSaving(false);
     }

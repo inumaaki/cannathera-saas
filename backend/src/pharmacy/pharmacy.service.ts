@@ -118,7 +118,11 @@ export class PharmacyService {
     const org = await this.orgOf(userId);
 
     // 1. Monthly Volume (Completed prescriptions this month)
-    const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+    const monthStart = new Date(
+      new Date().getFullYear(),
+      new Date().getMonth(),
+      1,
+    );
     const monthlyVolume = await this.prisma.prescription.count({
       where: {
         pharmacyId: org.id,
@@ -136,9 +140,10 @@ export class PharmacyService {
 
     const activeRegulars = presGroups.filter((g) => g._count._all > 1).length;
     const totalPatientsWithPrescriptions = presGroups.length;
-    const returningPatientsPercentage = totalPatientsWithPrescriptions > 0
-      ? Math.round((activeRegulars / totalPatientsWithPrescriptions) * 100)
-      : 0;
+    const returningPatientsPercentage =
+      totalPatientsWithPrescriptions > 0
+        ? Math.round((activeRegulars / totalPatientsWithPrescriptions) * 100)
+        : 0;
 
     // 3. Stock Alert
     const inventory = await this.prisma.inventoryItem.findMany({
@@ -158,14 +163,16 @@ export class PharmacyService {
       take: 5,
       include: {
         patient: {
-          include: { user: { select: { firstName: true, lastName: true } } }
-        }
-      }
+          include: { user: { select: { firstName: true, lastName: true } } },
+        },
+      },
     });
 
     const recentPrescriptions = recentPrescriptionsRaw.map((p) => ({
       id: p.id,
-      patientName: [p.patient.user.firstName, p.patient.user.lastName].filter(Boolean).join(' '),
+      patientName: [p.patient.user.firstName, p.patient.user.lastName]
+        .filter(Boolean)
+        .join(' '),
       status: p.status,
       parsedData: p.parsedData,
       createdAt: p.createdAt.toISOString(),
@@ -975,26 +982,54 @@ export class PharmacyService {
     const rows = await this.prisma.inventoryTransaction.findMany({
       where: { inventoryId: itemId },
       orderBy: { createdAt: 'desc' },
-      include: { prescription: { include: { patient: { include: { user: true } } } } }
+      include: {
+        prescription: { include: { patient: { include: { user: true } } } },
+      },
     });
     return {
-      item: { id: item.id, sku: item.sku, name: item.name, unit: item.unit, stockLevel: item.stockLevel },
+      item: {
+        id: item.id,
+        sku: item.sku,
+        name: item.name,
+        unit: item.unit,
+        stockLevel: item.stockLevel,
+      },
       events: rows.map((r) => ({
         id: r.id,
         type: r.type,
         quantity: r.quantity,
         batch: r.batch,
-        prescriptionRef: r.prescription ? [r.prescription.patient.user.firstName, r.prescription.patient.user.lastName].filter(Boolean).join(' ') : null,
+        prescriptionRef: r.prescription
+          ? [
+              r.prescription.patient.user.firstName,
+              r.prescription.patient.user.lastName,
+            ]
+              .filter(Boolean)
+              .join(' ')
+          : null,
         note: r.note,
         at: r.createdAt.toISOString(),
       })),
     };
   }
 
-  async addInventoryTransaction(userId: string, itemId: string, dto: { type: string; quantity: number; batch?: string; prescriptionId?: string; note?: string; }) {
+  async addInventoryTransaction(
+    userId: string,
+    itemId: string,
+    dto: {
+      type: string;
+      quantity: number;
+      batch?: string;
+      prescriptionId?: string;
+      note?: string;
+    },
+  ) {
     const item = await this.itemOf(userId, itemId);
-    const newStock = dto.type === 'INBOUND' ? item.stockLevel + dto.quantity : item.stockLevel - dto.quantity;
-    
+    const newStock =
+      dto.type === 'INBOUND'
+        ? item.stockLevel + dto.quantity
+        : item.stockLevel - dto.quantity;
+
     const [tx, updatedItem] = await this.prisma.$transaction([
       this.prisma.inventoryTransaction.create({
         data: {
@@ -1004,19 +1039,22 @@ export class PharmacyService {
           batch: dto.batch,
           prescriptionId: dto.prescriptionId,
           note: dto.note,
-        }
+        },
       }),
       this.prisma.inventoryItem.update({
         where: { id: itemId },
         data: {
           stockLevel: newStock,
-          ...(dto.type === 'INBOUND' ? { lastRestockAt: new Date() } : {})
-        }
-      })
+          ...(dto.type === 'INBOUND' ? { lastRestockAt: new Date() } : {}),
+        },
+      }),
     ]);
-    
+
     const wasCritical = this.stockStatus(item.stockLevel, item.safetyThreshold);
-    const nowCritical = this.stockStatus(updatedItem.stockLevel, updatedItem.safetyThreshold);
+    const nowCritical = this.stockStatus(
+      updatedItem.stockLevel,
+      updatedItem.safetyThreshold,
+    );
     if (nowCritical === 'critical' && wasCritical !== 'critical') {
       this.notifications.publish({
         target: { orgId: item.orgId },
@@ -1027,7 +1065,7 @@ export class PharmacyService {
         href: '/pharmacy/inventory',
       });
     }
-    
+
     return tx;
   }
 
@@ -1207,7 +1245,10 @@ export class PharmacyService {
     if (!prescription || prescription.pharmacyId !== org.id) {
       throw new NotFoundException('PRESCRIPTION_NOT_FOUND');
     }
-    if (prescription.status === 'COMPLETED' || prescription.status === 'CANCELLED') {
+    if (
+      prescription.status === 'COMPLETED' ||
+      prescription.status === 'CANCELLED'
+    ) {
       throw new BadRequestException('PRESCRIPTION_ALREADY_PROCESSED');
     }
 
@@ -1223,18 +1264,18 @@ export class PharmacyService {
     // Process the inventory deductions and mark as completed in a transaction
     const transactionOperations: any[] = [];
     const itemsToUpdate: any[] = [];
-    
+
     for (const item of parsedData) {
       if (item.inventoryId && item.quantity) {
         const invItem = await this.prisma.inventoryItem.findUnique({
-          where: { id: item.inventoryId }
+          where: { id: item.inventoryId },
         });
         if (invItem) {
           itemsToUpdate.push({ invItem, quantity: item.quantity });
           transactionOperations.push(
             this.prisma.inventoryItem.update({
               where: { id: item.inventoryId },
-              data: { stockLevel: { decrement: item.quantity } }
+              data: { stockLevel: { decrement: item.quantity } },
             }),
             this.prisma.inventoryTransaction.create({
               data: {
@@ -1243,8 +1284,8 @@ export class PharmacyService {
                 quantity: item.quantity,
                 prescriptionId: prescriptionId,
                 note: 'Auto-processed via 1-click workflow',
-              }
-            })
+              },
+            }),
           );
         }
       }
@@ -1253,17 +1294,23 @@ export class PharmacyService {
     transactionOperations.push(
       this.prisma.prescription.update({
         where: { id: prescriptionId },
-        data: { status: 'COMPLETED' }
-      })
+        data: { status: 'COMPLETED' },
+      }),
     );
 
     const results = await this.prisma.$transaction(transactionOperations);
-    
+
     // Check for low stock alerts
     for (const { invItem, quantity } of itemsToUpdate) {
       const newStock = invItem.stockLevel - quantity;
-      const wasCritical = this.stockStatus(invItem.stockLevel, invItem.safetyThreshold);
-      const nowCritical = this.stockStatus(newStock, invItem.safetyThreshold);
+      const wasCritical = this.stockStatus(
+        Number(invItem.stockLevel),
+        Number(invItem.safetyThreshold || 0),
+      );
+      const nowCritical = this.stockStatus(
+        Number(newStock),
+        Number(invItem.safetyThreshold || 0),
+      );
       if (nowCritical === 'critical' && wasCritical !== 'critical') {
         this.notifications.publish({
           target: { orgId: invItem.orgId },
@@ -1276,28 +1323,29 @@ export class PharmacyService {
       }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
     return results[results.length - 1]; // return the updated prescription
   }
 
   async getNetworkPhysicians(userId: string, query?: string) {
-    const org = await this.orgOf(userId);
-    
+    await this.orgOf(userId); // ensure user belongs to an org
+
     // In a real scenario, this might be filtered by doctors who have prescribed to this pharmacy,
     // or doctors within the same enterprise. For now, we return all PRACTICE organizations
     // to act as a directory.
-    
+
     const where: Prisma.OrganizationWhereInput = {
       type: 'PRACTICE',
       accountStatus: 'ACTIVE',
     };
-    
+
     if (query) {
       where.OR = [
         { name: { contains: query, mode: 'insensitive' } },
         { city: { contains: query, mode: 'insensitive' } },
       ];
     }
-    
+
     const practices = await this.prisma.organization.findMany({
       where,
       select: {
@@ -1317,14 +1365,14 @@ export class PharmacyService {
                 firstName: true,
                 lastName: true,
                 email: true,
-              }
-            }
-          }
-        }
+              },
+            },
+          },
+        },
       },
       orderBy: { name: 'asc' },
     });
-    
+
     return practices;
   }
 
@@ -1332,7 +1380,9 @@ export class PharmacyService {
     const org = await this.orgOf(userId);
 
     if (!process.env.OPENAI_API_KEY) {
-      throw new BadRequestException('OpenAI API Key is missing. Cannot process AI prescription matching.');
+      throw new BadRequestException(
+        'OpenAI API Key is missing. Cannot process AI prescription matching.',
+      );
     }
 
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -1343,12 +1393,16 @@ export class PharmacyService {
       messages: [
         {
           role: 'system',
-          content: 'You are a medical AI assistant. Your job is to extract patient information and prescribed items from the provided prescription image. Output ONLY valid JSON matching this schema: { "firstName": "string", "lastName": "string", "dateOfBirth": "YYYY-MM-DD" | null, "items": [{ "name": "string", "quantity": number, "unit": "string" }] }. If you cannot determine a field, return null.',
+          content:
+            'You are a medical AI assistant. Your job is to extract patient information and prescribed items from the provided prescription image. Output ONLY valid JSON matching this schema: { "firstName": "string", "lastName": "string", "dateOfBirth": "YYYY-MM-DD" | null, "items": [{ "name": "string", "quantity": number, "unit": "string" }] }. If you cannot determine a field, return null.',
         },
         {
           role: 'user',
           content: [
-            { type: 'text', text: 'Extract the patient and prescription details.' },
+            {
+              type: 'text',
+              text: 'Extract the patient and prescription details.',
+            },
             { type: 'image_url', image_url: { url: fileUrl } },
           ],
         },
@@ -1364,7 +1418,7 @@ export class PharmacyService {
     let parsed: any;
     try {
       parsed = JSON.parse(content);
-    } catch (err) {
+    } catch {
       throw new BadRequestException('AI_EXTRACTION_FAILED_JSON_PARSE');
     }
 
@@ -1389,11 +1443,13 @@ export class PharmacyService {
       // Name matching (simple substring / lowercasing)
       const pFirstName = (patient.user.firstName || '').toLowerCase();
       const pLastName = (patient.user.lastName || '').toLowerCase();
-      const parsedFirstName = (parsed.firstName || '').toLowerCase();
-      const parsedLastName = (parsed.lastName || '').toLowerCase();
+      const parsedFirstName = String(parsed.firstName || '').toLowerCase();
+      const parsedLastName = String(parsed.lastName || '').toLowerCase();
 
-      if (parsedFirstName && pFirstName && pFirstName.includes(parsedFirstName)) score += 20;
-      if (parsedLastName && pLastName && pLastName.includes(parsedLastName)) score += 20;
+      if (parsedFirstName && pFirstName && pFirstName.includes(parsedFirstName))
+        score += 20;
+      if (parsedLastName && pLastName && pLastName.includes(parsedLastName))
+        score += 20;
       if (parsedFirstName === pFirstName) score += 10;
       if (parsedLastName === pLastName) score += 10;
 
@@ -1417,7 +1473,7 @@ export class PharmacyService {
         fileUrl,
         parsedData: parsed.items || [],
         note: `AI Matched with confidence score: ${highestScore}`,
-      }
+      },
     });
 
     return prescription;

@@ -404,7 +404,10 @@ export class PharmacyController {
   }
 
   @Get('network/physicians')
-  networkPhysicians(@CurrentUser() user: SessionPayload, @Query('q') q?: string) {
+  networkPhysicians(
+    @CurrentUser() user: SessionPayload,
+    @Query('q') q?: string,
+  ) {
     return this.pharmacy.getNetworkPhysicians(user.sub, q);
   }
 }

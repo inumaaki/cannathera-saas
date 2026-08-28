@@ -142,7 +142,10 @@ export class PatientService {
   async summary(userId: string) {
     const profile = await this.profileOf(userId);
     const start = profile.therapyStart ?? profile.createdAt;
-    const absoluteDay = Math.max(1, Math.floor((Date.now() - start.getTime()) / 86_400_000) + 1);
+    const absoluteDay = Math.max(
+      1,
+      Math.floor((Date.now() - start.getTime()) / 86_400_000) + 1,
+    );
     const day = ((absoluteDay - 1) % PLAN_DAYS) + 1;
 
     const since = new Date(Date.now() - 30 * 86_400_000);
@@ -441,7 +444,9 @@ export class PatientService {
 
   async updateReminders(userId: string, times: string[]) {
     if (!Array.isArray(times) || times.length < 3 || times.length > 10) {
-      throw new BadRequestException('You must provide between 3 and 10 reminder times.');
+      throw new BadRequestException(
+        'You must provide between 3 and 10 reminder times.',
+      );
     }
     const timeRegex = /^([0-1]\d|2[0-3]):([0-5]\d)$/;
     for (const t of times) {
@@ -501,7 +506,9 @@ export class PatientService {
           }),
           ...(data.address !== undefined && { address: data.address }),
           ...(data.phone !== undefined && { phone: data.phone }),
-          ...(data.safeguardAcknowledged !== undefined && { safeguardAcknowledged: data.safeguardAcknowledged }),
+          ...(data.safeguardAcknowledged !== undefined && {
+            safeguardAcknowledged: data.safeguardAcknowledged,
+          }),
         },
       });
     }
@@ -553,7 +560,7 @@ export class PatientService {
    */
   async searchPharmacies(userId: string) {
     const profile = await this.profileOf(userId);
-    
+
     // Extract postal code from address if available
     const address = profile.address || '';
     const match = address.match(/\b\d{5}\b/);
@@ -587,7 +594,17 @@ export class PatientService {
     });
 
     // Run dynamic radius search: Start at 20km, expand to 40km if needed
-    let results: any[] = [];
+    let results: Array<{
+      id: string;
+      name: string;
+      postalCode: string;
+      city: string;
+      street: string;
+      description: string | null;
+      operatingHours: any;
+      distanceKm: number;
+      availableStrainsCount: number;
+    }> = [];
     const searchRadii = [20, 40];
 
     for (const radiusKm of searchRadii) {
@@ -686,28 +703,31 @@ export class PatientService {
         });
 
         const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-        
+
         const response = await openai.chat.completions.create({
-          model: "gpt-4o",
+          model: 'gpt-4o',
           messages: [
             {
-              role: "system",
+              role: 'system',
               content: `You are an AI assistant that reads cannabis prescriptions and strictly matches them to a pharmacy's inventory catalog.
 Catalog: ${JSON.stringify(inventory)}
 Return a JSON array of objects representing the prescribed items found in the image.
 Each object MUST HAVE exactly these fields: "inventoryId" (string, strictly matched from the Catalog), "name" (string, the name from the Catalog), "quantity" (number, extracted from the prescription), "unit" (string, from the Catalog). 
 If you cannot confidently match a prescribed strain to the Catalog, or cannot read the image, return an empty array [].
-Respond ONLY with raw JSON array. Do not include markdown formatting like \`\`\`json.`
+Respond ONLY with raw JSON array. Do not include markdown formatting like \`\`\`json.`,
             },
             {
-              role: "user",
+              role: 'user',
               content: [
-                { type: "text", text: "Extract the prescribed items from this prescription." },
                 {
-                  type: "image_url",
+                  type: 'text',
+                  text: 'Extract the prescribed items from this prescription.',
+                },
+                {
+                  type: 'image_url',
                   image_url: {
                     url: fileUrl,
-                    detail: "high"
+                    detail: 'high',
                   },
                 },
               ],
@@ -718,18 +738,21 @@ Respond ONLY with raw JSON array. Do not include markdown formatting like \`\`\`
         const content = response.choices[0]?.message?.content;
         if (content) {
           try {
-             // clean up potential markdown formatting just in case
-             const cleanContent = content.replace(/```json/g, '').replace(/```/g, '').trim();
-             const parsed = JSON.parse(cleanContent);
-             if (Array.isArray(parsed) && parsed.length > 0) {
-               parsedData = parsed;
-             }
-          } catch (e) {
-             console.error("Failed to parse AI response:", content);
+            // clean up potential markdown formatting just in case
+            const cleanContent = content
+              .replace(/```json/g, '')
+              .replace(/```/g, '')
+              .trim();
+            const parsed = JSON.parse(cleanContent);
+            if (Array.isArray(parsed) && parsed.length > 0) {
+              parsedData = parsed;
+            }
+          } catch {
+            console.error('Failed to parse AI response:', content);
           }
         }
       } catch (err) {
-        console.error("OpenAI OCR failed:", err);
+        console.error('OpenAI OCR failed:', err);
       }
     }
     // --- End AI OCR Integration ---
@@ -745,7 +768,10 @@ Respond ONLY with raw JSON array. Do not include markdown formatting like \`\`\`
       },
     });
 
-    this.notifications.notifyPharmacyNewPrescription(pharmacyId, prescription.id);
+    this.notifications.notifyPharmacyNewPrescription(
+      pharmacyId,
+      prescription.id,
+    );
 
     return prescription;
   }

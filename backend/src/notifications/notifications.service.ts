@@ -41,7 +41,9 @@ export class NotificationsService {
 
   constructor(private readonly prisma: PrismaService) {
     // Start background worker for intake reminders
-    setInterval(() => this.checkIntakeReminders(), 60_000);
+    setInterval(() => {
+      void this.checkIntakeReminders();
+    }, 60_000);
   }
 
   async checkIntakeReminders() {
@@ -52,7 +54,7 @@ export class NotificationsService {
       minute: '2-digit',
       timeZone: 'Europe/Berlin',
     });
-    
+
     try {
       // Find all patients whose reminderTimes array contains this specific HH:MM
       const patients = await this.prisma.patientProfile.findMany({
@@ -86,7 +88,7 @@ export class NotificationsService {
       severity: 'info',
       title: 'New Prescription Received',
       text: 'A patient has routed a new prescription to your pharmacy.',
-      href: `/pharmacy/prescriptions`,
+      href: `/pharmacy/prescriptions?highlight=${prescriptionId}`,
     });
   }
 

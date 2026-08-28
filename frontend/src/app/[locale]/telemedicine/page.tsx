@@ -93,9 +93,9 @@ function TelemedicineContent() {
                     </div>
                     <div className="text-mint/40">POST <span className="text-white">/v2/telemedicine/triage/eval</span></div>
                     <div className="text-white/30 pl-4">{"{"}</div>
-                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">"patient_id"</span>: <span className="text-amber-200/80">"PT-904X-E"</span>,</div>
-                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">"nrs_pain_score"</span>: <span className="text-blue-300">4</span>,</div>
-                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">"dizziness_flag"</span>: <span className="text-blue-300">false</span></div>
+                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">&quot;patient_id&quot;</span>: <span className="text-amber-200/80">&quot;PT-904X-E&quot;</span>,</div>
+                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">&quot;nrs_pain_score&quot;</span>: <span className="text-blue-300">4</span>,</div>
+                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">&quot;dizziness_flag&quot;</span>: <span className="text-blue-300">false</span></div>
                     <div className="text-white/30 pl-4">{"}"}</div>
                   </div>
                 </div>

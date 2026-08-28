@@ -979,17 +979,17 @@
       "nav": {
         "dashboard": "لوحة التحكم",
         "reviews": "المراجعات الشهرية",
-        "logs": "سجلات العلاج",
-        "analytics": "التحليلات والفواتير",
+        "logs": "السجلات السريرية",
+        "analytics": "تحليلات الشبكة",
         "inventory": "المخزون",
         "settings": "Settings",
-        "prescriptions": "صندوق الوصفات الطبية",
-        "network": "Physician Network"
+        "prescriptions": "الوصفات الطبية الإلكترونية",
+        "network": "شبكة الأطباء"
       }
     },
     "dashboard": {
       "title": "لوحة تحكم الصيدلية",
-      "subtitle": "نظرة عامة على العمليات اليومية لـ {name}.",
+      "subtitle": "مرحبًا بعودتك، {الاسم}",
       "cycleProgress": "تقدم الدورة",
       "completion": "الإتمام",
       "dueThisMonth": "المراجعات الشهرية المستحقة",
@@ -1029,24 +1029,24 @@
       "supportNeeded": "بحاجة إلى دعم",
       "criticalWarning": "حرج",
       "metrics": "METRICS",
-      "monthlyVolume": "اكتمل هذا الشهر",
-      "activeRegulars": "Regular Patients",
-      "returningPatients": "{pct}% تم الاحتفاظ بها محليًا",
+      "monthlyVolume": "الحجم الشهري",
+      "activeRegulars": "النظاميون النشطون",
+      "returningPatients": "{pct}٪ عائدون",
       "inventory": "INVENTORY",
       "stockOk": "Stock Optimal",
-      "lowStock": "مخزون منخفض - الإجراء مطلوب",
-      "liveOrderTicker": "صندوق الوصفات الطبية",
-      "viewAllOrders": "عرض الكل",
-      "noNewOrders": "لا وصفات طبية معلقة.",
-      "newPrescriptionReceived": "وصفة طبية جديدة - {name}",
+      "lowStock": "مخزون منخفض",
+      "liveOrderTicker": "شريط الطلب المباشر",
+      "viewAllOrders": "عرض جميع الطلبات",
+      "noNewOrders": "لا أوامر جديدة",
+      "newPrescriptionReceived": "وصفة طبية جديدة لـ {name}",
       "processOrder": "PROCESS",
       "aiExtracted": "AI Data Extracted",
       "prescriptionsToday": "وصفات جديدة اليوم",
       "todayActivity": "اليوم"
     },
     "reviews": {
-      "title": "المراجعات الشهرية",
-      "subtitle": "إدارة وتوثيق مراجعات العلاج الشهرية لمجموعة المرضى لديك.",
+      "title": "مراجعات العلاج",
+      "subtitle": "تقييم واعتماد تقارير العلاج الشهرية.",
       "overdue": "تأخرت",
       "completedToday": "اكتملت اليوم",
       "pending": "إجراءات مفتوحة",
@@ -1184,7 +1184,10 @@
       "unitPrice": "سعر المراجعة",
       "projected": "التكلفة المتوقعة",
       "tierNote": "التسعير حسب الحجم: 1–500 مراجعة 8٫00 € · 501–1.500 6٫50 € · من 1.501 5٫00 € (صافي).",
-      "exportCsv": "تصدير CSV"
+      "exportCsv": "تصدير CSV",
+      "clinicalContext": "السياق السريري",
+      "contextAdherence": "يشير معدل الالتزام الذي يزيد عن 80% إلى التزام قوي بالعلاج ويقلل من خطر الآثار الجانبية غير المنضبطة.",
+      "contextReviews": "يضمن استكمال المراجعات الشهرية بشكل منتظم تقديم وثائق خالية من الثغرات ومتوافقة قانونيًا لشركات التأمين الصحي."
     },
     "inventory": {
       "title": "المخزون",
@@ -1294,7 +1297,9 @@
       "logTitle": "Log {name}",
       "transactionType": "Transaction Type",
       "batchOptional": "Batch (optional)",
-      "noteOptional": "Note (optional)"
+      "noteOptional": "Note (optional)",
+      "addStock": "إضافة مخزون",
+      "lowStockAlert": "تحذير: مخزون منخفض"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1319,6 +1324,16 @@
       "noResults": "لم يتم العثور على ممارسات.",
       "doctors": "الأطباء",
       "physicians": "الأطباء"
+    },
+    "prescriptions": {
+      "title": "صندوق الوصفات الطبية الإلكتروني",
+      "subtitle": "جميع الوصفات الطبية الواردة وحالة معالجتها في الوقت الحقيقي.",
+      "status_RECEIVED": "تلقى",
+      "status_PREPARING": "تحضير",
+      "status_READY": "جاهز للاستلام/الشحن",
+      "status_COMPLETED": "مكتمل",
+      "processPrescription": "التحقق من صحة ومعالجة الوصفة الطبية",
+      "noPrescriptions": "لا وصفات طبية مفتوحة."
     }
   },
   "enterprise": {
@@ -1906,7 +1921,7 @@
     },
     "hero": {
       "certified": "برنامج سريري معتمد",
-      "title": "نظام التشغيل الطبي ل\nالعلاج بالقنب.",
+      "title": "The Medical OS for\nCannabis Therapy.",
       "subtitle": "انضم إلى آلاف المرضى الذين حسّنوا تقدمهم العلاجي عبر منصتنا التكيفية للإرشاد السريري لمدة 90 يومًا. أكمل التقييمات اليومية، وتابع تطورك الصحي، وابقَ على تواصل مع فريقك السريري.",
       "ctaStart": "ابدأ خطة الـ90 يومًا",
       "ctaPortal": "الدخول إلى البوابة",
@@ -1926,32 +1941,32 @@
       "last7": "آخر 7 أيام",
       "compliance": "الالتزام: لم تُكتشف أي تحذيرات",
       "trust": "درجة الثقة",
-      "v2_subtitle": "Cannathera is the definitive clinical operating system for medical cannabis. We transform fragmented, unstructured patient treatments into a fully closed-loop, data-driven ecosystem. By connecting patients, regional physicians, and verified local pharmacies through secure, structured monitoring, we ensure maximum therapeutic safety, unparalleled documentation precision, and sustainable medical outcomes from day one.",
+      "v2_subtitle": "Cannathera هو نظام التشغيل السريري النهائي للقنب الطبي. نقوم بتحويل علاجات المرضى المجزأة وغير المنظمة إلى نظام بيئي مغلق بالكامل ومعتمد على البيانات. من خلال ربط المرضى والأطباء الإقليميين والصيدليات المحلية المعتمدة من خلال مراقبة آمنة ومنظمة، فإننا نضمن أقصى قدر من السلامة العلاجية ودقة التوثيق التي لا مثيل لها والنتائج الطبية المستدامة من اليوم الأول.",
       "v2_ctaStart": "ابدأ دعم العلاج الخاص بك"
     },
     "features": {
       "tag": "إمكانات المنصة",
-      "title": "An Architected Ecosystem for Complete Therapy Compliance",
-      "subtitle": "Cannathera bridges the critical gap between prescribing physicians, dispensing pharmacies, and daily patient reality. By translating complex, highly individualized therapy regimes into structured, secure, and data-driven clinical workflows, we elevate cannabis treatment to the highest medical standards.",
+      "title": "نظام بيئي مصمم للامتثال الكامل للعلاج",
+      "subtitle": "تعمل تقنية Cannathera على سد الفجوة الحرجة بين الأطباء الذين يصفون الأطباء، والصيدليات التي تقوم بتوزيع الأدوية، والواقع اليومي للمريض. ومن خلال ترجمة أنظمة العلاج المعقدة والفردية للغاية إلى مسارات عمل سريرية منظمة وآمنة وقائمة على البيانات، فإننا نرفع مستوى علاج القنب إلى أعلى المعايير الطبية.",
       "patientBullets": [
-        "Ongoing documentation",
-        "Daily Dosage Logs",
-        "Adherence Analytics"
+        "التوثيق المستمر",
+        "سجلات الجرعة اليومية",
+        "تحليلات الالتزام"
       ],
       "doctorBullets": [
-        "Automated Red-Flags",
-        "Patient Roster Management",
-        "Clinical PDF Exports"
+        "الأعلام الحمراء الآلية",
+        "إدارة قائمة المرضى",
+        "صادرات PDF السريرية"
       ],
       "pharmacyBullets": [
-        "Inventory Tracking",
-        "مراجعات الامتثال",
+        "تتبع المخزون",
+        "Compliance Reviews",
         "Billing Logs Audit"
       ],
       "enterpriseBullets": [
         "العلامة التجارية المخصصة للمستأجر",
         "Webhook & API access",
-        "Comprehensive Security Policy"
+        "سياسة أمنية شاملة"
       ],
       "patientDescSuffix": "سجّل الأعراض والجرعات والنشاط اليومي بأمان، وتابع مؤشرات الالتزام لحظة بلحظة.",
       "doctorDescSuffix": "تراقب بروتوكولات الفرز الآلية قيم المرضى، وتُنشئ تقارير PDF منظمة بنقرة واحدة.",
@@ -2152,12 +2167,12 @@
     "compliance_title": "متوافق مع النظام الأوروبي لحماية البيانات",
     "compliance_text": "متوافق بالكامل ومُشفر.",
     "cta": "طلب وصول للعيادة",
-    "hero_title": "المراجعة الشهرية التي تكتب نفسها — الدقة السريرية الآلية",
-    "hero_intro": "Medical cannabis therapy demands continuous, structured, and legally defensible documentation — not retrospective guesswork or unstructured patient notes. Cannathera's active accompaniment engine automatically aggregates every patient's daily symptom logs, validated pain scale metrics, tolerability ratings, and strain-specific responses into a highly detailed, clinical-grade monthly review. When your patient arrives for their follow-up consultation, the clinical picture is already synthesized, structured, and ready for your immediate assessment. You regain hours of administrative time while eliminating the blind spots between scheduled appointments.",
+    "hero_title": "The Monthly Review That Writes Itself — Automated Clinical Precision",
+    "hero_intro": "يتطلب العلاج بالقنب الطبي توثيقًا مستمرًا ومنظمًا ويمكن الدفاع عنه قانونًا - وليس التخمين بأثر رجعي أو ملاحظات المريض غير المنظمة. يقوم محرك المرافقة النشط من Cannathera تلقائيًا بتجميع سجلات الأعراض اليومية لكل مريض، ومقاييس مقياس الألم المعتمدة، وتقييمات التحمل، والاستجابات الخاصة بالإجهاد في مراجعة شهرية مفصلة للغاية على المستوى السريري. عندما يصل مريضك للحصول على استشارة المتابعة، تكون الصورة السريرية قد تم تركيبها وتنظيمها وجاهزة لتقييمك الفوري. يمكنك استعادة ساعات من الوقت الإداري مع إزالة النقاط العمياء بين المواعيد المجدولة.",
     "f1_title": "تقارير علاج شهرية آلية",
-    "f1_text": "At the end of each month, Cannathera automatically compiles a structured, physician-facing therapy summary ready for export. It includes day-by-day symptom progression, validated NRS pain scale scores, PSQI sleep quality trends, and critical tolerability flags — all seamlessly generated from the patient's daily entries. You receive a legally sound clinical document, not a raw, uninterpretable data dump.",
+    "f1_text": "في نهاية كل شهر، تقوم Cannathera تلقائيًا بتجميع ملخص علاجي منظم يواجه الطبيب وجاهز للتصدير. وهو يتضمن تطور الأعراض يومًا بعد يوم، ودرجات مقياس الألم NRS المصادق عليها، واتجاهات جودة النوم PSQI، وعلامات التحمل الحرجة - كل ذلك يتم إنشاؤه بسلاسة من الإدخالات اليومية للمريض. تتلقى مستندًا سريريًا سليمًا من الناحية القانونية، وليس تفريغ بيانات أولية غير قابلة للتفسير.",
     "f2_title": "تنبيهات الفرز في الوقت الفعلي",
-    "f2_text": "You no longer need to wait for the monthly review to detect adverse effects. Our validated triage logic continuously monitors each patient's daily entries against their clinical baseline. When a clinically significant deviation occurs — a sudden pain spike, an unreported side effect, or a missed titration step — your dashboard generates an immediate, prioritized alert, enabling rapid, targeted intervention before the situation escalates into therapy failure.",
+    "f2_text": "لم تعد بحاجة إلى انتظار المراجعة الشهرية لاكتشاف الآثار الضارة. يقوم منطق الفرز المعتمد لدينا بمراقبة الإدخالات اليومية لكل مريض بشكل مستمر مقابل خط الأساس السريري الخاص به. عند حدوث انحراف كبير سريريًا — ارتفاع مفاجئ في الألم، أو تأثير جانبي غير مُبلغ عنه، أو خطوة معايرة ضائعة — تولد لوحة المعلومات تنبيهًا فوريًا ذي أولوية، مما يتيح التدخل السريع والموجه قبل تصاعد الموقف إلى فشل العلاج.",
     "f3_title": "توجيه الوصفات والامتثال",
     "f3_text": "إصدار وصفات إلكترونية توجه تلقائيًا إلى الصيدلية المفضلة للمريض.",
     "f4_title": "بيانات منظمة للتعديلات",

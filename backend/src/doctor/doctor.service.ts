@@ -841,20 +841,20 @@ export class DoctorService {
       where: { userId },
     });
     if (!membership) throw new ForbiddenException('NO_MEMBERSHIP');
-    
+
     // Return all PHARMACY organizations to act as a directory.
     const where: Prisma.OrganizationWhereInput = {
       type: 'PHARMACY',
       accountStatus: 'ACTIVE',
     };
-    
+
     if (query) {
       where.OR = [
         { name: { contains: query, mode: 'insensitive' } },
         { city: { contains: query, mode: 'insensitive' } },
       ];
     }
-    
+
     const pharmacies = await this.prisma.organization.findMany({
       where,
       select: {
@@ -868,7 +868,7 @@ export class DoctorService {
       },
       orderBy: { name: 'asc' },
     });
-    
+
     return pharmacies;
   }
 }

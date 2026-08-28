@@ -978,18 +978,18 @@
       "logout": "Çıkış yap",
       "nav": {
         "dashboard": "Kontrol Paneli",
-        "reviews": "Monthly Reviews",
-        "logs": "Treatment Logs",
-        "analytics": "Analytics & Billing",
+        "reviews": "Aylık İncelemeler",
+        "logs": "Klinik Günlükler",
+        "analytics": "Ağ Analitiği",
         "inventory": "Envanter",
         "settings": "Settings",
-        "prescriptions": "Prescription Inbox",
-        "network": "Physician Network"
+        "prescriptions": "E-Prescriptions",
+        "network": "Hekim Ağı"
       }
     },
     "dashboard": {
-      "title": "Pharmacy Dashboard",
-      "subtitle": "Daily operations overview for {name}.",
+      "title": "Eczane Kontrol Paneli",
+      "subtitle": "Tekrar hoş geldiniz {name}",
       "cycleProgress": "Döngü ilerlemesi",
       "completion": "Tamamlama",
       "dueThisMonth": "Monthly Reviews due",
@@ -1029,24 +1029,24 @@
       "supportNeeded": "Destek gerekiyor",
       "criticalWarning": "Kritik",
       "metrics": "METRICS",
-      "monthlyVolume": "Completed This Month",
-      "activeRegulars": "Regular Patients",
-      "returningPatients": "{pct}% locally retained",
+      "monthlyVolume": "Aylık Hacim",
+      "activeRegulars": "Aktif Müdavimler",
+      "returningPatients": "{pct}% returning",
       "inventory": "INVENTORY",
       "stockOk": "Stock Optimal",
-      "lowStock": "Low Stock – Action Required",
-      "liveOrderTicker": "Prescription Inbox",
-      "viewAllOrders": "View All",
-      "noNewOrders": "No pending prescriptions.",
-      "newPrescriptionReceived": "New prescription – {name}",
+      "lowStock": "Düşük Stok",
+      "liveOrderTicker": "Canlı Sipariş Kodu",
+      "viewAllOrders": "View All Orders",
+      "noNewOrders": "No new orders",
+      "newPrescriptionReceived": "New prescription for {name}",
       "processOrder": "PROCESS",
       "aiExtracted": "AI Data Extracted",
       "prescriptionsToday": "Bugün Yeni Reçeteler",
       "todayActivity": "BUGÜN"
     },
     "reviews": {
-      "title": "Monthly Reviews",
-      "subtitle": "Manage and document monthly therapy reviews for your patient cohort.",
+      "title": "Terapi İncelemeleri",
+      "subtitle": "Aylık tedavi raporlarının değerlendirilmesi ve onaylanması.",
       "overdue": "Overdue",
       "completedToday": "Bugün tamamlandı",
       "pending": "Açık işlemler",
@@ -1184,7 +1184,10 @@
       "unitPrice": "Kontrol başına fiyat",
       "projected": "Tahmini maliyet",
       "tierNote": "Hacim fiyatlandırması: 1–500 kontrol €8.00 · 501–1,500 €6.50 · 1,501'den itibaren €5.00 (net).",
-      "exportCsv": "CSV dışa aktar"
+      "exportCsv": "CSV dışa aktar",
+      "clinicalContext": "Clinical Context",
+      "contextAdherence": "An adherence rate above 80% indicates strong therapy compliance and reduces the risk of uncontrolled side effects.",
+      "contextReviews": "Aylık incelemelerin düzenli olarak tamamlanması, sağlık sigortacıları için boşluksuz ve yasal olarak uyumlu dokümantasyon sağlar."
     },
     "inventory": {
       "title": "Envanter",
@@ -1294,7 +1297,9 @@
       "logTitle": "Log {name}",
       "transactionType": "Transaction Type",
       "batchOptional": "Batch (optional)",
-      "noteOptional": "Note (optional)"
+      "noteOptional": "Note (optional)",
+      "addStock": "Stok Ekle",
+      "lowStockAlert": "Uyarı: Düşük Stok"
     },
     "nav": {
       "reviews": "Hasta kontrolleri"
@@ -1319,6 +1324,16 @@
       "noResults": "Hiçbir uygulama bulunamadı.",
       "doctors": "Physicians",
       "physicians": "Hekimler"
+    },
+    "prescriptions": {
+      "title": "E-Reçete Gelen Kutusu",
+      "subtitle": "Gelen tüm reçeteler ve bunların gerçek zamanlı işlenme durumu.",
+      "status_RECEIVED": "Kabul edilmiş",
+      "status_PREPARING": "Hazırlanıyor",
+      "status_READY": "Alım / Gönderim için Hazır",
+      "status_COMPLETED": "Tamamlanmış",
+      "processPrescription": "Reçeteyi Doğrula ve İşle",
+      "noPrescriptions": "Açık reçete yok."
     }
   },
   "enterprise": {
@@ -1932,9 +1947,9 @@
     "features": {
       "tag": "Platform Yetenekleri",
       "title": "An Architected Ecosystem for Complete Therapy Compliance",
-      "subtitle": "Cannathera bridges the critical gap between prescribing physicians, dispensing pharmacies, and daily patient reality. By translating complex, highly individualized therapy regimes into structured, secure, and data-driven clinical workflows, we elevate cannabis treatment to the highest medical standards.",
+      "subtitle": "Cannathera, reçete yazan doktorlar, eczaneler ve günlük hasta gerçekliği arasındaki kritik boşluğu dolduruyor. Karmaşık, son derece kişiselleştirilmiş tedavi rejimlerini yapılandırılmış, güvenli ve veri odaklı klinik iş akışlarına dönüştürerek esrar tedavisini en yüksek tıbbi standartlara yükseltiyoruz.",
       "patientBullets": [
-        "Ongoing documentation",
+        "Devam eden belgeler",
         "Daily Dosage Logs",
         "Adherence Analytics"
       ],

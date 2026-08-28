@@ -31,8 +31,9 @@ export function LiveOrderTicker({
         method: "POST",
       });
       router.refresh();
-    } catch (err: any) {
-      alert(err.message || "Failed to process prescription");
+    } catch (err) {
+          const error = err as Error;
+      alert(error.message || "Failed to process prescription");
     } finally {
       setProcessingId(null);
     }

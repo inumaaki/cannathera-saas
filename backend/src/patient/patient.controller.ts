@@ -22,7 +22,6 @@ import {
   RescheduleDto,
   UpdateProfileDto,
   CompleteOnboardingDto,
-  UpdateFavoritesDto,
   CreatePrescriptionDto,
 } from './patient.dto';
 

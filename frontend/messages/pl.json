@@ -979,17 +979,17 @@
       "nav": {
         "dashboard": "Panel kontrolny",
         "reviews": "Monthly Reviews",
-        "logs": "Treatment Logs",
-        "analytics": "Analityka i rozliczenia",
+        "logs": "Dzienniki kliniczne",
+        "analytics": "Network Analytics",
         "inventory": "Inwentaryzacja",
         "settings": "Settings",
-        "prescriptions": "Skrzynka odbiorcza recept",
-        "network": "Sieć lekarzy"
+        "prescriptions": "E-Prescriptions",
+        "network": "Physician Network"
       }
     },
     "dashboard": {
       "title": "Panel apteki",
-      "subtitle": "Przegląd codziennych operacji dla {name}.",
+      "subtitle": "Witamy ponownie, {name}",
       "cycleProgress": "Postęp cyklu",
       "completion": "Zakończenie",
       "dueThisMonth": "Termin przeglądu miesięcznego",
@@ -1029,24 +1029,24 @@
       "supportNeeded": "Wymagana pomoc",
       "criticalWarning": "Krytyczne",
       "metrics": "METRICS",
-      "monthlyVolume": "Completed This Month",
-      "activeRegulars": "Stali Pacjenci",
-      "returningPatients": "{pct}% locally retained",
+      "monthlyVolume": "Miesięczna objętość",
+      "activeRegulars": "Aktywni bywalcy",
+      "returningPatients": "{pct}% zwrotu",
       "inventory": "INVENTORY",
       "stockOk": "Stock Optimal",
-      "lowStock": "Niski poziom zapasów — wymagane działanie",
-      "liveOrderTicker": "Prescription Inbox",
-      "viewAllOrders": "Zobacz wszystko",
-      "noNewOrders": "Brak oczekujących recept.",
-      "newPrescriptionReceived": "Nowa recepta – {name}",
+      "lowStock": "Niskie zapasy",
+      "liveOrderTicker": "Pasek zamówienia na żywo",
+      "viewAllOrders": "Wyświetl wszystkie zamówienia",
+      "noNewOrders": "Żadnych nowych zamówień",
+      "newPrescriptionReceived": "Nowa recepta na {name}",
       "processOrder": "PROCESS",
       "aiExtracted": "AI Data Extracted",
       "prescriptionsToday": "New Prescriptions Today",
       "todayActivity": "DZISIAJ"
     },
     "reviews": {
-      "title": "Recenzje miesięczne",
-      "subtitle": "Manage and document monthly therapy reviews for your patient cohort.",
+      "title": "Therapy Reviews",
+      "subtitle": "Ocena i zatwierdzanie miesięcznych raportów z terapii.",
       "overdue": "Zaległy",
       "completedToday": "Zakończone dzisiaj",
       "pending": "Otwarte działania",
@@ -1184,7 +1184,10 @@
       "unitPrice": "Cena za recenzję",
       "projected": "Przewidywany koszt",
       "tierNote": "Ceny hurtowe: 1–500 recenzji 8,00 € · 501–1 500 6,50 € · od 1 501 5,00 € (netto).",
-      "exportCsv": "Eksport CSV"
+      "exportCsv": "Eksport CSV",
+      "clinicalContext": "Clinical Context",
+      "contextAdherence": "An adherence rate above 80% indicates strong therapy compliance and reduces the risk of uncontrolled side effects.",
+      "contextReviews": "Regular completion of monthly reviews ensures gapless and legally compliant documentation for health insurers."
     },
     "inventory": {
       "title": "Inwentarz",
@@ -1294,7 +1297,9 @@
       "logTitle": "Log {name}",
       "transactionType": "Transaction Type",
       "batchOptional": "Batch (optional)",
-      "noteOptional": "Note (optional)"
+      "noteOptional": "Note (optional)",
+      "addStock": "Add Stock",
+      "lowStockAlert": "Warning: Low Stock"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1319,6 +1324,16 @@
       "noResults": "No practices found.",
       "doctors": "Lekarze",
       "physicians": "Lekarze"
+    },
+    "prescriptions": {
+      "title": "Skrzynka odbiorcza e-recept",
+      "subtitle": "All incoming prescriptions and their real-time processing status.",
+      "status_RECEIVED": "Otrzymane",
+      "status_PREPARING": "Przygotowanie",
+      "status_READY": "Gotowe do odbioru/wysyłki",
+      "status_COMPLETED": "Completed",
+      "processPrescription": "Validate & Process Prescription",
+      "noPrescriptions": "No open prescriptions."
     }
   },
   "enterprise": {
@@ -1941,10 +1956,10 @@
       "doctorBullets": [
         "Zautomatyzowane czerwone flagi",
         "Zarządzanie listą pacjentów",
-        "Eksporty kliniczne do plików PDF"
+        "Clinical PDF Exports"
       ],
       "pharmacyBullets": [
-        "Śledzenie zapasów",
+        "Inventory Tracking",
         "Recenzje zgodności",
         "Audyt dzienników rozliczeniowych"
       ],
@@ -2157,7 +2172,7 @@
     "f1_title": "Zautomatyzowane raporty miesięczne",
     "f1_text": "Pod koniec każdego miesiąca Cannathera automatycznie tworzy ustrukturyzowane podsumowanie terapii skierowane do lekarza, gotowe do eksportu. Obejmuje progresję objawów z dnia na dzień, potwierdzone wyniki skali bólu NRS, trendy jakości snu PSQI i flagi krytycznej tolerancji – wszystko to płynnie generowane na podstawie codziennych wpisów pacjenta. Otrzymujesz prawnie uzasadniony dokument kliniczny, a nie surowy, niemożliwy do interpretacji zrzut danych.",
     "f2_title": "Triaż w czasie rzeczywistym i alerty",
-    "f2_text": "You no longer need to wait for the monthly review to detect adverse effects. Our validated triage logic continuously monitors each patient's daily entries against their clinical baseline. When a clinically significant deviation occurs — a sudden pain spike, an unreported side effect, or a missed titration step — your dashboard generates an immediate, prioritized alert, enabling rapid, targeted intervention before the situation escalates into therapy failure.",
+    "f2_text": "Nie musisz już czekać na comiesięczny przegląd, aby wykryć działania niepożądane. Nasza sprawdzona logika segregacji stale monitoruje codzienne wpisy każdego pacjenta pod kątem jego klinicznej wartości wyjściowej. W przypadku wystąpienia klinicznie istotnego odchylenia — nagłego wzrostu bólu, niezgłoszonego efektu ubocznego lub pominięcia etapu zwiększania dawki — pulpit nawigacyjny generuje natychmiastowy alert o określonym priorytecie, umożliwiając szybką, ukierunkowaną interwencję, zanim sytuacja przerodzi się w niepowodzenie terapii.",
     "f3_title": "Płynne kierowanie e-recept i zgodność",
     "f3_text": "Wystawiaj e-recepty, które automatycznie trafiają do preferowanej lokalnej apteki pacjenta w promieniu 30 km. Każda recepta jest zabezpieczona kryptograficznie.",
     "f4_title": "Ustrukturyzowane dane o wynikach",
@@ -2177,8 +2192,8 @@
     "title": "Dla Aptek",
     "subtitle": "Zostań filarem zweryfikowanej, zamkniętej lokalnej sieci terapii.",
     "cta": "Rozpocznij partnerstwo z apteką",
-    "hero_title": "Your Pharmacy at the Core of a Closed-Loop Regional Care Network",
-    "hero_intro": "Cannathera does not merely list your pharmacy in a passive directory — it integrates you as an active, indispensable dispensing node in a verified, closed-loop local therapy ecosystem. We actively reject the model of scraping pharmacies and redirecting patients anonymously to national mail-order giants. Instead, patients actively select your pharmacy as their permanent, trusted local partner. E-prescriptions from regional physicians route exclusively to your inbox, and crucial therapy outcomes flow back to the prescribing practice after dispensation. You transcend the role of a passive point of sale to become the dispensing anchor of a medically structured, fully accountable, and highly profitable local care loop.",
+    "hero_title": "Twoja apteka w sercu regionalnej sieci opieki zdrowotnej o zamkniętym obiegu",
+    "hero_intro": "Cannathera nie tylko umieszcza Twoją aptekę w pasywnym katalogu – ona integruje Cię jako aktywny, niezbędny węzeł wydawania leków w zweryfikowanym, lokalnym ekosystemie terapii o zamkniętym obiegu. Aktywnie odrzucamy model likwidowania aptek i anonimowego przekierowywania pacjentów do krajowych gigantów sprzedaży wysyłkowej. Zamiast tego pacjenci aktywnie wybierają Twoją aptekę jako stałego, zaufanego lokalnego partnera. E-recepty od lekarzy regionalnych trafiają wyłącznie na Twoją skrzynkę odbiorczą, a kluczowe wyniki terapii wracają do praktyki przepisywania leków po zwolnieniu. Wykraczasz z roli pasywnego punktu sprzedaży i stajesz się kotwicą wydającą medycznie zorganizowanej, w pełni odpowiedzialnej i wysoce dochodowej lokalnej pętli opieki.",
     "f1_title": "Hiperlokalny lejek pacjentów — promień 30 km",
     "f1_text": "Gwarantujemy, że pacjenci w Twojej okolicy są kierowani do Twojej apteki, a nie do ogólnokrajowej konkurencji wysyłkowej.",
     "f2_title": "Skrzynka e-recept i pełny panel CRM",
@@ -2214,9 +2229,9 @@
     "integration_title": "Bezproblemowa integracja",
     "integration_text": "Połącz swoją infrastrukturę w ciągu kilku dni, a nie miesięcy, dzięki naszym dobrze udokumentowanym interfejsom API REST.",
     "v2_hero_title": "Skaluj telemedycynę bez zwiększania obciążenia lekarzy",
-    "v2_hero_intro": "The primary bottleneck in telemedicine is physician capacity. Unstructured patient messages, ad-hoc follow-ups, and undocumented complaints consume valuable clinical time that should be dedicated exclusively to medical decision-making. Cannathera shatters this bottleneck. Our enterprise platform pre-filters, standardizes, and clinically stratifies all patient-generated therapy data before it ever reaches a physician's dashboard. Your medical team operates at maximum clinical throughput with near-zero administrative drag, allowing you to serve exponentially more patients per physician per month without compromising therapeutic safety or outcomes.",
+    "v2_hero_intro": "Głównym wąskim gardłem w telemedycynie są kompetencje lekarzy. Nieustrukturyzowane wiadomości od pacjentów, doraźne kontrole i nieudokumentowane skargi pochłaniają cenny czas kliniczny, który powinien być poświęcony wyłącznie podejmowaniu decyzji medycznych. Cannathera rozbija to wąskie gardło. Nasza platforma dla przedsiębiorstw wstępnie filtruje, standaryzuje i stratyfikuje klinicznie wszystkie dane dotyczące terapii generowane przez pacjentów, zanim trafią one na pulpit lekarza. Twój zespół medyczny działa z maksymalną wydajnością kliniczną przy niemal zerowych oporach administracyjnych, co pozwala na obsługę wykładniczo większej liczby pacjentów na jednego lekarza miesięcznie bez uszczerbku dla bezpieczeństwa terapeutycznego i wyników.",
     "v2_f1_title": "API klasy korporacyjnej i White-Label",
-    "v2_f1_text": "Cannathera's RESTful API embeds seamlessly into your existing clinical software stack—whether you deploy a proprietary EMR, a third-party telehealth platform, or a bespoke patient app. Prescription routing, triage alerts, and therapy outcomes sync bidirectionally via secure, versioned endpoints with full webhook telemetry. For enterprise clients, we deliver full white-label deployment: your branding, your patient interface, powered by our certified clinical infrastructure. SLA-backed 99.99% uptime guarantees and a dedicated integration engineering team are standard.",
+    "v2_f1_text": "Interfejs API RESTful firmy Cannathera płynnie integruje się z istniejącym stosem oprogramowania klinicznego — niezależnie od tego, czy wdrażasz zastrzeżony system EMR, platformę telezdrowia innej firmy, czy też dostosowaną do indywidualnych potrzeb aplikację dla pacjentów. Przekierowywanie recept, alerty selekcji i wyniki terapii synchronizują się dwukierunkowo za pośrednictwem bezpiecznych, wersjonowanych punktów końcowych z pełną telemetrią webhook. Klientom korporacyjnym zapewniamy pełne wdrożenie typu white label: Twój branding, Twój interfejs pacjenta, wspierane przez naszą certyfikowaną infrastrukturę kliniczną. Gwarancje dostępności na poziomie 99,99% objęte umową SLA oraz dedykowany zespół inżynierów zajmujących się integracją są standardem.",
     "v2_f2_title": "Długoterminowe zatrzymanie pacjenta",
     "v2_f2_text": "Przekształcamy pacjentów jednorazowych we w pełni zaangażowanych użytkowników platformy dzięki ciągłemu, aktywnemu towarzyszeniu w terapii.",
     "v2_f3_title": "Kliniczne filtrowanie: lekarze widzą to, co ważne",

@@ -977,11 +977,11 @@
       "nav": {
         "dashboard": "Dashboard",
         "prescriptions": "E-Rezepte",
-        "reviews": "Monatsreviews",
-        "logs": "Verlaufsprotokolle",
-        "analytics": "Netzwerk-Analytik",
+        "reviews": "Monatliche Rezensionen",
+        "logs": "Klinische Protokolle",
+        "analytics": "Netzwerkanalyse",
         "inventory": "Lagerbestand",
-        "network": "Ärzte-Netzwerk",
+        "network": "Ärztenetzwerk",
         "settings": "Einstellungen"
       }
     },
@@ -1044,30 +1044,30 @@
       "subtitle": "Gesamte Historie aller System- und Rezeptaktionen."
     },
     "reviews": {
-      "title": "Therapie-Reviews",
-      "subtitle": "Auswertung und Freigabe monatlicher Therapieberichte."
+      "title": "Therapiebewertungen",
+      "subtitle": "Auswertung und Genehmigung monatlicher Therapieberichte."
     },
     "settings": {
       "title": "Apotheken-Einstellungen",
       "subtitle": "Stammdaten, Benachrichtigungen und API-Integrationen verwalten."
     },
     "dashboard": {
-      "title": "Apotheken-Dashboard",
-      "subtitle": "Willkommen zurück, {name}",
+      "title": "Pharmacy Dashboard",
+      "subtitle": "Willkommen zurück, {Name}",
       "metrics": "Kennzahlen",
-      "monthlyVolume": "Monatliches Volumen",
+      "monthlyVolume": "Monthly Volume",
       "retention": "Kundenbindung",
-      "activeRegulars": "Stammkunden",
-      "returningPatients": "{pct}% wiederkehrend",
+      "activeRegulars": "Aktive Stammgäste",
+      "returningPatients": "{pct}% Rückkehr",
       "todayActivity": "Heute",
       "prescriptionsToday": "Rezepte heute",
       "inventory": "Lager",
       "stockOk": "Bestand OK",
-      "lowStock": "Niedriger Bestand",
-      "liveOrderTicker": "Live-Bestelleingang",
+      "lowStock": "Geringer Lagerbestand",
+      "liveOrderTicker": "Live-Order-Ticker",
       "viewAllOrders": "Alle Bestellungen anzeigen",
-      "noNewOrders": "Keine neuen Bestellungen",
-      "newPrescriptionReceived": "Neues Rezept für {name}",
+      "noNewOrders": "No new orders",
+      "newPrescriptionReceived": "New prescription for {name}",
       "processOrder": "Bestellung verarbeiten",
       "aiExtracted": "KI-Extrahiert"
     }
@@ -1677,7 +1677,7 @@
       "last7": "Letzte 7 Tage",
       "compliance": "Therapietreue: Keine Abweichungen erkannt",
       "trust": "Vertrauens-Score",
-      "v2_subtitle": "Cannathera ist das maßgebliche klinische Betriebssystem für medizinisches Cannabis. Wir verwandeln fragmentierte, unstrukturierte Patientenbehandlungen in ein vollständig geschlossenes, datengesteuertes Ökosystem. Durch die Verbindung von Patienten, regionalen Ärzten und geprüften lokalen Apotheken durch ein sicheres, strukturiertes Monitoring gewährleisten wir vom ersten Tag an maximale Therapiesicherheit, beispiellose Dokumentationsgenauigkeit und nachhaltige medizinische Ergebnisse.",
+      "v2_subtitle": "Cannathera is the definitive clinical operating system for medical cannabis. We transform fragmented, unstructured patient treatments into a fully closed-loop, data-driven ecosystem. By connecting patients, regional physicians, and verified local pharmacies through secure, structured monitoring, we ensure maximum therapeutic safety, unparalleled documentation precision, and sustainable medical outcomes from day one.",
       "v2_ctaStart": "Starten Sie Ihre Therapieunterstützung"
     },
     "features": {
@@ -1696,13 +1696,13 @@
       ],
       "pharmacyBullets": [
         "Bestandsverfolgung",
-        "Compliance Reviews",
+        "Compliance-Überprüfungen",
         "Prüfung der Abrechnungsprotokolle"
       ],
       "enterpriseBullets": [
-        "Custom Tenant Branding",
-        "Webhook & API access",
-        "Comprehensive Security Policy"
+        "Individuelles Mieter-Branding",
+        "Webhook- und API-Zugriff",
+        "Umfassende Sicherheitsrichtlinie"
       ],
       "patientDescSuffix": "Dokumentieren Sie Symptome, Dosierungen und Aktivitäten. Verfolgen Sie die Therapietreue in Echtzeit.",
       "doctorDescSuffix": "Automatisierte Triage-Protokolle überwachen die Werte. Erstellen Sie strukturierte PDF-Verlaufsberichte mit einem Klick.",
@@ -1903,10 +1903,10 @@
     "compliance_title": "DSGVO & Medizinisch zertifiziert",
     "compliance_text": "Vollständig DSGVO-konform, AES-256 verschlüsselt und als Medizinprodukt (Klasse I) zertifiziert.",
     "cta": "Praxiszugang anfordern",
-    "hero_title": "The Monthly Review That Writes Itself — Automated Clinical Precision",
-    "hero_intro": "Medical cannabis therapy demands continuous, structured, and legally defensible documentation — not retrospective guesswork or unstructured patient notes. Cannathera's active accompaniment engine automatically aggregates every patient's daily symptom logs, validated pain scale metrics, tolerability ratings, and strain-specific responses into a highly detailed, clinical-grade monthly review. When your patient arrives for their follow-up consultation, the clinical picture is already synthesized, structured, and ready for your immediate assessment. You regain hours of administrative time while eliminating the blind spots between scheduled appointments.",
+    "hero_title": "Der monatliche Rückblick, der sich selbst schreibt – Automatisierte klinische Präzision",
+    "hero_intro": "Die medizinische Cannabistherapie erfordert eine kontinuierliche, strukturierte und rechtlich vertretbare Dokumentation – keine retrospektiven Vermutungen oder unstrukturierten Patientennotizen. Cannatheras aktive Begleit-Engine fasst automatisch die täglichen Symptomprotokolle jedes Patienten, validierte Schmerzskalenmetriken, Verträglichkeitsbewertungen und belastungsspezifische Reaktionen in einer äußerst detaillierten, monatlichen Überprüfung auf klinischem Niveau zusammen. Wenn Ihr Patient zur Nachsorgeuntersuchung eintrifft, ist das klinische Bild bereits synthetisiert, strukturiert und für Ihre sofortige Beurteilung bereit. Sie gewinnen Stunden administrativer Zeit zurück und beseitigen gleichzeitig die blinden Flecken zwischen geplanten Terminen.",
     "f1_title": "Automatisierte monatliche Therapieberichte",
-    "f1_text": "At the end of each month, Cannathera automatically compiles a structured, physician-facing therapy summary ready for export. It includes day-by-day symptom progression, validated NRS pain scale scores, PSQI sleep quality trends, and critical tolerability flags — all seamlessly generated from the patient's daily entries. You receive a legally sound clinical document, not a raw, uninterpretable data dump.",
+    "f1_text": "Am Ende jedes Monats erstellt Cannathera automatisch eine strukturierte, ärztliche Therapiezusammenfassung, die exportiert werden kann. Es umfasst den täglichen Symptomverlauf, validierte NRS-Schmerzskalenwerte, PSQI-Schlafqualitätstrends und kritische Verträglichkeitsmarkierungen – alles nahtlos generiert aus den täglichen Einträgen des Patienten. Sie erhalten ein rechtlich einwandfreies klinisches Dokument und keinen rohen, nicht interpretierbaren Datendump.",
     "f2_title": "Echtzeit-Triage & Abweichungsalarme",
     "f2_text": "You no longer need to wait for the monthly review to detect adverse effects. Our validated triage logic continuously monitors each patient's daily entries against their clinical baseline. When a clinically significant deviation occurs — a sudden pain spike, an unreported side effect, or a missed titration step — your dashboard generates an immediate, prioritized alert, enabling rapid, targeted intervention before the situation escalates into therapy failure.",
     "f3_title": "Nahtloses Rezept-Routing & Compliance",
@@ -1928,7 +1928,7 @@
     "title": "Für Apotheken",
     "subtitle": "Werden Sie der Anker eines verifizierten, geschlossenen lokalen Cannabistherapie-Netzwerks.",
     "cta": "Apotheken-Partnerschaft starten",
-    "hero_title": "Your Pharmacy at the Core of a Closed-Loop Regional Care Network",
+    "hero_title": "Ihre Apotheke im Zentrum eines geschlossenen regionalen Versorgungsnetzwerks",
     "hero_intro": "Cannathera does not merely list your pharmacy in a passive directory — it integrates you as an active, indispensable dispensing node in a verified, closed-loop local therapy ecosystem. We actively reject the model of scraping pharmacies and redirecting patients anonymously to national mail-order giants. Instead, patients actively select your pharmacy as their permanent, trusted local partner. E-prescriptions from regional physicians route exclusively to your inbox, and crucial therapy outcomes flow back to the prescribing practice after dispensation. You transcend the role of a passive point of sale to become the dispensing anchor of a medically structured, fully accountable, and highly profitable local care loop.",
     "f1_title": "Hyperlokaler Patienten-Funnel — 30km-Radius-Exklusivität",
     "f1_text": "Unser proprietäres 30km-Routing garantiert, dass Patienten in Ihrem Einzugsgebiet zu Ihrer Apotheke geleitet werden. Patienten wählen Sie aktiv als ihre 'Lieblingsapotheke', und alle zukünftigen Rezepte werden exklusiv an Sie weitergeleitet.",
