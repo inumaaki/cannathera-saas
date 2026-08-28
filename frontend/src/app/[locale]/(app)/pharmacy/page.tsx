@@ -1,25 +1,14 @@
 import { getFormatter, getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { apiServer } from "@/lib/api-server";
-import { ProgressRing } from "@/components/patient/charts";
 import { LiveOrderTicker } from "@/components/pharmacy/LiveOrderTicker";
-
-type Row = {
-  id: string;
-  name: string;
-  patientRef: string | null;
-  condition: string | null;
-  tier: string;
-  lastReviewAt: string | null;
-  diffDays: number;
-  status: "overdue" | "dueSoon" | "onTrack";
-};
 
 type Overview = {
   pharmacyName: string;
   monthlyVolume: number;
   activeRegulars: number;
   returningPatientsPercentage: number;
+  prescriptionsToday: number;
   stockAlert: { id: string; name: string; stockLevel: number; unit: string } | null;
   recentPrescriptions: {
     id: string;
@@ -30,7 +19,7 @@ type Overview = {
   }[];
 };
 
-/* Figma 6.1 — Pharmacy Dashboard. */
+/* Pharmacy Smart Dashboard – real-time operational overview. */
 export default async function PharmacyDashboard({
   params,
 }: Readonly<{ params: Promise<{ locale: string }> }>) {
@@ -54,9 +43,9 @@ export default async function PharmacyDashboard({
         </div>
       </div>
 
-      <div className="mt-6 grid gap-4 md:grid-cols-3 xl:grid-cols-3">
+      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
         <StatCard
-          icon="shopping_bag"
+          icon="receipt_long"
           tint="bg-[#eef2fe] text-info"
           badge={t("metrics")}
           value={String(d?.monthlyVolume ?? 0)}
@@ -69,12 +58,20 @@ export default async function PharmacyDashboard({
           badge={t("retention")}
           value={String(d?.activeRegulars ?? 0)}
           label={t("activeRegulars")}
-          href="/pharmacy/patients"
+          href="/pharmacy/reviews"
           foot={{
             text: t("returningPatients", { pct: d?.returningPatientsPercentage ?? 0 }),
             tone: "text-pine-600",
-            icon: "trending_up"
+            icon: "hub"
           }}
+        />
+        <StatCard
+          icon="today"
+          tint="bg-amber-50 text-amber-600"
+          badge={t("todayActivity")}
+          value={String(d?.prescriptionsToday ?? 0)}
+          label={t("prescriptionsToday")}
+          href="/pharmacy/prescriptions"
         />
         <StatCard
           icon="inventory_2"

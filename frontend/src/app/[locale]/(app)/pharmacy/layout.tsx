@@ -39,17 +39,8 @@ export default async function PharmacyLayout({
   const name =
     [user!.firstName, user!.lastName].filter(Boolean).join(" ") || user!.email;
 
-  // Bell feed: overdue reviews first, then a stock shortage.
+  // Bell feed: stock shortage notices only (review scheduling is handled by AI/admin).
   const notices: Notice[] = [
-    ...(overview?.reviewsDueSoon ?? [])
-      .filter((r) => r.status === "overdue")
-      .map((r) => ({
-        id: r.id,
-        icon: "assignment_late",
-        tone: "critical" as const,
-        text: t("noticeOverdue", { name: r.name, days: Math.abs(r.diffDays) }),
-        href: `/pharmacy/reviews/${r.id}`,
-      })),
     ...(overview?.stockAlert
       ? [
           {

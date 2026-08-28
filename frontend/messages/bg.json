@@ -1040,7 +1040,9 @@
       "noNewOrders": "No new orders received.",
       "newPrescriptionReceived": "New prescription received – {name}",
       "processOrder": "PROCESS",
-      "aiExtracted": "AI Data Extracted"
+      "aiExtracted": "AI Data Extracted",
+      "prescriptionsToday": "Нови рецепти днес",
+      "todayActivity": "ДНЕС"
     },
     "reviews": {
       "title": "Прегледи на пациенти",
@@ -1315,7 +1317,8 @@
       "subtitle": "Намерете и се свържете с лекари във вашата мрежа.",
       "searchPlaceholder": "Търсене по практика или град...",
       "noResults": "Няма намерени практики.",
-      "doctors": "лекари"
+      "doctors": "лекари",
+      "physicians": "лекари"
     }
   },
   "enterprise": {
@@ -1929,7 +1932,7 @@
     "features": {
       "tag": "Възможности на платформата",
       "title": "Архитектирана екосистема за пълно съответствие с терапията",
-      "subtitle": "Cannathera преодолява критичната пропаст между предписващите лекари, отпускащите аптеки и ежедневната реалност на пациентите. Чрез превръщането на сложни, силно индивидуализирани терапевтични режими в структурирани, сигурни и управлявани от данни клинични работни процеси, ние издигаме лечението с канабис до най-високите медицински стандарти.",
+      "subtitle": "Cannathera преодолява критичната пропаст между предписващите лекари, отпускащите аптеки и ежедневната реалност на пациентите. By translating complex, highly individualized therapy regimes into structured, secure, and data-driven clinical workflows, we elevate cannabis treatment to the highest medical standards.",
       "patientBullets": [
         "Текуща документация",
         "Регистри на дневните дози",

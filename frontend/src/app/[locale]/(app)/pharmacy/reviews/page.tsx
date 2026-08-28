@@ -85,28 +85,14 @@ export default async function PharmacyReviews({
         </a>
       </div>
 
-      {/* Stats double as filter shortcuts. */}
-      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      {/* Stats double as filter shortcuts – only actionable alerts shown. */}
+      <div className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-2 max-w-xl">
         <Stat
           icon="error"
           tint="bg-red-50 text-red-600"
           value={d?.stats.overdue ?? 0}
           label={t("overdue")}
           href={{ pathname: "/pharmacy/reviews", query: { filter: "overdue" } }}
-        />
-        <Stat
-          icon="task_alt"
-          tint="bg-mint/30 text-pine-600"
-          value={d?.stats.completedToday ?? 0}
-          label={t("completedToday")}
-          href="/pharmacy/analytics"
-        />
-        <Stat
-          icon="pending_actions"
-          tint="bg-[#eef2fe] text-info"
-          value={d?.stats.pending ?? 0}
-          label={t("pending")}
-          href={{ pathname: "/pharmacy/reviews", query: { filter: "dueSoon" } }}
         />
         <Stat
           icon="flag"

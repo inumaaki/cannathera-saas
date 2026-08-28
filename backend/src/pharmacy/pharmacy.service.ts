@@ -170,11 +170,23 @@ export class PharmacyService {
       createdAt: p.createdAt.toISOString(),
     }));
 
+    // 5. New prescriptions received today
+    const todayStart = new Date();
+    todayStart.setHours(0, 0, 0, 0);
+    const prescriptionsToday = await this.prisma.prescription.count({
+      where: {
+        pharmacyId: org.id,
+        status: { in: ['RECEIVED', 'PREPARING', 'READY', 'COMPLETED'] },
+        createdAt: { gte: todayStart },
+      },
+    });
+
     return {
       pharmacyName: org.name,
       monthlyVolume,
       activeRegulars,
       returningPatientsPercentage,
+      prescriptionsToday,
       stockAlert: shortage
         ? {
             id: shortage.id,

@@ -140,7 +140,7 @@ export default function PharmacyNetworkPage() {
               {practice.memberships.length > 0 && (
                 <div className="mt-4 border-t border-hairline pt-4">
                   <p className="mb-2 text-xs font-bold uppercase tracking-wider text-muted">
-                    {t("doctors")}
+                    {t("physicians")}
                   </p>
                   <ul className="space-y-1">
                     {practice.memberships.map((m) => (
