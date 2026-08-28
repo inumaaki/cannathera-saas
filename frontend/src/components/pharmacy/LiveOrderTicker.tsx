@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Link, useRouter } from "@/i18n/navigation";
 import { api } from "@/lib/api";
+import { useTranslations, useFormatter } from "next-intl";
 
 type Prescription = {
   id: string;
@@ -14,21 +15,12 @@ type Prescription = {
 
 export function LiveOrderTicker({
   prescriptions,
-  translations,
-  timeFormatter,
 }: Readonly<{
   prescriptions: Prescription[];
-  translations: {
-    liveOrderTicker: string;
-    viewAllOrders: string;
-    noNewOrders: string;
-    newPrescriptionReceived: (name: string) => string;
-    processOrder: string;
-    aiExtracted: string;
-  };
-  timeFormatter: (date: Date) => string;
 }>) {
   const router = useRouter();
+  const format = useFormatter();
+  const t = useTranslations("pharmacy.dashboard");
   const [processingId, setProcessingId] = useState<string | null>(null);
 
   async function handleProcess(id: string) {
@@ -53,13 +45,13 @@ export function LiveOrderTicker({
           <span aria-hidden className="msym text-[22px]">
             inbox
           </span>
-          {translations.liveOrderTicker}
+          {t("liveOrderTicker")}
         </h2>
         <Link
           href="/pharmacy/prescriptions"
           className="flex items-center gap-1 text-sm font-bold text-ink-strong hover:text-accent-print"
         >
-          {translations.viewAllOrders}
+          {t("viewAllOrders")}
           <span aria-hidden className="msym text-[16px] rtl:-scale-x-100">
             chevron_right
           </span>
@@ -67,7 +59,7 @@ export function LiveOrderTicker({
       </div>
 
       {prescriptions.length === 0 ? (
-        <p className="px-6 py-10 text-center text-muted">{translations.noNewOrders}</p>
+        <p className="px-6 py-10 text-center text-muted">{t("noNewOrders")}</p>
       ) : (
         <div className="grid gap-0 divide-y divide-hairline">
           {prescriptions.map((r) => (
@@ -79,10 +71,10 @@ export function LiveOrderTicker({
                   </div>
                   <div>
                     <p className="font-bold text-ink-strong">
-                      {translations.newPrescriptionReceived(r.patientName)}
+                      {t("newPrescriptionReceived", { name: r.patientName })}
                     </p>
                     <p className="text-xs text-muted">
-                      {timeFormatter(new Date(r.createdAt))}
+                      {format.relativeTime(new Date(r.createdAt))}
                     </p>
                   </div>
                 </div>
@@ -91,7 +83,7 @@ export function LiveOrderTicker({
                   disabled={processingId === r.id}
                   className="rounded-lg bg-brand px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-pine disabled:opacity-50 transition-opacity"
                 >
-                  {processingId === r.id ? "Processing..." : translations.processOrder}
+                  {processingId === r.id ? "Processing..." : t("processOrder")}
                 </button>
               </div>
 
@@ -100,7 +92,7 @@ export function LiveOrderTicker({
                 <div className="mt-4 rounded-lg bg-amber-50/50 p-3 border border-amber-100">
                   <p className="flex items-center gap-1.5 text-xs font-bold text-amber-700 uppercase tracking-wide mb-2">
                     <span className="msym text-[14px]">smart_toy</span>
-                    {translations.aiExtracted}
+                    {t("aiExtracted")}
                   </p>
                   <div className="flex flex-wrap gap-2">
                     {r.parsedData.map((item, idx) => (

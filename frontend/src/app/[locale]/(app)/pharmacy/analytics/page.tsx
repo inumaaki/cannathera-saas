@@ -151,6 +151,16 @@ export default async function PharmacyAnalytics({
               <p className="mt-4 text-center text-sm leading-relaxed text-muted">
                 {t("adherenceNote")}
               </p>
+              
+              <div className="mt-6 rounded-lg bg-pine-50 p-4 border border-pine-100">
+                <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-pine-600 mb-1.5">
+                  <span className="msym text-[16px]">info</span>
+                  {t("clinicalContext")}
+                </p>
+                <p className="text-sm text-pine-800 leading-relaxed">
+                  {t("contextAdherence")}
+                </p>
+              </div>
             </section>
 
             <section className="cw-watermark rounded-xl border border-hairline bg-white p-6">
@@ -178,6 +188,16 @@ export default async function PharmacyAnalytics({
                   tone={sentiment.tone}
                 />
               </dl>
+              
+              <div className="mt-6 rounded-lg bg-surface p-4 border border-hairline">
+                <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted mb-1.5">
+                  <span className="msym text-[16px]">medical_services</span>
+                  {t("clinicalContext")}
+                </p>
+                <p className="text-sm text-ink leading-relaxed">
+                  {t("contextReviews")}
+                </p>
+              </div>
             </section>
           </div>
         </div>

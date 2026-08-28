@@ -124,22 +124,24 @@ export class PatientController {
   // ---------------------------------------------------------------------------
 
   @Get('pharmacies/search')
-  searchPharmacies(
-    @CurrentUser() user: SessionPayload,
-    @Query('postalCode') postalCode: string,
-    @Query('radius') radius?: string,
-  ) {
-    const requestedRadius = radius ? parseInt(radius, 10) : 30;
-    const radiusKm = Math.min(requestedRadius || 30, 30); // Hard cap at 30km to maintain local focus
-    return this.patients.searchPharmacies(user.sub, postalCode, radiusKm);
+  searchPharmacies(@CurrentUser() user: SessionPayload) {
+    return this.patients.searchPharmacies(user.sub);
   }
 
   @Patch('profile/favorites')
-  updateFavorites(
+  updateFavoritePharmacies(
     @CurrentUser() user: SessionPayload,
-    @Body() dto: UpdateFavoritesDto,
+    @Body('pharmacyIds') pharmacyIds: string[],
   ) {
-    return this.patients.updateFavoritePharmacies(user.sub, dto.pharmacyIds);
+    return this.patients.updateFavoritePharmacies(user.sub, pharmacyIds);
+  }
+
+  @Patch('profile/reminders')
+  updateReminders(
+    @CurrentUser() user: SessionPayload,
+    @Body('times') times: string[],
+  ) {
+    return this.patients.updateReminders(user.sub, times);
   }
 
   @Post('prescriptions')

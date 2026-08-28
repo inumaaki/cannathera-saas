@@ -40,6 +40,17 @@ export class PatientService {
       where: { userId },
       include: {
         user: { select: { firstName: true, lastName: true, email: true } },
+        favoritePharmacies: {
+          select: {
+            id: true,
+            name: true,
+            city: true,
+            inventory: {
+              where: { active: true, category: 'Flower' },
+              select: { name: true, stockLevel: true, unit: true },
+            },
+          },
+        },
       },
     });
     if (!profile) throw new NotFoundException('NO_PATIENT_PROFILE');
@@ -393,7 +404,20 @@ export class PatientService {
       p = await this.prisma.patientProfile.update({
         where: { id: p.id },
         data: { patientRef: newRef },
-        include: { user: true },
+        include: {
+          user: { select: { firstName: true, lastName: true, email: true } },
+          favoritePharmacies: {
+            select: {
+              id: true,
+              name: true,
+              city: true,
+              inventory: {
+                where: { active: true, category: 'Flower' },
+                select: { name: true, stockLevel: true, unit: true },
+              },
+            },
+          },
+        },
       });
     }
 
@@ -410,7 +434,27 @@ export class PatientService {
       phone: p.phone,
       packageTier: p.packageTier,
       pharmacies,
+      favoritePharmacies: p.favoritePharmacies,
+      reminderTimes: p.reminderTimes,
     };
+  }
+
+  async updateReminders(userId: string, times: string[]) {
+    if (!Array.isArray(times) || times.length < 3 || times.length > 10) {
+      throw new BadRequestException('You must provide between 3 and 10 reminder times.');
+    }
+    const timeRegex = /^([0-1]\d|2[0-3]):([0-5]\d)$/;
+    for (const t of times) {
+      if (!timeRegex.test(t)) {
+        throw new BadRequestException('Invalid time format. Use HH:MM.');
+      }
+    }
+    const profile = await this.profileOf(userId);
+    await this.prisma.patientProfile.update({
+      where: { id: profile.id },
+      data: { reminderTimes: times },
+    });
+    return { ok: true };
   }
 
   async updateProfile(
@@ -505,9 +549,16 @@ export class PatientService {
   }
 
   /**
-   * Search for pharmacies within a radius of the patient's postal code.
+   * AI-driven local pharmacy selection / radius logic
    */
-  async searchPharmacies(userId: string, postalCode: string, radiusKm: number = 30) {
+  async searchPharmacies(userId: string) {
+    const profile = await this.profileOf(userId);
+    
+    // Extract postal code from address if available
+    const address = profile.address || '';
+    const match = address.match(/\b\d{5}\b/);
+    const postalCode = match ? match[0] : '10115'; // Default to a central postal code if none exists
+
     const coords = await getCoordinatesForPostalCode(postalCode);
     if (!coords) {
       throw new BadRequestException('INVALID_POSTAL_CODE');
@@ -535,25 +586,35 @@ export class PatientService {
       },
     });
 
-    const results: any[] = [];
+    // Run dynamic radius search: Start at 20km, expand to 40km if needed
+    let results: any[] = [];
+    const searchRadii = [20, 40];
 
-    for (const p of pharmacies) {
-      if (p.lat == null || p.lng == null) continue;
+    for (const radiusKm of searchRadii) {
+      results = [];
+      for (const p of pharmacies) {
+        if (p.lat == null || p.lng == null) continue;
 
-      const distance = getDistanceKm(coords.lat, coords.lng, p.lat, p.lng);
+        const distance = getDistanceKm(coords.lat, coords.lng, p.lat, p.lng);
 
-      if (distance <= radiusKm) {
-        results.push({
-          id: p.id,
-          name: p.name,
-          postalCode: p.postalCode,
-          city: p.city,
-          street: p.street,
-          description: p.description,
-          operatingHours: p.operatingHours,
-          distanceKm: parseFloat(distance.toFixed(2)),
-          availableStrainsCount: p.inventory.length,
-        });
+        if (distance <= radiusKm) {
+          results.push({
+            id: p.id,
+            name: p.name,
+            postalCode: p.postalCode,
+            city: p.city,
+            street: p.street,
+            description: p.description,
+            operatingHours: p.operatingHours,
+            distanceKm: parseFloat(distance.toFixed(2)),
+            availableStrainsCount: p.inventory.length,
+          });
+        }
+      }
+
+      // If we found at least 3 pharmacies, stop expanding the radius
+      if (results.length >= 3) {
+        break;
       }
     }
 

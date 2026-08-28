@@ -12,7 +12,8 @@ export type NotificationEvent = {
     | 'stock_low'
     | 'appointment'
     | 'report_ready'
-    | 'prescription_received';
+    | 'prescription_received'
+    | 'intake_reminder';
   severity: 'info' | 'warning' | 'critical';
   title: string;
   text: string;
@@ -38,7 +39,41 @@ export class NotificationsService {
   private readonly logger = new Logger(NotificationsService.name);
   private readonly events$ = new Subject<NotificationEvent>();
 
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) {
+    // Start background worker for intake reminders
+    setInterval(() => this.checkIntakeReminders(), 60_000);
+  }
+
+  async checkIntakeReminders() {
+    const now = new Date();
+    // Format HH:MM in German local time, as users are mostly in Germany
+    const hhmm = now.toLocaleTimeString('de-DE', {
+      hour: '2-digit',
+      minute: '2-digit',
+      timeZone: 'Europe/Berlin',
+    });
+    
+    try {
+      // Find all patients whose reminderTimes array contains this specific HH:MM
+      const patients = await this.prisma.patientProfile.findMany({
+        where: { reminderTimes: { has: hhmm } },
+        select: { userId: true },
+      });
+
+      for (const p of patients) {
+        this.publish({
+          target: { userId: p.userId },
+          kind: 'intake_reminder',
+          severity: 'info',
+          title: 'Time for your documentation',
+          text: 'It is time for your scheduled intake / documentation log.',
+          href: '/patient/therapy/log',
+        });
+      }
+    } catch (err) {
+      this.logger.error('Failed to process intake reminders: ' + err);
+    }
+  }
 
   publish(event: Omit<NotificationEvent, 'at'>) {
     this.events$.next({ ...event, at: new Date().toISOString() });

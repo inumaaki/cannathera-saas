@@ -114,21 +114,21 @@ enum SubscriptionTier {
 // ---------------------------------------------------------------------------
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  passwordHash  String
-  role          Role      @default(PATIENT)
-  firstName     String?
-  lastName      String?
-  locale        Locale    @default(de)
-  isActive      Boolean   @default(true)
+  id                         String    @id @default(cuid())
+  email                      String    @unique
+  passwordHash               String
+  role                       Role      @default(PATIENT)
+  firstName                  String?
+  lastName                   String?
+  locale                     Locale    @default(de)
+  isActive                   Boolean   @default(true)
   // Set for doctor-created accounts (temp password) — forces password change on first login.
-  mustChangePassword Boolean @default(false)
+  mustChangePassword         Boolean   @default(false)
   // Short-lived, encrypted onboarding credential. Cleared as soon as the user sets a password.
   temporaryPasswordEncrypted String?
-  emailVerified DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  emailVerified              DateTime?
+  createdAt                  DateTime  @default(now())
+  updatedAt                  DateTime  @updatedAt
 
   patientProfile PatientProfile?
   memberships    Membership[]
@@ -142,22 +142,22 @@ model User {
 }
 
 model Organization {
-  id        String   @id @default(cuid())
-  name      String
-  type      OrgType
+  id          String    @id @default(cuid())
+  name        String
+  type        OrgType
   // Co-branding ("Powered by Cannathera" always stays; these override UI look).
-  branding  Json? // { logoUrl, primaryColor, accentColor, fontFamily }
+  branding    Json? // { logoUrl, primaryColor, accentColor, fontFamily }
   // An ENTERPRISE partner is an umbrella over member pharmacies/practices; the
   // enterprise overview aggregates everything below it.
   parentOrgId String?
   joinedAt    DateTime? // when this org joined the enterprise
-  
+
   // Local network / radius search fields
-  postalCode  String?
-  city        String?
-  street      String?
-  lat         Float?
-  lng         Float?
+  postalCode String?
+  city       String?
+  street     String?
+  lat        Float?
+  lng        Float?
 
   // Pharmacy CRM / Public Profile fields
   email              String?
@@ -167,26 +167,26 @@ model Organization {
   description        String?
   productFocus       String? // Restored
   source             String? // Restored
-  accountStatus      AccountStatus @default(ACTIVE) // Restored
+  accountStatus      AccountStatus      @default(ACTIVE) // Restored
   verificationStatus VerificationStatus @default(PENDING) // Restored
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  parentOrg        Organization?  @relation("EnterpriseMembers", fields: [parentOrgId], references: [id])
-  memberOrgs       Organization[] @relation("EnterpriseMembers")
-  memberships      Membership[]
-  patients         PatientProfile[] @relation("PracticePatients")
-  pharmacyPatients PatientProfile[] @relation("PharmacyPatients")
-  favoritedByPatients PatientProfile[] @relation("PatientFavoritePharmacies")
-  subscriptions    Subscription[]
-  inventory        InventoryItem[]
-  apiKeys          ApiKey[]
-  webhooks         WebhookEndpoint[]
-  invoices         Invoice[]
-  settings         OrgSettings?
-  partnerCodes     PartnerCode[]
-  prescriptions    Prescription[]
+  parentOrg           Organization?     @relation("EnterpriseMembers", fields: [parentOrgId], references: [id])
+  memberOrgs          Organization[]    @relation("EnterpriseMembers")
+  memberships         Membership[]
+  patients            PatientProfile[]  @relation("PracticePatients")
+  pharmacyPatients    PatientProfile[]  @relation("PharmacyPatients")
+  favoritedByPatients PatientProfile[]  @relation("PatientFavoritePharmacies")
+  subscriptions       Subscription[]
+  inventory           InventoryItem[]
+  apiKeys             ApiKey[]
+  webhooks            WebhookEndpoint[]
+  invoices            Invoice[]
+  settings            OrgSettings?
+  partnerCodes        PartnerCode[]
+  prescriptions       Prescription[]
 
   @@index([type])
   @@index([parentOrgId])
@@ -194,15 +194,15 @@ model Organization {
 
 // Links a user (doctor/pharmacy/enterprise staff) to an organization.
 model Membership {
-  id        String   @id @default(cuid())
-  userId    String
-  orgId     String
-  roleInOrg Role
+  id          String   @id @default(cuid())
+  userId      String
+  orgId       String
+  roleInOrg   Role
   // Org-level job title (ADMIN | DOCTOR | ASSISTANT | VIEWER) — presets a
   // permission bundle the admin can then fine-tune per member.
   orgRole     String   @default("DOCTOR")
   permissions String[] @default([])
-  createdAt DateTime @default(now())
+  createdAt   DateTime @default(now())
 
   user User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   org  Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
@@ -216,9 +216,9 @@ model PartnerCode {
   id         String    @id @default(cuid())
   orgId      String
   code       String    @unique // e.g. "DR-MUELLER-2026" or random 8-char
-  label      String?   // friendly description shown in admin
+  label      String? // friendly description shown in admin
   usageCount Int       @default(0)
-  maxUses    Int?      // null = unlimited
+  maxUses    Int? // null = unlimited
   isActive   Boolean   @default(true)
   expiresAt  DateTime?
   createdAt  DateTime  @default(now())
@@ -230,12 +230,12 @@ model PartnerCode {
 }
 
 model PatientProfile {
-  id           String    @id @default(cuid())
+  id           String           @id @default(cuid())
   // A patient is cared for by a PRACTICE (their doctor) and, independently, by a
   // PHARMACY (monthly reviews + dispensing). Both can be set at once.
   orgId        String? // practice
   pharmacyId   String? // pharmacy running the Monatsreview
-  userId       String    @unique
+  userId       String           @unique
   dateOfBirth  DateTime?
   patientRef   String? // human-facing Patienten-ID
   therapyStart DateTime?
@@ -243,25 +243,26 @@ model PatientProfile {
   packageTier  SubscriptionTier @default(BASIC)
   condition    String? // e.g. "Chronische Schmerzen" — shown in the pharmacy roster
   lastReviewAt DateTime?
-  
+
   // Day-1 Onboarding fields
-  address      String?
-  phone        String?
-  mainComplaints String[] @default([])
+  address               String?
+  phone                 String?
+  reminderTimes         String[] @default([])
+  mainComplaints        String[] @default([])
   complaintsDescription String?
-  therapyGoals   String[] @default([])
-  baselineMetrics Json?
-  onboardingCompleted Boolean @default(false)
-  hasActiveSubscription Boolean @default(false)
-  safeguardAcknowledged Boolean @default(false)
+  therapyGoals          String[] @default([])
+  baselineMetrics       Json?
+  onboardingCompleted   Boolean  @default(false)
+  hasActiveSubscription Boolean  @default(false)
+  safeguardAcknowledged Boolean  @default(false)
 
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  user               User                @relation(fields: [userId], references: [id], onDelete: Cascade)
-  org                Organization?        @relation("PracticePatients", fields: [orgId], references: [id])
-  pharmacy           Organization?        @relation("PharmacyPatients", fields: [pharmacyId], references: [id])
-  favoritePharmacies Organization[]       @relation("PatientFavoritePharmacies")
+  user               User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  org                Organization?         @relation("PracticePatients", fields: [orgId], references: [id])
+  pharmacy           Organization?         @relation("PharmacyPatients", fields: [pharmacyId], references: [id])
+  favoritePharmacies Organization[]        @relation("PatientFavoritePharmacies")
   submissions        Submission[]
   therapyLogs        TherapyLog[]
   reports            Report[]
@@ -279,15 +280,15 @@ model PatientProfile {
 // ---------------------------------------------------------------------------
 
 model Consent {
-  id         String    @id @default(cuid())
-  userId     String
-  purpose    String // e.g. "data_processing_art9", "share_with_doctor"
-  version    String // consent text version
-  granted    Boolean   @default(true)
-  grantedAt  DateTime  @default(now())
-  revokedAt  DateTime?
-  ipAddress  String?
-  userAgent  String?
+  id        String    @id @default(cuid())
+  userId    String
+  purpose   String // e.g. "data_processing_art9", "share_with_doctor"
+  version   String // consent text version
+  granted   Boolean   @default(true)
+  grantedAt DateTime  @default(now())
+  revokedAt DateTime?
+  ipAddress String?
+  userAgent String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -371,11 +372,11 @@ model QuestionnaireVersion {
 }
 
 model Section {
-  id        String  @id @default(cuid())
+  id        String @id @default(cuid())
   versionId String
   key       String
   title     String // canonical German
-  order     Int     @default(0)
+  order     Int    @default(0)
 
   version   QuestionnaireVersion @relation(fields: [versionId], references: [id], onDelete: Cascade)
   questions Question[]
@@ -384,18 +385,18 @@ model Section {
 }
 
 model Question {
-  id         String       @id @default(cuid())
-  sectionId  String
-  key        String // stable within questionnaire, used in showIf + answers
-  type       QuestionType
-  label      String // canonical German
-  helpText   String?
-  required   Boolean      @default(false)
-  order      Int          @default(0)
-  config     Json? // type-specific: { min, max, step, unit, ... }
-  showIf     Json? // conditional logic: { questionKey, op, value } or boolean tree
+  id        String       @id @default(cuid())
+  sectionId String
+  key       String // stable within questionnaire, used in showIf + answers
+  type      QuestionType
+  label     String // canonical German
+  helpText  String?
+  required  Boolean      @default(false)
+  order     Int          @default(0)
+  config    Json? // type-specific: { min, max, step, unit, ... }
+  showIf    Json? // conditional logic: { questionKey, op, value } or boolean tree
 
-  section      Section              @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  section      Section               @relation(fields: [sectionId], references: [id], onDelete: Cascade)
   options      QuestionOption[]
   translations QuestionTranslation[]
   answers      Answer[]
@@ -418,7 +419,7 @@ model QuestionOption {
 
 // Per-locale overrides for dynamic content. Missing locale falls back to canonical (de).
 model QuestionTranslation {
-  id         String @id @default(cuid())
+  id         String  @id @default(cuid())
   questionId String
   locale     Locale
   label      String
@@ -445,14 +446,14 @@ model OptionTranslation {
 // ---------------------------------------------------------------------------
 
 model Submission {
-  id        String           @id @default(cuid())
-  patientId String
-  versionId String
-  status    SubmissionStatus @default(DRAFT)
-  locale    Locale           @default(de)
+  id          String           @id @default(cuid())
+  patientId   String
+  versionId   String
+  status      SubmissionStatus @default(DRAFT)
+  locale      Locale           @default(de)
   submittedAt DateTime?
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
 
   patient     PatientProfile       @relation(fields: [patientId], references: [id], onDelete: Cascade)
   version     QuestionnaireVersion @relation(fields: [versionId], references: [id])
@@ -481,13 +482,13 @@ model Answer {
 // ---------------------------------------------------------------------------
 
 model RedFlagRule {
-  id          String          @id @default(cuid())
-  versionId   String
-  key         String
-  severity    RedFlagSeverity @default(WARNING)
-  condition   Json // { questionKey, op, value } or boolean tree
-  message     String // canonical German alert text
-  isActive    Boolean         @default(true)
+  id        String          @id @default(cuid())
+  versionId String
+  key       String
+  severity  RedFlagSeverity @default(WARNING)
+  condition Json // { questionKey, op, value } or boolean tree
+  message   String // canonical German alert text
+  isActive  Boolean         @default(true)
 
   version QuestionnaireVersion @relation(fields: [versionId], references: [id], onDelete: Cascade)
   hits    RedFlagHit[]
@@ -534,17 +535,17 @@ model ClinicalNote {
 // ---------------------------------------------------------------------------
 
 model TherapyLog {
-  id         String   @id @default(cuid())
-  patientId  String
-  loggedAt   DateTime
-  dosageG    Float? // Blüten dosage in grams
-  strain     String? // Sorte
-  batchNumber String? // Chargennummer
-  manufacturer String? // Hersteller
+  id                String   @id @default(cuid())
+  patientId         String
+  loggedAt          DateTime
+  dosageG           Float? // Blüten dosage in grams
+  strain            String? // Sorte
+  batchNumber       String? // Chargennummer
+  manufacturer      String? // Hersteller
   consumptionMethod String? // Vaporizer, Inhalation, Oral/Drops, Tea, Joint/Classic
-  metrics    Json? // { painNrs, sleepH, activity, qol, satisfaction, sideEffects }
-  note       String?
-  createdAt  DateTime @default(now())
+  metrics           Json? // { painNrs, sleepH, activity, qol, satisfaction, sideEffects }
+  note              String?
+  createdAt         DateTime @default(now())
 
   patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
@@ -575,15 +576,15 @@ model Report {
 // ---------------------------------------------------------------------------
 
 model TelemedicineSession {
-  id           String       @id @default(cuid())
-  patientId    String
-  provider     TeleProvider @default(ZOOM)
-  externalId   String? // provider meeting id
-  joinUrl      String?
-  hostUrl      String?
-  scheduledAt  DateTime
-  durationMin  Int          @default(30)
-  createdAt    DateTime     @default(now())
+  id          String       @id @default(cuid())
+  patientId   String
+  provider    TeleProvider @default(ZOOM)
+  externalId  String? // provider meeting id
+  joinUrl     String?
+  hostUrl     String?
+  scheduledAt DateTime
+  durationMin Int          @default(30)
+  createdAt   DateTime     @default(now())
 
   patient PatientProfile @relation(fields: [patientId], references: [id], onDelete: Cascade)
 
@@ -649,18 +650,18 @@ model WebhookDelivery {
 }
 
 model Invoice {
-  id        String        @id @default(cuid())
-  orgId     String
-  number    String        @unique // INV-2026-0941
+  id          String        @id @default(cuid())
+  orgId       String
+  number      String        @unique // INV-2026-0941
   periodStart DateTime
   periodEnd   DateTime
-  tier      String // Tier 1 | Tier 2 | Tier 3
-  reviews   Int // billable monthly reviews in the period
-  unitPrice Decimal       @db.Decimal(6, 2)
-  amount    Decimal       @db.Decimal(10, 2)
-  status    InvoiceStatus @default(PENDING)
-  issuedAt  DateTime      @default(now())
-  paidAt    DateTime?
+  tier        String // Tier 1 | Tier 2 | Tier 3
+  reviews     Int // billable monthly reviews in the period
+  unitPrice   Decimal       @db.Decimal(6, 2)
+  amount      Decimal       @db.Decimal(10, 2)
+  status      InvoiceStatus @default(PENDING)
+  issuedAt    DateTime      @default(now())
+  paidAt      DateTime?
 
   org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
 
@@ -675,11 +676,11 @@ enum InvoiceStatus {
 
 // Org-level security policy (Figma 8.8 Organization Settings).
 model OrgSettings {
-  id               String   @id @default(cuid())
-  orgId            String   @unique
-  mandatory2fa     Boolean  @default(true)
-  sessionTimeoutMin Int     @default(30)
-  updatedAt        DateTime @updatedAt
+  id                String   @id @default(cuid())
+  orgId             String   @unique
+  mandatory2fa      Boolean  @default(true)
+  sessionTimeoutMin Int      @default(30)
+  updatedAt         DateTime @updatedAt
 
   org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
 }
@@ -690,25 +691,25 @@ model OrgSettings {
 
 // Pharmacy stock (Figma 6.1.1 Inventory Management).
 model InventoryItem {
-  id             String   @id @default(cuid())
-  orgId          String
-  sku            String
-  name           String
-  category       String // Flower | Oil | Extract | Capsule
-  thc            Float?
-  cbd            Float?
-  stockLevel     Float    @default(0)
-  unit           String   @default("g") // g | ml | Stk.
-  safetyThreshold Float   @default(50)
-  pendingOrder   Boolean  @default(false)
-  reorderQty     Float? // quantity of the open purchase order
-  orderedAt      DateTime? // when the reorder was placed
-  lastRestockAt  DateTime? // when goods were last booked in
-  active         Boolean  @default(true) // archived instead of deleted (audit trail)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id              String    @id @default(cuid())
+  orgId           String
+  sku             String
+  name            String
+  category        String // Flower | Oil | Extract | Capsule
+  thc             Float?
+  cbd             Float?
+  stockLevel      Float     @default(0)
+  unit            String    @default("g") // g | ml | Stk.
+  safetyThreshold Float     @default(50)
+  pendingOrder    Boolean   @default(false)
+  reorderQty      Float? // quantity of the open purchase order
+  orderedAt       DateTime? // when the reorder was placed
+  lastRestockAt   DateTime? // when goods were last booked in
+  active          Boolean   @default(true) // archived instead of deleted (audit trail)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
-  org Organization @relation(fields: [orgId], references: [id], onDelete: Cascade)
+  org          Organization           @relation(fields: [orgId], references: [id], onDelete: Cascade)
   transactions InventoryTransaction[]
 
   @@unique([orgId, sku])
@@ -716,30 +717,30 @@ model InventoryItem {
 }
 
 model InventoryTransaction {
-  id             String        @id @default(cuid())
+  id             String   @id @default(cuid())
   inventoryId    String
-  type           String        // "INBOUND" | "OUTFLOW"
-  quantity       Float         
-  batch          String?       // Batch number for inbound
-  prescriptionId String?       // Link to prescription if outflow
-  note           String?       
-  createdAt      DateTime      @default(now())
+  type           String // "INBOUND" | "OUTFLOW"
+  quantity       Float
+  batch          String? // Batch number for inbound
+  prescriptionId String? // Link to prescription if outflow
+  note           String?
+  createdAt      DateTime @default(now())
 
-  inventory      InventoryItem @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
-  prescription   Prescription? @relation(fields: [prescriptionId], references: [id])
+  inventory    InventoryItem @relation(fields: [inventoryId], references: [id], onDelete: Cascade)
+  prescription Prescription? @relation(fields: [prescriptionId], references: [id])
 
   @@index([inventoryId])
   @@index([prescriptionId])
 }
 
 model PricingPlan {
-  id            String           @id @default(cuid())
-  tier          SubscriptionTier
-  name          String
-  monthlyPrice  Decimal          @db.Decimal(10, 2)
-  reviewCap     Int? // included reviews per month; null = unlimited/tiered
-  features      Json?
-  isActive      Boolean          @default(true)
+  id           String           @id @default(cuid())
+  tier         SubscriptionTier
+  name         String
+  monthlyPrice Decimal          @db.Decimal(10, 2)
+  reviewCap    Int? // included reviews per month; null = unlimited/tiered
+  features     Json?
+  isActive     Boolean          @default(true)
 
   subscriptions Subscription[]
 }
@@ -769,19 +770,19 @@ model Subscription {
 // ---------------------------------------------------------------------------
 
 model Prescription {
-  id           String             @id @default(cuid())
-  patientId    String
-  pharmacyId   String
-  status       PrescriptionStatus @default(RECEIVED)
-  fileUrl      String? // uploaded prescription image/pdf
-  note         String?
-  parsedData   Json? // mock AI parsed data: Array<{ inventoryId: string, name: string, quantity: number, unit: string }>
+  id              String             @id @default(cuid())
+  patientId       String
+  pharmacyId      String
+  status          PrescriptionStatus @default(RECEIVED)
+  fileUrl         String? // uploaded prescription image/pdf
+  note            String?
+  parsedData      Json? // mock AI parsed data: Array<{ inventoryId: string, name: string, quantity: number, unit: string }>
   rejectionReason String? // filled if status is CANCELLED
-  createdAt    DateTime           @default(now())
-  updatedAt    DateTime           @updatedAt
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
 
-  patient      PatientProfile     @relation(fields: [patientId], references: [id], onDelete: Cascade)
-  pharmacy     Organization       @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
+  patient               PatientProfile         @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  pharmacy              Organization           @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
   inventoryTransactions InventoryTransaction[]
 
   @@index([patientId])

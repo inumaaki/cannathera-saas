@@ -92,15 +92,6 @@ export default async function PharmacyDashboard({
       <div className="mt-8">
         <LiveOrderTicker
           prescriptions={d?.recentPrescriptions || []}
-          translations={{
-            liveOrderTicker: t("liveOrderTicker"),
-            viewAllOrders: t("viewAllOrders"),
-            noNewOrders: t("noNewOrders"),
-            newPrescriptionReceived: (name) => t("newPrescriptionReceived", { name }),
-            processOrder: t("processOrder"),
-            aiExtracted: t("aiExtracted"),
-          }}
-          timeFormatter={format.relativeTime}
         />
       </div>
     </>

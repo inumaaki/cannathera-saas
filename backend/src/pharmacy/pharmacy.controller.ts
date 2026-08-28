@@ -175,11 +175,24 @@ class UpdatePrescriptionStatusDto {
   rejectionReason?: string;
 }
 
+class UploadAiPrescriptionDto {
+  @IsString()
+  fileUrl!: string;
+}
+
 @Controller('pharmacy')
 @UseGuards(SessionGuard, RolesGuard, SubscriptionGuard)
 @Roles(Role.PHARMACY)
 export class PharmacyController {
   constructor(private readonly pharmacy: PharmacyService) {}
+
+  @Post('prescriptions/upload')
+  uploadAiPrescription(
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: UploadAiPrescriptionDto,
+  ) {
+    return this.pharmacy.uploadAiPrescription(user.sub, dto.fileUrl);
+  }
 
   @Get('prescriptions')
   prescriptions(@CurrentUser() user: SessionPayload) {

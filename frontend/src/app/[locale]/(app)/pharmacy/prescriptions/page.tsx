@@ -1,6 +1,7 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { apiServer } from "@/lib/api-server";
 import { PrescriptionStatusEditor } from "./PrescriptionStatusEditor";
+import { AiUploadButton } from "./AiUploadButton";
 import { format } from "date-fns";
 
 type Prescription = {
@@ -36,8 +37,11 @@ export default async function PharmacyPrescriptionsPage({
         <h1 className="font-display text-2xl font-bold text-pine-900">
           Prescriptions Inbox
         </h1>
-        <div className="text-sm font-medium text-muted">
-          {(prescriptions || []).length} Total Prescriptions
+        <div className="flex items-center gap-4">
+          <div className="text-sm font-medium text-muted">
+            {(prescriptions || []).length} Total Prescriptions
+          </div>
+          <AiUploadButton />
         </div>
       </div>
 

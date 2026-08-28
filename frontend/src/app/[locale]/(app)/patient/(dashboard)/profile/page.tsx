@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { apiServer } from "@/lib/api-server";
 import { ProfileForm } from "./ProfileForm";
 import { FavoritePharmacies } from "./FavoritePharmacies";
+import { IntakeReminders } from "./IntakeReminders";
 
 type Profile = {
   fullName: string;
@@ -9,7 +10,13 @@ type Profile = {
   email: string;
   pharmacyOrgId: string | null;
   pharmacies: Array<{ id: string; name: string }>;
-  favoritePharmacies: Array<{ id: string; name: string; city: string | null }>;
+  reminderTimes: string[];
+  favoritePharmacies: Array<{
+    id: string;
+    name: string;
+    city: string | null;
+    inventory: Array<{ name: string; stockLevel: number; unit: string }>;
+  }>;
 };
 
 /* Patient profile (Figma 6-1168). */
@@ -38,6 +45,7 @@ export default async function PatientProfilePage({
       {profile && (
         <section id="network" className="mt-5 rounded-2xl border border-hairline bg-white p-5 scroll-mt-24">
           <FavoritePharmacies initialFavorites={profile.favoritePharmacies || []} />
+          <IntakeReminders initialTimes={profile.reminderTimes || []} />
         </section>
       )}
 

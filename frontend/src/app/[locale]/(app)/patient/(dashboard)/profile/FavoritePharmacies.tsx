@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { api } from "@/lib/api";
 import { useRouter } from "@/i18n/navigation";
@@ -18,40 +18,37 @@ type PharmacyResult = {
 export function FavoritePharmacies({
   initialFavorites,
 }: Readonly<{
-  initialFavorites: Array<{ id: string; name: string; city: string | null }>;
+  initialFavorites: Array<{
+    id: string;
+    name: string;
+    city: string | null;
+    inventory?: Array<{ name: string; stockLevel: number; unit: string }>;
+  }>;
 }>) {
   const t = useTranslations("patient.profile");
   const router = useRouter();
   
-  const [postalCode, setPostalCode] = useState("");
-  const [radius, setRadius] = useState("30");
   const [results, setResults] = useState<PharmacyResult[]>([]);
-  const [searching, setSearching] = useState(false);
+  const [searching, setSearching] = useState(true);
   
   const [favorites, setFavorites] = useState(initialFavorites);
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  async function handleSearch(e: React.FormEvent) {
-    e.preventDefault();
-    if (!postalCode) return;
-    
-    setSearching(true);
-    setError(null);
-    try {
-      const res = await api<PharmacyResult[]>(
-        `/patient/pharmacies/search?postalCode=${encodeURIComponent(
-          postalCode
-        )}&radius=${encodeURIComponent(radius)}`
-      );
-      setResults(res);
-    } catch (err: any) {
-      setError(err.message || "Search failed");
-    } finally {
-      setSearching(false);
+  useEffect(() => {
+    async function fetchRecommendations() {
+      try {
+        const res = await api<PharmacyResult[]>("/patient/pharmacies/search");
+        setResults(res);
+      } catch (err: any) {
+        setError(err.message || "Failed to load local pharmacies");
+      } finally {
+        setSearching(false);
+      }
     }
-  }
+    fetchRecommendations();
+  }, []);
 
   function toggleFavorite(p: PharmacyResult) {
     const isFav = favorites.some((f) => f.id === p.id);
@@ -62,7 +59,7 @@ export function FavoritePharmacies({
         alert("You can only select up to 3 favorite pharmacies.");
         return;
       }
-      setFavorites([...favorites, { id: p.id, name: p.name, city: p.city }]);
+      setFavorites([...favorites, { id: p.id, name: p.name, city: p.city, inventory: [] }]);
     }
     setSaved(false);
   }
@@ -79,7 +76,7 @@ export function FavoritePharmacies({
       setSaved(true);
       router.refresh();
     } catch (err: any) {
-      setError(err.message || "Failed to remove favorite");
+      setError(err.message || "Failed to save network");
     } finally {
       setSaving(false);
     }
@@ -90,7 +87,7 @@ export function FavoritePharmacies({
       <div className="border-t border-hairline pt-6">
         <h2 className="text-lg font-bold text-pine-900">My Pharmacy Network</h2>
         <p className="text-sm text-muted mt-1">
-          Select up to 3 local pharmacies to receive your prescriptions directly.
+          Select up to 3 local pharmacies to receive your prescriptions directly. Your local recommendations are generated automatically based on your address.
         </p>
       </div>
 
@@ -99,20 +96,44 @@ export function FavoritePharmacies({
         {favorites.length === 0 ? (
           <p className="text-sm text-muted">No pharmacies selected yet.</p>
         ) : (
-          <ul className="space-y-2">
+          <ul className="space-y-3">
             {favorites.map((f) => (
-              <li key={f.id} className="flex items-center justify-between bg-white p-3 rounded-lg border border-hairline">
-                <div>
-                  <span className="font-medium text-ink-strong">{f.name}</span>
-                  {f.city && <span className="text-sm text-muted ml-2">{f.city}</span>}
+              <li key={f.id} className="bg-white p-4 rounded-xl border border-hairline shadow-sm">
+                <div className="flex items-start justify-between">
+                  <div>
+                    <span className="font-bold text-pine-900">{f.name}</span>
+                    {f.city && <span className="text-sm text-muted ml-2">{f.city}</span>}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setFavorites(favorites.filter((x) => x.id !== f.id))}
+                    className="text-red-500 hover:text-red-700 text-sm font-semibold"
+                  >
+                    Remove
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => setFavorites(favorites.filter((x) => x.id !== f.id))}
-                  className="text-red-500 hover:text-red-700 text-sm font-semibold"
-                >
-                  Remove
-                </button>
+                
+                {/* Stock levels display */}
+                {f.inventory && f.inventory.length > 0 && (
+                  <div className="mt-3 bg-leaf-50 rounded-lg p-3">
+                    <p className="text-xs font-semibold uppercase tracking-wide text-leaf-800 mb-2">Live Stock Levels</p>
+                    <div className="flex flex-wrap gap-2">
+                      {f.inventory.slice(0, 3).map((item, idx) => (
+                        <span key={idx} className="text-xs font-medium bg-white text-ink-strong border border-leaf-200 px-2 py-1 rounded">
+                          {item.name}: {item.stockLevel}{item.unit}
+                        </span>
+                      ))}
+                      {f.inventory.length > 3 && (
+                        <span className="text-xs font-medium text-leaf-700 py-1">
+                          +{f.inventory.length - 3} more strains...
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+                {f.inventory && f.inventory.length === 0 && (
+                  <p className="mt-2 text-xs text-muted italic">Inventory syncing...</p>
+                )}
               </li>
             ))}
           </ul>
@@ -131,42 +152,13 @@ export function FavoritePharmacies({
       </div>
 
       <div className="space-y-4">
-        <h3 className="font-semibold text-ink-strong">Find Local Pharmacies</h3>
-        <form onSubmit={handleSearch} className="flex items-end gap-4">
-          <div className="flex-1">
-            <label className="block text-xs font-semibold uppercase tracking-wide text-muted mb-1">
-              Postal Code
-            </label>
-            <input
-              value={postalCode}
-              onChange={(e) => setPostalCode(e.target.value)}
-              placeholder="e.g. 10115"
-              className="h-11 w-full rounded-lg border border-hairline bg-white px-4 outline-none focus:border-pine-600"
-              required
-            />
-          </div>
-          <div className="w-32">
-            <label className="block text-xs font-semibold uppercase tracking-wide text-muted mb-1">
-              Radius (km)
-            </label>
-            <div className="flex h-11 w-full items-center rounded-lg border border-hairline bg-[#f6f8fc] px-4 text-ink-strong opacity-80 cursor-not-allowed">
-              30 km
-            </div>
-          </div>
-          <button
-            type="submit"
-            disabled={searching}
-            className="h-11 rounded-lg bg-ink-strong px-5 font-bold text-white disabled:opacity-50"
-          >
-            Search
-          </button>
-        </form>
+        <h3 className="font-semibold text-ink-strong">Recommended Local Pharmacies</h3>
         {error && <p className="text-sm text-red-500">{error}</p>}
+        {searching && <p className="text-sm text-muted">Locating nearby partners...</p>}
       </div>
 
       {results.length > 0 && (
         <div className="space-y-3">
-          <h4 className="text-sm font-semibold text-muted uppercase tracking-wide">Results</h4>
           <ul className="space-y-3">
             {results.map((p) => {
               const isFav = favorites.some((f) => f.id === p.id);

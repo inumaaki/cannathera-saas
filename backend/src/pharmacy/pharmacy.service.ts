@@ -14,6 +14,7 @@ import {
 import { NotificationsService } from '../notifications/notifications.service';
 import { PrismaService } from '../prisma/prisma.service';
 import { getCoordinatesForPostalCode } from '../shared/geocode';
+import OpenAI from 'openai';
 
 type Metrics = {
   pain?: number;
@@ -1279,7 +1280,7 @@ export class PharmacyService {
   }
 
   async getNetworkPhysicians(userId: string, query?: string) {
-    const membership = await this.requireMembership(userId);
+    const org = await this.orgOf(userId);
     
     // In a real scenario, this might be filtered by doctors who have prescribed to this pharmacy,
     // or doctors within the same enterprise. For now, we return all PRACTICE organizations
@@ -1325,5 +1326,100 @@ export class PharmacyService {
     });
     
     return practices;
+  }
+
+  async uploadAiPrescription(userId: string, fileUrl: string) {
+    const org = await this.orgOf(userId);
+
+    if (!process.env.OPENAI_API_KEY) {
+      throw new BadRequestException('OpenAI API Key is missing. Cannot process AI prescription matching.');
+    }
+
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+    // 1. Call OpenAI to extract patient info from the prescription image
+    const completion = await openai.chat.completions.create({
+      model: 'gpt-4o',
+      messages: [
+        {
+          role: 'system',
+          content: 'You are a medical AI assistant. Your job is to extract patient information and prescribed items from the provided prescription image. Output ONLY valid JSON matching this schema: { "firstName": "string", "lastName": "string", "dateOfBirth": "YYYY-MM-DD" | null, "items": [{ "name": "string", "quantity": number, "unit": "string" }] }. If you cannot determine a field, return null.',
+        },
+        {
+          role: 'user',
+          content: [
+            { type: 'text', text: 'Extract the patient and prescription details.' },
+            { type: 'image_url', image_url: { url: fileUrl } },
+          ],
+        },
+      ],
+      response_format: { type: 'json_object' },
+    });
+
+    const content = completion.choices[0]?.message?.content;
+    if (!content) {
+      throw new BadRequestException('AI_EXTRACTION_FAILED');
+    }
+
+    let parsed: any;
+    try {
+      parsed = JSON.parse(content);
+    } catch (err) {
+      throw new BadRequestException('AI_EXTRACTION_FAILED_JSON_PARSE');
+    }
+
+    // 2. Fuzzy match the patient in the database
+    const potentialPatients = await this.prisma.patientProfile.findMany({
+      where: { pharmacyId: org.id },
+      include: { user: true },
+    });
+
+    let bestMatch: any = null;
+    let highestScore = 0;
+
+    for (const patient of potentialPatients) {
+      let score = 0;
+      const pDob = patient.dateOfBirth?.toISOString().split('T')[0];
+
+      // Exact DOB match is a strong indicator
+      if (parsed.dateOfBirth && pDob === parsed.dateOfBirth) {
+        score += 50;
+      }
+
+      // Name matching (simple substring / lowercasing)
+      const pFirstName = (patient.user.firstName || '').toLowerCase();
+      const pLastName = (patient.user.lastName || '').toLowerCase();
+      const parsedFirstName = (parsed.firstName || '').toLowerCase();
+      const parsedLastName = (parsed.lastName || '').toLowerCase();
+
+      if (parsedFirstName && pFirstName && pFirstName.includes(parsedFirstName)) score += 20;
+      if (parsedLastName && pLastName && pLastName.includes(parsedLastName)) score += 20;
+      if (parsedFirstName === pFirstName) score += 10;
+      if (parsedLastName === pLastName) score += 10;
+
+      if (score > highestScore) {
+        highestScore = score;
+        bestMatch = patient;
+      }
+    }
+
+    // Require a minimum confidence score (e.g., > 60 means exact DOB + partial name match)
+    if (!bestMatch || highestScore < 60) {
+      throw new BadRequestException('AI_MATCH_FAILED');
+    }
+
+    // 3. Create the prescription automatically linked to the matched patient
+    const prescription = await this.prisma.prescription.create({
+      data: {
+        patientId: bestMatch.id,
+        pharmacyId: org.id,
+        status: 'RECEIVED',
+        fileUrl,
+        parsedData: parsed.items || [],
+        note: `AI Matched with confidence score: ${highestScore}`,
+      }
+    });
+
+    return prescription;
   }
 }

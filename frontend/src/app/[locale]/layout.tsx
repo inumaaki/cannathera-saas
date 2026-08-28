@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Fraunces, IBM_Plex_Sans } from "next/font/google";
 import { notFound } from "next/navigation";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getMessages } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { isRtl } from "@cannathera/shared";
 import "../globals.css";
@@ -60,7 +60,7 @@ export default async function LocaleLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col font-sans" suppressHydrationWarning>
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider messages={await getMessages()}>{children}</NextIntlClientProvider>
       </body>
     </html>
   );
