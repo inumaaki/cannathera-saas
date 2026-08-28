@@ -21,6 +21,7 @@ const NAV = [
     // Team-only members still need Settings to reach Team Management.
     altPerm: "settings:team",
   },
+  { href: "/doctor/network", key: "network", icon: "hub", perm: null },
   { href: "/doctor/help", key: "help", icon: "help", perm: null },
 ] as const;
 

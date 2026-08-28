@@ -303,6 +303,18 @@
       "title": "Wichtiger Hinweis zur Tarifbindung",
       "description": "Die Nutzung von externen Apotheken oder behandelnden Ärzt:innen, die nicht an Ihren Plan angebunden sind, führt zum Verlust der subventionierten Tarifvorteile. In diesem Fall müssen Sie die monatlichen Plattformkosten selbst tragen.",
       "confirm": "Ich habe verstanden"
+    },
+    "onboarding": {
+      "masterDataDesc": "Bitte bestätigen Sie Ihre Kontaktdaten.",
+      "mainComplaintsDesc": "Was sind die Hauptgründe für Ihre Therapie?",
+      "descriptionOfComplaints": "Beschreibung der Beschwerden",
+      "back": "Zurück",
+      "continueToGoals": "Weiter zu Zielen",
+      "therapyGoalsDesc": "Was erhoffen Sie sich von dieser Therapie?",
+      "continueToCannatheraScore": "Weiter zum Cannathera Score",
+      "cannatheraScoreDesc1": "Teil 1: Symptom-Basislinie",
+      "continue": "Weiter",
+      "cannatheraScoreDesc2": "Teil 2: Alltags- & Ressourcen-Basislinie"
     }
   },
   "doctor": {
@@ -316,7 +328,8 @@
         "alerts": "Warnungen",
         "reports": "Berichte",
         "settings": "Praxis-Einstellungen",
-        "help": "Hilfe"
+        "help": "Hilfe",
+        "network": "Netzwerk"
       },
       "logout": "Abmelden",
       "systemStatus": "Systemstatus:",
@@ -730,6 +743,12 @@
       "download": "Herunterladen",
       "generatedOn": "Erstellt am {date}",
       "period": "{from} – {to}"
+    },
+    "network": {
+      "title": "Apotheken-Netzwerk",
+      "subtitle": "Finden und kontaktieren Sie Apotheken in Ihrem Netzwerk.",
+      "searchPlaceholder": "Nach Apotheke oder Stadt suchen...",
+      "noResults": "Keine Apotheken gefunden."
     }
   },
   "legal": {
@@ -964,7 +983,8 @@
         "analytics": "Analytik",
         "inventory": "Warenbestand",
         "settings": "Einstellungen",
-        "prescriptions": "Prescriptions"
+        "prescriptions": "Prescriptions",
+        "network": "Netzwerk"
       }
     },
     "dashboard": {
@@ -1289,6 +1309,13 @@
       "productFocusHint": "Beschreiben Sie kurz Ihren Schwerpunkt (z.B. Extrakte, bestimmte Blüten, Beratung). Dies wird Patienten angezeigt.",
       "save": "Änderungen speichern",
       "savedSuccess": "Einstellungen erfolgreich gespeichert."
+    },
+    "network": {
+      "title": "Ärzte-Netzwerk",
+      "subtitle": "Finden und kontaktieren Sie Ärzte in Ihrem Netzwerk.",
+      "searchPlaceholder": "Nach Praxis oder Stadt suchen...",
+      "noResults": "Keine Praxen gefunden.",
+      "doctors": "Ärzte"
     }
   },
   "enterprise": {
@@ -1876,7 +1903,7 @@
     },
     "hero": {
       "certified": "ZERTIFIZIERTE MEDIZINPRODUKTEPLATTFORM",
-      "title": "Ihre Therapie.\nSorgfältig strukturiert.",
+      "title": "Das medizinische Betriebssystem für\nCannabis-Therapie.",
       "subtitle": "Schließen Sie sich Tausenden von Patienten an, die ihren Therapieverlauf mit unserer klinisch geführten, adaptiven und kontinuierlichen Therapiebegleitung optimieren. Führen Sie tägliche Bewertungen durch, sehen Sie physiologische Zeitverläufe und bleiben Sie mit Ihrem klinischen Team verbunden.",
       "ctaStart": "Therapiebegleitung starten",
       "ctaPortal": "Zum Portal",
@@ -1896,20 +1923,20 @@
       "last7": "Letzte 7 Tage",
       "compliance": "Therapietreue: Keine Abweichungen erkannt",
       "trust": "Vertrauens-Score",
-      "v2_subtitle": "Ob Fragen zur Dosierung, verwirrende Notizen oder die fehlende Verbindung zwischen Patient, Arztpraxis und Apotheke: Eine erfolgreiche Cannabinoid-Therapie scheitert im Praxisalltag häufig an Koordinationsproblemen. Cannathera schließt diese Lücke als Ihr intelligenter, klinisch unterstützter digitaler Hub. Wir verbinden Behandler und Patienten nahtlos, automatisieren die Fortschrittsdokumentation und schaffen die valide Datenbasis, die für echte Therapiesicherheit notwendig ist. Werden Sie Teil von Cannathera – für transparente, rechtssichere und strukturierte Betreuung vom ersten Tag an.",
+      "v2_subtitle": "Cannathera ist das maßgebliche klinische Betriebssystem für medizinisches Cannabis. Wir verwandeln fragmentierte, unstrukturierte Patientenbehandlungen in ein vollständig geschlossenes, datengesteuertes Ökosystem. Durch die Verbindung von Patienten, regionalen Ärzten und geprüften lokalen Apotheken durch ein sicheres, strukturiertes Monitoring gewährleisten wir vom ersten Tag an maximale Therapiesicherheit, beispiellose Dokumentationsgenauigkeit und nachhaltige medizinische Ergebnisse.",
       "v2_ctaStart": "Starten Sie Ihre Therapieunterstützung"
     },
     "features": {
       "tag": "Plattform-Funktionen",
-      "title": "Ein ganzheitliches System für die Therapiebegleitung",
-      "subtitle": "Cannathera verbindet Praxen, Apotheken und Patient:innen, indem es komplexe Behandlungsabläufe in strukturierte, sichere und datenbasierte Prozesse übersetzt.",
+      "title": "Ein entwickeltes Ökosystem für vollständige Therapie-Compliance",
+      "subtitle": "Cannathera schließt die kritische Lücke zwischen verschreibenden Ärzten, abgebenden Apotheken und der täglichen Patientenrealität. Durch die Umsetzung komplexer, hochindividueller Therapiepläne in strukturierte, sichere und datengesteuerte klinische Arbeitsabläufe heben wir die Cannabisbehandlung auf höchste medizinische Standards.",
       "patientBullets": [
         "Laufende Dokumentation",
         "Tägliche Dosierungsprotokolle",
         "Adhärenzanalyse"
       ],
       "doctorBullets": [
-        "Automatisierte Warnsignale",
+        "Automatisierte rote Flaggen",
         "Verwaltung von Patientenlisten",
         "Klinische PDF-Exporte"
       ],
@@ -1990,7 +2017,8 @@
       "title": "Flexible, skalierbare & transparente Preise",
       "subtitle": "Wählen Sie das passende Modell für Ihre Anforderungen. Vom Selbstzahler-Tarif für Patient:innen bis zur Enterprise-Anbindung für Telemedizin-Plattformen.",
       "patients": "Patienten",
-      "pharmacies": "Apotheken / Ärzte",
+      "pharmacies": "Apotheken",
+      "physicians": "Physicians",
       "enterprise": "Telemedizin / Enterprise",
       "basic": "CANNATHERA BASIC",
       "basicDesc": "Wesentliche Begleitung und tägliche Struktur.",
@@ -2026,8 +2054,7 @@
       "api": "API",
       "webhooks": "Webhooks",
       "automation": "Make.com/Zapier",
-      "coBranding": "Co-Branding",
-      "physicians": "Physicians"
+      "coBranding": "Co-Branding"
     },
     "founder": {
       "tag": "Klinisch geführte Therapieunterstützung",
@@ -2122,12 +2149,12 @@
     "compliance_title": "DSGVO & Medizinisch zertifiziert",
     "compliance_text": "Vollständig DSGVO-konform, AES-256 verschlüsselt und als Medizinprodukt (Klasse I) zertifiziert.",
     "cta": "Praxiszugang anfordern",
-    "hero_title": "Die monatliche Auswertung, die sich selbst schreibt",
-    "hero_intro": "Cannabinoid-Therapie erfordert kontinuierliche, strukturierte Dokumentation — nicht quartalsweises Rätselraten. Cannathera fasst automatisch die täglichen Symptomprotokolle, Schmerzskalen, Verträglichkeitsbewertungen und sortenspezifischen Reaktionen jedes Patienten zu einem umfassenden Monatsbericht zusammen. Wenn Ihr Patient zum Folgetermin erscheint, ist das klinische Bild bereits vollständig, strukturiert und bereit für Ihre Beurteilung.",
+    "hero_title": "Der monatliche Rückblick, der sich selbst schreibt – Automatisierte klinische Präzision",
+    "hero_intro": "Die medizinische Cannabistherapie erfordert eine kontinuierliche, strukturierte und rechtlich vertretbare Dokumentation – keine retrospektiven Vermutungen oder unstrukturierten Patientennotizen. Cannatheras aktive Begleit-Engine fasst automatisch die täglichen Symptomprotokolle jedes Patienten, validierte Schmerzskalenmetriken, Verträglichkeitsbewertungen und belastungsspezifische Reaktionen in einer äußerst detaillierten, monatlichen Überprüfung auf klinischer Qualität zusammen. Wenn Ihr Patient zur Nachsorgeuntersuchung eintrifft, ist das klinische Bild bereits synthetisiert, strukturiert und für Ihre sofortige Beurteilung bereit. Sie gewinnen Stunden administrativer Zeit zurück und beseitigen gleichzeitig die blinden Flecken zwischen geplanten Terminen.",
     "f1_title": "Automatisierte monatliche Therapieberichte",
-    "f1_text": "Am Ende jeden Monats erstellt Cannathera für jeden Patienten eine strukturierte, arztorientierte Therapiezusammenfassung. Sie enthält den tagesweisen Symptomverlauf, validierte NRS-Schmerzskalen, Schlafqualitätstrends und Verträglichkeits-Flags — automatisch aus den täglichen Aktive-Begleitung-Einträgen generiert.",
+    "f1_text": "Am Ende jedes Monats erstellt Cannathera automatisch eine strukturierte, ärztliche Therapiezusammenfassung, die exportiert werden kann. Es umfasst den täglichen Symptomverlauf, validierte NRS-Schmerzskalenwerte, PSQI-Schlafqualitätstrends und kritische Verträglichkeitsmarkierungen – alles nahtlos generiert aus den täglichen Einträgen des Patienten. Sie erhalten ein rechtlich einwandfreies klinisches Dokument und keinen rohen, nicht interpretierbaren Datendump.",
     "f2_title": "Echtzeit-Triage & Abweichungsalarme",
-    "f2_text": "Sie müssen nicht auf den Monatsbericht warten, um Probleme zu erkennen. Unsere validierte Triage-Logik überwacht kontinuierlich die täglichen Einträge jedes Patienten gegen seine Basisparameter. Bei einer klinisch relevanten Abweichung erhalten Sie sofort einen priorisierten Alarm.",
+    "f2_text": "Sie müssen nicht mehr auf die monatliche Überprüfung warten, um Nebenwirkungen zu erkennen. Unsere validierte Triage-Logik überwacht kontinuierlich die täglichen Einträge jedes Patienten anhand seiner klinischen Basislinie. Wenn eine klinisch signifikante Abweichung auftritt – ein plötzlicher Schmerzanstieg, eine nicht gemeldete Nebenwirkung oder ein verpasster Titrationsschritt – generiert Ihr Dashboard eine sofortige, priorisierte Warnung, die ein schnelles, gezieltes Eingreifen ermöglicht, bevor die Situation zu einem Therapieversagen eskaliert.",
     "f3_title": "Nahtloses Rezept-Routing & Compliance",
     "f3_text": "Stellen Sie E-Rezepte aus, die automatisch an die bevorzugte lokale Apotheke des Patienten im 30km-Umkreis weitergeleitet werden. Jedes Rezept ist zeitgestempelt, kryptographisch signiert und in einer vollständig DSGVO-konformen, AES-256-verschlüsselten Umgebung archiviert.",
     "f4_title": "Strukturierte Ergebnisdaten für evidenzbasierte Anpassungen",
@@ -2147,8 +2174,8 @@
     "title": "Für Apotheken",
     "subtitle": "Werden Sie der Anker eines verifizierten, geschlossenen lokalen Cannabistherapie-Netzwerks.",
     "cta": "Apotheken-Partnerschaft starten",
-    "hero_title": "Ihre Apotheke im Zentrum eines geschlossenen lokalen Netzwerks",
-    "hero_intro": "Cannathera listet Ihre Apotheke nicht nur — wir machen Sie zu einem aktiven, unverzichtbaren Knotenpunkt in einem verifizierten, geschlossenen lokalen Therapie-Ökosystem. Patienten wählen Ihre Apotheke als dauerhaften, vertrauenswürdigen Partner. Rezepte lokaler Ärzte werden exklusiv an Sie weitergeleitet.",
+    "hero_title": "Ihre Apotheke im Zentrum eines geschlossenen regionalen Versorgungsnetzwerks",
+    "hero_intro": "Cannathera führt Ihre Apotheke nicht nur in einem Passivverzeichnis auf, sondern bindet Sie als aktiven, unverzichtbaren Abgabeknoten in ein verifiziertes, geschlossenes lokales Therapie-Ökosystem ein. Wir lehnen das Modell, Apotheken auszusortieren und Patienten anonym an nationale Versandriesen weiterzuleiten, entschieden ab. Stattdessen wählen Patienten Ihre Apotheke aktiv als festen, vertrauenswürdigen Partner vor Ort. E-Rezepte von regionalen Ärzten landen ausschließlich in Ihrem Posteingang und wichtige Therapieergebnisse fließen nach der Abgabe zurück an die verschreibende Praxis. Sie gehen über die Rolle einer passiven Verkaufsstelle hinaus und werden zum Abgabeanker eines medizinisch strukturierten, vollständig rechenschaftspflichtigen und hochprofitablen lokalen Versorgungskreislaufs.",
     "f1_title": "Hyperlokaler Patienten-Funnel — 30km-Radius-Exklusivität",
     "f1_text": "Unser proprietäres 30km-Routing garantiert, dass Patienten in Ihrem Einzugsgebiet zu Ihrer Apotheke geleitet werden. Patienten wählen Sie aktiv als ihre 'Lieblingsapotheke', und alle zukünftigen Rezepte werden exklusiv an Sie weitergeleitet.",
     "f2_title": "Rezept-Eingang & Vollständiges CRM-Dashboard",
@@ -2184,9 +2211,9 @@
     "integration_title": "Seamless Integration",
     "integration_text": "Connect your infrastructure in days, not months, with our well-documented REST APIs.",
     "v2_hero_title": "Telemedizin skalieren, ohne Arzt-Kapazität zu skalieren",
-    "v2_hero_intro": "Der zentrale Engpass der Telemedizin ist die Arztkapazität. Cannathera beseitigt diesen Engpass. Unsere Plattform filtert vor, strukturiert und stratifiziert alle Therapiedaten klinisch, bevor sie einen Arzt erreichen — sodass Ihr medizinisches Team bei maximalem Durchsatz arbeitet.",
+    "v2_hero_intro": "Der größte Engpass in der Telemedizin ist die Kapazität der Ärzte. Unstrukturierte Patientennachrichten, Ad-hoc-Follow-ups und undokumentierte Beschwerden verbrauchen wertvolle klinische Zeit, die ausschließlich der medizinischen Entscheidungsfindung gewidmet werden sollte. Cannathera beseitigt diesen Engpass. Unsere Unternehmensplattform filtert, standardisiert und klinisch stratifiziert alle vom Patienten generierten Therapiedaten, bevor sie jemals das Dashboard eines Arztes erreichen. Ihr medizinisches Team arbeitet mit maximalem klinischen Durchsatz und nahezu keinem Verwaltungsaufwand, sodass Sie exponentiell mehr Patienten pro Arzt und Monat betreuen können, ohne die therapeutische Sicherheit oder die Ergebnisse zu beeinträchtigen.",
     "v2_f1_title": "Enterprise-Grade API & White-Label-Integration",
-    "v2_f1_text": "Die RESTful API verbindet sich direkt mit Ihrem klinischen Software-Stack. Für Enterprise-Kunden bieten wir White-Label-Deployment: Ihr Branding, unsere klinische Infrastruktur.",
+    "v2_f1_text": "Die RESTful-API von Cannathera lässt sich nahtlos in Ihren bestehenden klinischen Software-Stack integrieren – unabhängig davon, ob Sie ein proprietäres EMR, eine Telegesundheitsplattform eines Drittanbieters oder eine maßgeschneiderte Patienten-App einsetzen. Verschreibungsweiterleitung, Triage-Benachrichtigungen und Therapieergebnisse werden bidirektional über sichere, versionierte Endpunkte mit vollständiger Webhook-Telemetrie synchronisiert. Für Unternehmenskunden bieten wir eine vollständige White-Label-Bereitstellung: Ihr Branding, Ihre Patientenschnittstelle, unterstützt durch unsere zertifizierte klinische Infrastruktur. SLA-gestützte Verfügbarkeitsgarantien von 99,99 % und ein engagiertes Integrationstechnikteam gehören zum Standard.",
     "v2_f2_title": "Langfristige Patientenbindung",
     "v2_f2_text": "Cannathera verwandelt Einmal-Rezept-Patienten in langfristig täglich aktive Plattformnutzer durch kontinuierliche Therapiebegleitung.",
     "v2_f3_title": "Klinische Vorfilterung: Ärzte sehen nur das Wesentliche",

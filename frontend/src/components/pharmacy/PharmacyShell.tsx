@@ -15,6 +15,7 @@ const NAV = [
   { href: "/pharmacy/logs", key: "logs", icon: "clinical_notes" },
   { href: "/pharmacy/analytics", key: "analytics", icon: "monitoring" },
   { href: "/pharmacy/inventory", key: "inventory", icon: "inventory_2" },
+  { href: "/pharmacy/network", key: "network", icon: "hub" },
   { href: "/pharmacy/settings", key: "settings", icon: "settings" },
 ] as const;
 

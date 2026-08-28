@@ -1227,4 +1227,53 @@ export class PharmacyService {
     const results = await this.prisma.$transaction(transactionOperations);
     return results[results.length - 1]; // return the updated prescription
   }
+
+  async getNetworkPhysicians(userId: string, query?: string) {
+    const membership = await this.requireMembership(userId);
+    
+    // In a real scenario, this might be filtered by doctors who have prescribed to this pharmacy,
+    // or doctors within the same enterprise. For now, we return all PRACTICE organizations
+    // to act as a directory.
+    
+    const where: Prisma.OrganizationWhereInput = {
+      type: 'PRACTICE',
+      accountStatus: 'ACTIVE',
+    };
+    
+    if (query) {
+      where.OR = [
+        { name: { contains: query, mode: 'insensitive' } },
+        { city: { contains: query, mode: 'insensitive' } },
+      ];
+    }
+    
+    const practices = await this.prisma.organization.findMany({
+      where,
+      select: {
+        id: true,
+        name: true,
+        city: true,
+        phone: true,
+        email: true,
+        website: true,
+        description: true,
+        memberships: {
+          where: { roleInOrg: 'DOCTOR' },
+          select: {
+            user: {
+              select: {
+                id: true,
+                firstName: true,
+                lastName: true,
+                email: true,
+              }
+            }
+          }
+        }
+      },
+      orderBy: { name: 'asc' },
+    });
+    
+    return practices;
+  }
 }

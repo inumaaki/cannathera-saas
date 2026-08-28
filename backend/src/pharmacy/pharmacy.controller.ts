@@ -389,4 +389,9 @@ export class PharmacyController {
   archiveItem(@CurrentUser() user: SessionPayload, @Param('id') id: string) {
     return this.pharmacy.archiveItem(user.sub, id);
   }
+
+  @Get('network/physicians')
+  networkPhysicians(@CurrentUser() user: SessionPayload, @Query('q') q?: string) {
+    return this.pharmacy.getNetworkPhysicians(user.sub, q);
+  }
 }

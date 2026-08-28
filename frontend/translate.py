@@ -51,9 +51,22 @@ def sync_keys(source, target, lang_code, path=""):
                 print(f"[{lang_code}] Array length mismatch: {curr_path}. Translating...")
                 target[key] = translate_value(value, lang_code)
                 updated = True
-            elif curr_path.startswith("landing.features."):
+            elif curr_path.startswith("landing.features.") and isinstance(value, list):
                 # Force translate features bullets to ensure they are updated
                 print(f"[{lang_code}] Forcing update of: {curr_path}")
+                target[key] = translate_value(value, lang_code)
+                updated = True
+        elif type(value) == str and type(target.get(key)) == str:
+            # Force update if it's one of the keys we just changed
+            force_keys = [
+                "landing.hero.title", "landing.hero.v2_subtitle", 
+                "landing.features.title", "landing.features.subtitle",
+                "physicians.hero_title", "physicians.hero_intro", "physicians.f1_text", "physicians.f2_text",
+                "pharmacies.hero_title", "pharmacies.hero_intro", 
+                "telemedicine.v2_hero_intro", "telemedicine.v2_f1_text"
+            ]
+            if curr_path in force_keys:
+                print(f"[{lang_code}] Forcing update of string: {curr_path}")
                 target[key] = translate_value(value, lang_code)
                 updated = True
     return updated

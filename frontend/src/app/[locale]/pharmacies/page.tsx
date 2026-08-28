@@ -57,126 +57,66 @@ function PharmaciesContent() {
               </div>
             </div>
 
-            {/* Closed-Loop Local Network Graphic */}
-            <div className="relative w-full rounded-2xl border border-white/10 bg-[#00120a] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col mt-8 lg:mt-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
+            {/* Closed-Loop Local Network Graphic - Dynamic Visualization */}
+            <div className="relative w-full rounded-2xl border border-mint/20 bg-gradient-to-br from-[#002819] to-[#00120a] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col mt-8 lg:mt-0 p-6 lg:p-8">
+              {/* Background Map/Grid Hint */}
+              <div className="absolute inset-0 bg-[url('/brand/grid-pattern.svg')] opacity-[0.05] pointer-events-none" style={{ backgroundSize: '20px 20px' }} />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(150,212,178,0.1),transparent_70%)] pointer-events-none" />
 
-              {/* Browser chrome */}
-              <div className="h-12 border-b border-white/5 bg-white/[0.02] flex items-center px-4 gap-4 shrink-0">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]"/>
-                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"/>
-                  <div className="w-3 h-3 rounded-full bg-[#27c93f]"/>
-                </div>
-                <div className="h-5 w-52 bg-white/5 rounded flex items-center px-2">
-                  <span className="text-[10px] text-white/30 font-mono tracking-widest">cannathera · Local Network</span>
-                </div>
-              </div>
-
-              <div className="p-4 sm:p-5 flex flex-col gap-4">
-                {/* Header */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Closed-Loop System</div>
-                    <div className="text-base font-bold text-white mt-0.5">Local Care Network</div>
+              <div className="relative z-10 flex flex-col h-full gap-8 items-center">
+                
+                {/* Top: Regional Clinic */}
+                <div className="flex flex-col items-center gap-3">
+                  <div className="flex items-center gap-2 bg-white/10 px-4 py-2 rounded-full border border-white/20 backdrop-blur-sm">
+                    <div className="w-2 h-2 rounded-full bg-mint animate-pulse" />
+                    <span className="text-xs font-bold text-white uppercase tracking-wider">Regional Physician</span>
                   </div>
-                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-mint/15 border border-mint/25 text-mint text-[10px] font-bold uppercase tracking-wide">
-                    <span className="msym text-[12px]">location_on</span> 30 km Radius
-                  </span>
-                </div>
-
-                {/* Node diagram */}
-                <div className="relative bg-white/[0.03] rounded-xl border border-white/5 p-4 flex flex-col items-center gap-3">
-                  {/* Top row: Physician ← → Patient */}
-                  <div className="flex items-center justify-between w-full gap-2">
-                    {/* Physician node */}
-                    <div className="flex flex-col items-center gap-1.5">
-                      <div className="w-12 h-12 rounded-2xl bg-[#0d3d27] border border-mint/20 flex items-center justify-center">
-                        <span className="msym text-mint text-xl">stethoscope</span>
-                      </div>
-                      <span className="text-[9px] font-bold text-white/60 uppercase tracking-wide">Physician</span>
-                    </div>
-
-                    {/* Arrow row */}
-                    <div className="flex-1 flex flex-col items-center gap-1">
-                      <div className="flex items-center gap-1 w-full">
-                        <div className="flex-1 h-px bg-gradient-to-r from-mint/40 to-mint/20" />
-                        <span className="text-[8px] text-mint/60 font-bold whitespace-nowrap px-1">E-Prescription</span>
-                        <div className="flex-1 h-px bg-gradient-to-l from-mint/40 to-mint/20" />
-                      </div>
-                    </div>
-
-                    {/* Patient node */}
-                    <div className="flex flex-col items-center gap-1.5">
-                      <div className="w-12 h-12 rounded-2xl bg-[#1a1a2e] border border-white/10 flex items-center justify-center">
-                        <span className="msym text-white/70 text-xl">person</span>
-                      </div>
-                      <span className="text-[9px] font-bold text-white/60 uppercase tracking-wide">Patient</span>
-                    </div>
-                  </div>
-
-                  {/* Vertical connectors */}
-                  <div className="flex items-center justify-between w-full px-6">
-                    <div className="flex flex-col items-center gap-0.5">
-                      <div className="w-px h-5 bg-gradient-to-b from-mint/30 to-transparent" />
-                      <span className="msym text-mint/40 text-xs">arrow_downward</span>
-                    </div>
-                    <div className="flex-1 flex items-center justify-center">
-                      <span className="text-[8px] text-white/20 italic">Cannathera routes &amp; structures</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-0.5">
-                      <div className="w-px h-5 bg-gradient-to-b from-white/20 to-transparent" />
-                      <span className="msym text-white/30 text-xs">arrow_downward</span>
-                    </div>
-                  </div>
-
-                  {/* Centre: Cannathera hub */}
-                  <div className="flex items-center justify-center">
-                    <div className="flex flex-col items-center gap-1.5">
-                      <div className="w-16 h-16 rounded-2xl bg-pine border border-mint/30 flex items-center justify-center shadow-[0_0_20px_rgba(150,212,178,0.15)]">
-                        <span className="msym text-mint-bright text-2xl">hub</span>
-                      </div>
-                      <span className="text-[9px] font-bold text-mint uppercase tracking-wider">Cannathera Hub</span>
-                    </div>
-                  </div>
-
-                  {/* Bottom connector to pharmacy */}
-                  <div className="flex flex-col items-center gap-0.5">
-                    <span className="msym text-mint/40 text-xs">arrow_downward</span>
-                    <div className="w-px h-3 bg-gradient-to-b from-transparent to-mint/30" />
-                  </div>
-
-                  {/* Bottom: Pharmacy node */}
-                  <div className="flex flex-col items-center gap-1.5">
-                    <div className="w-12 h-12 rounded-2xl bg-[#0d3d27] border border-mint/30 flex items-center justify-center">
-                      <span className="msym text-mint text-xl">local_pharmacy</span>
-                    </div>
-                    <span className="text-[9px] font-bold text-white/60 uppercase tracking-wide">Your Pharmacy</span>
-                  </div>
-
-                  {/* Outcome feedback tag */}
-                  <div className="w-full flex items-center justify-center">
-                    <span className="inline-flex items-center gap-1 text-[9px] text-white/30 font-semibold">
-                      <span className="msym text-[11px] text-mint/40">sync</span>
-                      Outcome data loops back to prescriber
-                    </span>
+                  <div className="w-16 h-16 rounded-full bg-white flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.2)]">
+                    <span className="msym text-pine text-3xl">local_hospital</span>
                   </div>
                 </div>
 
-                {/* Stats strip */}
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="bg-white/5 rounded-lg border border-white/5 p-2.5 text-center">
-                    <div className="text-[9px] text-white/40 font-bold uppercase">Pending Rx</div>
-                    <div className="text-lg font-bold text-white mt-0.5">42</div>
+                {/* Middle: The Loop & Patient */}
+                <div className="flex w-full items-center justify-between relative px-4">
+                  
+                  {/* Left Arrow (E-Prescription to Pharmacy) */}
+                  <div className="absolute left-[15%] top-1/2 -translate-y-1/2 w-[35%] h-[120px] border-l-2 border-b-2 border-dashed border-mint/40 rounded-bl-[40px] flex flex-col justify-end pb-2 pl-3">
+                    <span className="msym text-mint/80 text-xl absolute -bottom-[10px] right-0 translate-x-1/2">arrow_right</span>
+                    <span className="text-[9px] font-bold text-mint/80 uppercase tracking-widest bg-[#00120a] px-1 absolute -left-[14px] top-1/2 -translate-y-1/2 -rotate-90">E-Prescription</span>
                   </div>
-                  <div className="bg-mint/10 rounded-lg border border-mint/20 p-2.5 text-center">
-                    <div className="text-[9px] text-mint/70 font-bold uppercase">Dispatched</div>
-                    <div className="text-lg font-bold text-mint-bright mt-0.5">18</div>
+
+                  {/* Right Arrow (Feedback to Physician) */}
+                  <div className="absolute right-[15%] top-1/2 -translate-y-1/2 w-[35%] h-[120px] border-r-2 border-t-2 border-dashed border-mint/40 rounded-tr-[40px] flex flex-col justify-start pt-2 pr-3">
+                    <span className="msym text-mint/80 text-xl absolute -top-[10px] left-0 -translate-x-1/2 rotate-180">arrow_right</span>
+                    <span className="text-[9px] font-bold text-mint/80 uppercase tracking-widest bg-[#00120a] px-1 absolute -right-[10px] top-1/2 -translate-y-1/2 rotate-90">Therapy Feedback</span>
                   </div>
-                  <div className="bg-white/5 rounded-lg border border-white/5 p-2.5 text-center">
-                    <div className="text-[9px] text-white/40 font-bold uppercase">Partners</div>
-                    <div className="text-lg font-bold text-white mt-0.5">3</div>
+
+                  {/* Center Patient Node */}
+                  <div className="w-full flex justify-center z-10">
+                    <div className="flex flex-col items-center gap-2">
+                      <div className="w-14 h-14 rounded-full bg-pine-600 border-2 border-mint flex items-center justify-center relative shadow-[0_0_20px_rgba(150,212,178,0.4)]">
+                        <span className="msym text-white text-2xl">person</span>
+                        <div className="absolute -bottom-2 bg-mint text-pine text-[9px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Patient</div>
+                      </div>
+                    </div>
                   </div>
+                </div>
+
+                {/* Bottom: Local Pharmacy */}
+                <div className="flex flex-col items-center gap-3">
+                  <div className="w-20 h-20 rounded-2xl bg-mint-bright flex items-center justify-center shadow-[0_0_40px_rgba(150,212,178,0.3)] rotate-3 hover:rotate-0 transition-transform">
+                    <span className="msym text-pine text-4xl">local_pharmacy</span>
+                  </div>
+                  <div className="flex items-center gap-2 bg-mint/20 px-4 py-2 rounded-full border border-mint/40 backdrop-blur-sm">
+                    <span className="msym text-mint text-[14px]">verified</span>
+                    <span className="text-xs font-bold text-mint uppercase tracking-wider">Your Pharmacy</span>
+                  </div>
+                </div>
+
+                {/* Exclusivity Tag */}
+                <div className="absolute bottom-6 right-6 bg-white/10 px-3 py-1.5 rounded border border-white/10 flex items-center gap-2 backdrop-blur-md">
+                  <span className="msym text-white/50 text-sm">location_on</span>
+                  <span className="text-[10px] text-white/70 font-bold uppercase tracking-wider">30km Closed Loop Radius</span>
                 </div>
               </div>
             </div>

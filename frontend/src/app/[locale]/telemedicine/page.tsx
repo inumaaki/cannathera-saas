@@ -57,90 +57,79 @@ function TelemedicineContent() {
               </div>
             </div>
 
-            {/* Enterprise Dashboard Graphic */}
-            <div className="relative w-full rounded-2xl border border-white/10 bg-[#00120a] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col mt-8 lg:mt-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-
-              {/* Browser chrome */}
-              <div className="h-12 border-b border-white/5 bg-white/[0.02] flex items-center px-4 gap-4 shrink-0">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]"/>
-                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"/>
-                  <div className="w-3 h-3 rounded-full bg-[#27c93f]"/>
-                </div>
-                <div className="h-5 w-56 bg-white/5 rounded flex items-center px-2">
-                  <span className="text-[10px] text-white/30 font-mono tracking-widest">cannathera · Enterprise Admin</span>
-                </div>
-              </div>
-
-              <div className="p-4 sm:p-5 flex flex-col gap-3.5">
+            {/* Enterprise API Architecture Graphic */}
+            <div className="relative w-full rounded-2xl border border-pine/20 bg-gradient-to-br from-[#0d2a1c] to-[#04110a] shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col mt-8 lg:mt-0 p-5 lg:p-7 group">
+              
+              {/* Background Elements */}
+              <div className="absolute inset-0 bg-[linear-gradient(rgba(150,212,178,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(150,212,178,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
+              
+              <div className="relative z-10 flex flex-col h-full gap-5">
+                
                 {/* Header */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Enterprise Overview</div>
-                    <div className="text-base font-bold text-white mt-0.5">Telemedicine Platform</div>
+                <div className="flex items-center justify-between pb-3 border-b border-mint/10">
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded bg-mint/10 border border-mint/30 flex items-center justify-center">
+                      <span className="msym text-mint text-lg">api</span>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-bold text-white tracking-wide">Cannathera Enterprise API</h4>
+                      <p className="text-[10px] text-mint/60 font-mono mt-0.5">v2.4.0-stable · EU-Central Node</p>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-mint/10 border border-mint/20">
+                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#1a1a2e] border border-white/10">
                     <div className="w-1.5 h-1.5 rounded-full bg-mint animate-pulse" />
-                    <span className="text-[9px] font-bold text-mint uppercase tracking-wide">SLA 99.99%</span>
+                    <span className="text-[9px] font-bold text-mint uppercase tracking-widest">99.99% SLA Uptime</span>
                   </div>
                 </div>
 
-                {/* Top KPI strip */}
-                <div className="grid grid-cols-3 gap-2">
-                  <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-0.5">
-                    <span className="text-white/40 text-[9px] font-bold uppercase tracking-wider">Active Clinics</span>
-                    <span className="text-xl font-bold text-white">14</span>
-                  </div>
-                  <div className="bg-mint/10 rounded-xl border border-mint/20 p-3 flex flex-col gap-0.5">
-                    <span className="text-mint/70 text-[9px] font-bold uppercase tracking-wider">Patients / Mo</span>
-                    <span className="text-xl font-bold text-mint-bright">8,240</span>
-                  </div>
-                  <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-0.5">
-                    <span className="text-white/40 text-[9px] font-bold uppercase tracking-wider">Avg. Latency</span>
-                    <span className="text-xl font-bold text-white">11ms</span>
-                  </div>
-                </div>
-
-                {/* Physician workload triage */}
-                <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-2.5">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] text-white/60 font-bold uppercase tracking-wide">Physician Workload — Triage Distribution</span>
-                    <span className="text-[9px] text-white/30">This month</span>
-                  </div>
-                  {[
-                    { label: "Stable / Routine", pct: 68, color: "bg-mint/60" },
-                    { label: "Watchlist Review", pct: 23, color: "bg-amber-400/60" },
-                    { label: "Immediate Alert", pct: 9, color: "bg-red-400/70" },
-                  ].map((row) => (
-                    <div key={row.label} className="flex items-center gap-2">
-                      <span className="text-[9px] text-white/40 w-28 shrink-0">{row.label}</span>
-                      <div className="flex-1 h-2 bg-white/5 rounded-full overflow-hidden">
-                        <div className={`h-full rounded-full ${row.color}`} style={{ width: `${row.pct}%` }} />
-                      </div>
-                      <span className="text-[9px] font-bold text-white/50 w-6 text-right">{row.pct}%</span>
+                {/* API Request Flow */}
+                <div className="flex flex-col gap-4 py-2">
+                  <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Live Telemetry Stream</span>
+                  
+                  {/* Code Block Snippet */}
+                  <div className="bg-[#050b08] rounded-xl border border-white/5 p-4 font-mono text-[10px] sm:text-xs leading-loose relative overflow-hidden group-hover:border-mint/20 transition-colors">
+                    <div className="absolute top-0 right-0 p-2 opacity-30">
+                      <span className="msym text-mint">code</span>
                     </div>
-                  ))}
+                    <div className="text-mint/40">POST <span className="text-white">/v2/telemedicine/triage/eval</span></div>
+                    <div className="text-white/30 pl-4">{"{"}</div>
+                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">"patient_id"</span>: <span className="text-amber-200/80">"PT-904X-E"</span>,</div>
+                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">"nrs_pain_score"</span>: <span className="text-blue-300">4</span>,</div>
+                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">"dizziness_flag"</span>: <span className="text-blue-300">false</span></div>
+                    <div className="text-white/30 pl-4">{"}"}</div>
+                  </div>
                 </div>
 
-                {/* Session pipeline */}
-                <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-2">
-                  <span className="text-[10px] text-white/60 font-bold uppercase tracking-wide">Live Session Pipeline</span>
-                  {[
-                    { id: "sess_9A2", clinic: "Clinic Berlin", status: "Active", statusColor: "text-mint bg-mint/10 border-mint/20" },
-                    { id: "sess_7C1", clinic: "Clinic Hamburg", status: "Scheduled", statusColor: "text-white/50 bg-white/5 border-white/10" },
-                    { id: "sess_3F8", clinic: "Clinic München", status: "Completed", statusColor: "text-white/30 bg-white/5 border-white/5" },
-                  ].map((s) => (
-                    <div key={s.id} className="flex items-center gap-2.5 p-2 rounded-lg bg-white/[0.03] border border-white/5">
-                      <span className="msym text-white/30 text-sm shrink-0">videocam</span>
-                      <div className="flex-1 min-w-0">
-                        <div className="text-[10px] font-bold text-white/70 font-mono">{s.id}</div>
-                        <div className="text-[9px] text-white/30 truncate">{s.clinic}</div>
-                      </div>
-                      <span className={`text-[9px] font-bold px-1.5 py-0.5 rounded border ${s.statusColor}`}>{s.status}</span>
+                {/* Integration Nodes */}
+                <div className="mt-auto grid grid-cols-2 gap-3">
+                  <div className="bg-white/[0.03] rounded-xl border border-white/10 p-3 flex items-start gap-3">
+                    <span className="msym text-mint/60 text-xl shrink-0">webhook</span>
+                    <div>
+                      <div className="text-[11px] font-bold text-white">Event Webhooks</div>
+                      <div className="text-[9px] text-white/40 mt-1 leading-relaxed">Bidirectional sync with proprietary EMR systems.</div>
                     </div>
-                  ))}
+                  </div>
+                  <div className="bg-white/[0.03] rounded-xl border border-white/10 p-3 flex items-start gap-3">
+                    <span className="msym text-mint/60 text-xl shrink-0">verified_user</span>
+                    <div>
+                      <div className="text-[11px] font-bold text-white">White-Label Auth</div>
+                      <div className="text-[9px] text-white/40 mt-1 leading-relaxed">SSO integration for seamless patient onboarding.</div>
+                    </div>
+                  </div>
                 </div>
+
+                {/* Footer Bar */}
+                <div className="flex items-center justify-between pt-3 border-t border-mint/10">
+                  <div className="flex items-center gap-2">
+                    <span className="msym text-[14px] text-mint">security</span>
+                    <span className="text-[9px] text-white/60 font-bold uppercase tracking-wider">AES-256 Encrypted</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="msym text-[14px] text-mint">speed</span>
+                    <span className="text-[9px] text-white/60 font-bold uppercase tracking-wider">Avg Latency: 11ms</span>
+                  </div>
+                </div>
+
               </div>
             </div>
           </div>

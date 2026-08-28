@@ -129,8 +129,8 @@ export default function PatientOnboarding() {
       {step === 1 && (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
           <div>
-            <h2 className="text-xl font-bold text-ink-strong">Master Data</h2>
-            <p className="text-sm text-sage-900 mt-1">Please confirm your contact details.</p>
+            <h2 className="text-xl font-bold text-ink-strong">{t("masterData")}</h2>
+            <p className="text-sm text-sage-900 mt-1">{t("masterDataDesc")}</p>
           </div>
           
           <div>
@@ -172,8 +172,8 @@ export default function PatientOnboarding() {
       {step === 2 && (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
           <div>
-            <h2 className="text-xl font-bold text-ink-strong">Main Complaints</h2>
-            <p className="text-sm text-sage-900 mt-1">What are the primary reasons for your therapy?</p>
+            <h2 className="text-xl font-bold text-ink-strong">{t("mainComplaints")}</h2>
+            <p className="text-sm text-sage-900 mt-1">{t("mainComplaintsDesc")}</p>
           </div>
           
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
@@ -194,7 +194,7 @@ export default function PatientOnboarding() {
 
           <div>
             <label className="mb-2 block text-sm font-semibold uppercase tracking-wider text-ink-strong">
-              Description of Complaints <span className="text-red-500">*</span>
+              {t("descriptionOfComplaints")} <span className="text-red-500">*</span>
             </label>
             <textarea
               value={complaintsDescription}
@@ -210,14 +210,14 @@ export default function PatientOnboarding() {
               onClick={prevStep}
               className="w-1/3 rounded-xl border border-hairline bg-white py-4 font-bold text-ink-strong transition-all hover:bg-surface"
             >
-              Back
+              {t("back")}
             </button>
             <button
               onClick={nextStep}
               disabled={!isStep2Valid}
               className="w-2/3 rounded-xl bg-pine-600 py-4 font-bold text-white transition-all hover:bg-pine-700 disabled:opacity-50"
             >
-              Continue to Goals
+              {t("continueToGoals")}
             </button>
           </div>
         </div>
@@ -226,8 +226,8 @@ export default function PatientOnboarding() {
       {step === 3 && (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
           <div>
-            <h2 className="text-xl font-bold text-ink-strong">Therapy Goals</h2>
-            <p className="text-sm text-sage-900 mt-1">What do you hope to achieve with this therapy?</p>
+            <h2 className="text-xl font-bold text-ink-strong">{t("therapyGoals")}</h2>
+            <p className="text-sm text-sage-900 mt-1">{t("therapyGoalsDesc")}</p>
           </div>
           
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
@@ -256,14 +256,14 @@ export default function PatientOnboarding() {
               onClick={prevStep}
               className="w-1/3 rounded-xl border border-hairline bg-white py-4 font-bold text-ink-strong transition-all hover:bg-surface"
             >
-              Back
+              {t("back")}
             </button>
             <button
               onClick={nextStep}
               disabled={!isStep3Valid}
               className="w-2/3 rounded-xl bg-pine-600 py-4 font-bold text-white transition-all hover:bg-pine-700 disabled:opacity-50"
             >
-              Continue to Cannathera Score
+              {t("continueToCannatheraScore")}
             </button>
           </div>
         </div>
@@ -272,8 +272,8 @@ export default function PatientOnboarding() {
       {step === 4 && (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
           <div>
-            <h2 className="text-xl font-bold text-ink-strong">The Cannathera Score</h2>
-            <p className="text-sm text-sage-900 mt-1">Part 1: Symptom Baseline</p>
+            <h2 className="text-xl font-bold text-ink-strong">{t("cannatheraScore")}</h2>
+            <p className="text-sm text-sage-900 mt-1">{t("cannatheraScoreDesc1")}</p>
           </div>
           
           <div className="space-y-2">
@@ -288,13 +288,13 @@ export default function PatientOnboarding() {
               onClick={prevStep}
               className="w-1/3 rounded-xl border border-hairline bg-white py-4 font-bold text-ink-strong transition-all hover:bg-surface"
             >
-              Back
+              {t("back")}
             </button>
             <button
               onClick={nextStep}
               className="w-2/3 rounded-xl bg-pine-600 py-4 font-bold text-white transition-all hover:bg-pine-700"
             >
-              Continue
+              {t("continue")}
             </button>
           </div>
         </div>
@@ -303,8 +303,8 @@ export default function PatientOnboarding() {
       {step === 5 && (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4">
           <div>
-            <h2 className="text-xl font-bold text-ink-strong">The Cannathera Score</h2>
-            <p className="text-sm text-sage-900 mt-1">Part 2: Daily Life & Resource Baseline</p>
+            <h2 className="text-xl font-bold text-ink-strong">{t("cannatheraScore")}</h2>
+            <p className="text-sm text-sage-900 mt-1">{t("cannatheraScoreDesc2")}</p>
           </div>
           
           <div className="space-y-2">

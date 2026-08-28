@@ -303,6 +303,18 @@
       "title": "Planınızla İlgili Önemli Bilgilendirme",
       "description": "Planınıza bağlı olmayan harici bir eczane veya harici bir doktor kullanmak, sübvanse edilmiş avantajlarınızı geçersiz kılacaktır. Bu durumda, aylık platform maliyetlerinden siz sorumlu olacaksınız.",
       "confirm": "Anlıyor ve kabul ediyorum"
+    },
+    "onboarding": {
+      "masterDataDesc": "Lütfen iletişim bilgilerinizi doğrulayın.",
+      "mainComplaintsDesc": "Terapinizin temel nedenleri nelerdir?",
+      "descriptionOfComplaints": "Şikayetlerin Açıklaması",
+      "back": "Geri",
+      "continueToGoals": "Hedeflere Devam Et",
+      "therapyGoalsDesc": "Bu terapiyle neyi başarmayı umuyorsunuz?",
+      "continueToCannatheraScore": "Cannathera Skoruna Devam Et",
+      "cannatheraScoreDesc1": "Bölüm 1: Belirti Başlangıç ​​Durumu",
+      "continue": "Devam etmek",
+      "cannatheraScoreDesc2": "Bölüm 2: Günlük Yaşam ve Kaynak Temelleri"
     }
   },
   "doctor": {
@@ -316,7 +328,8 @@
         "alerts": "Uyarılar",
         "reports": "Raporlar",
         "settings": "Klinik Ayarları",
-        "help": "Yardım"
+        "help": "Yardım",
+        "network": "Ağ"
       },
       "logout": "Çıkış yap",
       "systemStatus": "Sistem durumu:",
@@ -730,6 +743,12 @@
       "download": "İndir",
       "generatedOn": "{date} tarihinde oluşturuldu",
       "period": "{from} – {to}"
+    },
+    "network": {
+      "title": "Eczane Ağı",
+      "subtitle": "Ağınızdaki eczaneleri bulun ve onlarla iletişime geçin.",
+      "searchPlaceholder": "Eczaneye veya şehre göre arayın...",
+      "noResults": "Eczane bulunamadı."
     }
   },
   "legal": {
@@ -964,7 +983,8 @@
         "analytics": "Analitik",
         "inventory": "Envanter",
         "settings": "Settings",
-        "prescriptions": "Prescriptions"
+        "prescriptions": "Prescriptions",
+        "network": "Ağ"
       }
     },
     "dashboard": {
@@ -1289,6 +1309,13 @@
       "productFocusHint": "Briefly describe your focus (e.g. extracts, specific strains, consultation). This will be shown to patients.",
       "save": "Save Changes",
       "savedSuccess": "Settings saved successfully."
+    },
+    "network": {
+      "title": "Hekim Ağı",
+      "subtitle": "Ağınızdaki doktorları bulun ve onlarla iletişime geçin.",
+      "searchPlaceholder": "Antrenmana veya şehre göre arayın...",
+      "noResults": "Hiçbir uygulama bulunamadı.",
+      "doctors": "Doktorlar"
     }
   },
   "enterprise": {
@@ -1876,7 +1903,7 @@
     },
     "hero": {
       "certified": "SERTİFİKALI KLİNİK YAZILIM",
-      "title": "Tedaviniz.\nÖzenle Yapılandırılmış.",
+      "title": "Tıbbi İşletim Sistemi\nEsrar Terapisi.",
       "subtitle": "Klinik olarak yönlendirilen 90 günlük adaptif rehberlik platformumuz aracılığıyla tedavi süreçlerini optimize eden binlerce hastaya katılın. Günlük değerlendirmelerinizi yapın, fizyolojik süreçlerinizi izleyin ve klinik ekibinizle bağlantıda kalın.",
       "ctaStart": "30 Günlük Planı Başlat",
       "ctaPortal": "Portala Eriş",
@@ -1896,13 +1923,13 @@
       "last7": "Son 7 gün",
       "compliance": "Uyum: Herhangi bir uyarı tespit edilmedi",
       "trust": "Güven Skoru",
-      "v2_subtitle": "Dozaj, kafa karıştırıcı notlar veya hasta, doktor muayenehanesi ve eczane arasındaki eksik bağlantıyla ilgili sorular olsun: başarılı kanabinoid tedavisi, koordinasyon sorunları nedeniyle günlük uygulamalarda sıklıkla başarısız olur. Cannathera, akıllı, klinik olarak desteklenen dijital merkeziniz olarak bu açığı kapatıyor. Uygulayıcıları ve hastaları sorunsuz bir şekilde birbirine bağlıyor, ilerleme dokümantasyonunu otomatikleştiriyor ve gerçek terapi güvenliği için gerekli olan geçerli veritabanını oluşturuyoruz. İlk günden itibaren şeffaf, yasal olarak uyumlu ve yapılandırılmış destek için Cannathera'nın bir parçası olun.",
+      "v2_subtitle": "Cannathera, tıbbi esrar için kesin klinik işletim sistemidir. Parçalı, yapılandırılmamış hasta tedavilerini tamamen kapalı döngü, veri odaklı bir ekosisteme dönüştürüyoruz. Hastaları, bölgesel doktorları ve doğrulanmış yerel eczaneleri güvenli, yapılandırılmış izleme yoluyla birbirine bağlayarak, ilk günden itibaren maksimum tedavi güvenliği, benzersiz dokümantasyon hassasiyeti ve sürdürülebilir tıbbi sonuçlar sağlıyoruz.",
       "v2_ctaStart": "Terapi desteğinizi başlatın"
     },
     "features": {
       "tag": "Platform Yetenekleri",
-      "title": "Tedavi Refakati İçin Bütünsel Bir Ekosistem",
-      "subtitle": "Cannathera, karmaşık tedavi rejimlerini yapılandırılmış, güvenli ve veri odaklı süreçlere dönüştürerek hekimler, eczaneler ve hastalar arasındaki köprüyü kurar.",
+      "title": "Tam Tedavi Uyumluluğu için Mimari Ekosistem",
+      "subtitle": "Cannathera, reçete yazan doktorlar, eczaneler ve günlük hasta gerçekliği arasındaki kritik boşluğu dolduruyor. Karmaşık, son derece kişiselleştirilmiş tedavi rejimlerini yapılandırılmış, güvenli ve veri odaklı klinik iş akışlarına dönüştürerek esrar tedavisini en yüksek tıbbi standartlara yükseltiyoruz.",
       "patientBullets": [
         "Devam eden belgeler",
         "Günlük Dozaj Kayıtları",
@@ -2122,12 +2149,12 @@
     "compliance_title": "GDPR Uyumluluğu",
     "compliance_text": "Tam GDPR uyumlu, AES-256 şifreli tıbbi yazılım.",
     "cta": "Erişim İste",
-    "hero_title": "Kendi Kendini Yazan Aylık Rapor",
-    "hero_intro": "Cannathera günlük belirti günlüklerini otomatik olarak analiz eder ve doktorlar için kapsamlı bir rapor oluşturur.",
+    "hero_title": "Kendi Kendini Yazan Aylık İnceleme — Otomatik Klinik Hassasiyet",
+    "hero_intro": "Tıbbi esrar tedavisi, geriye dönük tahminler veya yapılandırılmamış hasta notları değil, sürekli, yapılandırılmış ve yasal olarak savunulabilir belgeler gerektirir. Cannathera'nın aktif eşlik motoru, her hastanın günlük semptom kayıtlarını, doğrulanmış ağrı ölçeği ölçümlerini, tolere edilebilirlik derecelendirmelerini ve suşa özgü yanıtları son derece ayrıntılı, klinik düzeyde aylık bir incelemede otomatik olarak toplar. Hastanız takip konsültasyonu için geldiğinde, klinik tablo zaten sentezlenmiş, yapılandırılmış ve acil değerlendirmeniz için hazırdır. Planlanan randevular arasındaki kör noktaları ortadan kaldırırken saatlerce süren idari süreyi yeniden kazanırsınız.",
     "f1_title": "Otomatik Raporlama",
-    "f1_text": "Her ay sonu her hasta için yapılandırılmış bir tedavi özeti derlenir.",
+    "f1_text": "Her ayın sonunda Cannathera, dışa aktarılmaya hazır, yapılandırılmış, hekimin görebileceği bir tedavi özetini otomatik olarak derler. Günlük semptom ilerlemesini, doğrulanmış NRS ağrı ölçeği puanlarını, PSQI uyku kalitesi eğilimlerini ve kritik tolere edilebilirlik işaretlerini içerir; bunların tümü hastanın günlük girişlerinden sorunsuz bir şekilde oluşturulur. Ham, yorumlanamayan bir veri dökümü değil, yasal olarak sağlam bir klinik belge alırsınız.",
     "f2_title": "Gerçek Zamanlı Triyaj",
-    "f2_text": "Sistem, hastaların girişlerini izler ve olağan dışı durumlarda uyarır.",
+    "f2_text": "Artık olumsuz etkilerin tespit edilmesi için aylık incelemeyi beklemenize gerek yok. Doğrulanmış triyaj mantığımız, her hastanın günlük girişlerini klinik temel değerlerine göre sürekli olarak izler. Ani bir ağrı artışı, raporlanmayan bir yan etki veya kaçırılan bir titrasyon adımı gibi klinik olarak anlamlı bir sapma meydana geldiğinde, kontrol paneliniz acil, öncelikli bir uyarı oluşturarak durum tedavi başarısızlığına dönüşmeden hızlı, hedefe yönelik müdahaleye olanak tanır.",
     "f3_title": "Kesintisiz Reçete Yönlendirme",
     "f3_text": "Reçeteleri 30 km içindeki tercih edilen eczanelere yönlendirin.",
     "f4_title": "Kanıta Dayalı Veriler",
@@ -2147,8 +2174,8 @@
     "title": "Eczaneler İçin",
     "subtitle": "Kapalı yerel terapi ağının merkezi olun.",
     "cta": "Ortaklığa Başla",
-    "hero_title": "Eczaneniz Yerel Ağın Merkezinde",
-    "hero_intro": "Cannathera ile eczaneniz aktif ve vazgeçilmez bir merkez olur. Reçeteler sadece size yönlendirilir.",
+    "hero_title": "Kapalı Döngü Bölgesel Bakım Ağının Merkezindeki Eczaneniz",
+    "hero_intro": "Cannathera eczanenizi yalnızca pasif bir dizinde listelemekle kalmaz; sizi doğrulanmış, kapalı döngülü bir yerel terapi ekosisteminde aktif, vazgeçilmez bir dağıtım düğümü olarak entegre eder. Eczaneleri ortadan kaldırma ve hastaları isimsiz olarak ulusal postayla sipariş devlerine yönlendirme modelini aktif olarak reddediyoruz. Bunun yerine hastalar eczanenizi kalıcı, güvenilir yerel ortakları olarak aktif olarak seçerler. Bölge hekimlerinden gelen e-reçeteler yalnızca gelen kutunuza yönlendirilir ve önemli tedavi sonuçları, dağıtımdan sonra reçete yazma uygulamasına geri döner. Tıbbi olarak yapılandırılmış, tamamen hesap verebilir ve son derece karlı bir yerel bakım döngüsünün dağıtım dayanağı haline gelmek için pasif bir satış noktası rolünü aşarsınız.",
     "f1_title": "30km Yarıçap Ayrıcalığı",
     "f1_text": "Hastaların sadece sizin eczanenize yönlendirilmesini garanti ediyoruz.",
     "f2_title": "E-Reçete Panosu",
@@ -2184,9 +2211,9 @@
     "integration_title": "Sorunsuz Entegrasyon",
     "integration_text": "İyi belgelenmiş REST API'lerimizle altyapınızı aylar değil günler içinde bağlayın.",
     "v2_hero_title": "Doktor İş Yükünü Artırmadan Teletıbbı Ölçeklendirin",
-    "v2_hero_intro": "Cannathera klinik verileri doktorlara ulaşmadan önce filtreler ve yapılandırır.",
+    "v2_hero_intro": "Teletıptaki birincil darboğaz doktor kapasitesidir. Yapılandırılmamış hasta mesajları, geçici takipler ve belgelenmemiş şikayetler, yalnızca tıbbi karar almaya ayrılması gereken değerli klinik zamanı tüketir. Cannathera bu darboğazı kırıyor. Kurumsal platformumuz, hastalar tarafından oluşturulan tüm tedavi verilerini daha hekimin kontrol paneline ulaşmadan önce ön filtreden geçirir, standartlaştırır ve klinik olarak katmanlandırır. Tıbbi ekibiniz, sıfıra yakın idari zorlukla maksimum klinik verimle çalışarak, terapötik güvenlik veya sonuçlardan ödün vermeden ayda doktor başına katlanarak daha fazla hastaya hizmet vermenize olanak tanır.",
     "v2_f1_title": "Kurumsal API ve Beyaz Etiket",
-    "v2_f1_text": "Mevcut altyapınızla entegrasyon için RESTful API.",
+    "v2_f1_text": "Cannathera'nın RESTful API'si, ister özel bir EMR, ister üçüncü taraf bir telesağlık platformu, ister özel bir hasta uygulaması dağıtın, mevcut klinik yazılım yığınınıza sorunsuz bir şekilde yerleşir. Reçete yönlendirme, önceliklendirme uyarıları ve tedavi sonuçları, tam web kancası telemetrisine sahip güvenli, sürümlü uç noktalar aracılığıyla çift yönlü olarak senkronize edilir. Kurumsal müşteriler için tam beyaz etiket dağıtımı sunuyoruz: markanız, hasta arayüzünüz, sertifikalı klinik altyapımız tarafından desteklenmektedir. SLA destekli %99,99 kesintisiz çalışma garantisi ve özel bir entegrasyon mühendisliği ekibi standarttır.",
     "v2_f2_title": "Uzun Vadeli Hasta Bağlılığı",
     "v2_f2_text": "Tek seferlik hastaları sadık kullanıcılara dönüştürün.",
     "v2_f3_title": "Klinik Ön Filtreleme",

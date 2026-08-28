@@ -244,4 +244,9 @@ export class DoctorController {
   ) {
     return this.doctors.submissionDetail(user.sub, id);
   }
+
+  @Get('network/pharmacies')
+  networkPharmacies(@CurrentUser() user: SessionPayload, @Query('q') q?: string) {
+    return this.doctors.getNetworkPharmacies(user.sub, q);
+  }
 }

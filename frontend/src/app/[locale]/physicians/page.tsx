@@ -57,77 +57,84 @@ function PhysiciansContent() {
               </div>
             </div>
 
-            {/* Monthly Review Graphic */}
-            <div className="relative w-full rounded-2xl border border-white/10 bg-[#00120a] shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col mt-8 lg:mt-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none" />
-
-              {/* Browser chrome */}
-              <div className="h-12 border-b border-white/5 bg-white/[0.02] flex items-center px-4 gap-4 shrink-0">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]"/>
-                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"/>
-                  <div className="w-3 h-3 rounded-full bg-[#27c93f]"/>
+            {/* Monthly Review Graphic - PDF Report Style */}
+            <div className="relative w-full rounded-2xl border border-white/10 bg-white shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col mt-8 lg:mt-0 transform lg:rotate-2 hover:rotate-0 transition-transform duration-500 origin-bottom-right">
+              {/* Report Header */}
+              <div className="border-b-2 border-pine/20 bg-[#f8fdfa] p-5 sm:p-6 flex items-start justify-between">
+                <div className="flex flex-col gap-1">
+                  <div className="flex items-center gap-2">
+                    <span className="msym text-pine text-xl">description</span>
+                    <span className="text-xs font-bold text-pine uppercase tracking-widest">Clinical Progress Report</span>
+                  </div>
+                  <h3 className="text-2xl font-extrabold text-[#002819] mt-2">Monthly Review</h3>
+                  <p className="text-sm font-semibold text-pine/70">Period: August 2026</p>
                 </div>
-                <div className="h-5 w-56 bg-white/5 rounded flex items-center px-2">
-                  <span className="text-[10px] text-white/30 font-mono tracking-widest">cannathera · Monthly Review</span>
+                <div className="bg-pine/5 rounded-lg border border-pine/10 p-2 flex flex-col items-center justify-center min-w-[80px]">
+                  <span className="text-[10px] font-bold text-pine/50 uppercase tracking-wider mb-1">Status</span>
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-mint-bright bg-pine px-2 py-1 rounded">
+                    <span className="msym text-[14px]">verified</span> Ready
+                  </span>
                 </div>
               </div>
 
-              <div className="p-4 sm:p-5 flex flex-col gap-4">
-                {/* Header row */}
-                <div className="flex items-center justify-between">
+              {/* Report Body */}
+              <div className="p-5 sm:p-6 flex flex-col gap-5 bg-white">
+                
+                {/* Patient Info Row */}
+                <div className="grid grid-cols-2 gap-4 pb-4 border-b border-hairline">
                   <div>
-                    <div className="text-[10px] text-white/40 uppercase tracking-widest font-bold">Monthly Review</div>
-                    <div className="text-base font-bold text-white mt-0.5">August 2026</div>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Patient ID</span>
+                    <span className="text-sm font-bold text-gray-800 font-mono">PT-9942-DE</span>
                   </div>
-                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-mint/15 border border-mint/25 text-mint text-[10px] font-bold uppercase tracking-wide">
-                    <span className="msym text-[12px]">check_circle</span> Report Ready
-                  </span>
-                </div>
-
-                {/* Stats row */}
-                <div className="grid grid-cols-3 gap-2.5">
-                  <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-1">
-                    <span className="text-white/40 text-[9px] font-bold uppercase tracking-wider">Avg. Pain Score</span>
-                    <span className="text-xl font-bold text-white">3.2 <span className="text-xs text-mint font-semibold">↓ 1.4</span></span>
-                  </div>
-                  <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-1">
-                    <span className="text-white/40 text-[9px] font-bold uppercase tracking-wider">Sleep Quality</span>
-                    <span className="text-xl font-bold text-mint-bright">Good</span>
-                  </div>
-                  <div className="bg-white/5 rounded-xl border border-white/5 p-3 flex flex-col gap-1">
-                    <span className="text-white/40 text-[9px] font-bold uppercase tracking-wider">Tolerance</span>
-                    <span className="text-xl font-bold text-white">Stable</span>
-                  </div>
-                </div>
-
-                {/* Calendar heatmap */}
-                <div className="bg-white/5 rounded-xl border border-white/5 p-3">
-                  <div className="text-[10px] text-white/50 font-bold uppercase tracking-wider mb-2.5">Daily Activity — August</div>
-                  <div className="grid grid-cols-7 gap-1">
-                    {["M","T","W","T","F","S","S"].map((d, i) => (
-                      <div key={i} className="text-[8px] text-white/30 text-center font-bold">{d}</div>
-                    ))}
-                    {[
-                      "bg-white/5","bg-mint/20","bg-mint/35","bg-mint/50","bg-mint/35","bg-white/5","bg-white/5",
-                      "bg-mint/25","bg-mint/40","bg-mint/55","bg-mint/70","bg-mint/55","bg-white/5","bg-white/5",
-                      "bg-mint/20","bg-mint/45","bg-red-500/30","bg-mint/30","bg-mint/50","bg-white/5","bg-white/5",
-                      "bg-mint/30","bg-mint/45","bg-mint/60","bg-mint/40","bg-white/5","bg-white/5","bg-white/10",
-                    ].map((cls, i) => (
-                      <div key={i} className={`h-4 rounded-sm ${cls}`} />
-                    ))}
-                  </div>
-                </div>
-
-                {/* Triage alert */}
-                <div className="flex items-start gap-2.5 p-3 rounded-xl bg-red-500/10 border border-red-500/20">
-                  <span className="msym text-red-400 text-base mt-0.5 shrink-0">warning</span>
                   <div>
-                    <div className="text-[10px] font-bold text-red-300 uppercase tracking-wide">Triage Alert · Aug 17</div>
-                    <div className="text-[10px] text-white/50 mt-0.5">Pain spike NRS 7 — Dizziness reported. Review recommended.</div>
+                    <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest block mb-1">Current Protocol</span>
+                    <span className="text-sm font-bold text-gray-800">Cannabis Flos 20/1</span>
                   </div>
-                  <span className="ml-auto shrink-0 text-[9px] font-bold text-red-400 border border-red-400/30 rounded px-1.5 py-0.5">Review</span>
                 </div>
+
+                {/* Clinical Outcomes (Structured Data) */}
+                <div className="flex flex-col gap-3">
+                  <span className="text-[10px] font-bold text-pine uppercase tracking-widest">Aggregated Outcomes (30 Days)</span>
+                  
+                  <div className="grid grid-cols-3 gap-3">
+                    <div className="bg-gray-50 rounded-xl p-3 border border-gray-100 flex flex-col items-center justify-center text-center">
+                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Avg Pain (NRS)</span>
+                      <div className="flex items-end gap-1">
+                        <span className="text-2xl font-extrabold text-gray-900">3.2</span>
+                        <span className="text-xs font-bold text-green-600 mb-1">↓ 1.4</span>
+                      </div>
+                    </div>
+                    <div className="bg-gray-50 rounded-xl p-3 border border-gray-100 flex flex-col items-center justify-center text-center">
+                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Sleep Quality</span>
+                      <span className="text-xl font-bold text-gray-900 mt-1">Improved</span>
+                    </div>
+                    <div className="bg-gray-50 rounded-xl p-3 border border-gray-100 flex flex-col items-center justify-center text-center">
+                      <span className="text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1">Adherence</span>
+                      <span className="text-xl font-bold text-gray-900 mt-1">96%</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Triage Alert Section */}
+                <div className="bg-red-50/50 rounded-xl border border-red-100 p-4 flex gap-3 items-start mt-2">
+                  <span className="msym text-red-500 text-xl shrink-0 mt-0.5">notification_important</span>
+                  <div className="flex flex-col">
+                    <span className="text-xs font-bold text-red-700 uppercase tracking-wider">Clinical Alert Flagged</span>
+                    <span className="text-sm text-red-900/80 mt-1">Patient reported temporary dizziness on Aug 17 following dosage titration. No subsequent events recorded. Review advised during consultation.</span>
+                  </div>
+                </div>
+
+                {/* Report Footer / Signature Line */}
+                <div className="mt-4 pt-4 border-t border-hairline flex justify-between items-end">
+                  <div className="flex flex-col gap-1">
+                    <span className="text-[10px] text-gray-400 font-mono">Generated: Aug 31, 2026</span>
+                    <span className="text-[10px] text-gray-400 font-mono">Validated via Cannathera AI</span>
+                  </div>
+                  <div className="w-32 h-px bg-gray-300 relative">
+                    <span className="absolute -bottom-4 right-0 text-[9px] text-gray-400 uppercase font-bold tracking-wider">Physician Signature</span>
+                  </div>
+                </div>
+
               </div>
             </div>
 

@@ -303,6 +303,18 @@
       "title": "Notificare importantă privind planul dvs.",
       "description": "Utilizarea unei farmacii externe sau a unui medic extern care nu este legat de planul dvs. va anula beneficiile subvenționate. În acest caz, veți fi responsabil pentru costurile lunare ale platformei.",
       "confirm": "Înțeleg și sunt de acord"
+    },
+    "onboarding": {
+      "masterDataDesc": "Vă rugăm să confirmați datele dvs. de contact.",
+      "mainComplaintsDesc": "Care sunt motivele principale pentru terapia dumneavoastră?",
+      "descriptionOfComplaints": "Descrierea reclamațiilor",
+      "back": "Spate",
+      "continueToGoals": "Continuați la Obiective",
+      "therapyGoalsDesc": "Ce speri să obții cu această terapie?",
+      "continueToCannatheraScore": "Continuați până la Cannathera Score",
+      "cannatheraScoreDesc1": "Partea 1: Linia de bază a simptomelor",
+      "continue": "Continua",
+      "cannatheraScoreDesc2": "Partea 2: Viața de zi cu zi și Linia de bază a resurselor"
     }
   },
   "doctor": {
@@ -316,7 +328,8 @@
         "alerts": "Alerte",
         "reports": "Rapoarte",
         "settings": "Setările cabinetului",
-        "help": "Ajutor"
+        "help": "Ajutor",
+        "network": "Reţea"
       },
       "logout": "Deconectare",
       "systemStatus": "Starea sistemului:",
@@ -730,6 +743,12 @@
       "download": "Descarcă",
       "generatedOn": "Generat la {date}",
       "period": "{from} – {to}"
+    },
+    "network": {
+      "title": "Rețeaua de farmacii",
+      "subtitle": "Găsiți și contactați farmaciile din rețeaua dvs.",
+      "searchPlaceholder": "Cauta dupa farmacie sau oras...",
+      "noResults": "Nu au fost găsite farmacii."
     }
   },
   "legal": {
@@ -964,7 +983,8 @@
         "analytics": "Analize",
         "inventory": "Inventar",
         "settings": "Settings",
-        "prescriptions": "Prescriptions"
+        "prescriptions": "Prescriptions",
+        "network": "Reţea"
       }
     },
     "dashboard": {
@@ -1289,6 +1309,13 @@
     },
     "nav": {
       "reviews": "Patient checks"
+    },
+    "network": {
+      "title": "Rețeaua de medici",
+      "subtitle": "Găsiți și contactați medicii din rețeaua dvs.",
+      "searchPlaceholder": "Căutați după practică sau oraș...",
+      "noResults": "Nu s-au găsit practici.",
+      "doctors": "Doctori"
     }
   },
   "enterprise": {
@@ -1876,7 +1903,7 @@
     },
     "hero": {
       "certified": "Software Clinic Certificat",
-      "title": "Terapia Ta. Structurată Meticulos.",
+      "title": "Sistemul de operare medical pentru\nTerapia cu canabis.",
       "subtitle": "Alăturați-vă miilor de pacienți care și-au optimizat progresul terapeutic prin platforma noastră de ghidare adaptivă pe 90 de zile condusă clinic. Completați evaluările zilnice, vizualizați cronologii fiziologice și rămâneți conectați cu echipa dvs. clinică.",
       "ctaStart": "Începeți Planul Gratuit de 90 de Zile",
       "ctaPortal": "Accesați Portalul",
@@ -1896,13 +1923,13 @@
       "last7": "Ultimele 7 zile",
       "compliance": "Conformitate: Nu au fost detectate avertismente",
       "trust": "Scor de Încredere",
-      "v2_subtitle": "Fie că este vorba despre întrebări despre dozare, note confuze sau legătura lipsă dintre pacient, cabinetul medicului și farmacie: terapia cu canabinoizi de succes eșuează adesea în practica de zi cu zi din cauza problemelor de coordonare. Cannathera reduce acest decalaj ca hub digital inteligent, susținut clinic. Conectăm fără probleme practicienii și pacienții, automatizăm documentarea progresului și creăm baza de date validă necesară pentru siguranța reală a terapiei. Deveniți parte din Cannathera – pentru asistență transparentă, conformă din punct de vedere legal și structurat din prima zi.",
+      "v2_subtitle": "Cannathera este sistemul de operare clinic definitiv pentru canabisul medicinal. Transformăm tratamentele fragmentate și nestructurate ale pacienților într-un ecosistem complet în buclă închisă, bazat pe date. Prin conectarea pacienților, a medicilor regionali și a farmaciilor locale verificate prin monitorizare securizată și structurată, asigurăm siguranță terapeutică maximă, precizie de neegalat a documentației și rezultate medicale durabile încă din prima zi.",
       "v2_ctaStart": "Începeți-vă asistența terapeutică"
     },
     "features": {
       "tag": "Capacități ale platformei",
-      "title": "Un Ecosistem Complet pentru Însoțirea Terapiei",
-      "subtitle": "Cannathera umple golul dintre clinicieni, farmacii și pacienți prin traducerea regimurilor complexe de terapie în fluxuri de progres structurate, securizate și bazate pe date.",
+      "title": "Un ecosistem arhitectat pentru conformitatea completă cu terapia",
+      "subtitle": "Cannathera realizează o punte de decalaj critică dintre medicii care prescriu, farmaciile care eliberează și realitatea zilnică a pacientului. Prin traducerea regimurilor de terapie complexe, extrem de individualizate în fluxuri de lucru clinice structurate, sigure și bazate pe date, ridicăm tratamentul cu canabis la cele mai înalte standarde medicale.",
       "patientBullets": [
         "Documentare in curs de desfasurare",
         "Jurnalele de dozare zilnică",
@@ -2122,12 +2149,12 @@
     "compliance_title": "Conformitate GDPR",
     "compliance_text": "Complet conform GDPR, criptat AES-256 și certificat ca dispozitiv medical clasa I.",
     "cta": "Solicitați acces",
-    "hero_title": "Raportul lunar care se scrie singur",
-    "hero_intro": "Terapia cu canabinoizi necesită o documentare structurată, nu presupuneri trimestriale. Cannathera cumulează zilnic simptomele, nivelul durerii și toleranța într-un raport clar.",
+    "hero_title": "Revizuirea lunară care se scrie în sine — Precizie clinică automatizată",
+    "hero_intro": "Terapia cu canabis medical necesită o documentație continuă, structurată și care poate fi susținută din punct de vedere legal - nu presupuneri retrospective sau note nestructurate ale pacientului. Motorul de acompaniament activ al Cannathera reunește automat jurnalele zilnice de simptome ale fiecărui pacient, valorile validate ale scalei durerii, evaluările de tolerabilitate și răspunsurile specifice tulpinii într-o revizuire lunară extrem de detaliată, de grad clinic. Când pacientul dumneavoastră sosește pentru consultația de urmărire, tabloul clinic este deja sintetizat, structurat și pregătit pentru evaluarea dumneavoastră imediată. Recuperați ore de timp administrativ în timp ce eliminați punctele moarte dintre întâlnirile programate.",
     "f1_title": "Rapoarte lunare automatizate",
-    "f1_text": "La sfârșitul fiecărei luni, Cannathera compilează un rezumat structurat. Acesta include evoluția zilnică a simptomelor și scorurile durerii.",
+    "f1_text": "La sfârșitul fiecărei luni, Cannathera alcătuiește automat un rezumat al terapiei structurat, orientat către medic, gata de export. Include progresia zilnică a simptomelor, scorurile validate ale scalei de durere NRS, tendințele de calitate a somnului PSQI și indicatoarele de tolerabilitate critice - toate generate fără probleme din intrările zilnice ale pacientului. Primești un document clinic solid din punct de vedere legal, nu un depozit de date brute, neinterpretabile.",
     "f2_title": "Triaj și alerte în timp real",
-    "f2_text": "Sistemul monitorizează zilnic înregistrările pacienților. Dacă apare o abatere semnificativă clinic, primiți o alertă imediată.",
+    "f2_text": "Nu mai trebuie să așteptați revizuirea lunară pentru a detecta efectele adverse. Logica noastră de triaj validată monitorizează continuu intrările zilnice ale fiecărui pacient în raport cu valoarea de bază clinică. Când apare o abatere semnificativă din punct de vedere clinic - o creștere bruscă a durerii, un efect secundar neraportat sau o etapă de titrare ratată - tabloul de bord generează o alertă imediată, prioritizată, permițând intervenția rapidă și direcționată înainte ca situația să devină eșec al terapiei.",
     "f3_title": "Direcționare e-Rețete și Conformitate",
     "f3_text": "Eliberați rețete electronice direcționate automat către farmacia locală preferată de pacient. Totul este semnat criptografic și sigur.",
     "f4_title": "Date structurate pentru ajustări sigure",
@@ -2147,8 +2174,8 @@
     "title": "Pentru Farmacii",
     "subtitle": "Deveniți pilonul central al unei rețele locale închise.",
     "cta": "Începeți parteneriatul",
-    "hero_title": "Farmacia ta în centrul rețelei locale",
-    "hero_intro": "Cannathera transformă farmacia ta într-un nod esențial al unui ecosistem verificat. Pacienții aleg farmacia ta și rețetele medicilor ajung direct la tine.",
+    "hero_title": "Farmacia dvs. în centrul unei rețele regionale de îngrijire în buclă închisă",
+    "hero_intro": "Cannathera nu doar listează farmacia dvs. într-un director pasiv - vă integrează ca un nod de distribuire activ, indispensabil într-un ecosistem de terapie local verificat, în buclă închisă. Respingem în mod activ modelul de eliminare a farmaciilor și redirecționare anonimă a pacienților către giganții naționali de comandă prin corespondență. În schimb, pacienții își selectează în mod activ farmacia ca partener local permanent și de încredere. Rețetele electronice de la medicii regionali sunt direcționate exclusiv către căsuța dvs. de e-mail, iar rezultatele cruciale ale terapiei revin la practica de prescriere după eliberare. Transcendeți rolul unui punct de vânzare pasiv pentru a deveni ancora de distribuire a unui circuit de îngrijire local structurat din punct de vedere medical, pe deplin responsabil și extrem de profitabil.",
     "f1_title": "Retea hiperlocală - Exclusivitate 30km",
     "f1_text": "Routarea noastră hiperlocală pe 30km garantează că pacienții din zona ta sunt direcționați către farmacia ta, generând loialitate autentică.",
     "f2_title": "Panou CRM pentru Rețete",
@@ -2184,9 +2211,9 @@
     "integration_title": "Integrare perfectă",
     "integration_text": "Conectați-vă infrastructura în zile, nu în luni, cu API-urile noastre REST bine documentate.",
     "v2_hero_title": "Scalați Telemedicina, fără a suprasolicita medicii",
-    "v2_hero_intro": "Eliminați blocajul principal al telemedicinii: capacitatea medicilor. Cannathera filtrează și structurează datele clinice, maximizând randamentul medical.",
+    "v2_hero_intro": "Principalul blocaj în telemedicină este capacitatea medicului. Mesajele nestructurate ale pacienților, urmăririle ad-hoc și plângerile nedocumentate consumă timp clinic valoros care ar trebui să fie dedicat exclusiv luării deciziilor medicale. Cannathera sparge acest blocaj. Platforma noastră de întreprindere prefiltrează, standardizează și stratifică clinic toate datele de terapie generate de pacient înainte ca acestea să ajungă vreodată în tabloul de bord al unui medic. Echipa dumneavoastră medicală operează la un debit clinic maxim, cu o frecvență administrativă aproape de zero, permițându-vă să deserviți exponențial mai mulți pacienți per medic pe lună, fără a compromite siguranța sau rezultatele terapeutice.",
     "v2_f1_title": "API Enterprise & Integrare White-Label",
-    "v2_f1_text": "API-ul RESTful se conectează direct la software-ul dvs. clinic existent. Oferim și interfețe personalizabile white-label.",
+    "v2_f1_text": "API-ul RESTful de la Cannathera se integrează perfect în stiva dvs. de software clinică existentă, indiferent dacă implementați un EMR proprietar, o platformă de telesănătate terță parte sau o aplicație personalizată pentru pacient. Dirijarea prescripției, alertele de triaj și rezultatele terapiei se sincronizează bidirecțional prin puncte finale securizate, versiuni cu telemetrie webhook completă. Pentru clienții întreprinderi, oferim o implementare completă cu etichetă albă: brandingul dvs., interfața pacientului dvs., alimentată de infrastructura noastră clinică certificată. Garanții de funcționare de 99,99% susținute de SLA și o echipă dedicată de inginerie de integrare sunt standard.",
     "v2_f2_title": "Fidelizarea pe termen lung a pacienților",
     "v2_f2_text": "Transformați pacienții unici în utilizatori constanți prin instrumente digitale de acompaniere activă în terapie.",
     "v2_f3_title": "Filtrare Clinică: Medicii văd doar esențialul",
