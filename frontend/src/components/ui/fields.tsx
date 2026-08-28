@@ -14,6 +14,8 @@ type BaseProps = {
   autoComplete?: string;
   /** Optional element rendered at the end of the label row (e.g. forgot-password link) */
   labelEnd?: React.ReactNode;
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export function FieldLabel({
@@ -46,6 +48,8 @@ export function TextField({
   name,
   autoComplete,
   labelEnd,
+  value,
+  onChange,
   type = "text",
   icon,
 }: Readonly<BaseProps & { type?: string; icon?: string }>) {
@@ -63,6 +67,8 @@ export function TextField({
           required={required}
           placeholder={placeholder}
           autoComplete={autoComplete}
+          value={value}
+          onChange={onChange}
           className={`${inputClass} ${icon ? "pe-12" : ""}`}
         />
         {icon ? (
@@ -85,6 +91,8 @@ export function PasswordField({
   name,
   autoComplete = "current-password",
   labelEnd,
+  value,
+  onChange,
 }: Readonly<BaseProps>) {
   const t = useTranslations("common");
   const id = useId();
@@ -102,6 +110,8 @@ export function PasswordField({
           required={required}
           placeholder={placeholder}
           autoComplete={autoComplete}
+          value={value}
+          onChange={onChange}
           className={`${inputClass} pe-12`}
         />
         <button
@@ -123,7 +133,9 @@ export function CheckboxField({
   children,
   name,
   required,
-}: Readonly<{ children: React.ReactNode; name?: string; required?: boolean }>) {
+  checked,
+  onChange,
+}: Readonly<{ children: React.ReactNode; name?: string; required?: boolean; checked?: boolean; onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void }>) {
   const id = useId();
   return (
     <label htmlFor={id} className="flex items-start gap-3 cursor-pointer select-none">
@@ -132,6 +144,8 @@ export function CheckboxField({
         name={name}
         type="checkbox"
         required={required}
+        checked={checked}
+        onChange={onChange}
         className="mt-0.5 size-5 shrink-0 rounded border-hairline text-pine-600 accent-(--color-pine-600)"
       />
       <span className="text-base text-ink-strong">{children}</span>

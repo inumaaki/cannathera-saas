@@ -1014,6 +1014,19 @@ export class PharmacyService {
       })
     ]);
     
+    const wasCritical = this.stockStatus(item.stockLevel, item.safetyThreshold);
+    const nowCritical = this.stockStatus(updatedItem.stockLevel, updatedItem.safetyThreshold);
+    if (nowCritical === 'critical' && wasCritical !== 'critical') {
+      this.notifications.publish({
+        target: { orgId: item.orgId },
+        kind: 'stock_low',
+        severity: 'critical',
+        title: updatedItem.name,
+        text: `Kritischer Engpass — nur noch ${updatedItem.stockLevel} ${updatedItem.unit} auf Lager.`,
+        href: '/pharmacy/inventory',
+      });
+    }
+    
     return tx;
   }
 
@@ -1208,24 +1221,31 @@ export class PharmacyService {
 
     // Process the inventory deductions and mark as completed in a transaction
     const transactionOperations: any[] = [];
+    const itemsToUpdate: any[] = [];
     
     for (const item of parsedData) {
       if (item.inventoryId && item.quantity) {
-        transactionOperations.push(
-          this.prisma.inventoryItem.update({
-            where: { id: item.inventoryId },
-            data: { stockLevel: { decrement: item.quantity } }
-          }),
-          this.prisma.inventoryTransaction.create({
-            data: {
-              inventoryId: item.inventoryId,
-              type: 'OUTFLOW',
-              quantity: item.quantity,
-              prescriptionId: prescriptionId,
-              note: 'Auto-processed via 1-click workflow',
-            }
-          })
-        );
+        const invItem = await this.prisma.inventoryItem.findUnique({
+          where: { id: item.inventoryId }
+        });
+        if (invItem) {
+          itemsToUpdate.push({ invItem, quantity: item.quantity });
+          transactionOperations.push(
+            this.prisma.inventoryItem.update({
+              where: { id: item.inventoryId },
+              data: { stockLevel: { decrement: item.quantity } }
+            }),
+            this.prisma.inventoryTransaction.create({
+              data: {
+                inventoryId: item.inventoryId,
+                type: 'OUTFLOW',
+                quantity: item.quantity,
+                prescriptionId: prescriptionId,
+                note: 'Auto-processed via 1-click workflow',
+              }
+            })
+          );
+        }
       }
     }
 
@@ -1237,6 +1257,24 @@ export class PharmacyService {
     );
 
     const results = await this.prisma.$transaction(transactionOperations);
+    
+    // Check for low stock alerts
+    for (const { invItem, quantity } of itemsToUpdate) {
+      const newStock = invItem.stockLevel - quantity;
+      const wasCritical = this.stockStatus(invItem.stockLevel, invItem.safetyThreshold);
+      const nowCritical = this.stockStatus(newStock, invItem.safetyThreshold);
+      if (nowCritical === 'critical' && wasCritical !== 'critical') {
+        this.notifications.publish({
+          target: { orgId: invItem.orgId },
+          kind: 'stock_low',
+          severity: 'critical',
+          title: invItem.name,
+          text: `Kritischer Engpass — nur noch ${newStock} ${invItem.unit} auf Lager.`,
+          href: '/pharmacy/inventory',
+        });
+      }
+    }
+
     return results[results.length - 1]; // return the updated prescription
   }
 

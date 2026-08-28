@@ -3,6 +3,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { useRouter } from "@/i18n/navigation";
 import { api } from "@/lib/api";
 
@@ -31,6 +32,7 @@ function SliderField({ label, value, onChange, minLabel = "Low", maxLabel = "Hig
 
 export default function PatientOnboarding() {
   const router = useRouter();
+  const t = useTranslations("patient.onboarding");
 
   const [step, setStep] = useState(1);
   const [loading, setLoading] = useState(false);
