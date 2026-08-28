@@ -597,9 +597,9 @@ export class PatientService {
     let results: Array<{
       id: string;
       name: string;
-      postalCode: string;
-      city: string;
-      street: string;
+      postalCode: string | null;
+      city: string | null;
+      street: string | null;
       description: string | null;
       operatingHours: any;
       distanceKm: number;
