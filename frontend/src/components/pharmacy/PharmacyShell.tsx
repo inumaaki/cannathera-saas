@@ -16,6 +16,7 @@ const NAV = [
   { href: "/pharmacy/analytics", key: "analytics", icon: "monitoring" },
   { href: "/pharmacy/inventory", key: "inventory", icon: "inventory_2" },
   { href: "/pharmacy/network", key: "network", icon: "hub" },
+  { href: "/pharmacy/chat", key: "chat", icon: "chat" },
   { href: "/pharmacy/settings", key: "settings", icon: "settings" },
 ] as const;
 
@@ -278,6 +279,16 @@ export function PharmacyShell({
                     <p className="border-b border-hairline px-5 py-3 text-sm text-muted rounded-t-xl">
                       {pharmacyName}
                     </p>
+                    <Link
+                      href="/set-password"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-center gap-3 border-b border-hairline px-5 py-3 text-sm font-semibold text-ink-strong hover:bg-surface"
+                    >
+                      <span aria-hidden className="msym text-[20px] text-pine-600">
+                        lock
+                      </span>
+                      {t("security")}
+                    </Link>
                     <div className="flex items-center justify-between border-b border-hairline px-5 py-3">
                       <span className="flex items-center gap-3 text-sm font-semibold text-ink-strong">
                         <span aria-hidden className="msym text-[20px] text-pine-600">

@@ -22,11 +22,11 @@ export function PrescriptionUpload({
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!pharmacyId) {
-      setError("Please select a pharmacy from your favorites.");
+      setError(t("upload.errorNoPharmacy"));
       return;
     }
     if (!file) {
-      setError("Please select a prescription file to upload.");
+      setError(t("upload.errorNoFile"));
       return;
     }
 
@@ -66,15 +66,15 @@ export function PrescriptionUpload({
   if (!favoritePharmacies || favoritePharmacies.length === 0) {
     return (
       <div className="rounded-xl border border-hairline bg-[#f6f8fc] p-6 text-center">
-        <h3 className="font-bold text-ink-strong">No Favorite Pharmacies</h3>
+        <h3 className="font-bold text-ink-strong">{t("upload.noFavoritesTitle")}</h3>
         <p className="mt-2 text-sm text-muted">
-          You must add at least one pharmacy to your favorites before you can upload a prescription.
+          {t("upload.noFavoritesText")}
         </p>
         <button
           onClick={() => router.push("/patient/profile#network")}
           className="mt-4 h-10 rounded-lg bg-pine-600 px-5 font-bold text-white"
         >
-          Manage Network
+          {t("upload.manageNetwork")}
         </button>
       </div>
     );
@@ -82,11 +82,11 @@ export function PrescriptionUpload({
 
   return (
     <form onSubmit={handleSubmit} className="rounded-xl border border-hairline bg-white p-5 space-y-4 shadow-sm">
-      <h3 className="font-bold text-pine-900 text-xl border-b border-hairline pb-2">Upload New Prescription</h3>
+      <h3 className="font-bold text-pine-900 text-xl border-b border-hairline pb-2">{t("upload.title")}</h3>
       
       <div>
         <label className="block text-xs font-semibold uppercase tracking-wide text-muted mb-1">
-          Select Pharmacy
+          {t("upload.selectPharmacy")}
         </label>
         <select
           value={pharmacyId}
@@ -95,7 +95,7 @@ export function PrescriptionUpload({
           required
         >
           <option value="" disabled>
-            -- Choose from your favorites --
+            {t("upload.choosePlaceholder")}
           </option>
           {favoritePharmacies.map((p) => (
             <option key={p.id} value={p.id}>
@@ -107,45 +107,54 @@ export function PrescriptionUpload({
 
       <div>
         <label className="block text-xs font-semibold uppercase tracking-wide text-muted mb-1">
-          Prescription File (PDF, JPG, PNG)
+          {t("upload.selectFile")}
         </label>
-        <label className="flex h-32 w-full cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-pine-200 bg-[#f6f8fc] text-muted hover:bg-pine-50 hover:border-pine-400 transition-colors">
-          <span aria-hidden className="msym text-[32px] mb-2 text-pine-600">upload_file</span>
-          <span className="text-sm font-medium text-pine-900">
-            {file ? file.name : "Click to select a file"}
-          </span>
-          <input 
-            type="file" 
-            accept=".pdf,.jpg,.jpeg,.png"
-            className="hidden" 
+        <div className="relative flex h-32 cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-hairline bg-[#f6f8fc] hover:bg-gray-50 transition-colors">
+          <input
+            type="file"
+            accept="image/*,application/pdf"
             onChange={(e) => setFile(e.target.files?.[0] || null)}
+            className="absolute inset-0 z-10 w-full opacity-0 cursor-pointer"
+            required
           />
-        </label>
+          <span aria-hidden className="msym text-pine-600 text-3xl mb-2">upload_file</span>
+          <p className="text-sm font-medium text-ink-strong">
+            {file ? file.name : t("upload.filePlaceholder")}
+          </p>
+        </div>
       </div>
 
       <div>
         <label className="block text-xs font-semibold uppercase tracking-wide text-muted mb-1">
-          Optional Note for Pharmacist
+          {t("upload.noteLabel")}
         </label>
         <textarea
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          className="h-20 w-full resize-none rounded-lg border border-hairline bg-[#f6f8fc] p-3 text-ink-strong outline-none focus:border-pine-600"
-          placeholder="E.g. Please split into multiple smaller jars."
+          rows={3}
+          className="w-full rounded-lg border border-hairline bg-[#f6f8fc] p-3 text-ink-strong outline-none focus:border-pine-600"
+          placeholder={t("upload.notePlaceholder")}
         />
       </div>
 
-      {error && <p className="text-sm text-red-500 font-medium">{error}</p>}
-
-      <div className="flex justify-end pt-2">
-        <button
-          type="submit"
-          disabled={pending || !pharmacyId}
-          className="h-11 rounded-lg bg-pine-600 px-6 font-bold text-white disabled:opacity-50"
-        >
-          {pending ? "Uploading..." : "Submit Prescription"}
-        </button>
-      </div>
+      {error && <p className="text-sm text-red-600 bg-red-50 p-3 rounded-lg border border-red-100">{error}</p>}
+      <button
+        type="submit"
+        disabled={pending}
+        className="h-11 w-full rounded-lg bg-pine-600 font-bold text-white transition-colors hover:bg-pine-700 disabled:opacity-50 flex items-center justify-center gap-2"
+      >
+        {pending ? (
+          <>
+            <span aria-hidden className="msym animate-spin text-[20px]">progress_activity</span>
+            {t("upload.submitting")}
+          </>
+        ) : (
+          <>
+            <span aria-hidden className="msym text-[20px]">send</span>
+            {t("upload.submit")}
+          </>
+        )}
+      </button>
     </form>
   );
 }

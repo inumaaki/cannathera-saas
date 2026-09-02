@@ -54,6 +54,31 @@ function points(values: number[], w: number, h: number, pad = 4) {
   });
 }
 
+const smoothLine = (pts: ReadonlyArray<readonly [number, number]>) => {
+  if (pts.length === 0) return "";
+  if (pts.length === 1) return `M${pts[0][0]},${pts[0][1]}`;
+  const d = [`M${pts[0][0]},${pts[0][1]}`];
+  for (let i = 0; i < pts.length - 1; i++) {
+    const x0 = pts[Math.max(i - 1, 0)][0];
+    const y0 = pts[Math.max(i - 1, 0)][1];
+    const x1 = pts[i][0];
+    const y1 = pts[i][1];
+    const x2 = pts[i + 1][0];
+    const y2 = pts[i + 1][1];
+    const x3 = pts[Math.min(i + 2, pts.length - 1)][0];
+    const y3 = pts[Math.min(i + 2, pts.length - 1)][1];
+
+    const tension = 0.2;
+    const cp1x = x1 + (x2 - x0) * tension;
+    const cp1y = y1 + (y2 - y0) * tension;
+    const cp2x = x2 - (x3 - x1) * tension;
+    const cp2y = y2 - (y3 - y1) * tension;
+
+    d.push(`C ${cp1x},${cp1y} ${cp2x},${cp2y} ${x2},${y2}`);
+  }
+  return d.join(" ");
+};
+
 /** Smooth single-series sparkline (2px line, no axes — value shown as big label). */
 export function Sparkline({
   values,
@@ -70,9 +95,9 @@ export function Sparkline({
 }>) {
   if (values.length < 2) return null;
   const pts = points(values, width, height);
-  const d = pts
-    .map(([x, y], i) => (i === 0 ? `M${x},${y}` : step ? `H${x} V${y}` : `L${x},${y}`))
-    .join(" ");
+  const d = step
+    ? pts.map(([x, y], i) => (i === 0 ? `M${x},${y}` : `H${x} V${y}`)).join(" ")
+    : smoothLine(pts);
   return (
     <svg width={width} height={height} viewBox={`0 0 ${width} ${height}`} aria-hidden className="max-w-full">
       <path d={d} fill="none" stroke={color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
@@ -98,8 +123,7 @@ export function CorrelationChart({
   const plotH = height - 24; // room for x labels
   const dPts = points(dosage, width, plotH);
   const rPts = points(relief, width, plotH);
-  const line = (pts: ReadonlyArray<readonly [number, number]>) =>
-    pts.map(([x, y], i) => (i === 0 ? `M${x},${y}` : `L${x},${y}`)).join(" ");
+  const line = (pts: ReadonlyArray<readonly [number, number]>) => smoothLine(pts);
   const area = `${line(dPts)} L${dPts.at(-1)![0]},${plotH} L${dPts[0][0]},${plotH} Z`;
 
   return (

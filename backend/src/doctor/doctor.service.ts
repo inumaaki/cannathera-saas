@@ -6,6 +6,8 @@ import {
 } from '@nestjs/common';
 import { Prisma, Role, SubmissionStatus } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { getCoordinatesForPostalCode, getDistanceKm } from '../shared/geocode';
+import { BadRequestException } from '@nestjs/common';
 
 type LogMetrics = {
   pain?: number;
@@ -96,8 +98,27 @@ export class DoctorService {
       ? Math.round(adherences.reduce((a, b) => a + b, 0) / adherences.length)
       : null;
 
+    const recentSubmissions = await this.prisma.submission.findMany({
+      where: { status: SubmissionStatus.SUBMITTED, patient: scope },
+      orderBy: { submittedAt: 'desc' },
+      take: 10,
+      select: {
+        id: true,
+        patientId: true,
+        patient: {
+          select: {
+            patientRef: true,
+            user: { select: { firstName: true, lastName: true } },
+          },
+        },
+        submittedAt: true,
+        answers: { include: { question: { select: { key: true } } } },
+      },
+    });
+
     return {
-      activePatients: patients.length,
+      totalPatients: patients.length,
+      activePatients: patients.filter((p) => daysByPatient.has(p.id)).length,
       appointmentsToday: todaysSessions.length,
       nextAppointment:
         todaysSessions.find((s) => s.scheduledAt > new Date()) ?? null,
@@ -112,6 +133,21 @@ export class DoctorService {
         video: !!s.joinUrl,
       })),
       recentPatients: patients.slice(0, 6),
+      recentSubmissions: recentSubmissions.map((s) => {
+        const satisfaction = s.answers.find(
+          (a) => a.question.key === 'satisfaction',
+        )?.value as number | undefined;
+        return {
+          id: s.id,
+          patientId: s.patientId,
+          patientName: [s.patient.user.firstName, s.patient.user.lastName]
+            .filter(Boolean)
+            .join(' '),
+          patientRef: s.patient.patientRef,
+          submittedAt: s.submittedAt?.toISOString() ?? '',
+          compliance: satisfaction != null ? satisfaction * 10 : null,
+        };
+      }),
     };
   }
 
@@ -836,27 +872,82 @@ export class DoctorService {
     };
   }
 
-  async getNetworkPharmacies(userId: string, query?: string) {
+  async getPharmacies(doctorId: string) {
     const membership = await this.prisma.membership.findFirst({
-      where: { userId },
+      where: { userId: doctorId },
+      include: { org: true },
     });
-    if (!membership) throw new ForbiddenException('NO_MEMBERSHIP');
+    if (!membership?.org) throw new ForbiddenException('NO_MEMBERSHIP');
 
-    // Return all PHARMACY organizations to act as a directory.
-    const where: Prisma.OrganizationWhereInput = {
-      type: 'PHARMACY',
-      accountStatus: 'ACTIVE',
-    };
-
-    if (query) {
-      where.OR = [
-        { name: { contains: query, mode: 'insensitive' } },
-        { city: { contains: query, mode: 'insensitive' } },
-      ];
+    // Radius logic
+    const address = membership.org.postalCode || '80331';
+    const coords = await getCoordinatesForPostalCode(address);
+    if (!coords) {
+      throw new BadRequestException('INVALID_POSTAL_CODE');
     }
 
     const pharmacies = await this.prisma.organization.findMany({
-      where,
+      where: {
+        type: 'PHARMACY',
+        accountStatus: 'ACTIVE',
+      },
+      select: {
+        id: true,
+        name: true,
+        postalCode: true,
+        city: true,
+        street: true,
+        lat: true,
+        lng: true,
+        description: true,
+        operatingHours: true,
+        inventory: {
+          where: { active: true, category: 'Flower', stockLevel: { gt: 0 } },
+          select: { id: true },
+        },
+      },
+    });
+
+    let results: any[] = [];
+    const searchRadii = [25, 35];
+    for (const radiusKm of searchRadii) {
+      results = [];
+      for (const p of pharmacies) {
+        if (p.lat == null || p.lng == null) continue;
+        const distance = getDistanceKm(coords.lat, coords.lng, p.lat, p.lng);
+        if (distance <= radiusKm) {
+          results.push({
+            ...p,
+            distanceKm: parseFloat(distance.toFixed(2)),
+            availableStrainsCount: p.inventory.length,
+          });
+        }
+      }
+      if (results.length >= 3) break;
+    }
+
+    results.sort((a, b) => {
+      if (a.distanceKm !== b.distanceKm) return a.distanceKm - b.distanceKm;
+      return b.availableStrainsCount - a.availableStrainsCount;
+    });
+    return results;
+  }
+
+  async getNetworkPharmacies(practiceUserId: string, q?: string) {
+    const membership = await this.prisma.membership.findFirst({
+      where: { userId: practiceUserId },
+    });
+    if (!membership) throw new ForbiddenException('NO_MEMBERSHIP');
+
+    return this.prisma.organization.findMany({
+      where: {
+        type: 'PHARMACY',
+        ...(q
+          ? {
+              name: { contains: q, mode: 'insensitive' },
+            }
+          : {}),
+      },
       select: {
         id: true,
         name: true,
@@ -868,7 +959,102 @@ export class DoctorService {
       },
       orderBy: { name: 'asc' },
     });
+  }
 
-    return pharmacies;
+  async getChatThreads(doctorId: string) {
+    const membership = await this.prisma.membership.findFirst({
+      where: { userId: doctorId },
+    });
+    if (!membership) throw new ForbiddenException('NO_MEMBERSHIP');
+    
+    return this.prisma.chatThread.findMany({
+      where: { practiceId: membership.orgId },
+      include: {
+        pharmacy: {
+          select: { id: true, name: true, city: true },
+        },
+        messages: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+        }
+      },
+      orderBy: { updatedAt: 'desc' },
+    });
+  }
+
+  async getChatMessages(practiceUserId: string, pharmacyId: string) {
+    const membership = await this.prisma.membership.findFirst({
+      where: { userId: practiceUserId },
+    });
+    if (!membership) throw new ForbiddenException('NO_MEMBERSHIP');
+
+    let thread = await this.prisma.chatThread.findUnique({
+      where: {
+        practiceId_pharmacyId: {
+          practiceId: membership.orgId,
+          pharmacyId,
+        }
+      },
+    });
+
+    if (!thread) {
+      thread = await this.prisma.chatThread.create({
+        data: {
+          practiceId: membership.orgId,
+          pharmacyId,
+        },
+      });
+    }
+
+    return this.prisma.chatMessage.findMany({
+      where: { threadId: thread.id },
+      include: {
+        sender: { select: { id: true, firstName: true, lastName: true } }
+      },
+      orderBy: { createdAt: 'asc' },
+    });
+  }
+
+  async sendChatMessage(doctorId: string, pharmacyId: string, content: string) {
+    const membership = await this.prisma.membership.findFirst({
+      where: { userId: doctorId },
+    });
+    if (!membership) throw new ForbiddenException('NO_MEMBERSHIP');
+
+    let thread = await this.prisma.chatThread.findUnique({
+      where: {
+        practiceId_pharmacyId: {
+          practiceId: membership.orgId,
+          pharmacyId,
+        }
+      },
+    });
+
+    if (!thread) {
+      thread = await this.prisma.chatThread.create({
+        data: {
+          practiceId: membership.orgId,
+          pharmacyId,
+        },
+      });
+    }
+
+    const message = await this.prisma.chatMessage.create({
+      data: {
+        threadId: thread.id,
+        senderId: doctorId,
+        content,
+      },
+      include: {
+        sender: { select: { id: true, firstName: true, lastName: true } }
+      }
+    });
+
+    await this.prisma.chatThread.update({
+      where: { id: thread.id },
+      data: { updatedAt: new Date() },
+    });
+
+    return message;
   }
 }

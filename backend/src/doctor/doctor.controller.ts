@@ -12,6 +12,7 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Role } from '@prisma/client';
 import type { Response } from 'express';
@@ -193,6 +194,37 @@ export class DoctorController {
     @Body() dto: UpdateMemberDto,
   ) {
     return this.doctors.updateTeamMember(user.sub, membershipId, dto);
+  }
+
+  @Get('pharmacies')
+  @ApiOperation({ summary: 'List pharmacies in radius' })
+  getPharmacies(@CurrentUser() user: SessionPayload) {
+    return this.doctors.getPharmacies(user.sub);
+  }
+
+  @Get('chat/threads')
+  @ApiOperation({ summary: 'Get chat threads' })
+  getChatThreads(@CurrentUser() user: SessionPayload) {
+    return this.doctors.getChatThreads(user.sub);
+  }
+
+  @Get('chat/:pharmacyId/messages')
+  @ApiOperation({ summary: 'Get chat messages with pharmacy' })
+  getChatMessages(
+    @CurrentUser() user: SessionPayload,
+    @Param('pharmacyId') pharmacyId: string,
+  ) {
+    return this.doctors.getChatMessages(user.sub, pharmacyId);
+  }
+
+  @Post('chat/:pharmacyId/messages')
+  @ApiOperation({ summary: 'Send a chat message to pharmacy' })
+  sendChatMessage(
+    @CurrentUser() user: SessionPayload,
+    @Param('pharmacyId') pharmacyId: string,
+    @Body('content') content: string,
+  ) {
+    return this.doctors.sendChatMessage(user.sub, pharmacyId, content);
   }
 
   @Get('patients')

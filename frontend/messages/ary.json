@@ -284,7 +284,26 @@
       "saved": "تم حفظ الملف الشخصي",
       "gdprTitle": "متوافق مع GDPR",
       "gdprText": "بياناتك الطبية مشفرة وفقًا لمعايير الأمان العالية في الاتحاد الأوروبي.",
-      "safeguardWarning": "هام: إن التحول إلى صيدلية أو طبيب خارجي يلغي المزايا المدعومة لخطتك."
+      "safeguardWarning": "هام: إن التحول إلى صيدلية أو طبيب خارجي يلغي المزايا المدعومة لخطتك.",
+      "networkTitle": "My Pharmacy Network",
+      "networkSubtitle": "Choose up to 3 local pharmacies to receive your prescriptions directly. Your local recommendations are generated automatically based on your address.",
+      "recommendedPharmacies": "Find Local Pharmacies",
+      "currentFavorites": "Current Favourites",
+      "noFavorites": "No pharmacies selected yet.",
+      "addToFavorites": "Add to Favourites",
+      "added": "Added",
+      "saveNetwork": "Save Network",
+      "networkSaved": "Saved!",
+      "liveStock": "Live Stock",
+      "inventorySyncing": "Syncing inventory...",
+      "moreStrains": "+{count} more strains...",
+      "locatingPartners": "Locating nearby partners...",
+      "address": "Address",
+      "phone": "Phone Number",
+      "dateOfBirth": "Date of Birth",
+      "treatingPhysician": "Treating Physician / Practice",
+      "changePassword": "Change Password",
+      "passwordAndSecurity": "Password & Security"
     },
     "reports": {
       "title": "تقاريري",
@@ -314,7 +333,35 @@
       "continueToCannatheraScore": "الاستمرار في نقاط Cannathera",
       "cannatheraScoreDesc1": "الجزء 1: خط الأساس للأعراض",
       "continue": "يكمل",
-      "cannatheraScoreDesc2": "الجزء 2: الحياة اليومية وخط الأساس للموارد"
+      "cannatheraScoreDesc2": "الجزء 2: الحياة اليومية وخط الأساس للموارد",
+      "address": "Address",
+      "addressPlaceholder": "123 Main St, 10115 Berlin",
+      "phone": "Phone Number"
+    },
+    "prescriptions": {
+      "title": "My E-Prescriptions",
+      "upload": {
+        "title": "Upload New E-Prescription",
+        "selectPharmacy": "Select Pharmacy",
+        "choosePlaceholder": "-- Please select from favourites --",
+        "noFavoritesTitle": "No Favourite Pharmacies",
+        "noFavoritesText": "You must add at least one pharmacy to your favourites before uploading a prescription.",
+        "manageNetwork": "Manage Network",
+        "selectFile": "Upload Prescription File",
+        "filePlaceholder": "Click or drag a file here",
+        "noteLabel": "Note (Optional)",
+        "notePlaceholder": "Notes for the pharmacy...",
+        "submit": "Submit Prescription",
+        "submitting": "Submitting...",
+        "errorNoFile": "Please select a prescription file to upload.",
+        "errorNoPharmacy": "Please select a pharmacy from your favourites."
+      },
+      "history": {
+        "title": "Prescription History",
+        "noPrescriptions": "No prescriptions found.",
+        "rejectionReason": "Reason for rejection:",
+        "yourNote": "Your note:"
+      }
     }
   },
   "doctor": {
@@ -329,7 +376,9 @@
         "reports": "التقارير",
         "settings": "إعدادات العيادة",
         "help": "المساعدة",
-        "network": "شبكة"
+        "network": "شبكة",
+        "chat": "Messages",
+        "pharmacies": "Pharmacy Overview"
       },
       "logout": "تسجيل الخروج",
       "systemStatus": "حالة النظام:",
@@ -341,7 +390,8 @@
       "searchAction": "بحث",
       "menu": "قائمة الحساب",
       "myPractice": "إعدادات العيادة",
-      "language": "اللغة"
+      "language": "اللغة",
+      "security": "Password & Security"
     },
     "dashboard": {
       "activePatients": "المرضى النشطون",
@@ -368,7 +418,14 @@
       "reviewData": "مراجعة البيانات",
       "viewAllAlerts": "عرض كل التنبيهات السابقة",
       "noAppointments": "لا توجد مواعيد اليوم.",
-      "noAlerts": "لا توجد تنبيهات مفتوحة."
+      "noAlerts": "لا توجد تنبيهات مفتوحة.",
+      "colCompliance": "Compliance",
+      "colDate": "Date",
+      "noSubmissions": "No new submissions.",
+      "recentSubmissions": "Current Submissions",
+      "subtitle": "Here is an overview of your clinical agenda today.",
+      "title": "Good morning, Dr. {name}",
+      "totalPatients": "Total Patients"
     },
     "roster": {
       "breadcrumb": "إدارة المرضى",
@@ -531,7 +588,9 @@
       "showing": "{count} إرسالات",
       "noData": "لا توجد بيانات بعد.",
       "last90": "آخر 90 يومًا",
-      "allTime": "طوال الوقت"
+      "allTime": "طوال الوقت",
+      "clinicalReports": "Clinical Reports",
+      "clinicalReportsDesc": "Archive of monthly and quarterly patient reports"
     },
     "settings": {
       "title": "إعدادات الممارسة",
@@ -984,8 +1043,10 @@
         "inventory": "المخزون",
         "settings": "Settings",
         "prescriptions": "الوصفات الطبية الإلكترونية",
-        "network": "شبكة الأطباء"
-      }
+        "network": "شبكة الأطباء",
+        "chat": "Messages"
+      },
+      "security": "Password & Security"
     },
     "dashboard": {
       "title": "لوحة تحكم الصيدلية",
@@ -1299,7 +1360,8 @@
       "batchOptional": "Batch (optional)",
       "noteOptional": "Note (optional)",
       "addStock": "إضافة مخزون",
-      "lowStockAlert": "تحذير: مخزون منخفض"
+      "lowStockAlert": "تحذير: مخزون منخفض",
+      "safetyThreshold": "Safety Threshold"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1360,7 +1422,8 @@
         "reports": "التقارير",
         "team": "الفريق",
         "settings": "الإعدادات"
-      }
+      },
+      "security": "Password & Security"
     },
     "overview": {
       "title": "نظرة عامة على المؤسسة",
@@ -1874,7 +1937,8 @@
     "planAssignmentHint": "قم بتكوين الخطة التي تنطبق على هذا الحساب أو قم بتعيين معدل تجريبي مخصص.",
     "planTier": "طبقة الخطة",
     "setDemoFree": "تعيين كعرض تجريبي / مجاني",
-    "demoFreeAccount": "حساب تجريبي / مجاني"
+    "demoFreeAccount": "حساب تجريبي / مجاني",
+    "security": "Password & Security"
   },
   "paywall": {
     "checkoutFailed": "فشل في بدء عملية الدفع عبر Stripe.",
@@ -1961,7 +2025,7 @@
       "pharmacyBullets": [
         "تتبع المخزون",
         "مراجعات الامتثال",
-        "Billing Logs Audit"
+        "تدقيق سجلات الفواتير"
       ],
       "enterpriseBullets": [
         "العلامة التجارية المخصصة للمستأجر",
@@ -2072,7 +2136,11 @@
       "webhooks": "الويب هوكس (Webhooks)",
       "automation": "Make.com/Zapier",
       "coBranding": "التعاون بعلامة تجارية مشتركة",
-      "physicians": "Physicians"
+      "physicians": "Physicians",
+      "unitPatient": "التقرير الشهري",
+      "unitPharmacy": "مريض",
+      "unitPhysician": "حالة المريض",
+      "unitEnterprise": "التشاور"
     },
     "founder": {
       "tag": "دعم العلاج بقيادة طبية",
@@ -2170,7 +2238,7 @@
     "hero_title": "المراجعة الشهرية التي تكتب نفسها — الدقة السريرية الآلية",
     "hero_intro": "يتطلب العلاج بالقنب الطبي توثيقًا مستمرًا ومنظمًا ويمكن الدفاع عنه قانونًا - وليس التخمين بأثر رجعي أو ملاحظات المريض غير المنظمة. يقوم محرك المرافقة النشط من Cannathera تلقائيًا بتجميع سجلات الأعراض اليومية لكل مريض، ومقاييس مقياس الألم المعتمدة، وتقييمات التحمل، والاستجابات الخاصة بالإجهاد في مراجعة شهرية مفصلة للغاية على المستوى السريري. عندما يصل مريضك للحصول على استشارة المتابعة، تكون الصورة السريرية قد تم تركيبها وتنظيمها وجاهزة لتقييمك الفوري. يمكنك استعادة ساعات من الوقت الإداري مع إزالة النقاط العمياء بين المواعيد المجدولة.",
     "f1_title": "تقارير علاج شهرية آلية",
-    "f1_text": "في نهاية كل شهر، تقوم Cannathera تلقائيًا بتجميع ملخص علاجي منظم يواجه الطبيب وجاهز للتصدير. وهو يتضمن تطور الأعراض يومًا بعد يوم، ودرجات مقياس الألم NRS المصادق عليها، واتجاهات جودة النوم PSQI، وعلامات التحمل الحرجة - كل ذلك يتم إنشاؤه بسلاسة من الإدخالات اليومية للمريض. تتلقى مستندًا سريريًا سليمًا من الناحية القانونية، وليس تفريغ بيانات أولية غير قابلة للتفسير.",
+    "f1_text": "في نهاية كل شهر، تقوم Cannathera تلقائيًا بتجميع ملخص علاجي منظم يواجه الطبيب وجاهز للتصدير. وهو يتضمن تطور الأعراض يومًا بعد يوم، ودرجات مقياس الألم NRS المصادق عليها، واتجاهات جودة النوم PSQI، وعلامات التحمل الحرجة - كل ذلك يتم إنشاؤه بسلاسة من الإدخالات اليومية للمريض. ستتلقى مستندًا سريريًا سليمًا من الناحية القانونية، وليس تفريغ بيانات أولية غير قابلة للتفسير.",
     "f2_title": "تنبيهات الفرز في الوقت الفعلي",
     "f2_text": "لم تعد بحاجة إلى انتظار المراجعة الشهرية لاكتشاف الآثار الضارة. يقوم منطق الفرز المعتمد لدينا بمراقبة الإدخالات اليومية لكل مريض بشكل مستمر مقابل خط الأساس السريري الخاص به. عند حدوث انحراف كبير سريريًا — ارتفاع مفاجئ في الألم، أو تأثير جانبي غير مُبلغ عنه، أو خطوة معايرة ضائعة — تولد لوحة المعلومات تنبيهًا فوريًا ذي أولوية، مما يتيح التدخل السريع والموجه قبل تصاعد الموقف إلى فشل العلاج.",
     "f3_title": "توجيه الوصفات والامتثال",
@@ -2193,7 +2261,7 @@
     "subtitle": "كن الركيزة الأساسية لشبكة علاج محلية مغلقة وموثوقة.",
     "cta": "بدء شراكة صيدلانية",
     "hero_title": "صيدليتك في قلب شبكة رعاية إقليمية مغلقة",
-    "hero_intro": "Cannathera does not merely list your pharmacy in a passive directory — it integrates you as an active, indispensable dispensing node in a verified, closed-loop local therapy ecosystem. We actively reject the model of scraping pharmacies and redirecting patients anonymously to national mail-order giants. Instead, patients actively select your pharmacy as their permanent, trusted local partner. E-prescriptions from regional physicians route exclusively to your inbox, and crucial therapy outcomes flow back to the prescribing practice after dispensation. You transcend the role of a passive point of sale to become the dispensing anchor of a medically structured, fully accountable, and highly profitable local care loop.",
+    "hero_intro": "لا تقوم Cannathera بإدراج الصيدلية الخاصة بك في دليل سلبي فحسب، بل إنها تدمجك كعقدة صرف نشطة لا غنى عنها في نظام بيئي علاجي محلي مغلق الحلقة ومعتمد. نحن نرفض بشدة نموذج الصيدليات القديمة وإعادة توجيه المرضى بشكل مجهول إلى عمالقة الطلب عبر البريد الوطني. وبدلاً من ذلك، يقوم المرضى باختيار الصيدلية الخاصة بك كشريك محلي دائم وموثوق لهم. يتم توجيه الوصفات الطبية الإلكترونية من الأطباء الإقليميين حصريًا إلى صندوق الوارد الخاص بك، وتعود نتائج العلاج الحاسمة إلى ممارسة الوصفات الطبية بعد صرفها. أنت تتجاوز دور نقطة البيع السلبية لتصبح مرساة التوزيع لحلقة رعاية محلية منظمة طبيًا وخاضعة للمساءلة بالكامل ومربحة للغاية.",
     "f1_title": "نطاق محلي حصري (30 كم)",
     "f1_text": "نضمن توجيه المرضى في منطقتك إلى صيدليتك فقط.",
     "f2_title": "لوحة تحكم الوصفات الطبية",
@@ -2231,7 +2299,7 @@
     "v2_hero_title": "توسيع نطاق الطب عن بعد بدون زيادة عبء الأطباء",
     "v2_hero_intro": "إن عنق الزجاجة الأساسي في التطبيب عن بعد هو قدرة الطبيب. تستهلك رسائل المرضى غير المنظمة والمتابعات المخصصة والشكاوى غير الموثقة وقتًا سريريًا ثمينًا يجب تخصيصه حصريًا لاتخاذ القرارات الطبية. كاناثيرا يكسر عنق الزجاجة هذا. تقوم منصة مؤسستنا بتصفية جميع بيانات العلاج التي أنشأها المريض وتوحيدها وتقسيمها سريريًا إلى طبقات قبل أن تصل إلى لوحة معلومات الطبيب. يعمل فريقك الطبي بأقصى قدر من الإنتاجية السريرية مع إعاقة إدارية تقترب من الصفر، مما يسمح لك بخدمة عدد أكبر من المرضى بشكل كبير لكل طبيب شهريًا دون المساس بالسلامة العلاجية أو النتائج.",
     "v2_f1_title": "واجهة برمجة التطبيقات للمؤسسات",
-    "v2_f1_text": "Cannathera's RESTful API embeds seamlessly into your existing clinical software stack—whether you deploy a proprietary EMR, a third-party telehealth platform, or a bespoke patient app. Prescription routing, triage alerts, and therapy outcomes sync bidirectionally via secure, versioned endpoints with full webhook telemetry. For enterprise clients, we deliver full white-label deployment: your branding, your patient interface, powered by our certified clinical infrastructure. SLA-backed 99.99% uptime guarantees and a dedicated integration engineering team are standard.",
+    "v2_f1_text": "يتم تضمين RESTful API من Cannathera بسلاسة في حزمة البرامج السريرية الحالية لديك - سواء كنت تنشر سجلًا طبيًا إلكترونيًا خاصًا، أو منصة رعاية صحية عن بعد تابعة لجهة خارجية، أو تطبيقًا مخصصًا للمرضى. تتم مزامنة توجيه الوصفات الطبية وتنبيهات الفرز ونتائج العلاج بشكل ثنائي الاتجاه عبر نقاط نهاية آمنة ومُصدرة مع قياس كامل للخطاف عبر الويب. بالنسبة لعملاء المؤسسات، نقدم نشرًا كاملاً للعلامة البيضاء: علامتك التجارية، وواجهة المريض الخاصة بك، والمدعومة بالبنية التحتية السريرية المعتمدة لدينا. تُعد ضمانات وقت التشغيل بنسبة 99.99% المدعومة باتفاقية مستوى الخدمة (SLA) وفريق هندسة التكامل المخصص أمرًا قياسيًا.",
     "v2_f2_title": "الاحتفاظ بالمرضى",
     "v2_f2_text": "تحويل المرضى لمرة واحدة إلى مستخدمين نشطين دائمين.",
     "v2_f3_title": "التصفية السريرية",

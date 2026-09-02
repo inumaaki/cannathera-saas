@@ -80,6 +80,7 @@ enum PrescriptionStatus {
   READY
   COMPLETED
   CANCELLED
+  UNMATCHED
 }
 
 enum RedFlagSeverity {
@@ -137,6 +138,7 @@ model User {
   twoFactorCodes TwoFactorCode[]
   passwordResets PasswordResetToken[]
   authoredNotes  ClinicalNote[]
+  sentMessages   ChatMessage[]
 
   @@index([role])
 }
@@ -187,6 +189,8 @@ model Organization {
   settings            OrgSettings?
   partnerCodes        PartnerCode[]
   prescriptions       Prescription[]
+  practiceChatThreads ChatThread[]      @relation("PracticeChatThreads")
+  pharmacyChatThreads ChatThread[]      @relation("PharmacyChatThreads")
 
   @@index([type])
   @@index([parentOrgId])
@@ -771,7 +775,7 @@ model Subscription {
 
 model Prescription {
   id              String             @id @default(cuid())
-  patientId       String
+  patientId       String?
   pharmacyId      String
   status          PrescriptionStatus @default(RECEIVED)
   fileUrl         String? // uploaded prescription image/pdf
@@ -781,10 +785,44 @@ model Prescription {
   createdAt       DateTime           @default(now())
   updatedAt       DateTime           @updatedAt
 
-  patient               PatientProfile         @relation(fields: [patientId], references: [id], onDelete: Cascade)
+  patient               PatientProfile?        @relation(fields: [patientId], references: [id], onDelete: Cascade)
   pharmacy              Organization           @relation(fields: [pharmacyId], references: [id], onDelete: Cascade)
   inventoryTransactions InventoryTransaction[]
 
   @@index([patientId])
   @@index([pharmacyId])
+}
+
+// ---------------------------------------------------------------------------
+// Chat
+// ---------------------------------------------------------------------------
+
+model ChatThread {
+  id              String         @id @default(cuid())
+  practiceId      String
+  pharmacyId      String
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  practice        Organization   @relation("PracticeChatThreads", fields: [practiceId], references: [id], onDelete: Cascade)
+  pharmacy        Organization   @relation("PharmacyChatThreads", fields: [pharmacyId], references: [id], onDelete: Cascade)
+  messages        ChatMessage[]
+
+  @@unique([practiceId, pharmacyId])
+  @@index([practiceId])
+  @@index([pharmacyId])
+}
+
+model ChatMessage {
+  id              String         @id @default(cuid())
+  threadId        String
+  senderId        String
+  content         String         @db.Text
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  thread          ChatThread     @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  sender          User           @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@index([threadId, createdAt])
 }

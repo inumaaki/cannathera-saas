@@ -1,27 +1,22 @@
-import { getFormatter, getTranslations, setRequestLocale } from "next-intl/server";
+import { getFormatter, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { API_URL } from "@/lib/api";
 import { apiServer } from "@/lib/api-server";
 import { ProgressRing } from "@/components/patient/charts";
 
 type Data = {
-  retention: number;
-  months: Array<{ month: string; entries: number; avgQol: number | null }>;
-  totalReviews: number;
-  avgRating: number | null;
-  responseRate: number;
+  totalPrescriptions: number;
+  completedPrescriptions: number;
+  processingTimeHours: number;
+  stockAlerts: number;
+  topStrains: Array<{ name: string; quantity: number }>;
   billing: {
     tier: string;
     planName: string;
     monthlyPrice: number | null;
-    reviewCap: number | null;
-    reviewsThisMonth: number;
-    unitPrice: number;
-    projectedCost: number;
   };
 };
 
-/* Figma 6.4 Analytics + 6.5 Billing & Usage. */
+/* Pharmacy Analytics + Billing */
 export default async function PharmacyAnalytics({
   params,
   searchParams,
@@ -34,33 +29,20 @@ export default async function PharmacyAnalytics({
 
   const tab = sp.tab === "billing" ? "billing" : "analytics";
 
-  const [t, format, d] = await Promise.all([
-    getTranslations("pharmacy.analytics"),
+  const [format, d] = await Promise.all([
     getFormatter(),
     apiServer<Data>("/pharmacy/analytics"),
   ]);
 
-  const maxEntries = Math.max(1, ...(d?.months ?? []).map((m) => m.entries));
   const money = (v: number) =>
     format.number(v, { style: "currency", currency: "EUR" });
-
-  // Sentiment is derived from the satisfaction answers, never assumed positive.
-  const rating = d?.avgRating ?? null;
-  const sentiment =
-    rating == null
-      ? { label: t("noRating"), tone: "text-muted" }
-      : rating >= 4
-        ? { label: t("positive"), tone: "text-pine-600" }
-        : rating >= 3
-          ? { label: t("neutral"), tone: "text-gold" }
-          : { label: t("negative"), tone: "text-red-600" };
 
   return (
     <>
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="font-display text-4xl font-bold text-pine">{t("title")}</h1>
-          <p className="mt-1 max-w-2xl text-muted">{t("subtitle")}</p>
+          <h1 className="font-display text-4xl font-bold text-pine">Apotheken-Analytik</h1>
+          <p className="mt-1 max-w-2xl text-muted">Umfassende operative Auswertung von Rezeptvolumen, Durchlaufzeiten und Lagerbewegungen.</p>
         </div>
         <a
           href={`/api/pharmacy/analytics/export`}
@@ -69,7 +51,7 @@ export default async function PharmacyAnalytics({
           <span aria-hidden className="msym text-[18px]">
             download
           </span>
-          {t("exportCsv")}
+          Export
         </a>
       </div>
 
@@ -82,7 +64,7 @@ export default async function PharmacyAnalytics({
               : "text-muted hover:text-ink-strong"
           }`}
         >
-          {t("tabAnalytics")}
+          Operative Auswertung
         </Link>
         <Link
           href={{ pathname: "/pharmacy/analytics", query: { tab: "billing" } }}
@@ -92,7 +74,7 @@ export default async function PharmacyAnalytics({
               : "text-muted hover:text-ink-strong"
           }`}
         >
-          {t("tabBilling")}
+          Tarif & Abrechnung
         </Link>
       </div>
 
@@ -101,35 +83,20 @@ export default async function PharmacyAnalytics({
           <section className="cw-watermark rounded-xl border border-hairline bg-white p-6">
             <div className="flex items-center justify-between">
               <h2 className="font-display text-xl font-bold text-pine">
-                {t("monthlyEntries")}
+                Top Dispensed Strains
               </h2>
-              <span className="rounded-md bg-mint/30 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-pine-600">
-                {t("retention")} {d?.retention ?? 0}%
-              </span>
             </div>
-
-            {(d?.months.length ?? 0) === 0 ? (
-              <p className="py-10 text-center text-muted">—</p>
+            {(d?.topStrains?.length ?? 0) === 0 ? (
+              <p className="py-10 text-center text-muted">Noch keine Abverkäufe registriert.</p>
             ) : (
-              /* `h-full` on the item gives the bar's percentage height something
-                 definite to resolve against — without it the bars collapse to 0. */
-              <ul className="mt-6 flex h-56 items-end gap-3">
-                {d!.months.map((m) => (
-                  <li
-                    key={m.month}
-                    className="flex h-full flex-1 flex-col items-center justify-end gap-2"
-                  >
-                    <span className="font-mono text-xs font-bold text-ink-strong">
-                      {m.entries}
+              <ul className="mt-6 space-y-4">
+                {d?.topStrains.map((s, idx) => (
+                  <li key={s.name} className="flex items-center justify-between border-b border-hairline pb-2 last:border-0">
+                    <span className="flex items-center gap-3">
+                      <span className="flex size-6 items-center justify-center rounded-full bg-mint/20 text-xs font-bold text-pine-600">{idx + 1}</span>
+                      <span className="font-semibold text-ink-strong">{s.name}</span>
                     </span>
-                    <span
-                      className="w-full min-h-1 rounded-t-md bg-pine-600"
-                      style={{ height: `${(m.entries / maxEntries) * 100}%` }}
-                      aria-hidden
-                    />
-                    <span className="text-[10px] font-bold uppercase text-muted">
-                      {m.month.slice(5)}/{m.month.slice(2, 4)}
-                    </span>
+                    <span className="font-mono text-sm font-bold text-pine-600">{s.quantity} g</span>
                   </li>
                 ))}
               </ul>
@@ -139,63 +106,59 @@ export default async function PharmacyAnalytics({
           <div className="space-y-6">
             <section className="cw-watermark rounded-xl border border-hairline bg-white p-6">
               <h2 className="font-display text-xl font-bold text-pine">
-                {t("adherenceTitle")}
+                Effizienz & Durchsatz
               </h2>
               <div className="mt-4 flex justify-center">
-                <ProgressRing pct={d?.retention ?? 0} size={160} stroke={14}>
+                <ProgressRing pct={100} size={160} stroke={14}>
                   <p className="font-display text-3xl font-bold text-pine">
-                    {d?.retention ?? 0}%
+                    {d?.processingTimeHours}h
                   </p>
                 </ProgressRing>
               </div>
               <p className="mt-4 text-center text-sm leading-relaxed text-muted">
-                {t("adherenceNote")}
+                Durchschnittliche Bearbeitungszeit (Eingang bis Bereitstellung)
               </p>
               
               <div className="mt-6 rounded-lg bg-pine-50 p-4 border border-pine-100">
                 <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-pine-600 mb-1.5">
                   <span className="msym text-[16px]">info</span>
-                  {t("clinicalContext")}
+                  Effizienz-Kontext
                 </p>
                 <p className="text-sm text-pine-800 leading-relaxed">
-                  {t("contextAdherence")}
+                  Schnelle Bearbeitungszeiten unter 4 Stunden steigern die Patientenzufriedenheit erheblich und erhöhen die Bindungsrate.
                 </p>
               </div>
             </section>
 
             <section className="cw-watermark rounded-xl border border-hairline bg-white p-6">
               <h2 className="font-display text-xl font-bold text-pine">
-                {t("reviewVolume")}
+                Rezept-Volumen
               </h2>
               <dl className="mt-4 space-y-3 text-sm">
                 <Row
-                  label={t("totalReviews")}
-                  value={String(d?.totalReviews ?? 0)}
-                  href="/pharmacy/reviews"
+                  label="Eingegangene Rezepte"
+                  value={String(d?.totalPrescriptions ?? 0)}
+                  href="/pharmacy/prescriptions"
                 />
                 <Row
-                  label={t("avgRating")}
-                  value={d?.avgRating != null ? `${d.avgRating}/5` : "—"}
+                  label="Abgeschlossene Verordnungen"
+                  value={String(d?.completedPrescriptions ?? 0)}
                 />
                 <Row
-                  label={t("responseRate")}
-                  value={`${d?.responseRate ?? 0}%`}
-                  href="/pharmacy/logs"
-                />
-                <Row
-                  label={t("sentiment")}
-                  value={sentiment.label}
-                  tone={sentiment.tone}
+                  label="Kritische Lagerbestände"
+                  value={String(d?.stockAlerts ?? 0)}
+                  tone={d?.stockAlerts && d.stockAlerts > 0 ? "text-red-600" : "text-pine-600"}
+                  href="/pharmacy/inventory"
                 />
               </dl>
               
               <div className="mt-6 rounded-lg bg-surface p-4 border border-hairline">
                 <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-muted mb-1.5">
                   <span className="msym text-[16px]">medical_services</span>
-                  {t("clinicalContext")}
+                  Lagerwarnungen
                 </p>
                 <p className="text-sm text-ink leading-relaxed">
-                  {t("contextReviews")}
+                  Stellen Sie sicher, dass Bestände frühzeitig nachbestellt werden, um Engpässe bei wiederkehrenden Verordnungen zu vermeiden.
                 </p>
               </div>
             </section>
@@ -204,67 +167,22 @@ export default async function PharmacyAnalytics({
       ) : (
         <section className="cw-watermark mt-6 rounded-xl border border-hairline bg-white p-6">
           <h2 className="font-display text-xl font-bold text-pine">
-            {t("billingTitle")}
+            Monatliche Abrechnungsübersicht
           </h2>
 
           <div className="mt-5 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
             <BillCard
-              label={t("plan")}
+              label="Aktueller Tarif"
               value={d?.billing.planName ?? "—"}
               badge={d?.billing.tier}
             />
             <BillCard
-              label={t("monthlyPrice")}
+              label="Grundgebühr (Monat)"
               value={
                 d?.billing.monthlyPrice != null ? money(d.billing.monthlyPrice) : "—"
               }
             />
-            <BillCard
-              label={t("includedReviews")}
-              value={
-                d?.billing.reviewCap != null ? String(d.billing.reviewCap) : "∞"
-              }
-            />
-            <BillCard
-              label={t("reviewsThisMonth")}
-              value={String(d?.billing.reviewsThisMonth ?? 0)}
-            />
-            <BillCard
-              label={t("unitPrice")}
-              value={d ? money(d.billing.unitPrice) : "—"}
-            />
-            <BillCard
-              label={t("projected")}
-              value={d ? money(d.billing.projectedCost) : "—"}
-              highlight
-            />
           </div>
-
-          {d?.billing.reviewCap ? (
-            <div className="mt-6">
-              <div className="flex justify-between text-xs font-bold text-muted">
-                <span>{t("reviewsThisMonth")}</span>
-                <span className="font-mono">
-                  {d.billing.reviewsThisMonth} / {d.billing.reviewCap}
-                </span>
-              </div>
-              <div className="mt-2 h-2 rounded-full bg-[#e3e9f2]" aria-hidden>
-                <div
-                  className="h-full rounded-full bg-brand"
-                  style={{
-                    width: `${Math.min(
-                      100,
-                      (d.billing.reviewsThisMonth / d.billing.reviewCap) * 100,
-                    )}%`,
-                  }}
-                />
-              </div>
-            </div>
-          ) : null}
-
-          <p className="mt-6 rounded-lg border border-hairline bg-surface p-4 text-xs leading-relaxed text-muted">
-            {t("tierNote")}
-          </p>
         </section>
       )}
     </>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
+import { useRouter, Link } from "@/i18n/navigation";
 import { api } from "@/lib/api";
 
 
@@ -15,6 +15,8 @@ type Profile = {
   phone?: string;
   pharmacies: Array<{ id: string; name: string }>;
   packageTier?: string;
+  dateOfBirth?: string | null;
+  practiceName?: string | null;
 };
 
 const label = "block text-sm font-semibold uppercase tracking-wide text-muted";
@@ -27,6 +29,7 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
   const [fullName, setFullName] = useState(profile.fullName);
   const [address, setAddress] = useState(profile.address ?? "");
   const [phone, setPhone] = useState(profile.phone ?? "");
+  const [dateOfBirth, setDateOfBirth] = useState(profile.dateOfBirth ?? "");
 
   const [pending, setPending] = useState(false);
   const [saved, setSaved] = useState(false);
@@ -44,6 +47,7 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
           lastName: rest.join(" "),
           address,
           phone,
+          dateOfBirth,
         },
       });
       setSaved(true);
@@ -89,6 +93,19 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
       </div>
 
       <div>
+        <label htmlFor="dateOfBirth" className={label}>
+          {t("dateOfBirth")}
+        </label>
+        <input
+          id="dateOfBirth"
+          type="date"
+          value={dateOfBirth}
+          onChange={(e) => setDateOfBirth(e.target.value)}
+          className={`${box} outline-none focus:border-pine-600`}
+        />
+      </div>
+
+      <div>
         <label htmlFor="email" className={label}>
           {t("email")}
         </label>
@@ -97,7 +114,7 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
 
       <div>
         <label htmlFor="address" className={label}>
-          Address
+          {t("address")}
         </label>
         <input
           id="address"
@@ -109,7 +126,7 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
 
       <div>
         <label htmlFor="phone" className={label}>
-          Phone Number
+          {t("phone")}
         </label>
         <input
           id="phone"
@@ -118,7 +135,25 @@ export function ProfileForm({ profile }: Readonly<{ profile: Profile }>) {
           className={`${box} outline-none focus:border-pine-600`}
         />
       </div>
-      <div className="flex justify-end">
+
+      {profile.practiceName && (
+        <div>
+          <label className={label}>{t("treatingPhysician")}</label>
+          <input readOnly value={profile.practiceName} className={`${box} bg-gray-50`} />
+        </div>
+      )}
+
+      <div className="border-t border-hairline pt-6 mt-6">
+        <h3 className="text-lg font-bold text-pine-900 mb-2">{t("passwordAndSecurity")}</h3>
+        <Link 
+          href="/set-password" 
+          className="inline-flex h-12 items-center rounded-xl bg-gray-100 px-6 font-bold text-ink-strong hover:bg-gray-200"
+        >
+          {t("changePassword")}
+        </Link>
+      </div>
+
+      <div className="flex justify-end pt-4">
         <button
           type="submit"
           disabled={pending}

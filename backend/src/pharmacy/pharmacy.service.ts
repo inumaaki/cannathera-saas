@@ -10,6 +10,7 @@ import {
   RedFlagSeverity,
   SubmissionStatus,
   SubscriptionTier,
+  PrescriptionStatus,
 } from '@prisma/client';
 import { NotificationsService } from '../notifications/notifications.service';
 import { PrismaService } from '../prisma/prisma.service';
@@ -139,11 +140,7 @@ export class PharmacyService {
     });
 
     const activeRegulars = presGroups.filter((g) => g._count._all > 1).length;
-    const totalPatientsWithPrescriptions = presGroups.length;
-    const returningPatientsPercentage =
-      totalPatientsWithPrescriptions > 0
-        ? Math.round((activeRegulars / totalPatientsWithPrescriptions) * 100)
-        : 0;
+    const totalLocallyConnected = presGroups.length;
 
     // 3. Stock Alert
     const inventory = await this.prisma.inventoryItem.findMany({
@@ -170,9 +167,9 @@ export class PharmacyService {
 
     const recentPrescriptions = recentPrescriptionsRaw.map((p) => ({
       id: p.id,
-      patientName: [p.patient.user.firstName, p.patient.user.lastName]
+      patientName: p.patient ? [p.patient.user.firstName, p.patient.user.lastName]
         .filter(Boolean)
-        .join(' '),
+        .join(' ') : 'Unbekannt',
       status: p.status,
       parsedData: p.parsedData,
       createdAt: p.createdAt.toISOString(),
@@ -193,7 +190,7 @@ export class PharmacyService {
       pharmacyName: org.name,
       monthlyVolume,
       activeRegulars,
-      returningPatientsPercentage,
+      totalLocallyConnected,
       prescriptionsToday,
       stockAlert: shortage
         ? {
@@ -560,119 +557,73 @@ export class PharmacyService {
   async analytics(userId: string) {
     const org = await this.orgOf(userId);
 
-    const logs = await this.prisma.therapyLog.findMany({
-      where: { patient: { pharmacyId: org.id } },
-      select: { loggedAt: true, metrics: true, patientId: true },
-      orderBy: { loggedAt: 'asc' },
-    });
-
-    // Monthly review volume + adherence trend.
-    const byMonth = new Map<
-      string,
-      { adherenceDays: Set<string>; qol: number[] }
-    >();
-    for (const l of logs) {
-      const key = l.loggedAt.toISOString().slice(0, 7);
-      const b = byMonth.get(key) ?? {
-        adherenceDays: new Set<string>(),
-        qol: [],
-      };
-      b.adherenceDays.add(
-        `${l.patientId}:${l.loggedAt.toISOString().slice(0, 10)}`,
-      );
-      const m = (l.metrics as Metrics | null) ?? {};
-      if (m.qol != null) b.qol.push(m.qol);
-      byMonth.set(key, b);
-    }
-    const months = [...byMonth.entries()]
-      .sort(([a], [b]) => a.localeCompare(b))
-      .slice(-8)
-      .map(([month, b]) => ({
-        month,
-        entries: b.adherenceDays.size,
-        avgQol: b.qol.length
-          ? Math.round((b.qol.reduce((x, y) => x + y, 0) / b.qol.length) * 10) /
-            10
-          : null,
-      }));
-
-    const submissions = await this.prisma.submission.findMany({
-      where: {
-        patient: { pharmacyId: org.id },
-        status: SubmissionStatus.SUBMITTED,
-      },
-      include: {
-        answers: { include: { question: { select: { key: true } } } },
-      },
-    });
-    const ratings = submissions
-      .map(
-        (s) => s.answers.find((a) => a.question.key === 'satisfaction')?.value,
-      )
-      .filter((v): v is number => typeof v === 'number');
-    const avgRating = ratings.length
-      ? Math.round(
-          (ratings.reduce((a, b) => a + b, 0) / ratings.length / 2) * 10,
-        ) / 10
-      : null;
-
-    const patients = await this.prisma.patientProfile.count({
+    // 1. Prescription stats
+    const prescriptions = await this.prisma.prescription.findMany({
       where: { pharmacyId: org.id },
+      select: { status: true, createdAt: true, updatedAt: true },
     });
-    // Retention = share of patients still logging in the last 30 days.
-    const since30 = new Date(Date.now() - 30 * 86_400_000);
-    const activeRecently = await this.prisma.patientProfile.count({
-      where: {
-        pharmacyId: org.id,
-        therapyLogs: { some: { loggedAt: { gte: since30 } } },
-      },
-    });
-    const retention = patients
-      ? Math.round((activeRecently / patients) * 100)
-      : 0;
 
-    // Billing: tier, usage, projected cost (client's enterprise tiering).
+    const totalPrescriptions = prescriptions.length;
+    const completedPrescriptions = prescriptions.filter(
+      (p) => p.status === 'COMPLETED' || p.status === 'READY',
+    ).length;
+
+    let processingTimeHours = 0;
+    if (completedPrescriptions > 0) {
+      const completed = prescriptions.filter(
+        (p) => p.status === 'COMPLETED' || p.status === 'READY',
+      );
+      const totalHours = completed.reduce((sum, p) => {
+        const diffMs = p.updatedAt.getTime() - p.createdAt.getTime();
+        return sum + diffMs / (1000 * 60 * 60);
+      }, 0);
+      processingTimeHours =
+        Math.round((totalHours / completed.length) * 10) / 10;
+    }
+
+    // 2. Inventory stats
+    const inventory = await this.prisma.inventoryItem.findMany({
+      where: { orgId: org.id, active: true },
+      select: { name: true, stockLevel: true, safetyThreshold: true },
+    });
+
+    const stockAlerts = inventory.filter(
+      (i) => i.stockLevel <= i.safetyThreshold,
+    ).length;
+
+    // 3. Top strains dispensed (mocked from inventory outflows or just top by stock logic for now)
+    const outflows = await this.prisma.inventoryTransaction.findMany({
+      where: { inventory: { orgId: org.id }, type: 'OUTFLOW' },
+      select: { quantity: true, inventory: { select: { name: true } } },
+    });
+
+    const strainMap = new Map<string, number>();
+    for (const out of outflows) {
+      const qty = strainMap.get(out.inventory.name) ?? 0;
+      strainMap.set(out.inventory.name, qty + out.quantity);
+    }
+    const topStrains = [...strainMap.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 5)
+      .map(([name, quantity]) => ({ name, quantity: Math.round(quantity) }));
+
     const subscription = await this.prisma.subscription.findFirst({
       where: { orgId: org.id, isActive: true },
       include: { plan: true },
     });
-    const monthStart = new Date(
-      new Date().getFullYear(),
-      new Date().getMonth(),
-      1,
-    );
-    const reviewsThisMonth = await this.prisma.submission.count({
-      where: {
-        patient: { pharmacyId: org.id },
-        status: SubmissionStatus.SUBMITTED,
-        submittedAt: { gte: monthStart },
-        version: { questionnaire: { key: 'monthly_review' } },
-      },
-    });
-    const unitPrice =
-      reviewsThisMonth <= 500 ? 8 : reviewsThisMonth <= 1500 ? 6.5 : 5;
 
     return {
-      retention,
-      months,
-      totalReviews: submissions.length,
-      avgRating,
-      responseRate: patients
-        ? Math.min(
-            100,
-            Math.round((submissions.length / Math.max(1, patients)) * 100),
-          )
-        : 0,
+      totalPrescriptions,
+      completedPrescriptions,
+      processingTimeHours,
+      stockAlerts,
+      topStrains,
       billing: {
         tier: subscription?.plan.tier ?? SubscriptionTier.BASIC,
         planName: subscription?.plan.name ?? 'Basic',
         monthlyPrice: subscription?.plan.monthlyPrice
           ? Number(subscription.plan.monthlyPrice)
           : null,
-        reviewCap: subscription?.plan.reviewCap ?? null,
-        reviewsThisMonth,
-        unitPrice,
-        projectedCost: Math.round(reviewsThisMonth * unitPrice * 100) / 100,
       },
     };
   }
@@ -999,7 +950,7 @@ export class PharmacyService {
         type: r.type,
         quantity: r.quantity,
         batch: r.batch,
-        prescriptionRef: r.prescription
+        prescriptionRef: r.prescription?.patient
           ? [
               r.prescription.patient.user.firstName,
               r.prescription.patient.user.lastName,
@@ -1155,19 +1106,15 @@ export class PharmacyService {
   async exportAnalyticsCsv(userId: string) {
     const a = await this.analytics(userId);
     const rows: Array<Array<string | number>> = [
-      ['Patientenbindung (%)', a.retention],
-      ['Reviews gesamt', a.totalReviews],
-      ['Ø Bewertung (1–5)', a.avgRating ?? ''],
-      ['Rücklaufquote (%)', a.responseRate],
+      ['Eingegangene Rezepte', a.totalPrescriptions],
+      ['Abgeschlossene Verordnungen', a.completedPrescriptions],
+      ['Durchlaufzeit (h)', a.processingTimeHours],
+      ['Kritische Lagerbestände', a.stockAlerts],
       ['Tarif', a.billing.planName],
       ['Monatliche Grundgebühr (EUR)', a.billing.monthlyPrice ?? ''],
-      ['Inklusive Reviews', a.billing.reviewCap ?? 'unbegrenzt'],
-      ['Reviews in diesem Monat', a.billing.reviewsThisMonth],
-      ['Preis pro Review (EUR)', a.billing.unitPrice],
-      ['Voraussichtliche Kosten (EUR)', a.billing.projectedCost],
       [],
-      ['Monat', 'Einträge', 'Ø Lebensqualität'],
-      ...a.months.map((m) => [m.month, m.entries, m.avgQol ?? '']),
+      ['Top Dispensed Strains', 'Menge (g)'],
+      ...a.topStrains.map((s) => [s.name, s.quantity]),
     ];
     return this.toCsv('Kennzahl,Wert', rows);
   }
@@ -1202,7 +1149,7 @@ export class PharmacyService {
   async updatePrescriptionStatus(
     userId: string,
     prescriptionId: string,
-    status: any,
+    status: PrescriptionStatus,
     rejectionReason?: string,
   ) {
     const org = await this.orgOf(userId);
@@ -1227,7 +1174,16 @@ export class PharmacyService {
           ? { rejectionReason }
           : { rejectionReason: null }),
       },
+      include: { pharmacy: true },
     });
+
+    if (updated.patientId) {
+      this.notifications.notifyPatientPrescriptionStatusUpdate(
+        updated.patientId,
+        updated.pharmacy.name,
+        status,
+      );
+    }
 
     return updated;
   }
@@ -1240,6 +1196,7 @@ export class PharmacyService {
 
     const prescription = await this.prisma.prescription.findUnique({
       where: { id: prescriptionId },
+      include: { pharmacy: true },
     });
 
     if (!prescription || prescription.pharmacyId !== org.id) {
@@ -1255,10 +1212,18 @@ export class PharmacyService {
     const parsedData: any = prescription.parsedData;
     if (!parsedData || !Array.isArray(parsedData) || parsedData.length === 0) {
       // If no AI data, just mark as completed.
-      return this.prisma.prescription.update({
+      const res = await this.prisma.prescription.update({
         where: { id: prescriptionId },
         data: { status: 'COMPLETED' },
       });
+      if (prescription.patientId) {
+        this.notifications.notifyPatientPrescriptionStatusUpdate(
+          prescription.patientId,
+          prescription.pharmacy.name,
+          'COMPLETED',
+        );
+      }
+      return res;
     }
 
     // Process the inventory deductions and mark as completed in a transaction
@@ -1299,6 +1264,14 @@ export class PharmacyService {
     );
 
     const results = await this.prisma.$transaction(transactionOperations);
+
+    if (prescription.patientId) {
+      this.notifications.notifyPatientPrescriptionStatusUpdate(
+        prescription.patientId,
+        prescription.pharmacy.name,
+        'COMPLETED',
+      );
+    }
 
     // Check for low stock alerts
     for (const { invItem, quantity } of itemsToUpdate) {
@@ -1459,23 +1432,118 @@ export class PharmacyService {
       }
     }
 
-    // Require a minimum confidence score (e.g., > 60 means exact DOB + partial name match)
-    if (!bestMatch || highestScore < 60) {
-      throw new BadRequestException('AI_MATCH_FAILED');
-    }
+    // 3. Evaluate confidence (e.g., > 60 means exact DOB + partial name match)
+    const isMatched = bestMatch && highestScore >= 60;
 
-    // 3. Create the prescription automatically linked to the matched patient
+    // 4. Create the prescription automatically linked to the matched patient, or leave UNMATCHED
     const prescription = await this.prisma.prescription.create({
       data: {
-        patientId: bestMatch.id,
+        patientId: isMatched ? bestMatch.id : null,
         pharmacyId: org.id,
-        status: 'RECEIVED',
+        status: isMatched ? 'RECEIVED' : 'UNMATCHED',
         fileUrl,
         parsedData: parsed.items || [],
-        note: `AI Matched with confidence score: ${highestScore}`,
+        note: `AI Confidence Score: ${highestScore}. ${isMatched ? 'Auto-matched by AI.' : 'Manual patient assignment required.'}`,
       },
     });
 
     return prescription;
+  }
+
+  async getChatThreads(pharmacyUserId: string) {
+    const membership = await this.prisma.membership.findFirst({
+      where: { userId: pharmacyUserId },
+    });
+    if (!membership) throw new ForbiddenException('NO_MEMBERSHIP');
+
+    return this.prisma.chatThread.findMany({
+      where: { pharmacyId: membership.orgId },
+      include: {
+        practice: {
+          select: { id: true, name: true, city: true },
+        },
+        messages: {
+          orderBy: { createdAt: 'desc' },
+          take: 1,
+        }
+      },
+      orderBy: { updatedAt: 'desc' },
+    });
+  }
+
+  async getChatMessages(pharmacyUserId: string, practiceId: string) {
+    const membership = await this.prisma.membership.findFirst({
+      where: { userId: pharmacyUserId },
+    });
+    if (!membership) throw new ForbiddenException('NO_MEMBERSHIP');
+
+    let thread = await this.prisma.chatThread.findUnique({
+      where: {
+        practiceId_pharmacyId: {
+          practiceId,
+          pharmacyId: membership.orgId,
+        }
+      },
+    });
+
+    if (!thread) {
+      thread = await this.prisma.chatThread.create({
+        data: {
+          practiceId,
+          pharmacyId: membership.orgId,
+        },
+      });
+    }
+
+    return this.prisma.chatMessage.findMany({
+      where: { threadId: thread.id },
+      include: {
+        sender: { select: { id: true, firstName: true, lastName: true } }
+      },
+      orderBy: { createdAt: 'asc' },
+    });
+  }
+
+  async sendChatMessage(pharmacyUserId: string, practiceId: string, content: string) {
+    const membership = await this.prisma.membership.findFirst({
+      where: { userId: pharmacyUserId },
+    });
+    if (!membership) throw new ForbiddenException('NO_MEMBERSHIP');
+
+    let thread = await this.prisma.chatThread.findUnique({
+      where: {
+        practiceId_pharmacyId: {
+          practiceId,
+          pharmacyId: membership.orgId,
+        }
+      },
+    });
+
+    if (!thread) {
+      thread = await this.prisma.chatThread.create({
+        data: {
+          practiceId,
+          pharmacyId: membership.orgId,
+        },
+      });
+    }
+
+    const message = await this.prisma.chatMessage.create({
+      data: {
+        threadId: thread.id,
+        senderId: pharmacyUserId,
+        content,
+      },
+      include: {
+        sender: { select: { id: true, firstName: true, lastName: true } }
+      }
+    });
+
+    await this.prisma.chatThread.update({
+      where: { id: thread.id },
+      data: { updatedAt: new Date() },
+    });
+
+    return message;
   }
 }

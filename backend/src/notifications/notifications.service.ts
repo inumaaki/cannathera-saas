@@ -13,6 +13,7 @@ export type NotificationEvent = {
     | 'appointment'
     | 'report_ready'
     | 'prescription_received'
+    | 'prescription_status_update'
     | 'intake_reminder';
   severity: 'info' | 'warning' | 'critical';
   title: string;
@@ -89,6 +90,21 @@ export class NotificationsService {
       title: 'New Prescription Received',
       text: 'A patient has routed a new prescription to your pharmacy.',
       href: `/pharmacy/prescriptions?highlight=${prescriptionId}`,
+    });
+  }
+
+  notifyPatientPrescriptionStatusUpdate(
+    patientUserId: string,
+    pharmacyName: string,
+    status: string,
+  ) {
+    this.publish({
+      target: { userId: patientUserId },
+      kind: 'prescription_status_update',
+      severity: 'info',
+      title: 'Prescription Status Update',
+      text: `Your prescription at ${pharmacyName} is now: ${status}.`,
+      href: '/patient/prescriptions',
     });
   }
 

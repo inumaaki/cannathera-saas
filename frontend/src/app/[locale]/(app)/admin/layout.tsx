@@ -27,6 +27,7 @@ export default async function AdminLayout({
         systemAdmin: t("systemAdmin"),
         controlCenter: t("controlCenter"),
         exit: t("exit"),
+        security: t("security"),
         menu: t("openMenu"),
         close: t("close"),
         adminSections: t("adminSections"),

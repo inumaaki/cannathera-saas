@@ -7,9 +7,11 @@ import {
   Param,
   Patch,
   Post,
+  Put,
   Query,
   UseGuards,
 } from '@nestjs/common';
+import { ApiOperation } from '@nestjs/swagger';
 import { Role } from '@prisma/client';
 import {
   IsIn,
@@ -409,5 +411,30 @@ export class PharmacyController {
     @Query('q') q?: string,
   ) {
     return this.pharmacy.getNetworkPhysicians(user.sub, q);
+  }
+
+  @Get('chat/threads')
+  @ApiOperation({ summary: 'Get chat threads' })
+  getChatThreads(@CurrentUser() user: SessionPayload) {
+    return this.pharmacy.getChatThreads(user.sub);
+  }
+
+  @Get('chat/:practiceId/messages')
+  @ApiOperation({ summary: 'Get chat messages with practice' })
+  getChatMessages(
+    @CurrentUser() user: SessionPayload,
+    @Param('practiceId') practiceId: string,
+  ) {
+    return this.pharmacy.getChatMessages(user.sub, practiceId);
+  }
+
+  @Post('chat/:practiceId/messages')
+  @ApiOperation({ summary: 'Send a chat message to practice' })
+  sendChatMessage(
+    @CurrentUser() user: SessionPayload,
+    @Param('practiceId') practiceId: string,
+    @Body('content') content: string,
+  ) {
+    return this.pharmacy.sendChatMessage(user.sub, practiceId, content);
   }
 }

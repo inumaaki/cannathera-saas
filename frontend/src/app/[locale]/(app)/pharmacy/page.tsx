@@ -7,7 +7,7 @@ type Overview = {
   pharmacyName: string;
   monthlyVolume: number;
   activeRegulars: number;
-  returningPatientsPercentage: number;
+  totalLocallyConnected: number;
   prescriptionsToday: number;
   stockAlert: { id: string; name: string; stockLevel: number; unit: string } | null;
   recentPrescriptions: {
@@ -60,7 +60,7 @@ export default async function PharmacyDashboard({
           label={t("activeRegulars")}
           href="/pharmacy/reviews"
           foot={{
-            text: t("returningPatients", { pct: d?.returningPatientsPercentage ?? 0 }),
+            text: t("returningPatients", { total: d?.totalLocallyConnected ?? 0 }),
             tone: "text-pine-600",
             icon: "hub"
           }}

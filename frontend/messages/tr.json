@@ -284,7 +284,26 @@
       "saved": "Profil kaydedildi",
       "gdprTitle": "GDPR uyumlu",
       "gdprText": "Tıbbi verileriniz AB yüksek güvenlik standartlarına göre şifrelenmektedir.",
-      "safeguardWarning": "Önemli: Harici bir eczaneye veya doktora geçmek, planınızın sübvanse edilmiş avantajlarını geçersiz kılar."
+      "safeguardWarning": "Önemli: Harici bir eczaneye veya doktora geçmek, planınızın sübvanse edilmiş avantajlarını geçersiz kılar.",
+      "networkTitle": "My Pharmacy Network",
+      "networkSubtitle": "Choose up to 3 local pharmacies to receive your prescriptions directly. Your local recommendations are generated automatically based on your address.",
+      "recommendedPharmacies": "Find Local Pharmacies",
+      "currentFavorites": "Current Favourites",
+      "noFavorites": "No pharmacies selected yet.",
+      "addToFavorites": "Add to Favourites",
+      "added": "Added",
+      "saveNetwork": "Save Network",
+      "networkSaved": "Saved!",
+      "liveStock": "Live Stock",
+      "inventorySyncing": "Syncing inventory...",
+      "moreStrains": "+{count} more strains...",
+      "locatingPartners": "Locating nearby partners...",
+      "address": "Address",
+      "phone": "Phone Number",
+      "dateOfBirth": "Date of Birth",
+      "treatingPhysician": "Treating Physician / Practice",
+      "changePassword": "Change Password",
+      "passwordAndSecurity": "Password & Security"
     },
     "reports": {
       "title": "Raporlarım",
@@ -314,7 +333,35 @@
       "continueToCannatheraScore": "Cannathera Skoruna Devam Et",
       "cannatheraScoreDesc1": "Bölüm 1: Belirti Başlangıç ​​Durumu",
       "continue": "Devam etmek",
-      "cannatheraScoreDesc2": "Bölüm 2: Günlük Yaşam ve Kaynak Temelleri"
+      "cannatheraScoreDesc2": "Bölüm 2: Günlük Yaşam ve Kaynak Temelleri",
+      "address": "Address",
+      "addressPlaceholder": "123 Main St, 10115 Berlin",
+      "phone": "Phone Number"
+    },
+    "prescriptions": {
+      "title": "My E-Prescriptions",
+      "upload": {
+        "title": "Upload New E-Prescription",
+        "selectPharmacy": "Select Pharmacy",
+        "choosePlaceholder": "-- Please select from favourites --",
+        "noFavoritesTitle": "No Favourite Pharmacies",
+        "noFavoritesText": "You must add at least one pharmacy to your favourites before uploading a prescription.",
+        "manageNetwork": "Manage Network",
+        "selectFile": "Upload Prescription File",
+        "filePlaceholder": "Click or drag a file here",
+        "noteLabel": "Note (Optional)",
+        "notePlaceholder": "Notes for the pharmacy...",
+        "submit": "Submit Prescription",
+        "submitting": "Submitting...",
+        "errorNoFile": "Please select a prescription file to upload.",
+        "errorNoPharmacy": "Please select a pharmacy from your favourites."
+      },
+      "history": {
+        "title": "Prescription History",
+        "noPrescriptions": "No prescriptions found.",
+        "rejectionReason": "Reason for rejection:",
+        "yourNote": "Your note:"
+      }
     }
   },
   "doctor": {
@@ -329,7 +376,9 @@
         "reports": "Raporlar",
         "settings": "Klinik Ayarları",
         "help": "Yardım",
-        "network": "Ağ"
+        "network": "Ağ",
+        "chat": "Messages",
+        "pharmacies": "Pharmacy Overview"
       },
       "logout": "Çıkış yap",
       "systemStatus": "Sistem durumu:",
@@ -341,7 +390,8 @@
       "searchAction": "Ara",
       "menu": "Hesap menüsü",
       "myPractice": "Klinik Ayarları",
-      "language": "Dil"
+      "language": "Dil",
+      "security": "Password & Security"
     },
     "dashboard": {
       "activePatients": "Aktif Hastalar",
@@ -368,7 +418,14 @@
       "reviewData": "Verileri incele",
       "viewAllAlerts": "Tüm önceki uyarıları görüntüle",
       "noAppointments": "Bugün randevu yok.",
-      "noAlerts": "Açık uyarı yok."
+      "noAlerts": "Açık uyarı yok.",
+      "colCompliance": "Compliance",
+      "colDate": "Date",
+      "noSubmissions": "No new submissions.",
+      "recentSubmissions": "Current Submissions",
+      "subtitle": "Here is an overview of your clinical agenda today.",
+      "title": "Good morning, Dr. {name}",
+      "totalPatients": "Total Patients"
     },
     "roster": {
       "breadcrumb": "Hasta Yönetimi",
@@ -531,7 +588,9 @@
       "showing": "{count} gönderme",
       "noData": "Henüz veri yok.",
       "last90": "Son 90 gün",
-      "allTime": "Tüm zamanlar"
+      "allTime": "Tüm zamanlar",
+      "clinicalReports": "Clinical Reports",
+      "clinicalReportsDesc": "Archive of monthly and quarterly patient reports"
     },
     "settings": {
       "title": "Klinik Ayarları",
@@ -983,9 +1042,11 @@
         "analytics": "Ağ Analitiği",
         "inventory": "Envanter",
         "settings": "Settings",
-        "prescriptions": "E-Prescriptions",
-        "network": "Hekim Ağı"
-      }
+        "prescriptions": "E-Reçeteler",
+        "network": "Hekim Ağı",
+        "chat": "Messages"
+      },
+      "security": "Password & Security"
     },
     "dashboard": {
       "title": "Eczane Kontrol Paneli",
@@ -1031,14 +1092,14 @@
       "metrics": "METRICS",
       "monthlyVolume": "Aylık Hacim",
       "activeRegulars": "Aktif Müdavimler",
-      "returningPatients": "{pct}% returning",
+      "returningPatients": "Geri dönenlerin %{pct}'i",
       "inventory": "INVENTORY",
       "stockOk": "Stock Optimal",
       "lowStock": "Düşük Stok",
       "liveOrderTicker": "Canlı Sipariş Kodu",
-      "viewAllOrders": "View All Orders",
-      "noNewOrders": "No new orders",
-      "newPrescriptionReceived": "New prescription for {name}",
+      "viewAllOrders": "Tüm Siparişleri Görüntüle",
+      "noNewOrders": "Yeni sipariş yok",
+      "newPrescriptionReceived": "{name} için yeni reçete",
       "processOrder": "PROCESS",
       "aiExtracted": "AI Data Extracted",
       "prescriptionsToday": "Bugün Yeni Reçeteler",
@@ -1299,7 +1360,8 @@
       "batchOptional": "Batch (optional)",
       "noteOptional": "Note (optional)",
       "addStock": "Stok Ekle",
-      "lowStockAlert": "Uyarı: Düşük Stok"
+      "lowStockAlert": "Uyarı: Düşük Stok",
+      "safetyThreshold": "Safety Threshold"
     },
     "nav": {
       "reviews": "Hasta kontrolleri"
@@ -1360,7 +1422,8 @@
         "reports": "Raporlar",
         "team": "Ekip",
         "settings": "Ayarlar"
-      }
+      },
+      "security": "Password & Security"
     },
     "overview": {
       "title": "Kurumsal Genel Bakış",
@@ -1874,7 +1937,8 @@
     "planAssignmentHint": "Bu hesaba hangi planın uygulanacağını yapılandırın veya özel bir pilot ücret belirleyin.",
     "planTier": "Plan Katmanı",
     "setDemoFree": "Demo / Ücretsiz olarak ayarla",
-    "demoFreeAccount": "Demo / Ücretsiz Hesap"
+    "demoFreeAccount": "Demo / Ücretsiz Hesap",
+    "security": "Password & Security"
   },
   "paywall": {
     "checkoutFailed": "Stripe ödeme işlemi başlatılamadı.",
@@ -1921,7 +1985,7 @@
     },
     "hero": {
       "certified": "SERTİFİKALI KLİNİK YAZILIM",
-      "title": "The Medical OS for\nCannabis Therapy.",
+      "title": "Tıbbi İşletim Sistemi\nEsrar Terapisi.",
       "subtitle": "Klinik olarak yönlendirilen 90 günlük adaptif rehberlik platformumuz aracılığıyla tedavi süreçlerini optimize eden binlerce hastaya katılın. Günlük değerlendirmelerinizi yapın, fizyolojik süreçlerinizi izleyin ve klinik ekibinizle bağlantıda kalın.",
       "ctaStart": "30 Günlük Planı Başlat",
       "ctaPortal": "Portala Eriş",
@@ -1941,17 +2005,17 @@
       "last7": "Son 7 gün",
       "compliance": "Uyum: Herhangi bir uyarı tespit edilmedi",
       "trust": "Güven Skoru",
-      "v2_subtitle": "Cannathera is the definitive clinical operating system for medical cannabis. We transform fragmented, unstructured patient treatments into a fully closed-loop, data-driven ecosystem. By connecting patients, regional physicians, and verified local pharmacies through secure, structured monitoring, we ensure maximum therapeutic safety, unparalleled documentation precision, and sustainable medical outcomes from day one.",
+      "v2_subtitle": "Cannathera, tıbbi esrar için kesin klinik işletim sistemidir. Parçalı, yapılandırılmamış hasta tedavilerini tamamen kapalı döngü, veri odaklı bir ekosisteme dönüştürüyoruz. Hastaları, bölgesel doktorları ve doğrulanmış yerel eczaneleri güvenli, yapılandırılmış izleme yoluyla birbirine bağlayarak, ilk günden itibaren maksimum tedavi güvenliği, benzersiz dokümantasyon hassasiyeti ve sürdürülebilir tıbbi sonuçlar sağlıyoruz.",
       "v2_ctaStart": "Terapi desteğinizi başlatın"
     },
     "features": {
       "tag": "Platform Yetenekleri",
-      "title": "An Architected Ecosystem for Complete Therapy Compliance",
+      "title": "Tam Terapi Uyumluluğu için Mimari Bir Ekosistem",
       "subtitle": "Cannathera, reçete yazan doktorlar, eczaneler ve günlük hasta gerçekliği arasındaki kritik boşluğu dolduruyor. Karmaşık, son derece kişiselleştirilmiş tedavi rejimlerini yapılandırılmış, güvenli ve veri odaklı klinik iş akışlarına dönüştürerek esrar tedavisini en yüksek tıbbi standartlara yükseltiyoruz.",
       "patientBullets": [
         "Devam eden belgeler",
-        "Daily Dosage Logs",
-        "Adherence Analytics"
+        "Günlük Dozaj Kayıtları",
+        "Bağlılık Analizi"
       ],
       "doctorBullets": [
         "Automated Red-Flags",
@@ -2072,7 +2136,11 @@
       "webhooks": "Webhook'lar",
       "automation": "Make.com/Zapier",
       "coBranding": "Ortak Markalama",
-      "physicians": "Physicians"
+      "physicians": "Physicians",
+      "unitPatient": "aylık rapor",
+      "unitPharmacy": "hasta",
+      "unitPhysician": "hasta vakası",
+      "unitEnterprise": "danışma"
     },
     "founder": {
       "tag": "Kurucu ve Klinik Uyum",
@@ -2193,7 +2261,7 @@
     "subtitle": "Kapalı yerel terapi ağının merkezi olun.",
     "cta": "Ortaklığa Başla",
     "hero_title": "Your Pharmacy at the Core of a Closed-Loop Regional Care Network",
-    "hero_intro": "Cannathera does not merely list your pharmacy in a passive directory — it integrates you as an active, indispensable dispensing node in a verified, closed-loop local therapy ecosystem. We actively reject the model of scraping pharmacies and redirecting patients anonymously to national mail-order giants. Instead, patients actively select your pharmacy as their permanent, trusted local partner. E-prescriptions from regional physicians route exclusively to your inbox, and crucial therapy outcomes flow back to the prescribing practice after dispensation. You transcend the role of a passive point of sale to become the dispensing anchor of a medically structured, fully accountable, and highly profitable local care loop.",
+    "hero_intro": "Cannathera eczanenizi yalnızca pasif bir dizinde listelemekle kalmaz; sizi doğrulanmış, kapalı döngülü bir yerel terapi ekosisteminde aktif, vazgeçilmez bir dağıtım düğümü olarak entegre eder. Eczaneleri ortadan kaldırma ve hastaları isimsiz olarak ulusal postayla sipariş devlerine yönlendirme modelini aktif olarak reddediyoruz. Bunun yerine hastalar eczanenizi kalıcı, güvenilir yerel ortakları olarak aktif olarak seçerler. Bölge hekimlerinden gelen e-reçeteler yalnızca gelen kutunuza yönlendirilir ve önemli tedavi sonuçları, dağıtımdan sonra reçete yazma uygulamasına geri döner. Tıbbi olarak yapılandırılmış, tamamen hesap verebilir ve son derece karlı bir yerel bakım döngüsünün dağıtım dayanağı haline gelmek için pasif bir satış noktası rolünü aşarsınız.",
     "f1_title": "30km Yarıçap Ayrıcalığı",
     "f1_text": "Hastaların sadece sizin eczanenize yönlendirilmesini garanti ediyoruz.",
     "f2_title": "E-Reçete Panosu",
@@ -2231,7 +2299,7 @@
     "v2_hero_title": "Doktor İş Yükünü Artırmadan Teletıbbı Ölçeklendirin",
     "v2_hero_intro": "The primary bottleneck in telemedicine is physician capacity. Unstructured patient messages, ad-hoc follow-ups, and undocumented complaints consume valuable clinical time that should be dedicated exclusively to medical decision-making. Cannathera shatters this bottleneck. Our enterprise platform pre-filters, standardizes, and clinically stratifies all patient-generated therapy data before it ever reaches a physician's dashboard. Your medical team operates at maximum clinical throughput with near-zero administrative drag, allowing you to serve exponentially more patients per physician per month without compromising therapeutic safety or outcomes.",
     "v2_f1_title": "Kurumsal API ve Beyaz Etiket",
-    "v2_f1_text": "Cannathera's RESTful API embeds seamlessly into your existing clinical software stack—whether you deploy a proprietary EMR, a third-party telehealth platform, or a bespoke patient app. Prescription routing, triage alerts, and therapy outcomes sync bidirectionally via secure, versioned endpoints with full webhook telemetry. For enterprise clients, we deliver full white-label deployment: your branding, your patient interface, powered by our certified clinical infrastructure. SLA-backed 99.99% uptime guarantees and a dedicated integration engineering team are standard.",
+    "v2_f1_text": "Cannathera'nın RESTful API'si, ister özel bir EMR, ister üçüncü taraf bir telesağlık platformu, ister özel bir hasta uygulaması dağıtın, mevcut klinik yazılım yığınınıza sorunsuz bir şekilde yerleşir. Reçete yönlendirme, önceliklendirme uyarıları ve tedavi sonuçları, tam web kancası telemetrisine sahip güvenli, sürümlü uç noktalar aracılığıyla çift yönlü olarak senkronize edilir. Kurumsal müşteriler için tam beyaz etiket dağıtımı sunuyoruz: markanız, hasta arayüzünüz, sertifikalı klinik altyapımız tarafından desteklenmektedir. SLA destekli %99,99 kesintisiz çalışma garantisi ve özel bir entegrasyon mühendisliği ekibi standarttır.",
     "v2_f2_title": "Uzun Vadeli Hasta Bağlılığı",
     "v2_f2_text": "Tek seferlik hastaları sadık kullanıcılara dönüştürün.",
     "v2_f3_title": "Klinik Ön Filtreleme",

@@ -87,16 +87,16 @@ export function FavoritePharmacies({
   return (
     <div className="mt-8 space-y-6">
       <div className="border-t border-hairline pt-6">
-        <h2 className="text-lg font-bold text-pine-900">My Pharmacy Network</h2>
+        <h2 className="text-lg font-bold text-pine-900">{t("networkTitle")}</h2>
         <p className="text-sm text-muted mt-1">
-          Select up to 3 local pharmacies to receive your prescriptions directly. Your local recommendations are generated automatically based on your address.
+          {t("networkSubtitle")}
         </p>
       </div>
 
       <div className="rounded-xl border border-hairline bg-[#f6f8fc] p-5">
-        <h3 className="font-semibold text-ink-strong mb-3">Current Favorites ({favorites.length}/3)</h3>
+        <h3 className="font-semibold text-ink-strong mb-3">{t("currentFavorites")} ({favorites.length}/3)</h3>
         {favorites.length === 0 ? (
-          <p className="text-sm text-muted">No pharmacies selected yet.</p>
+          <p className="text-sm text-muted">{t("noFavorites")}</p>
         ) : (
           <ul className="space-y-3">
             {favorites.map((f) => (
@@ -118,7 +118,7 @@ export function FavoritePharmacies({
                 {/* Stock levels display */}
                 {f.inventory && f.inventory.length > 0 && (
                   <div className="mt-3 bg-leaf-50 rounded-lg p-3">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-leaf-800 mb-2">Live Stock Levels</p>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-leaf-800 mb-2">{t("liveStock")}</p>
                     <div className="flex flex-wrap gap-2">
                       {f.inventory.slice(0, 3).map((item, idx) => (
                         <span key={idx} className="text-xs font-medium bg-white text-ink-strong border border-leaf-200 px-2 py-1 rounded">
@@ -127,14 +127,14 @@ export function FavoritePharmacies({
                       ))}
                       {f.inventory.length > 3 && (
                         <span className="text-xs font-medium text-leaf-700 py-1">
-                          +{f.inventory.length - 3} more strains...
+                          {t("moreStrains", { count: f.inventory.length - 3 })}
                         </span>
                       )}
                     </div>
                   </div>
                 )}
                 {f.inventory && f.inventory.length === 0 && (
-                  <p className="mt-2 text-xs text-muted italic">Inventory syncing...</p>
+                  <p className="mt-2 text-xs text-muted italic">{t("inventorySyncing")}</p>
                 )}
               </li>
             ))}
@@ -148,15 +148,15 @@ export function FavoritePharmacies({
             disabled={saving || favorites.length === 0}
             className="h-10 rounded-lg bg-pine-600 px-5 font-bold text-white disabled:opacity-50"
           >
-            {saved ? "Saved!" : "Save Network"}
+            {saved ? t("networkSaved") : t("saveNetwork")}
           </button>
         </div>
       </div>
 
       <div className="space-y-4">
-        <h3 className="font-semibold text-ink-strong">Recommended Local Pharmacies</h3>
+        <h3 className="font-semibold text-ink-strong">{t("recommendedPharmacies")}</h3>
         {error && <p className="text-sm text-red-500">{error}</p>}
-        {searching && <p className="text-sm text-muted">Locating nearby partners...</p>}
+        {searching && <p className="text-sm text-muted">{t("locatingPartners")}</p>}
       </div>
 
       {results.length > 0 && (
@@ -191,7 +191,7 @@ export function FavoritePharmacies({
                         : "bg-pine-100 text-pine-700 hover:bg-pine-200"
                     }`}
                   >
-                    {isFav ? "Added" : "Add to Favorites"}
+                    {isFav ? t("added") : t("addToFavorites")}
                   </button>
                 </li>
               );

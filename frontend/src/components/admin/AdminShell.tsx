@@ -13,6 +13,7 @@ type AdminShellLabels = {
   systemAdmin: string;
   controlCenter: string;
   exit: string;
+  security: string;
   menu: string;
   close: string;
   adminSections: string;
@@ -112,6 +113,13 @@ export function AdminShell({
           </div>
           <div className="flex items-center gap-4">
             <LocaleSwitcher direction="down" align="right" />
+            <Link
+              href="/set-password"
+              className="flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-2 text-xs font-bold text-muted hover:bg-surface hover:text-ink-strong"
+            >
+              <span aria-hidden className="msym text-[18px]">lock</span>
+              <span className="hidden sm:inline">{labels.security}</span>
+            </Link>
             <Link
               href="/login"
               className="flex shrink-0 items-center gap-1.5 rounded-lg px-2 py-2 text-xs font-bold text-muted hover:bg-surface hover:text-ink-strong"

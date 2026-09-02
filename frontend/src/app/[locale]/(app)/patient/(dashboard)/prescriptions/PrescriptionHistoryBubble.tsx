@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { format } from "date-fns";
+import { useTranslations } from "next-intl";
 
 type Prescription = {
   id: string;
@@ -19,6 +20,7 @@ export function PrescriptionHistoryBubble({
 }: Readonly<{
   prescriptions: Prescription[] | null;
 }>) {
+  const t = useTranslations("patient.prescriptions");
   const [isOpen, setIsOpen] = useState(false);
 
   const statusColors: Record<string, string> = {
@@ -44,7 +46,7 @@ export function PrescriptionHistoryBubble({
       {isOpen && (
         <div className="fixed inset-y-0 right-0 w-full max-w-md bg-[#f6f8fc] shadow-2xl z-50 flex flex-col border-l border-hairline animate-in slide-in-from-right duration-300">
           <div className="flex items-center justify-between p-5 border-b border-hairline bg-white">
-            <h2 className="font-bold text-ink-strong text-lg">Prescription History</h2>
+            <h2 className="font-bold text-ink-strong text-lg">{t("history.title")}</h2>
             <button
               onClick={() => setIsOpen(false)}
               className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-muted transition-colors"
@@ -58,7 +60,7 @@ export function PrescriptionHistoryBubble({
             {!prescriptions || prescriptions.length === 0 ? (
               <div className="rounded-xl border border-hairline bg-white p-8 text-center text-muted">
                 <span aria-hidden className="msym text-[48px] mb-2 opacity-50">receipt_long</span>
-                <p>No prescriptions found.</p>
+                <p>{t("history.noPrescriptions")}</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -72,13 +74,13 @@ export function PrescriptionHistoryBubble({
                         </p>
                       </div>
                       <span className={`px-3 py-1 rounded-full text-xs font-bold ${statusColors[p.status] || "bg-gray-100 text-gray-800"}`}>
-                        {p.status}
+                        {t(`status_${p.status}`)}
                       </span>
                     </div>
 
                     {p.note && (
                       <div className="mt-4 text-sm text-ink-strong bg-[#f6f8fc] p-4 rounded-lg border border-hairline">
-                        <span className="font-semibold block mb-1 text-muted uppercase tracking-wider text-xs">Your Note:</span>
+                        <span className="font-semibold block mb-1 text-muted uppercase tracking-wider text-xs">{t("history.yourNote")}</span>
                         {p.note}
                       </div>
                     )}
@@ -87,7 +89,7 @@ export function PrescriptionHistoryBubble({
                       <div className="mt-4 flex gap-3 rounded-xl bg-red-50 p-4 text-sm text-red-900 border border-red-100">
                         <span aria-hidden className="msym text-[20px] text-red-600">error</span>
                         <div>
-                          <span className="font-semibold block mb-1">Reason for cancellation:</span>
+                          <span className="font-semibold block mb-1">{t("history.rejectionReason")}</span>
                           <p>{p.rejectionReason}</p>
                         </div>
                       </div>

@@ -43,7 +43,7 @@ export default async function PatientPrescriptionsPage({
     <div className="space-y-6">
       <section className="cw-watermark rounded-2xl border border-hairline bg-white">
         <h1 className="rounded-t-2xl border-b border-hairline bg-[#f6f8fc] px-5 py-4 font-display text-xl font-bold text-pine">
-          My Prescriptions
+          {t("title")}
         </h1>
         <div className="p-5 max-w-4xl mx-auto space-y-12">
           

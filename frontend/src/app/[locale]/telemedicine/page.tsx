@@ -58,79 +58,13 @@ function TelemedicineContent() {
             </div>
 
             {/* Enterprise API Architecture Graphic */}
-            <div className="relative w-full rounded-2xl border border-pine/20 bg-gradient-to-br from-[#0d2a1c] to-[#04110a] shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col mt-8 lg:mt-0 p-5 lg:p-7 group">
-              
-              {/* Background Elements */}
-              <div className="absolute inset-0 bg-[linear-gradient(rgba(150,212,178,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(150,212,178,0.03)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none" />
-              
-              <div className="relative z-10 flex flex-col h-full gap-5">
-                
-                {/* Header */}
-                <div className="flex items-center justify-between pb-3 border-b border-mint/10">
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded bg-mint/10 border border-mint/30 flex items-center justify-center">
-                      <span className="msym text-mint text-lg">api</span>
-                    </div>
-                    <div>
-                      <h4 className="text-sm font-bold text-white tracking-wide">Cannathera Enterprise API</h4>
-                      <p className="text-[10px] text-mint/60 font-mono mt-0.5">v2.4.0-stable · EU-Central Node</p>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-[#1a1a2e] border border-white/10">
-                    <div className="w-1.5 h-1.5 rounded-full bg-mint animate-pulse" />
-                    <span className="text-[9px] font-bold text-mint uppercase tracking-widest">99.99% SLA Uptime</span>
-                  </div>
-                </div>
-
-                {/* API Request Flow */}
-                <div className="flex flex-col gap-4 py-2">
-                  <span className="text-[10px] font-bold text-white/50 uppercase tracking-widest">Live Telemetry Stream</span>
-                  
-                  {/* Code Block Snippet */}
-                  <div className="bg-[#050b08] rounded-xl border border-white/5 p-4 font-mono text-[10px] sm:text-xs leading-loose relative overflow-hidden group-hover:border-mint/20 transition-colors">
-                    <div className="absolute top-0 right-0 p-2 opacity-30">
-                      <span className="msym text-mint">code</span>
-                    </div>
-                    <div className="text-mint/40">POST <span className="text-white">/v2/telemedicine/triage/eval</span></div>
-                    <div className="text-white/30 pl-4">{"{"}</div>
-                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">&quot;patient_id&quot;</span>: <span className="text-amber-200/80">&quot;PT-904X-E&quot;</span>,</div>
-                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">&quot;nrs_pain_score&quot;</span>: <span className="text-blue-300">4</span>,</div>
-                    <div className="text-white/60 pl-8"><span className="text-mint-bright/80">&quot;dizziness_flag&quot;</span>: <span className="text-blue-300">false</span></div>
-                    <div className="text-white/30 pl-4">{"}"}</div>
-                  </div>
-                </div>
-
-                {/* Integration Nodes */}
-                <div className="mt-auto grid grid-cols-2 gap-3">
-                  <div className="bg-white/[0.03] rounded-xl border border-white/10 p-3 flex items-start gap-3">
-                    <span className="msym text-mint/60 text-xl shrink-0">webhook</span>
-                    <div>
-                      <div className="text-[11px] font-bold text-white">Event Webhooks</div>
-                      <div className="text-[9px] text-white/40 mt-1 leading-relaxed">Bidirectional sync with proprietary EMR systems.</div>
-                    </div>
-                  </div>
-                  <div className="bg-white/[0.03] rounded-xl border border-white/10 p-3 flex items-start gap-3">
-                    <span className="msym text-mint/60 text-xl shrink-0">verified_user</span>
-                    <div>
-                      <div className="text-[11px] font-bold text-white">White-Label Auth</div>
-                      <div className="text-[9px] text-white/40 mt-1 leading-relaxed">SSO integration for seamless patient onboarding.</div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Footer Bar */}
-                <div className="flex items-center justify-between pt-3 border-t border-mint/10">
-                  <div className="flex items-center gap-2">
-                    <span className="msym text-[14px] text-mint">security</span>
-                    <span className="text-[9px] text-white/60 font-bold uppercase tracking-wider">AES-256 Encrypted</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className="msym text-[14px] text-mint">speed</span>
-                    <span className="text-[9px] text-white/60 font-bold uppercase tracking-wider">Avg Latency: 11ms</span>
-                  </div>
-                </div>
-
-              </div>
+            <div className="relative w-full rounded-2xl border border-pine/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col mt-8 lg:mt-0 group bg-[#04110a]">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/brand/telemedicine_flow_graphic.jpg"
+                alt="Enterprise API Architecture"
+                className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
+              />
             </div>
           </div>
         </div>

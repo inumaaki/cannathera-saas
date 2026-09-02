@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useId, useRef, useState, Fragment } from "react";
 import { API_URL } from "@/lib/api";
 import { useTranslations } from "next-intl";
+import { CustomSelect } from "@/components/ui/CustomSelect";
 
 type Subscription = {
   id: string;
@@ -1563,19 +1564,16 @@ export default function AdminDashboardPage() {
                 <label className="block text-xs font-bold uppercase tracking-wider text-sage-950">
                   {t("codes.orgLabel")}
                 </label>
-                <select
-                  required
+                <CustomSelect
                   value={newCodeOrgId}
-                  onChange={(e) => setNewCodeOrgId(e.target.value)}
-                  className="mt-1.5 w-full rounded-xl border border-hairline bg-surface px-3.5 py-2.5 text-sm focus:border-brand focus:outline-none"
-                >
-                  <option value="">{t("codes.selectOrgPlaceholder")}</option>
-                  {partners.map((p) => (
-                    <option key={p.id} value={p.id}>
-                      {p.name} ({p.type})
-                    </option>
-                  ))}
-                </select>
+                  onChange={(val: string) => setNewCodeOrgId(val)}
+                  placeholder={t("codes.selectOrgPlaceholder")}
+                  options={partners.map((p) => ({
+                    value: p.id,
+                    label: `${p.name} (${p.type})`,
+                  }))}
+                  className="mt-1.5 h-[42px] w-full rounded-xl border border-hairline bg-surface px-3.5 text-sm focus-within:border-brand"
+                />
               </div>
 
               <div>

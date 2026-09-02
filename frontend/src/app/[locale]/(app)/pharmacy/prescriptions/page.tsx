@@ -17,7 +17,7 @@ type Prescription = {
       email: string;
     };
     dateOfBirth: string | null;
-  };
+  } | null;
 };
 
 export default async function PharmacyPrescriptionsPage({
@@ -63,47 +63,66 @@ export default async function PharmacyPrescriptionsPage({
                 </tr>
               </thead>
               <tbody className="divide-y divide-hairline">
-                {(prescriptions || []).map((p) => (
-                  <tr key={p.id} className="hover:bg-black/[0.02] transition-colors">
-                    <td className="px-6 py-4 align-top">
-                      <div className="font-bold text-ink-strong">
-                        {p.patient.user.firstName} {p.patient.user.lastName}
-                      </div>
-                      <div className="text-muted text-xs mt-0.5">
-                        {p.patient.user.email}
-                      </div>
-                      {p.patient.dateOfBirth && (
-                        <div className="text-muted text-xs mt-0.5">
-                          DOB: {format(new Date(p.patient.dateOfBirth), "PP")}
-                        </div>
-                      )}
-                    </td>
-                    
-                    <td className="px-6 py-4 align-top text-ink-strong">
-                      {format(new Date(p.createdAt), "PPP p")}
-                    </td>
+                {(prescriptions || []).map((p) => {
+                  const isUnmatched = p.status === 'UNMATCHED' || !p.patient;
 
-                    <td className="px-6 py-4 align-top max-w-xs">
-                      {p.note ? (
-                        <p className="text-ink-strong line-clamp-3">{p.note}</p>
-                      ) : (
-                        <span className="text-muted italic">No note provided.</span>
-                      )}
+                  return (
+                    <tr key={p.id} className={`transition-colors ${isUnmatched ? 'bg-red-50 hover:bg-red-100/50' : 'hover:bg-black/[0.02]'}`}>
+                      <td className="px-6 py-4 align-top">
+                        {isUnmatched ? (
+                          <div className="font-bold text-red-600 flex items-center gap-2">
+                            <span className="msym text-[18px]">error</span>
+                            Unknown Patient
+                          </div>
+                        ) : (
+                          <>
+                            <div className="font-bold text-ink-strong">
+                              {p.patient?.user.firstName} {p.patient?.user.lastName}
+                            </div>
+                            <div className="text-muted text-xs mt-0.5">
+                              {p.patient?.user.email}
+                            </div>
+                            {p.patient?.dateOfBirth && (
+                              <div className="text-muted text-xs mt-0.5">
+                                DOB: {format(new Date(p.patient.dateOfBirth), "PP")}
+                              </div>
+                            )}
+                          </>
+                        )}
+                      </td>
                       
-                      {p.status === 'CANCELLED' && p.rejectionReason && (
-                        <div className="mt-2 text-xs font-medium text-red-600 bg-red-50 p-2 rounded border border-red-100">
-                          <strong>Rejection Reason:</strong> {p.rejectionReason}
-                        </div>
-                      )}
-                    </td>
+                      <td className={`px-6 py-4 align-top ${isUnmatched ? 'text-red-900 font-medium' : 'text-ink-strong'}`}>
+                        {format(new Date(p.createdAt), "PPP p")}
+                      </td>
 
-                    <td className="px-6 py-4 align-top text-right">
-                      <div className="flex justify-end">
-                        <PrescriptionStatusEditor id={p.id} currentStatus={p.status} />
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                      <td className="px-6 py-4 align-top max-w-xs">
+                        {p.note ? (
+                          <p className={`line-clamp-3 ${isUnmatched ? 'text-red-800 font-medium' : 'text-ink-strong'}`}>{p.note}</p>
+                        ) : (
+                          <span className="text-muted italic">No note provided.</span>
+                        )}
+                        
+                        {p.status === 'CANCELLED' && p.rejectionReason && (
+                          <div className="mt-2 text-xs font-medium text-red-600 bg-white p-2 rounded border border-red-200">
+                            <strong>Rejection Reason:</strong> {p.rejectionReason}
+                          </div>
+                        )}
+                      </td>
+
+                      <td className="px-6 py-4 align-top text-right">
+                        <div className="flex justify-end items-center gap-3">
+                          {isUnmatched ? (
+                            <button className="text-xs font-bold bg-white text-red-600 border border-red-200 px-3 py-1.5 rounded-md hover:bg-red-50">
+                              Assign Patient
+                            </button>
+                          ) : (
+                            <PrescriptionStatusEditor id={p.id} currentStatus={p.status} />
+                          )}
+                        </div>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

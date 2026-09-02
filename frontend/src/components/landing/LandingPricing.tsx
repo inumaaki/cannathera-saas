@@ -64,7 +64,7 @@ export function LandingPricing() {
                     <h3 className="text-lg font-bold text-ink-strong">{t("basic")}</h3>
                     <p className="mt-2 text-sm text-muted">{t("basicDesc")}</p>
                     <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                      9,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
+                      9,99 € <span className="text-sm font-semibold text-muted">/ {t("unitPatient") || "monthly report"}</span>
                     </p>
                     <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                       <li className="flex gap-2.5 items-center font-semibold">
@@ -98,7 +98,7 @@ export function LandingPricing() {
                     <h3 className="text-lg font-bold text-ink-strong">{t("plus")}</h3>
                     <p className="mt-2 text-sm text-muted">{t("plusDesc")}</p>
                     <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                      39,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
+                      39,99 € <span className="text-sm font-semibold text-muted">/ {t("unitPatient") || "monthly report"}</span>
                     </p>
                     <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                       <li className="flex gap-2.5 items-center font-semibold">
@@ -133,7 +133,7 @@ export function LandingPricing() {
                     <h3 className="text-lg font-bold text-ink-strong">{t("premium")}</h3>
                     <p className="mt-2 text-sm text-muted">{t("premiumDesc")}</p>
                     <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                      49,99 € <span className="text-sm font-semibold text-muted">/ {t("month")}</span>
+                      49,99 € <span className="text-sm font-semibold text-muted">/ {t("unitPatient") || "monthly report"}</span>
                     </p>
                     <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                       <li className="flex gap-2.5 items-center font-semibold">
@@ -212,7 +212,7 @@ export function LandingPricing() {
                   <h3 className="text-lg font-bold text-ink-strong">{t("flex") || "Flex Package"}</h3>
                   <p className="mt-2 text-sm text-muted">{t("flexDesc") || "For independent local pharmacies starting out with digital prescriptions."}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    299 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
+                    299 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("unitPharmacy") || "patient"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
@@ -246,7 +246,7 @@ export function LandingPricing() {
                   <h3 className="text-lg font-bold text-ink-strong">{t("flashbackS") || "Flashback S"}</h3>
                   <p className="mt-2 text-sm text-muted">{t("flashbackSDesc") || "The full operating system for growing cannabis pharmacies."}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    499 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
+                    499 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("unitPharmacy") || "patient"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
@@ -277,7 +277,7 @@ export function LandingPricing() {
                   <h3 className="text-lg font-bold text-ink-strong">{t("flashbackM") || "Flashback M"}</h3>
                   <p className="mt-2 text-sm text-muted">{t("flashbackMDesc") || "For high-volume pharmacies with custom integrations."}</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    699 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
+                    699 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("unitPharmacy") || "patient"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
@@ -319,9 +319,9 @@ export function LandingPricing() {
               <div className="rounded-2xl border-2 border-pine-600 bg-white p-8 shadow-xl flex flex-col justify-between">
                 <div>
                   <h3 className="text-lg font-bold text-ink-strong">Physician License (B2B)</h3>
-                  <p className="mt-2 text-sm text-muted">Automated, legally compliant cannabis documentation & a practical interface for local patient care.</p>
+                  <p className="mt-2 text-sm text-muted">Automated, legally compliant cannabis documentation & practical interface for local patient care.</p>
                   <p className="mt-6 font-display text-4xl font-extrabold text-pine">
-                    399 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("month") || "mo"}</span>
+                    399 € <span className="text-sm font-semibold text-muted">{t("netto") || "net"} / {t("unitPhysician") || "patient case"}</span>
                   </p>
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
@@ -350,30 +350,30 @@ export function LandingPricing() {
 
           {activeTab === "enterprise" && (
             <div className="mx-auto max-w-3xl rounded-2xl border border-hairline bg-white p-4 shadow-sm sm:p-8">
-              <h3 className="text-xl font-bold text-ink-strong text-center">Enterprise – from 350 monthly reviews</h3>
+              <h3 className="text-xl font-bold text-ink-strong text-center">Enterprise – from 350 consultations</h3>
               <p className="mt-2 text-sm text-muted text-center max-w-md mx-auto">
-                Base price: 699 € net / month (includes the first 350 reviews). Volume-based billing applies exclusively to any reviews exceeding this number.
+                Base price: 699 € net / month (includes the first 350 consultations). Volume-based billing applies exclusively to any consultations exceeding this amount. Price tiers are graduated (calculated conditionally, not retroactively).
               </p>
 
               <div className="mt-6 overflow-hidden rounded-xl border border-hairline">
                 <table className="w-full text-start text-sm">
                   <thead className="bg-surface text-ink-strong uppercase tracking-wider text-xs font-bold border-b border-hairline">
                     <tr>
-                      <th className="px-6 py-4">Volume (Monthly Reviews)</th>
-                      <th className="px-6 py-4 text-right">Price per additional review</th>
+                      <th className="px-6 py-4">Volume (Consultations)</th>
+                      <th className="px-6 py-4 text-right">Price per additional consultation</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-hairline">
                     <tr>
-                      <td className="px-6 py-4 font-semibold">351 – 500 reviews</td>
+                      <td className="px-6 py-4 font-semibold">351 – 500 consultations</td>
                       <td className="px-6 py-4 text-right font-bold text-pine-600">8,00 € {t("netto") || "net"}</td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 font-semibold">501 – 1,500 reviews</td>
+                      <td className="px-6 py-4 font-semibold">501 – 1,500 consultations</td>
                       <td className="px-6 py-4 text-right font-bold text-pine-600">6,50 € {t("netto") || "net"}</td>
                     </tr>
                     <tr>
-                      <td className="px-6 py-4 font-semibold">From 1,501 reviews</td>
+                      <td className="px-6 py-4 font-semibold">From 1,501 consultations</td>
                       <td className="px-6 py-4 text-right font-bold text-pine-600">5,00 € {t("netto") || "net"}</td>
                     </tr>
                   </tbody>
@@ -384,19 +384,19 @@ export function LandingPricing() {
                 <h4 className="text-sm font-bold text-ink-strong mb-4">Illustrative Examples:</h4>
                 <div className="space-y-3 text-sm text-muted">
                   <div className="flex justify-between items-center bg-surface/50 p-3 rounded-lg border border-hairline">
-                    <span className="font-semibold text-ink-strong">500 reviews</span>
+                    <span className="font-semibold text-ink-strong">500 consultations</span>
                     <span className="text-right">699 € + (150 × 8,00 €) = <strong className="text-pine-600">1.899 € net</strong></span>
                   </div>
                   <div className="flex justify-between items-center bg-surface/50 p-3 rounded-lg border border-hairline">
-                    <span className="font-semibold text-ink-strong">1,000 reviews</span>
+                    <span className="font-semibold text-ink-strong">1,000 consultations</span>
                     <span className="text-right">699 € + (150 × 8,00 €) + (500 × 6,50 €) = <strong className="text-pine-600">5.149 € net</strong></span>
                   </div>
                   <div className="flex justify-between items-center bg-surface/50 p-3 rounded-lg border border-hairline">
-                    <span className="font-semibold text-ink-strong">1,500 reviews</span>
+                    <span className="font-semibold text-ink-strong">1,500 consultations</span>
                     <span className="text-right">699 € + (150 × 8,00 €) + (1,000 × 6,50 €) = <strong className="text-pine-600">8.399 € net</strong></span>
                   </div>
                   <div className="flex justify-between items-center bg-surface/50 p-3 rounded-lg border border-hairline">
-                    <span className="font-semibold text-ink-strong">2,000 reviews</span>
+                    <span className="font-semibold text-ink-strong">2,000 consultations</span>
                     <span className="text-right">699 € + (150 × 8,00 €) + (1,000 × 6,50 €) + (500 × 5,00 €) = <strong className="text-pine-600">10.899 € net</strong></span>
                   </div>
                 </div>

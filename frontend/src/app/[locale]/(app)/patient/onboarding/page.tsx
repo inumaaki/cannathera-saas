@@ -137,20 +137,20 @@ export default function PatientOnboarding() {
           
           <div>
             <label className="mb-2 block text-sm font-semibold uppercase tracking-wider text-ink-strong">
-              Address
+              {t("address")}
             </label>
             <input
               type="text"
               value={address}
               onChange={(e) => setAddress(e.target.value)}
-              placeholder="Street, House Number, Zip Code, City"
+              placeholder={t("addressPlaceholder")}
               className="w-full rounded-xl border border-hairline px-4 py-3 outline-none focus:border-pine-600 focus:ring-2 focus:ring-pine-600/20"
             />
           </div>
 
           <div>
             <label className="mb-2 block text-sm font-semibold uppercase tracking-wider text-ink-strong">
-              Phone Number
+              {t("phone")}
             </label>
             <input
               type="tel"

@@ -280,6 +280,16 @@ export function EnterpriseShell({
                     <p className="border-b border-hairline px-5 py-3 text-sm text-muted rounded-t-xl">
                       {networkName}
                     </p>
+                    <Link
+                      href="/set-password"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-center gap-3 border-b border-hairline px-5 py-3 text-sm font-semibold text-ink-strong hover:bg-surface"
+                    >
+                      <span aria-hidden className="msym text-[20px] text-pine-600">
+                        lock
+                      </span>
+                      {t("security")}
+                    </Link>
                     <div className="flex items-center justify-between border-b border-hairline px-5 py-3">
                       <span className="flex items-center gap-3 text-sm font-semibold text-ink-strong">
                         <span aria-hidden className="msym text-[20px] text-pine-600">

@@ -284,7 +284,26 @@
       "saved": "Profil salvat",
       "gdprTitle": "Conform regulamentului GDPR",
       "gdprText": "Datele tale medicale sunt criptate conform standardelor UE de securitate înaltă.",
-      "safeguardWarning": "Important: Trecerea la o farmacie sau medic extern anulează beneficiile subvenționate ale planului dvs."
+      "safeguardWarning": "Important: Trecerea la o farmacie sau medic extern anulează beneficiile subvenționate ale planului dvs.",
+      "networkTitle": "My Pharmacy Network",
+      "networkSubtitle": "Choose up to 3 local pharmacies to receive your prescriptions directly. Your local recommendations are generated automatically based on your address.",
+      "recommendedPharmacies": "Find Local Pharmacies",
+      "currentFavorites": "Current Favourites",
+      "noFavorites": "No pharmacies selected yet.",
+      "addToFavorites": "Add to Favourites",
+      "added": "Added",
+      "saveNetwork": "Save Network",
+      "networkSaved": "Saved!",
+      "liveStock": "Live Stock",
+      "inventorySyncing": "Syncing inventory...",
+      "moreStrains": "+{count} more strains...",
+      "locatingPartners": "Locating nearby partners...",
+      "address": "Address",
+      "phone": "Phone Number",
+      "dateOfBirth": "Date of Birth",
+      "treatingPhysician": "Treating Physician / Practice",
+      "changePassword": "Change Password",
+      "passwordAndSecurity": "Password & Security"
     },
     "reports": {
       "title": "Rapoartele mele",
@@ -314,7 +333,35 @@
       "continueToCannatheraScore": "Continuați până la Cannathera Score",
       "cannatheraScoreDesc1": "Partea 1: Linia de bază a simptomelor",
       "continue": "Continua",
-      "cannatheraScoreDesc2": "Partea 2: Viața de zi cu zi și Linia de bază a resurselor"
+      "cannatheraScoreDesc2": "Partea 2: Viața de zi cu zi și Linia de bază a resurselor",
+      "address": "Address",
+      "addressPlaceholder": "123 Main St, 10115 Berlin",
+      "phone": "Phone Number"
+    },
+    "prescriptions": {
+      "title": "My E-Prescriptions",
+      "upload": {
+        "title": "Upload New E-Prescription",
+        "selectPharmacy": "Select Pharmacy",
+        "choosePlaceholder": "-- Please select from favourites --",
+        "noFavoritesTitle": "No Favourite Pharmacies",
+        "noFavoritesText": "You must add at least one pharmacy to your favourites before uploading a prescription.",
+        "manageNetwork": "Manage Network",
+        "selectFile": "Upload Prescription File",
+        "filePlaceholder": "Click or drag a file here",
+        "noteLabel": "Note (Optional)",
+        "notePlaceholder": "Notes for the pharmacy...",
+        "submit": "Submit Prescription",
+        "submitting": "Submitting...",
+        "errorNoFile": "Please select a prescription file to upload.",
+        "errorNoPharmacy": "Please select a pharmacy from your favourites."
+      },
+      "history": {
+        "title": "Prescription History",
+        "noPrescriptions": "No prescriptions found.",
+        "rejectionReason": "Reason for rejection:",
+        "yourNote": "Your note:"
+      }
     }
   },
   "doctor": {
@@ -329,7 +376,9 @@
         "reports": "Rapoarte",
         "settings": "Setările cabinetului",
         "help": "Ajutor",
-        "network": "Reţea"
+        "network": "Reţea",
+        "chat": "Messages",
+        "pharmacies": "Pharmacy Overview"
       },
       "logout": "Deconectare",
       "systemStatus": "Starea sistemului:",
@@ -341,7 +390,8 @@
       "searchAction": "Caută",
       "menu": "Meniu cont",
       "myPractice": "Setările cabinetului",
-      "language": "Limbă"
+      "language": "Limbă",
+      "security": "Password & Security"
     },
     "dashboard": {
       "activePatients": "Pacienți activi",
@@ -368,7 +418,14 @@
       "reviewData": "Revizuiește datele",
       "viewAllAlerts": "Vezi toate alertele anterioare",
       "noAppointments": "Nicio programare azi.",
-      "noAlerts": "Nicio alertă deschisă."
+      "noAlerts": "Nicio alertă deschisă.",
+      "colCompliance": "Compliance",
+      "colDate": "Date",
+      "noSubmissions": "No new submissions.",
+      "recentSubmissions": "Current Submissions",
+      "subtitle": "Here is an overview of your clinical agenda today.",
+      "title": "Good morning, Dr. {name}",
+      "totalPatients": "Total Patients"
     },
     "roster": {
       "breadcrumb": "Gestionarea pacienților",
@@ -531,7 +588,9 @@
       "showing": "{count} trimiteri",
       "noData": "Încă nu există date.",
       "last90": "Ultimele 90 de zile",
-      "allTime": "Toate timpurile"
+      "allTime": "Toate timpurile",
+      "clinicalReports": "Clinical Reports",
+      "clinicalReportsDesc": "Archive of monthly and quarterly patient reports"
     },
     "settings": {
       "title": "Setări cabinet",
@@ -984,12 +1043,14 @@
         "inventory": "Inventar",
         "settings": "Settings",
         "prescriptions": "Rețete electronice",
-        "network": "Rețeaua de medici"
-      }
+        "network": "Rețeaua de medici",
+        "chat": "Messages"
+      },
+      "security": "Password & Security"
     },
     "dashboard": {
       "title": "Tabloul de bord al farmaciei",
-      "subtitle": "Welcome back, {name}",
+      "subtitle": "Bine ai revenit, {name}",
       "cycleProgress": "Progres ciclu",
       "completion": "Finalizare",
       "dueThisMonth": "Monthly Reviews due",
@@ -1046,7 +1107,7 @@
     },
     "reviews": {
       "title": "Recenzii de terapie",
-      "subtitle": "Evaluation and approval of monthly therapy reports.",
+      "subtitle": "Evaluarea și aprobarea rapoartelor lunare de terapie.",
       "overdue": "Overdue",
       "completedToday": "Finalizate astăzi",
       "pending": "Acțiuni deschise",
@@ -1299,7 +1360,8 @@
       "batchOptional": "Batch (optional)",
       "noteOptional": "Note (optional)",
       "addStock": "Adăugați stoc",
-      "lowStockAlert": "Avertisment: Stoc scăzut"
+      "lowStockAlert": "Avertisment: Stoc scăzut",
+      "safetyThreshold": "Safety Threshold"
     },
     "settings": {
       "title": "Pharmacy Settings",
@@ -1360,7 +1422,8 @@
         "reports": "Rapoarte",
         "team": "Echipa",
         "settings": "Setări"
-      }
+      },
+      "security": "Password & Security"
     },
     "overview": {
       "title": "Prezentare generală Enterprise",
@@ -1874,7 +1937,8 @@
     "planAssignmentHint": "Configurați planul care se aplică acestui cont sau setați o rată pilot personalizată.",
     "planTier": "Nivelul de plan",
     "setDemoFree": "Setați ca Demo / Gratuit",
-    "demoFreeAccount": "Cont Demo / Gratuit"
+    "demoFreeAccount": "Cont Demo / Gratuit",
+    "security": "Password & Security"
   },
   "paywall": {
     "checkoutFailed": "Eșec la inițierea Stripe checkout.",
@@ -1941,13 +2005,13 @@
       "last7": "Ultimele 7 zile",
       "compliance": "Conformitate: Nu au fost detectate avertismente",
       "trust": "Scor de Încredere",
-      "v2_subtitle": "Cannathera este sistemul de operare clinic definitiv pentru canabisul medicinal. Transformăm tratamentele fragmentate, nestructurate ale pacienților într-un ecosistem complet în buclă închisă, bazat pe date. Prin conectarea pacienților, a medicilor regionali și a farmaciilor locale verificate prin monitorizare securizată și structurată, asigurăm siguranță terapeutică maximă, precizie de neegalat a documentației și rezultate medicale durabile încă din prima zi.",
+      "v2_subtitle": "Cannathera este sistemul de operare clinic definitiv pentru canabisul medicinal. Transformăm tratamentele fragmentate și nestructurate ale pacienților într-un ecosistem complet în buclă închisă, bazat pe date. Prin conectarea pacienților, a medicilor regionali și a farmaciilor locale verificate printr-o monitorizare securizată și structurată, asigurăm siguranță terapeutică maximă, precizie de neegalat a documentației și rezultate medicale durabile încă din prima zi.",
       "v2_ctaStart": "Începeți-vă asistența terapeutică"
     },
     "features": {
       "tag": "Capacități ale platformei",
       "title": "Un ecosistem arhitectat pentru conformitatea completă cu terapia",
-      "subtitle": "Cannathera realizează o punte de decalaj critică dintre medicii care prescriu, farmaciile care eliberează și realitatea zilnică a pacientului. Prin traducerea regimurilor de terapie complexe, extrem de individualizate în fluxuri de lucru clinice structurate, sigure și bazate pe date, ridicăm tratamentul cu canabis la cele mai înalte standarde medicale.",
+      "subtitle": "Cannathera face legătura între medicii care prescriu, farmaciile care eliberează și realitatea zilnică a pacientului. Prin traducerea regimurilor de terapie complexe, extrem de individualizate în fluxuri de lucru clinice structurate, sigure și bazate pe date, ridicăm tratamentul cu canabis la cele mai înalte standarde medicale.",
       "patientBullets": [
         "Documentare in curs de desfasurare",
         "Jurnalele de dozare zilnică",
@@ -2072,7 +2136,11 @@
       "webhooks": "Webhooks",
       "automation": "Make.com/Zapier",
       "coBranding": "Co-branding",
-      "physicians": "Physicians"
+      "physicians": "Physicians",
+      "unitPatient": "raport lunar",
+      "unitPharmacy": "pacient",
+      "unitPhysician": "caz pacient",
+      "unitEnterprise": "consultare"
     },
     "founder": {
       "tag": "Suport pentru Terapie Condusă Clinic",
@@ -2167,12 +2235,12 @@
     "compliance_title": "Conformitate GDPR",
     "compliance_text": "Complet conform GDPR, criptat AES-256 și certificat ca dispozitiv medical clasa I.",
     "cta": "Solicitați acces",
-    "hero_title": "Revizuirea lunară care se scrie în sine — Precizie clinică automatizată",
+    "hero_title": "Revizuirea lunară care se scrie – Precizie clinică automatizată",
     "hero_intro": "Terapia cu canabis medical necesită o documentație continuă, structurată și care poate fi susținută din punct de vedere legal - nu presupuneri retrospective sau note nestructurate ale pacientului. Motorul de acompaniament activ al Cannathera reunește automat jurnalele zilnice de simptome ale fiecărui pacient, valorile validate ale scalei durerii, evaluările de tolerabilitate și răspunsurile specifice tulpinii într-o revizuire lunară extrem de detaliată, de grad clinic. Când pacientul dumneavoastră sosește pentru consultația de urmărire, tabloul clinic este deja sintetizat, structurat și pregătit pentru evaluarea dumneavoastră imediată. Recuperați ore de timp administrativ în timp ce eliminați punctele moarte dintre întâlnirile programate.",
     "f1_title": "Rapoarte lunare automatizate",
     "f1_text": "La sfârșitul fiecărei luni, Cannathera alcătuiește automat un rezumat al terapiei structurat, orientat către medic, gata de export. Include progresia zilnică a simptomelor, scorurile validate ale scalei de durere NRS, tendințele de calitate a somnului PSQI și indicatoarele de tolerabilitate critice - toate generate fără probleme din intrările zilnice ale pacientului. Primești un document clinic solid din punct de vedere legal, nu un depozit de date brute, neinterpretabile.",
     "f2_title": "Triaj și alerte în timp real",
-    "f2_text": "Nu mai trebuie să așteptați revizuirea lunară pentru a detecta efectele adverse. Logica noastră de triaj validată monitorizează continuu intrările zilnice ale fiecărui pacient în raport cu valoarea de bază clinică. Când apare o abatere semnificativă din punct de vedere clinic - o creștere bruscă a durerii, un efect secundar neraportat sau o etapă de titrare ratată - tabloul de bord generează o alertă imediată, prioritizată, permițând intervenția rapidă și direcționată înainte ca situația să devină eșec al terapiei.",
+    "f2_text": "Nu mai trebuie să așteptați revizuirea lunară pentru a detecta efectele adverse. Logica noastră de triaj validată monitorizează continuu intrările zilnice ale fiecărui pacient în raport cu valoarea de bază clinică. Când apare o abatere semnificativă din punct de vedere clinic - o creștere bruscă a durerii, un efect secundar neraportat sau un pas de titrare ratat - tabloul de bord generează o alertă imediată, prioritizată, permițând intervenția rapidă și direcționată înainte ca situația să devină eșec al terapiei.",
     "f3_title": "Direcționare e-Rețete și Conformitate",
     "f3_text": "Eliberați rețete electronice direcționate automat către farmacia locală preferată de pacient. Totul este semnat criptografic și sigur.",
     "f4_title": "Date structurate pentru ajustări sigure",
@@ -2231,7 +2299,7 @@
     "v2_hero_title": "Scalați Telemedicina, fără a suprasolicita medicii",
     "v2_hero_intro": "Principalul blocaj în telemedicină este capacitatea medicului. Mesajele nestructurate ale pacienților, urmăririle ad-hoc și plângerile nedocumentate consumă timp clinic valoros care ar trebui să fie dedicat exclusiv luării deciziilor medicale. Cannathera sparge acest blocaj. Platforma noastră de întreprindere prefiltrează, standardizează și stratifică clinic toate datele de terapie generate de pacient înainte ca acestea să ajungă vreodată în tabloul de bord al unui medic. Echipa dumneavoastră medicală operează la un debit clinic maxim, cu o frecvență administrativă aproape de zero, permițându-vă să deserviți exponențial mai mulți pacienți per medic pe lună, fără a compromite siguranța sau rezultatele terapeutice.",
     "v2_f1_title": "API Enterprise & Integrare White-Label",
-    "v2_f1_text": "API-ul RESTful de la Cannathera se integrează perfect în stiva dvs. de software clinică existentă, indiferent dacă implementați un EMR proprietar, o platformă de telesănătate terță parte sau o aplicație personalizată pentru pacient. Dirijarea prescripției, alertele de triaj și rezultatele terapiei se sincronizează bidirecțional prin puncte finale securizate, versiuni cu telemetrie webhook completă. Pentru clienții întreprinderi, oferim o implementare completă cu etichetă albă: brandingul dvs., interfața pacientului dvs., alimentată de infrastructura noastră clinică certificată. Garanții de funcționare de 99,99% susținute de SLA și o echipă dedicată de inginerie de integrare sunt standard.",
+    "v2_f1_text": "API-ul RESTful de la Cannathera se încorporează perfect în stiva dvs. de software clinică existentă, indiferent dacă implementați un EMR proprietar, o platformă de telesănătate terță parte sau o aplicație personalizată pentru pacient. Dirijarea prescripțiilor, alertele de triaj și rezultatele terapiei se sincronizează bidirecțional prin puncte finale securizate, versiuni, cu telemetrie webhook completă. Pentru clienții întreprinderi, oferim o implementare completă cu etichetă albă: branding-ul dvs., interfața pacientului, alimentată de infrastructura noastră clinică certificată. Garanții de funcționare de 99,99% susținute de SLA și o echipă de inginerie de integrare dedicată sunt standard.",
     "v2_f2_title": "Fidelizarea pe termen lung a pacienților",
     "v2_f2_text": "Transformați pacienții unici în utilizatori constanți prin instrumente digitale de acompaniere activă în terapie.",
     "v2_f3_title": "Filtrare Clinică: Medicii văd doar esențialul",

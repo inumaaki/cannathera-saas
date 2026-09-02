@@ -5,7 +5,7 @@ import { useRouter } from "@/i18n/navigation";
 import { API_URL } from "@/lib/api";
 
 export type LiveEvent = {
-  kind: "red_flag" | "log_submitted" | "review_due" | "stock_low" | "appointment" | "report_ready";
+  kind: "red_flag" | "log_submitted" | "review_due" | "stock_low" | "appointment" | "report_ready" | "prescription_received" | "prescription_status_update" | "intake_reminder";
   severity: "info" | "warning" | "critical";
   title: string;
   text: string;
@@ -20,6 +20,9 @@ const ICONS: Record<LiveEvent["kind"], string> = {
   stock_low: "inventory_2",
   appointment: "videocam",
   report_ready: "picture_as_pdf",
+  prescription_received: "receipt_long",
+  prescription_status_update: "update",
+  intake_reminder: "alarm",
 };
 
 /**

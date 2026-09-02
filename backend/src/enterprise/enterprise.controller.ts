@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Res,
   UploadedFile,
   UseGuards,
   UseInterceptors,
@@ -193,13 +194,29 @@ export class EnterpriseController {
   }
 
   @Get('export')
-  @Header('Content-Type', 'text/csv; charset=utf-8')
-  @Header(
-    'Content-Disposition',
-    'attachment; filename="cannathera-netzwerk.csv"',
-  )
+  @Header('Content-Type', 'text/csv')
+  @Header('Content-Disposition', 'attachment; filename="network-audit.csv"')
   exportCsv(@CurrentUser() user: SessionPayload) {
     return this.enterprise.exportCsv(user.sub);
+  }
+
+  @Get('report/pdf')
+  async exportPdf(
+    @CurrentUser() user: SessionPayload,
+    @Res() res: import('express').Response,
+  ) {
+    try {
+      const buffer = await this.enterprise.exportPdf(user.sub);
+      const filename = `network-report-${new Date().toISOString().slice(0, 10)}.pdf`;
+      res.set({
+        'Content-Type': 'application/pdf',
+        'Content-Disposition': `attachment; filename="${filename}"`,
+        'Content-Length': buffer.length,
+      });
+      res.end(buffer);
+    } catch {
+      res.status(500).send('PDF generation failed');
+    }
   }
 
   // ------------------------------------------------ API & Integrations (8.4) ---

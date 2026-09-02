@@ -12,6 +12,7 @@ import {
   SubscriptionTier,
 } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { renderNetworkReportPdf } from './network-report-template';
 import { requirePermission } from './access';
 
 type Metrics = {
@@ -459,5 +460,10 @@ export class EnterpriseService {
       ),
     ];
     return '﻿' + lines.join('\r\n');
+  }
+
+  async exportPdf(userId: string): Promise<Buffer> {
+    const data = await this.overview(userId);
+    return renderNetworkReportPdf(data);
   }
 }

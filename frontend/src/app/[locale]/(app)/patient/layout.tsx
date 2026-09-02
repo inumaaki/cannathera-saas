@@ -7,6 +7,7 @@ import { PatientShell, type Notification } from "@/components/patient/PatientShe
 type Summary = {
   todayLogged: boolean;
   nextAppointment: { scheduledAt: string } | null;
+  reminderTimes?: string[];
 };
 type Plan = { phases: Array<{ key: string; status: string }> };
 type Branding = {
@@ -85,6 +86,7 @@ export default async function PatientLayout({
       userName={name}
       notifications={notifications}
       branding={branding ?? null}
+      reminderTimes={summary?.reminderTimes || []}
     >
       {children}
     </PatientShell>

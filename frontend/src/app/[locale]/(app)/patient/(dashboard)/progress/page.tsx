@@ -84,7 +84,7 @@ export default async function PatientProgress({
           </StatCard>
 
           <StatCard label={t("totalDosage")} value={`${stats?.totalDosageMg ?? 0}mg`}>
-            <Sparkline values={dosageSeries} color="#2563eb" step />
+            <Sparkline values={dosageSeries} color="#2563eb" />
           </StatCard>
 
           <StatCard label={t("adherence")} value={`${stats?.adherence ?? 0}%`} info={t("adherenceInfo")}>
@@ -123,7 +123,7 @@ export default async function PatientProgress({
             <h2 className="font-display text-2xl font-bold text-pine">
               {t("correlationTitle")}
             </h2>
-            <p className="mt-1 text-sm text-muted">{t("correlationSubtitle")}</p>
+            <p className="mt-1 text-sm text-muted">{t("correlationSubtitle", { days })}</p>
             <div className="mt-3 flex flex-wrap gap-2">
               <span className="flex items-center gap-1.5 rounded-full bg-mint/40 px-3 py-1 text-xs font-bold text-pine">
                 <span aria-hidden className="size-2 rounded-full bg-pine-600" />

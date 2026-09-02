@@ -8,6 +8,7 @@ import { api, API_URL } from "@/lib/api";
 import { LocaleSwitcher } from "@/components/auth/LocaleSwitcher";
 import { LiveNotifications } from "@/components/common/LiveNotifications";
 import { QuickLogSheet } from "./QuickLogSheet";
+import { LiveReminders } from "./LiveReminders";
 
 export type Notification = {
   id: string;
@@ -29,7 +30,6 @@ export type Branding = {
 const NAV = [
   { href: "/patient", key: "home", icon: "explore" },
   { href: "/patient/progress", key: "progress", icon: "monitoring" },
-  { href: "/patient/appointments", key: "appointments", icon: "calendar_month" },
   { href: "/patient/prescriptions", key: "prescriptions", icon: "receipt_long" },
   { href: "/patient/profile", key: "profile", icon: "person" },
 ] as const;
@@ -42,11 +42,13 @@ export function PatientShell({
   userName,
   notifications = [],
   branding = null,
+  reminderTimes = [],
 }: Readonly<{
   children: React.ReactNode;
   userName: string;
   notifications?: Notification[];
   branding?: Branding | null;
+  reminderTimes?: string[];
 }>) {
   const t = useTranslations("patient.nav");
   const th = useTranslations("patient.header");
@@ -260,6 +262,7 @@ export function PatientShell({
         {/* Content */}
         <main className="flex-1 px-4 pt-4 pb-28">
           {children}
+          <LiveReminders reminderTimes={reminderTimes} />
 
           {/* Co-branding rule: when a partner's brand is shown, the Cannathera
               mark must remain visible. It is never removable. */}

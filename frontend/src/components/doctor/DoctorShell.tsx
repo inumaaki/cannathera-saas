@@ -22,6 +22,8 @@ const NAV = [
     altPerm: "settings:team",
   },
   { href: "/doctor/network", key: "network", icon: "hub", perm: null },
+  { href: "/doctor/pharmacies", key: "pharmacies", icon: "local_pharmacy", perm: null },
+  { href: "/doctor/chat", key: "chat", icon: "chat", perm: null },
   { href: "/doctor/help", key: "help", icon: "help", perm: null },
 ] as const;
 
@@ -240,6 +242,16 @@ export function DoctorShell({
                         settings
                       </span>
                       {t("myPractice")}
+                    </Link>
+                    <Link
+                      href="/set-password"
+                      onClick={() => setMenuOpen(false)}
+                      className="flex items-center gap-3 border-b border-hairline px-5 py-3 text-sm font-semibold text-ink-strong hover:bg-surface"
+                    >
+                      <span aria-hidden className="msym text-[20px] text-pine-600">
+                        lock
+                      </span>
+                      {t("security")}
                     </Link>
                     <div className="flex items-center justify-between border-b border-hairline px-5 py-3">
                       <span className="flex items-center gap-3 text-sm font-semibold text-ink-strong">

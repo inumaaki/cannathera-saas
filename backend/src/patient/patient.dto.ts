@@ -132,6 +132,11 @@ export class UpdateProfileDto {
 
   @IsOptional()
   @IsString()
+  @MaxLength(40)
+  dateOfBirth?: string;
+
+  @IsOptional()
+  @IsString()
   @MaxLength(50)
   phone?: string;
 

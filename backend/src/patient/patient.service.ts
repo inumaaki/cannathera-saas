@@ -40,6 +40,7 @@ export class PatientService {
       where: { userId },
       include: {
         user: { select: { firstName: true, lastName: true, email: true } },
+        org: { select: { name: true } },
         favoritePharmacies: {
           select: {
             id: true,
@@ -210,6 +211,7 @@ export class PatientService {
         profile.hasActiveSubscription || isPaywallBypassed(profile.user.email),
       safeguardAcknowledged: profile.safeguardAcknowledged,
       packageTier: profile.packageTier,
+      reminderTimes: profile.reminderTimes,
     };
   }
 
@@ -409,6 +411,7 @@ export class PatientService {
         data: { patientRef: newRef },
         include: {
           user: { select: { firstName: true, lastName: true, email: true } },
+          org: { select: { name: true } },
           favoritePharmacies: {
             select: {
               id: true,
@@ -435,6 +438,8 @@ export class PatientService {
       pharmacyOrgId: p.pharmacyId,
       address: p.address,
       phone: p.phone,
+      dateOfBirth: p.dateOfBirth ? p.dateOfBirth.toISOString().split('T')[0] : null,
+      practiceName: p.org?.name ?? null,
       packageTier: p.packageTier,
       pharmacies,
       favoritePharmacies: p.favoritePharmacies,
@@ -470,6 +475,7 @@ export class PatientService {
       pharmacyOrgId?: string | null;
       address?: string;
       phone?: string;
+      dateOfBirth?: string;
       safeguardAcknowledged?: boolean;
     },
   ) {
@@ -487,6 +493,7 @@ export class PatientService {
       data.pharmacyOrgId !== undefined ||
       data.address !== undefined ||
       data.phone !== undefined ||
+      data.dateOfBirth !== undefined ||
       data.safeguardAcknowledged !== undefined
     ) {
       // Guard the choice: it must be a real PHARMACY org, so a crafted request
@@ -506,6 +513,9 @@ export class PatientService {
           }),
           ...(data.address !== undefined && { address: data.address }),
           ...(data.phone !== undefined && { phone: data.phone }),
+          ...(data.dateOfBirth !== undefined && {
+            dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth) : null,
+          }),
           ...(data.safeguardAcknowledged !== undefined && {
             safeguardAcknowledged: data.safeguardAcknowledged,
           }),
@@ -564,7 +574,7 @@ export class PatientService {
     // Extract postal code from address if available
     const address = profile.address || '';
     const match = address.match(/\b\d{5}\b/);
-    const postalCode = match ? match[0] : '10115'; // Default to a central postal code if none exists
+    const postalCode = match ? match[0] : '80331'; // Default to a central postal code if none exists
 
     const coords = await getCoordinatesForPostalCode(postalCode);
     if (!coords) {
@@ -593,7 +603,7 @@ export class PatientService {
       },
     });
 
-    // Run dynamic radius search: Start at 20km, expand to 40km if needed
+    // AI radius logic: Start with 25km core radius. If < 3 pharmacies found, expand to 35km fallback.
     let results: Array<{
       id: string;
       name: string;
@@ -605,7 +615,7 @@ export class PatientService {
       distanceKm: number;
       availableStrainsCount: number;
     }> = [];
-    const searchRadii = [20, 40];
+    const searchRadii = [25, 35];
 
     for (const radiusKm of searchRadii) {
       results = [];
@@ -651,6 +661,35 @@ export class PatientService {
 
     if (pharmacyIds.length > 3) {
       throw new BadRequestException('MAX_FAVORITES_EXCEEDED');
+    }
+
+    // Enforce max 35km radius limit for selected pharmacies (Onboarding & AI fallback radius requirement)
+    if (pharmacyIds.length > 0) {
+      const address = profile.address || '';
+      const match = address.match(/\b\d{5}\b/);
+      const postalCode = match ? match[0] : '80331';
+      const coords = await getCoordinatesForPostalCode(postalCode);
+
+      if (coords) {
+        const pharmacies = await this.prisma.organization.findMany({
+          where: { id: { in: pharmacyIds }, type: 'PHARMACY' },
+          select: { id: true, lat: true, lng: true },
+        });
+
+        for (const p of pharmacies) {
+          if (p.lat != null && p.lng != null) {
+            const distance = getDistanceKm(
+              coords.lat,
+              coords.lng,
+              p.lat,
+              p.lng,
+            );
+            if (distance > 35) {
+              throw new ForbiddenException('PHARMACY_OUTSIDE_RADIUS');
+            }
+          }
+        }
+      }
     }
 
     return this.prisma.patientProfile.update({
