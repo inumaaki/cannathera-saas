@@ -2140,7 +2140,21 @@
       "unitPatient": "raport miesięczny",
       "unitPharmacy": "pacjent",
       "unitPhysician": "przypadek pacjenta",
-      "unitEnterprise": "konsultacja"
+      "unitEnterprise": "konsultacja",
+      "unitMonth": "month",
+      "physicianTitle": "Physician License (B2B)",
+      "physicianDesc": "Automated, legally compliant cannabis documentation & practical interface for local patient care.",
+      "bulletPhysician1": "Secure E-Prescriptions",
+      "bulletPhysician2": "Local Pharmacy Routing",
+      "bulletPhysician3": "Advanced Therapy Outcomes",
+      "startPhysician": "Start Practice License",
+      "enterpriseTitle2": "Enterprise – from 350 consultations",
+      "enterpriseDesc2": "Base price: 699 € net / month (includes the first 350 consultations). Volume-based billing applies exclusively to any consultations exceeding this amount. Price tiers are graduated (calculated conditionally, not retroactively).",
+      "entVol": "Volume (Consultations)",
+      "entPriceAdd": "Price per additional consultation",
+      "entConsultations": "consultations",
+      "entFrom": "From",
+      "entExamples": "Illustrative Examples:"
     },
     "founder": {
       "tag": "Terapia wspierana klinicznie",
@@ -2254,7 +2268,9 @@
     "monthly_review_status_stable": "Stabilny",
     "monthly_review_status_improved": "Poprawa",
     "monthly_review_alert": "Alert triażowy",
-    "monthly_review_report": "Raport gotowy"
+    "monthly_review_report": "Raport gotowy",
+    "hero_image": "/brand/physicians_dashboard_mockup_pl.jpg",
+    "hero_image_alt": "Monthly Review Dashboard"
   },
   "pharmacies": {
     "title": "Dla Aptek",
@@ -2284,7 +2300,9 @@
     "loop_rx": "E-Recepta",
     "loop_report": "Raport",
     "loop_dispense": "Wydanie",
-    "loop_feedback": "Opinia"
+    "loop_feedback": "Opinia",
+    "hero_image": "/brand/pharmacies_inbox_mockup_en.jpg",
+    "hero_image_alt": "Closed-Loop Local Network"
   },
   "telemedicine": {
     "title": "Dla Dostawców Telemedycyny",
@@ -2311,7 +2329,9 @@
     "v2_feat3_title": "Triaż zgodny z RODO",
     "v2_feat3_text": "Wszystkie dane są gromadzone w architekturze w pełni zgodnej z RODO z silnym szyfrowaniem.",
     "v2_feat4_title": "Skalowalność White-Label",
-    "v2_feat4_text": "Wdróż całą infrastrukturę kliniczną Cannathera pod własną marką."
+    "v2_feat4_text": "Wdróż całą infrastrukturę kliniczną Cannathera pod własną marką.",
+    "hero_image": "/brand/telemedicine_flow_graphic_en.jpg",
+    "hero_image_alt": "Enterprise API Architecture"
   },
   "cancellation": {
     "title": "Polityka anulowania",

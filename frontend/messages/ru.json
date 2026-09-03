@@ -2140,7 +2140,21 @@
       "unitPatient": "ежемесячный отчет",
       "unitPharmacy": "пациент",
       "unitPhysician": "случай пациента",
-      "unitEnterprise": "консультация"
+      "unitEnterprise": "консультация",
+      "unitMonth": "month",
+      "physicianTitle": "Physician License (B2B)",
+      "physicianDesc": "Automated, legally compliant cannabis documentation & practical interface for local patient care.",
+      "bulletPhysician1": "Secure E-Prescriptions",
+      "bulletPhysician2": "Local Pharmacy Routing",
+      "bulletPhysician3": "Advanced Therapy Outcomes",
+      "startPhysician": "Start Practice License",
+      "enterpriseTitle2": "Enterprise – from 350 consultations",
+      "enterpriseDesc2": "Base price: 699 € net / month (includes the first 350 consultations). Volume-based billing applies exclusively to any consultations exceeding this amount. Price tiers are graduated (calculated conditionally, not retroactively).",
+      "entVol": "Volume (Consultations)",
+      "entPriceAdd": "Price per additional consultation",
+      "entConsultations": "consultations",
+      "entFrom": "From",
+      "entExamples": "Illustrative Examples:"
     },
     "founder": {
       "tag": "Клинически-ведемая поддержка терапии",
@@ -2254,7 +2268,9 @@
     "monthly_review_status_stable": "Стабильно",
     "monthly_review_status_improved": "Улучшено",
     "monthly_review_alert": "Оповещение триажа",
-    "monthly_review_report": "Отчет готов"
+    "monthly_review_report": "Отчет готов",
+    "hero_image": "/brand/physicians_dashboard_mockup_ru.jpg",
+    "hero_image_alt": "Monthly Review Dashboard"
   },
   "pharmacies": {
     "title": "Для Аптек",
@@ -2284,7 +2300,9 @@
     "loop_rx": "e-Рецепт",
     "loop_report": "Отчет",
     "loop_dispense": "Выдача",
-    "loop_feedback": "Обратная связь"
+    "loop_feedback": "Обратная связь",
+    "hero_image": "/brand/pharmacies_inbox_mockup_en.jpg",
+    "hero_image_alt": "Closed-Loop Local Network"
   },
   "telemedicine": {
     "title": "Для Телемедицины",
@@ -2311,7 +2329,9 @@
     "v2_feat3_title": "GDPR триаж",
     "v2_feat3_text": "Сбор данных в соответствии со строгими правилами конфиденциальности.",
     "v2_feat4_title": "Масштабируемость",
-    "v2_feat4_text": "Наша инфраструктура под вашим брендом."
+    "v2_feat4_text": "Наша инфраструктура под вашим брендом.",
+    "hero_image": "/brand/telemedicine_flow_graphic_en.jpg",
+    "hero_image_alt": "Enterprise API Architecture"
   },
   "cancellation": {
     "title": "Политика отмены",

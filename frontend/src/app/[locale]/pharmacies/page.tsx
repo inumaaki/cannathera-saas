@@ -61,8 +61,8 @@ function PharmaciesContent() {
             <div className="relative w-full rounded-2xl border border-mint/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden flex flex-col mt-8 lg:mt-0 group bg-[#00120a]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/brand/pharmacies_inbox_mockup.jpg"
-                alt="Closed-Loop Local Network"
+                src={t("hero_image") || "/brand/pharmacies_inbox_mockup.jpg"}
+                alt={t("hero_image_alt") || "Closed-Loop Local Network"}
                 className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
               />
             </div>

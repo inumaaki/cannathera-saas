@@ -1956,7 +1956,21 @@
       "api": "API",
       "webhooks": "Webhooks",
       "automation": "Make.com/Zapier",
-      "coBranding": "Co-branding"
+      "coBranding": "Co-branding",
+      "unitMonth": "month",
+      "physicianTitle": "Physician License (B2B)",
+      "physicianDesc": "Automated, legally compliant cannabis documentation & practical interface for local patient care.",
+      "bulletPhysician1": "Secure E-Prescriptions",
+      "bulletPhysician2": "Local Pharmacy Routing",
+      "bulletPhysician3": "Advanced Therapy Outcomes",
+      "startPhysician": "Start Practice License",
+      "enterpriseTitle2": "Enterprise – from 350 consultations",
+      "enterpriseDesc2": "Base price: 699 € net / month (includes the first 350 consultations). Volume-based billing applies exclusively to any consultations exceeding this amount. Price tiers are graduated (calculated conditionally, not retroactively).",
+      "entVol": "Volume (Consultations)",
+      "entPriceAdd": "Price per additional consultation",
+      "entConsultations": "consultations",
+      "entFrom": "From",
+      "entExamples": "Illustrative Examples:"
     },
     "founder": {
       "tag": "Clinically-Led Therapy Support",
@@ -2070,7 +2084,9 @@
     "monthly_review_status_stable": "Stable",
     "monthly_review_status_improved": "Improved",
     "monthly_review_alert": "Triage Alert",
-    "monthly_review_report": "Report Ready"
+    "monthly_review_report": "Report Ready",
+    "hero_image": "/brand/physicians_dashboard_mockup_en.jpg",
+    "hero_image_alt": "Monthly Review Dashboard"
   },
   "pharmacies": {
     "title": "For Pharmacies",
@@ -2100,7 +2116,9 @@
     "loop_rx": "E-Prescription",
     "loop_report": "Therapy Report",
     "loop_dispense": "Dispensing",
-    "loop_feedback": "Outcome Feedback"
+    "loop_feedback": "Outcome Feedback",
+    "hero_image": "/brand/pharmacies_inbox_mockup_en.jpg",
+    "hero_image_alt": "Closed-Loop Local Network"
   },
   "telemedicine": {
     "title": "For Telemedicine Providers",
@@ -2127,7 +2145,9 @@
     "benefits_title": "Interface & Documentation Benefits",
     "benefits_text": "Seamless digital aftercare and monitoring of patients. Legally compliant and structured remote capture of all therapy-relevant thresholds, triage procedures and questionnaires.",
     "integration_title": "Seamless Integration",
-    "integration_text": "Connect your infrastructure in days, not months, with our well-documented REST APIs."
+    "integration_text": "Connect your infrastructure in days, not months, with our well-documented REST APIs.",
+    "hero_image": "/brand/telemedicine_flow_graphic_en.jpg",
+    "hero_image_alt": "Enterprise API Architecture"
   },
   "founder": {
     "philosophy_text_1": "We do not replace doctors or pharmacists – we create the precise clinical structure that significantly reduces their workload in their daily practice and provides close support to patients. Successful cannabis therapy is not a rigid short-term sprint, but a continuous, long-term journey that requires maximum data security and complete transparency. While patients manage their treatment independently in everyday life, pharmacies ensure safe supply and dosage determination, and physicians make medical decisions, Cannathera closes the potentially dangerous gaps between doctor's visits.",

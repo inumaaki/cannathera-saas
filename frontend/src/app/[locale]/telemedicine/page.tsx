@@ -61,8 +61,8 @@ function TelemedicineContent() {
             <div className="relative w-full rounded-2xl border border-pine/20 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col mt-8 lg:mt-0 group bg-[#04110a]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/brand/telemedicine_flow_graphic.jpg"
-                alt="Enterprise API Architecture"
+                src={t("hero_image") || "/brand/telemedicine_flow_graphic.jpg"}
+                alt={t("hero_image_alt") || "Enterprise API Architecture"}
                 className="w-full h-auto object-cover transform group-hover:scale-105 transition-transform duration-700"
               />
             </div>

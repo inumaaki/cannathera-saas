@@ -1948,7 +1948,21 @@
       "api": "API",
       "webhooks": "Webhooks",
       "automation": "Make.com/Zapier",
-      "coBranding": "Co-Branding"
+      "coBranding": "Co-Branding",
+      "unitMonth": "Monat",
+      "physicianTitle": "Arztlizenz (B2B)",
+      "physicianDesc": "Automatisierte, rechtskonforme Cannabis-Dokumentation & praktische Schnittstelle für die lokale Patientenversorgung.",
+      "bulletPhysician1": "Sichere E-Rezepte",
+      "bulletPhysician2": "Lokale Apotheken-Zuweisung",
+      "bulletPhysician3": "Erweiterte Therapie-Ergebnisse",
+      "startPhysician": "Praxislizenz starten",
+      "enterpriseTitle2": "Enterprise – ab 350 Konsultationen",
+      "enterpriseDesc2": "Grundpreis: 699 € netto / Monat (inklusive der ersten 350 Konsultationen). Eine volumenbasierte Abrechnung erfolgt ausschließlich für Konsultationen, die diesen Wert überschreiten. Die Preisstaffeln sind gestuft (werden bedingt und nicht rückwirkend berechnet).",
+      "entVol": "Volumen (Konsultationen)",
+      "entPriceAdd": "Preis pro zusätzlicher Konsultation",
+      "entConsultations": "Konsultationen",
+      "entFrom": "Ab",
+      "entExamples": "Rechenbeispiele:"
     },
     "founder": {
       "tag": "Klinisch geführte Therapieunterstützung",
@@ -2062,7 +2076,9 @@
     "monthly_review_status_stable": "Stabil",
     "monthly_review_status_improved": "Verbessert",
     "monthly_review_alert": "Triage-Alarm",
-    "monthly_review_report": "Bericht bereit"
+    "monthly_review_report": "Bericht bereit",
+    "hero_image": "/brand/physicians_dashboard_mockup_de.jpg",
+    "hero_image_alt": "Monatliches Review Dashboard"
   },
   "pharmacies": {
     "title": "Für Apotheken",
@@ -2092,7 +2108,9 @@
     "loop_rx": "E-Rezept",
     "loop_report": "Therapiebericht",
     "loop_dispense": "Abgabe",
-    "loop_feedback": "Ergebnis-Feedback"
+    "loop_feedback": "Ergebnis-Feedback",
+    "hero_image": "/brand/pharmacies_inbox_mockup_de.jpg",
+    "hero_image_alt": "Geschlossenes Lokales Netzwerk"
   },
   "telemedicine": {
     "title": "Für Telemedizin-Anbieter",
@@ -2119,7 +2137,9 @@
     "v2_feat3_title": "DSGVO-konforme Triage",
     "v2_feat3_text": "Alle Therapiedaten werden in einer vollständig DSGVO-konformen Architektur verarbeitet.",
     "v2_feat4_title": "White-Label-Skalierbarkeit",
-    "v2_feat4_text": "Setzen Sie die gesamte klinische Infrastruktur unter Ihrer eigenen Marke ein."
+    "v2_feat4_text": "Setzen Sie die gesamte klinische Infrastruktur unter Ihrer eigenen Marke ein.",
+    "hero_image": "/brand/telemedicine_flow_graphic_de.jpg",
+    "hero_image_alt": "Enterprise API Architektur"
   },
   "cancellation": {
     "title": "Stornierungsbedingungen",

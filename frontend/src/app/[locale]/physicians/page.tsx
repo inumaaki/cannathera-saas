@@ -61,8 +61,8 @@ function PhysiciansContent() {
             <div className="relative w-full rounded-2xl border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.6)] overflow-hidden flex flex-col mt-8 lg:mt-0 transform lg:rotate-2 hover:rotate-0 transition-transform duration-500 origin-bottom-right">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/brand/physicians_dashboard_mockup.jpg"
-                alt="Monthly Review Dashboard"
+                src={t("hero_image") || "/brand/physicians_dashboard_mockup.jpg"}
+                alt={t("hero_image_alt") || "Monthly Review Dashboard"}
                 className="w-full h-auto object-cover"
               />
             </div>

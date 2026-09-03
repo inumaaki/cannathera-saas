@@ -2140,7 +2140,21 @@
       "unitPatient": "raport lunar",
       "unitPharmacy": "pacient",
       "unitPhysician": "caz pacient",
-      "unitEnterprise": "consultare"
+      "unitEnterprise": "consultare",
+      "unitMonth": "month",
+      "physicianTitle": "Physician License (B2B)",
+      "physicianDesc": "Automated, legally compliant cannabis documentation & practical interface for local patient care.",
+      "bulletPhysician1": "Secure E-Prescriptions",
+      "bulletPhysician2": "Local Pharmacy Routing",
+      "bulletPhysician3": "Advanced Therapy Outcomes",
+      "startPhysician": "Start Practice License",
+      "enterpriseTitle2": "Enterprise – from 350 consultations",
+      "enterpriseDesc2": "Base price: 699 € net / month (includes the first 350 consultations). Volume-based billing applies exclusively to any consultations exceeding this amount. Price tiers are graduated (calculated conditionally, not retroactively).",
+      "entVol": "Volume (Consultations)",
+      "entPriceAdd": "Price per additional consultation",
+      "entConsultations": "consultations",
+      "entFrom": "From",
+      "entExamples": "Illustrative Examples:"
     },
     "founder": {
       "tag": "Suport pentru Terapie Condusă Clinic",
@@ -2254,7 +2268,9 @@
     "monthly_review_status_stable": "Stabil",
     "monthly_review_status_improved": "Îmbunătățit",
     "monthly_review_alert": "Alertă triaj",
-    "monthly_review_report": "Raport generat"
+    "monthly_review_report": "Raport generat",
+    "hero_image": "/brand/physicians_dashboard_mockup_ro.jpg",
+    "hero_image_alt": "Monthly Review Dashboard"
   },
   "pharmacies": {
     "title": "Pentru Farmacii",
@@ -2284,7 +2300,9 @@
     "loop_rx": "e-Rețetă",
     "loop_report": "Raport",
     "loop_dispense": "Eliberare",
-    "loop_feedback": "Feedback"
+    "loop_feedback": "Feedback",
+    "hero_image": "/brand/pharmacies_inbox_mockup_en.jpg",
+    "hero_image_alt": "Closed-Loop Local Network"
   },
   "telemedicine": {
     "title": "Pentru Telemedicină",
@@ -2311,7 +2329,9 @@
     "v2_feat3_title": "Triaj conform GDPR",
     "v2_feat3_text": "Protecție absolută a datelor la standarde enterprise (AES-256, TLS 1.3).",
     "v2_feat4_title": "Scalabilitate White-label",
-    "v2_feat4_text": "Infrastructura noastră, marca dvs."
+    "v2_feat4_text": "Infrastructura noastră, marca dvs.",
+    "hero_image": "/brand/telemedicine_flow_graphic_en.jpg",
+    "hero_image_alt": "Enterprise API Architecture"
   },
   "cancellation": {
     "title": "Politica de anulare",
