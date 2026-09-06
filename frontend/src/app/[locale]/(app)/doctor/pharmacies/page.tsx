@@ -178,7 +178,7 @@ function PharmacyDrawer({
             className="flex w-full items-center justify-center gap-2 rounded-xl border border-hairline bg-white px-4 py-2.5 font-bold text-ink-strong shadow-sm hover:bg-surface/50"
           >
             <span className="msym text-[18px]">chat</span>
-            {t("chatButton") || "Nachricht senden"}
+            {t("chatButton")}
           </Link>
         </div>
       </div>
@@ -213,10 +213,8 @@ export default function DoctorPharmaciesPage() {
       <div className="space-y-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-ink-strong">{t("title") || "Apotheken-Übersicht"}</h1>
-            <p className="mt-1 text-sm text-muted">
-              {t("subtitle") || "Übersicht lokaler Partner-Apotheken für Ihre Patienten."}
-            </p>
+            <h1 className="text-2xl font-bold text-ink-strong">{t("title")}</h1>
+            <p className="mt-1 text-sm text-muted">{t("subtitle")}</p>
           </div>
         </div>
 
@@ -225,12 +223,13 @@ export default function DoctorPharmaciesPage() {
             <span className="msym animate-spin text-[32px] text-muted">refresh</span>
           </div>
         ) : pharmacies.length === 0 ? (
-          <div className="flex h-32 items-center justify-center rounded-xl border border-hairline bg-surface/50">
-            <p className="text-sm font-semibold text-muted">{t("noResults") || "Keine Apotheken in der Nähe gefunden."}</p>
+          <div className="flex h-40 flex-col items-center justify-center gap-3 rounded-xl border border-hairline bg-surface/50 text-center px-6">
+            <span className="msym text-[36px] text-muted">local_pharmacy</span>
+            <p className="text-sm font-semibold text-muted">{t("noResults")}</p>
           </div>
         ) : (
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-            {pharmacies.map((pharmacy) => (
+            {pharmacies.map((pharmacy, index) => (
               <button
                 key={pharmacy.id}
                 type="button"
@@ -244,30 +243,33 @@ export default function DoctorPharmaciesPage() {
                     </div>
                     <div className="min-w-0 flex-1">
                       <h3 className="truncate text-lg font-bold text-ink-strong">{pharmacy.name}</h3>
-                      <p className="flex items-center gap-1.5 text-sm text-muted">
-                        <span className="msym text-[16px]">location_on</span>
-                        {pharmacy.distanceKm} km
-                        {pharmacy.city && ` • ${pharmacy.city}`}
-                      </p>
+                      {pharmacy.city && (
+                        <p className="mt-0.5 text-xs text-muted">{pharmacy.street ? `${pharmacy.street}, ` : ""}{pharmacy.city}</p>
+                      )}
                     </div>
                     <span className="msym shrink-0 text-[18px] text-muted">chevron_right</span>
                   </div>
 
-                  {pharmacy.description && (
-                    <p className="mt-4 line-clamp-2 text-sm text-ink">{pharmacy.description}</p>
-                  )}
-
-                  <div className="mt-4 flex flex-wrap gap-2">
-                    <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
-                      {pharmacy.availableStrainsCount} Blüten verfügbar
+                  {/* Distance badge — primary sorting signal */}
+                  <div className="mt-4 flex flex-wrap items-center gap-2">
+                    <span className="inline-flex items-center gap-1 rounded-full bg-pine px-3 py-1 text-xs font-bold text-white">
+                      <span className="msym text-[12px]">near_me</span>
+                      {pharmacy.distanceKm} km
                     </span>
-                    {pharmacy.phone && (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-pine/10 px-2.5 py-1 text-xs font-semibold text-pine">
-                        <span className="msym text-[12px]">phone</span>
-                        {pharmacy.phone}
+                    <span className="inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+                      {pharmacy.availableStrainsCount} Sorten
+                    </span>
+                    {index === 0 && (
+                      <span className="inline-flex items-center gap-1 rounded-full bg-gold/20 px-2.5 py-1 text-xs font-bold text-gold">
+                        <span className="msym text-[12px]">star</span>
+                        Nächste
                       </span>
                     )}
                   </div>
+
+                  {pharmacy.description && (
+                    <p className="mt-3 line-clamp-2 text-sm text-ink">{pharmacy.description}</p>
+                  )}
                 </Card>
               </button>
             ))}

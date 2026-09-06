@@ -826,7 +826,11 @@
       "address": "Address",
       "openingHours": "Opening hours",
       "viewOnMap": "View on map",
-      "noContact": "No contact info available."
+      "noContact": "No contact info available.",
+      "title": "Nearby Pharmacies",
+      "subtitle": "Partner pharmacies sorted by distance — recommend the nearest one directly during consultations.",
+      "noResults": "No pharmacies found. Please ensure your practice postal code is set in Settings.",
+      "chatButton": "Send message"
     }
   },
   "legal": {

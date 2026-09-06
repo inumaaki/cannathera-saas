@@ -826,7 +826,11 @@
       "address": "Adresse",
       "openingHours": "Oeffnungszeiten",
       "viewOnMap": "Auf Karte anzeigen",
-      "noContact": "Keine Kontaktdaten hinterlegt."
+      "noContact": "Keine Kontaktdaten hinterlegt.",
+      "title": "Apotheken in der Naehe",
+      "subtitle": "Partner-Apotheken nach Entfernung sortiert - empfehlen Sie die naechstgelegene direkt beim Patientengespraech.",
+      "noResults": "Keine Apotheken gefunden. Bitte sicherstellen, dass die Postleitzahl der Praxis in den Einstellungen hinterlegt ist.",
+      "chatButton": "Nachricht senden"
     }
   },
   "legal": {

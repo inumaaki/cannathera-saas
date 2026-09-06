@@ -894,39 +894,34 @@ export class DoctorService {
       },
     });
 
-    let results: any[] = [];
-    const searchRadii = [25, 35];
-    for (const radiusKm of searchRadii) {
-      results = [];
-      for (const p of pharmacies) {
-        if (p.lat == null || p.lng == null) continue;
-        const distance = getDistanceKm(coords.lat, coords.lng, p.lat, p.lng);
-        if (distance <= radiusKm) {
-          results.push({
-            id: p.id,
-            name: p.name,
-            postalCode: p.postalCode,
-            city: p.city,
-            street: p.street,
-            phone: (p as any).phone ?? null,
-            email: (p as any).email ?? null,
-            website: (p as any).website ?? null,
-            description: p.description,
-            operatingHours: p.operatingHours,
-            distanceKm: parseFloat(distance.toFixed(2)),
-            availableStrainsCount: p.inventory.length,
-          });
-        }
-      }
-      if (results.length >= 3) break;
+    const results: any[] = [];
+    for (const p of pharmacies) {
+      if (p.lat == null || p.lng == null) continue;
+      const distance = getDistanceKm(coords.lat, coords.lng, p.lat, p.lng);
+      results.push({
+        id: p.id,
+        name: p.name,
+        postalCode: p.postalCode,
+        city: p.city,
+        street: p.street,
+        phone: p.phone ?? null,
+        email: p.email ?? null,
+        website: p.website ?? null,
+        description: p.description,
+        operatingHours: p.operatingHours,
+        distanceKm: parseFloat(distance.toFixed(2)),
+        availableStrainsCount: p.inventory.length,
+      });
     }
 
+    // Primary: nearest first. Secondary: more strains available.
     results.sort((a, b) => {
       if (a.distanceKm !== b.distanceKm) return a.distanceKm - b.distanceKm;
       return b.availableStrainsCount - a.availableStrainsCount;
     });
     return results;
   }
+
 
   async getNetworkPharmacies(practiceUserId: string, q?: string) {
     const membership = await this.prisma.membership.findFirst({
