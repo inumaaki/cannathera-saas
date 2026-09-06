@@ -56,21 +56,15 @@ export class DoctorService {
     const orgId = await this.orgIdOf(doctorUserId);
     const scope: Prisma.PatientProfileWhereInput = { orgId };
 
-    const [patients, todaysSessions] = await Promise.all([
+    const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1);
+
+    const [patients, reportsThisMonth] = await Promise.all([
       this.patients(doctorUserId),
-      this.prisma.telemedicineSession.findMany({
+      this.prisma.submission.count({
         where: {
+          status: SubmissionStatus.SUBMITTED,
           patient: scope,
-          scheduledAt: {
-            gte: new Date(new Date().setHours(0, 0, 0, 0)),
-            lt: new Date(new Date().setHours(24, 0, 0, 0)),
-          },
-        },
-        orderBy: { scheduledAt: 'asc' },
-        include: {
-          patient: {
-            include: { user: { select: { firstName: true, lastName: true } } },
-          },
+          submittedAt: { gte: monthStart },
         },
       }),
     ]);
@@ -119,19 +113,8 @@ export class DoctorService {
     return {
       totalPatients: patients.length,
       activePatients: patients.filter((p) => daysByPatient.has(p.id)).length,
-      appointmentsToday: todaysSessions.length,
-      nextAppointment:
-        todaysSessions.find((s) => s.scheduledAt > new Date()) ?? null,
+      reportsThisMonth,
       avgAdherence,
-      appointments: todaysSessions.map((s) => ({
-        id: s.id,
-        patientId: s.patientId,
-        patientName: [s.patient.user.firstName, s.patient.user.lastName]
-          .filter(Boolean)
-          .join(' '),
-        scheduledAt: s.scheduledAt,
-        video: !!s.joinUrl,
-      })),
       recentPatients: patients.slice(0, 6),
       recentSubmissions: recentSubmissions.map((s) => {
         const satisfaction = s.answers.find(

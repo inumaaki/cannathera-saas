@@ -425,7 +425,14 @@
       "recentSubmissions": "Current Submissions",
       "subtitle": "Here is an overview of your clinical agenda today.",
       "title": "Good morning, Dr. {name}",
-      "totalPatients": "Total Patients"
+      "totalPatients": "Total Patients",
+      "practiceOverview": "Practice Overview",
+      "reportsThisMonth": "Reports this month",
+      "viewReports": "View all reports",
+      "nearbyPharmacies": "Nearby Pharmacies",
+      "nearbyPharmaciesSubtitle": "Quick access to partner pharmacies",
+      "viewAllPharmacies": "View all",
+      "noPharmaciesNearby": "No nearby pharmacies found."
     },
     "roster": {
       "breadcrumb": "Управление пациентами",

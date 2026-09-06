@@ -3,19 +3,18 @@ import { Link } from "@/i18n/navigation";
 import { apiServer } from "@/lib/api-server";
 import { requirePermission } from "@/lib/permissions";
 
+type PharmacySnippet = {
+  id: string;
+  name: string;
+  city: string | null;
+  distanceKm: number;
+};
+
 type Overview = {
   totalPatients: number;
   activePatients: number;
-  appointmentsToday: number;
-  nextAppointment: { scheduledAt: string } | null;
+  reportsThisMonth: number;
   avgAdherence: number | null;
-  appointments: Array<{
-    id: string;
-    patientId: string;
-    patientName: string;
-    scheduledAt: string;
-    video: boolean;
-  }>;
   recentPatients: Array<{
     id: string;
     name: string;
@@ -48,20 +47,19 @@ export default async function DoctorDashboard({
 
   if (denied) return denied;
 
-  const [t, tr, format, data] = await Promise.all([
+  const [t, tr, format, data, pharmacies] = await Promise.all([
     getTranslations("doctor.dashboard"),
     getTranslations("doctor.roster"),
     getFormatter(),
     apiServer<Overview>("/doctor/overview"),
+    apiServer<PharmacySnippet[]>("/doctor/pharmacies").catch(() => [] as PharmacySnippet[]),
   ]);
-
-  const timeOf = (iso: string) =>
-    format.dateTime(new Date(iso), { hour: "2-digit", minute: "2-digit" });
 
   return (
     <>
       {/* Stat cards */}
       <div className="grid gap-4 md:grid-cols-3">
+        {/* Card 1 — Patient counts */}
         <div className="cw-watermark rounded-xl border border-hairline bg-white p-5">
           <div className="flex items-center gap-4">
             <div className="flex-1 border-r border-hairline pr-4">
@@ -78,22 +76,37 @@ export default async function DoctorDashboard({
             </div>
           </div>
         </div>
+
+        {/* Card 2 — Practice Overview (replaces Appointments) */}
         <div className="cw-watermark rounded-xl border border-hairline bg-white p-5">
           <p className="text-sm font-semibold text-ink-strong">
-            {t("appointmentsToday")}
+            {t("practiceOverview") || "Practice Overview"}
           </p>
-          <p className="mt-2 font-display text-4xl font-bold text-ink-strong">
-            {data?.appointmentsToday ?? "—"}
-          </p>
-          <p className="mt-3 flex items-center gap-1.5 text-sm font-semibold text-gold">
-            <span aria-hidden className="msym text-[18px]">
-              schedule
-            </span>
-            {data?.nextAppointment
-              ? t("next", { time: timeOf(data.nextAppointment.scheduledAt) })
-              : t("noneToday")}
-          </p>
+          <div className="mt-3 flex items-center gap-4">
+            <div className="flex-1">
+              <p className="text-xs text-muted">{t("reportsThisMonth") || "Reports this month"}</p>
+              <p className="mt-1 font-display text-3xl font-bold text-pine">
+                {data?.reportsThisMonth ?? "—"}
+              </p>
+            </div>
+            <div className="h-10 w-px bg-hairline" />
+            <div className="flex-1">
+              <p className="text-xs text-muted">{t("activePatients")}</p>
+              <p className="mt-1 font-display text-3xl font-bold text-ink-strong">
+                {data?.activePatients ?? "—"}
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/doctor/reports"
+            className="mt-4 flex items-center gap-1 text-xs font-semibold text-pine-600 hover:underline"
+          >
+            <span aria-hidden className="msym text-[14px]">bar_chart</span>
+            {t("viewReports") || "View all reports"}
+          </Link>
         </div>
+
+        {/* Card 3 — Avg Adherence */}
         <div className="cw-watermark rounded-xl border border-hairline bg-white p-5">
           <p className="text-sm font-semibold text-ink-strong">{t("avgAdherence")}</p>
           <p className="mt-2 font-display text-4xl font-bold text-pine">
@@ -107,6 +120,59 @@ export default async function DoctorDashboard({
           </p>
         </div>
       </div>
+
+      {/* Pharmacy Quick Access */}
+      <section className="cw-watermark mt-6 overflow-hidden rounded-xl border border-hairline bg-white">
+        <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-4">
+          <div className="flex items-center gap-3">
+            <div className="flex size-9 items-center justify-center rounded-lg bg-pine/10 text-pine">
+              <span aria-hidden className="msym text-[20px]">local_pharmacy</span>
+            </div>
+            <div>
+              <h2 className="font-display text-lg font-bold text-ink-strong">
+                {t("nearbyPharmacies") || "Nearby Pharmacies"}
+              </h2>
+              <p className="text-xs text-muted">
+                {t("nearbyPharmaciesSubtitle") || "Quick access to partner pharmacies"}
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/doctor/pharmacies"
+            className="rounded-lg border border-pine-600 px-4 py-2 text-sm font-bold text-pine-600 hover:bg-mint/20"
+          >
+            {t("viewAllPharmacies") || "View all"}
+          </Link>
+        </div>
+        {(pharmacies?.length ?? 0) === 0 ? (
+          <p className="border-t border-hairline px-6 py-5 text-sm text-muted">
+            {t("noPharmaciesNearby") || "No nearby pharmacies found."}
+          </p>
+        ) : (
+          <div className="grid gap-0 divide-y divide-hairline border-t border-hairline sm:grid-cols-2 lg:grid-cols-3">
+            {pharmacies!.slice(0, 3).map((ph) => (
+              <div key={ph.id} className="flex items-center gap-4 px-6 py-4">
+                <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-pine/10 text-pine">
+                  <span aria-hidden className="msym text-[18px]">storefront</span>
+                </div>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate font-semibold text-ink-strong">{ph.name}</p>
+                  <p className="flex items-center gap-1 text-xs text-muted">
+                    <span aria-hidden className="msym text-[12px]">location_on</span>
+                    {ph.distanceKm} km{ph.city ? ` · ${ph.city}` : ""}
+                  </p>
+                </div>
+                <Link
+                  href={`/doctor/chat/${ph.id}`}
+                  className="shrink-0 rounded-lg bg-pine/10 px-3 py-1.5 text-xs font-bold text-pine hover:bg-mint/30"
+                >
+                  <span aria-hidden className="msym text-[14px]">chat</span>
+                </Link>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
 
       <section className="cw-watermark mt-6 overflow-hidden rounded-xl border border-hairline bg-white">
         <div className="flex flex-wrap items-center justify-between gap-3 px-6 py-4">
@@ -271,3 +337,4 @@ export default async function DoctorDashboard({
     </>
   );
 }
+

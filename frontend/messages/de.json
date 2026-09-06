@@ -425,7 +425,14 @@
       "recentSubmissions": "Aktuelle Einreichungen",
       "noSubmissions": "Keine neuen Einreichungen.",
       "colDate": "Datum",
-      "colCompliance": "Compliance"
+      "colCompliance": "Compliance",
+      "practiceOverview": "Praxisübersicht",
+      "reportsThisMonth": "Berichte diesen Monat",
+      "viewReports": "Alle Berichte ansehen",
+      "nearbyPharmacies": "Apotheken in der Nähe",
+      "nearbyPharmaciesSubtitle": "Schnellzugriff auf Parterapotheken",
+      "viewAllPharmacies": "Alle ansehen",
+      "noPharmaciesNearby": "Keine Apotheken in der Nähe gefunden."
     },
     "roster": {
       "breadcrumb": "Patientenverwaltung",
