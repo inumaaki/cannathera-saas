@@ -7,7 +7,14 @@ import { requirePermission } from "@/lib/permissions";
 type Org = {
   id: string;
   name: string;
-  branding: Record<string, string> | null;
+  street?: string | null;
+  postalCode?: string | null;
+  city?: string | null;
+  phone?: string | null;
+  email?: string | null;
+  website?: string | null;
+  operatingHours?: any;
+  branding: Record<string, any> | null;
 };
 
 /* Figma 5.7 Profile — Clinic Identity (persists to Organization). */

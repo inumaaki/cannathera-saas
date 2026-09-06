@@ -157,7 +157,18 @@ export class DoctorController {
   @Perms('settings:practice')
   updatePractice(
     @CurrentUser() user: SessionPayload,
-    @Body() body: { name?: string; branding?: Record<string, unknown> },
+    @Body()
+    body: {
+      name?: string;
+      street?: string;
+      postalCode?: string;
+      city?: string;
+      phone?: string;
+      email?: string;
+      website?: string;
+      operatingHours?: any;
+      branding?: Record<string, unknown>;
+    },
   ) {
     return this.doctors.updatePractice(user.sub, body);
   }

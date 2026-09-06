@@ -234,7 +234,17 @@ export class DoctorService {
 
   async updatePractice(
     doctorUserId: string,
-    data: { name?: string; branding?: Record<string, unknown> },
+    data: {
+      name?: string;
+      street?: string;
+      postalCode?: string;
+      city?: string;
+      phone?: string;
+      email?: string;
+      website?: string;
+      operatingHours?: Prisma.InputJsonValue;
+      branding?: Record<string, unknown>;
+    },
   ) {
     const membership = await this.prisma.membership.findFirst({
       where: { userId: doctorUserId },
@@ -247,6 +257,16 @@ export class DoctorService {
       where: { id: membership.orgId },
       data: {
         name: data.name ?? undefined,
+        street: data.street !== undefined ? data.street : undefined,
+        postalCode: data.postalCode !== undefined ? data.postalCode : undefined,
+        city: data.city !== undefined ? data.city : undefined,
+        phone: data.phone !== undefined ? data.phone : undefined,
+        email: data.email !== undefined ? data.email : undefined,
+        website: data.website !== undefined ? data.website : undefined,
+        operatingHours:
+          data.operatingHours !== undefined
+            ? (data.operatingHours as Prisma.InputJsonValue)
+            : undefined,
         branding: data.branding
           ? ({
               ...((existing.branding as Record<string, unknown>) ?? {}),

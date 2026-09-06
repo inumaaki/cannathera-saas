@@ -1460,6 +1460,8 @@ export class PharmacyService {
       where.OR = [
         { name: { contains: query, mode: 'insensitive' } },
         { city: { contains: query, mode: 'insensitive' } },
+        { street: { contains: query, mode: 'insensitive' } },
+        { postalCode: { contains: query, mode: 'insensitive' } },
       ];
     }
 
@@ -1469,10 +1471,14 @@ export class PharmacyService {
         id: true,
         name: true,
         city: true,
+        street: true,
+        postalCode: true,
         phone: true,
         email: true,
         website: true,
         description: true,
+        branding: true,
+        operatingHours: true,
         memberships: {
           where: { roleInOrg: 'DOCTOR' },
           select: {
@@ -1490,7 +1496,23 @@ export class PharmacyService {
       orderBy: { name: 'asc' },
     });
 
-    return practices;
+    return practices.map((p) => {
+      const branding = (p.branding as Record<string, any>) || {};
+      const specialty =
+        branding.specialty ||
+        (branding.practiceType === 'pain'
+          ? 'Spezielle Schmerztherapie'
+          : branding.practiceType === 'general'
+            ? 'Allgemeinmedizin'
+            : branding.practiceType === 'clinic'
+              ? 'Klinik / MVZ'
+              : 'Allgemeinmedizin');
+
+      return {
+        ...p,
+        specialty,
+      };
+    });
   }
 
   async uploadAiPrescription(userId: string, fileUrl: string) {
