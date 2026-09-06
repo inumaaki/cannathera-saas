@@ -164,6 +164,21 @@ class UpdatePharmacySettingsDto {
   @IsString()
   @MaxLength(60)
   productFocus?: string;
+
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
+  @IsOptional()
+  @IsString()
+  email?: string;
+
+  @IsOptional()
+  @IsString()
+  website?: string;
+
+  @IsOptional()
+  operatingHours?: any;
 }
 
 class UpdatePrescriptionStatusDto {
@@ -448,8 +463,19 @@ export class PharmacyController {
   sendChatMessage(
     @CurrentUser() user: SessionPayload,
     @Param('practiceId') practiceId: string,
-    @Body('content') content: string,
+    @Body() body: any,
   ) {
-    return this.pharmacy.sendChatMessage(user.sub, practiceId, content);
+    let content = body;
+    if (typeof body === 'string') {
+      try {
+        const parsed = JSON.parse(body);
+        content = parsed.content ?? parsed;
+      } catch {
+        content = body;
+      }
+    } else if (body && typeof body === 'object') {
+      content = body.content ?? body;
+    }
+    return this.pharmacy.sendChatMessage(user.sub, practiceId, String(content));
   }
 }

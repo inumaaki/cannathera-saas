@@ -233,9 +233,20 @@ export class DoctorController {
   sendChatMessage(
     @CurrentUser() user: SessionPayload,
     @Param('pharmacyId') pharmacyId: string,
-    @Body('content') content: string,
+    @Body() body: any,
   ) {
-    return this.doctors.sendChatMessage(user.sub, pharmacyId, content);
+    let content = body;
+    if (typeof body === 'string') {
+      try {
+        const parsed = JSON.parse(body);
+        content = parsed.content ?? parsed;
+      } catch {
+        content = body;
+      }
+    } else if (body && typeof body === 'object') {
+      content = body.content ?? body;
+    }
+    return this.doctors.sendChatMessage(user.sub, pharmacyId, String(content));
   }
 
   @Get('patients')

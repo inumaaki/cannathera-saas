@@ -54,7 +54,11 @@ export class PharmacyService {
       street: org.street,
       postalCode: org.postalCode,
       city: org.city,
+      phone: org.phone,
+      email: org.email,
+      website: org.website,
       productFocus: org.productFocus,
+      operatingHours: org.operatingHours,
     };
   }
 
@@ -65,7 +69,11 @@ export class PharmacyService {
       street?: string;
       postalCode?: string;
       city?: string;
+      phone?: string;
+      email?: string;
+      website?: string;
       productFocus?: string;
+      operatingHours?: any;
     },
   ) {
     const org = await this.orgOf(userId);
@@ -89,7 +97,14 @@ export class PharmacyService {
         street: data.street,
         postalCode: data.postalCode,
         city: data.city,
+        phone: data.phone,
+        email: data.email,
+        website: data.website,
         productFocus: data.productFocus,
+        operatingHours:
+          data.operatingHours !== undefined
+            ? (data.operatingHours as Prisma.InputJsonValue)
+            : undefined,
         lat,
         lng,
       },
@@ -100,7 +115,11 @@ export class PharmacyService {
       street: updated.street,
       postalCode: updated.postalCode,
       city: updated.city,
+      phone: updated.phone,
+      email: updated.email,
+      website: updated.website,
       productFocus: updated.productFocus,
+      operatingHours: updated.operatingHours,
     };
   }
 
