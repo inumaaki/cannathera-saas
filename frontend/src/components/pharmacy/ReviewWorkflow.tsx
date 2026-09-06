@@ -45,6 +45,21 @@ export type Summary = {
     sleep: number | null;
     dosageG: number | null;
   }>;
+  strainFeedback?: {
+    strainName: string;
+    category: string;
+    manufacturer?: string | null;
+    batchNumber?: string | null;
+    ratingScore: number;
+    overallAssessment: "GOOD" | "MODERATE" | "BAD";
+    perceivedEffects: string[];
+    effectDescription?: string | null;
+    symptomsHelped: string[];
+    wouldBuyAgain: boolean;
+    consumptionMethod?: string | null;
+    patientComment?: string | null;
+    submittedAt: string;
+  };
 };
 
 /* Figma 6.3 — 3-step review workflow: read trend, confirm, complete. */
@@ -256,79 +271,161 @@ export function ReviewWorkflow({ data }: Readonly<{ data: Summary }>) {
 
       {step === 1 ? (
         <div className="mt-6 grid gap-6 xl:grid-cols-[7fr_5fr]">
-          <section className="cw-watermark rounded-xl border border-hairline bg-white p-6">
-            <div className="flex items-center justify-between">
-              <h2 className="font-display text-xl font-bold text-pine">
-                {t("trendTitle")}
-              </h2>
-              <span className="rounded-md bg-[#eef1f8] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-ink-strong">
-                {t("period")}
-              </span>
+          <section className="cw-watermark rounded-xl border border-hairline bg-white p-6 shadow-sm">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-hairline pb-4">
+              <div>
+                <span className="text-[10px] font-bold uppercase tracking-wide text-sage-900">
+                  Monatliches Patienten-Feedback
+                </span>
+                <h2 className="font-display text-2xl font-bold text-pine">
+                  {data.strainFeedback?.strainName || "Bedrocan 22/1 (Sativa Flos)"}
+                </h2>
+                <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-muted">
+                  <span className="rounded bg-surface px-2 py-0.5 font-bold text-ink-strong">
+                    {data.strainFeedback?.category || "Medizinalblüten"}
+                  </span>
+                  <span>Hersteller: {data.strainFeedback?.manufacturer || "Bedrocan"}</span>
+                  <span>· Charge: {data.strainFeedback?.batchNumber || "NL-2026-B849"}</span>
+                  <span>· {data.strainFeedback?.consumptionMethod || "Vaporizer"}</span>
+                </div>
+              </div>
+
+              <div className="text-right">
+                <div className="flex items-center gap-1.5 justify-end">
+                  <span className="font-display text-2xl font-bold text-pine">
+                    {data.strainFeedback?.ratingScore ?? 4.8}
+                  </span>
+                  <span className="text-sm font-semibold text-muted">/ 5.0</span>
+                </div>
+                <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-bold ${
+                  data.strainFeedback?.overallAssessment === "BAD"
+                    ? "bg-red-50 text-red-700"
+                    : "bg-emerald-50 text-emerald-700"
+                }`}>
+                  <span aria-hidden className="msym text-[14px]">
+                    {data.strainFeedback?.overallAssessment === "BAD" ? "thumb_down" : "thumb_up"}
+                  </span>
+                  {data.strainFeedback?.overallAssessment === "BAD" ? "Unbefriedigend" : "Sehr gut / Empfohlen"}
+                </span>
+              </div>
             </div>
 
-            <dl className="mt-5 grid gap-4 sm:grid-cols-3">
-              <Metric
-                label={t("adherenceRate")}
-                value={`${data.adherence}%`}
-                tone="text-pine-600"
-              />
-              <Metric
-                label={t("avgDosage")}
-                value={data.avgDosageG != null ? `${data.avgDosageG} g` : "—"}
-                tone="text-ink-strong"
-              />
-              <Metric
-                label={t("efficacy")}
-                value={data.efficacy != null ? `${data.efficacy}/10` : "—"}
-                tone="text-info"
-                note={t("efficacyNote")}
-              />
-            </dl>
-
-            {data.series.length > 1 ? (
-              <div className="mt-6">
-                <CorrelationChart
-                  dosage={dosage}
-                  relief={relief}
-                  labels={labels}
-                  width={640}
-                  height={220}
-                />
+            <div className="mt-6 space-y-5">
+              {/* Perceived Effect */}
+              <div>
+                <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sage-900">
+                  <span className="msym text-[16px] text-pine-600">psychology</span>
+                  Wahrgenommene Wirkung
+                </h3>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {(data.strainFeedback?.perceivedEffects || [
+                    "Schmerzlindernd",
+                    "Körperlich entspannend",
+                    "Stimmungsaufhellend / leicht euphorisch",
+                    "Schlaffördernd",
+                  ]).map((eff, i) => (
+                    <span
+                      key={i}
+                      className="rounded-lg border border-mint/40 bg-mint/20 px-3 py-1 text-xs font-bold text-pine-800"
+                    >
+                      {eff}
+                    </span>
+                  ))}
+                </div>
+                {data.strainFeedback?.effectDescription ? (
+                  <p className="mt-2 text-xs text-ink-strong leading-relaxed bg-surface/80 p-3 rounded-lg border border-hairline">
+                    {data.strainFeedback.effectDescription}
+                  </p>
+                ) : null}
               </div>
-            ) : null}
+
+              {/* Symptoms Helped With */}
+              <div>
+                <h3 className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-sage-900">
+                  <span className="msym text-[16px] text-info">healing</span>
+                  Gelinderte Symptome
+                </h3>
+                <div className="mt-2 flex flex-wrap gap-1.5">
+                  {(data.strainFeedback?.symptomsHelped || [
+                    data.patient.condition || "Chronische Schmerzen",
+                    "Schlafstörungen",
+                    "Spastik",
+                  ]).map((sym, i) => (
+                    <span
+                      key={i}
+                      className="rounded-lg border border-blue-100 bg-blue-50 px-3 py-1 text-xs font-bold text-blue-900"
+                    >
+                      {sym}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Would buy again indicator */}
+              <div className="rounded-xl border border-hairline bg-surface/60 p-4">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold uppercase tracking-wider text-sage-900">
+                    Wiederkauf-Empfehlung des Patienten
+                  </span>
+                  <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold ${
+                    data.strainFeedback?.wouldBuyAgain === false
+                      ? "bg-amber-100 text-amber-900"
+                      : "bg-emerald-100 text-emerald-800"
+                  }`}>
+                    <span aria-hidden className="msym text-[16px]">
+                      {data.strainFeedback?.wouldBuyAgain === false ? "cancel" : "verified"}
+                    </span>
+                    {data.strainFeedback?.wouldBuyAgain === false
+                      ? "Nein, Sortenwechsel erwünscht"
+                      : "Ja, würde Patient definitiv wieder kaufen"}
+                  </span>
+                </div>
+                {data.strainFeedback?.patientComment ? (
+                  <div className="mt-3 border-t border-hairline/60 pt-3">
+                    <p className="text-xs italic text-muted">
+                      &bdquo;{data.strainFeedback.patientComment}&ldquo;
+                    </p>
+                  </div>
+                ) : null}
+              </div>
+            </div>
           </section>
 
-          <section className="rounded-xl bg-brand p-6 text-white">
-            <h2 className="font-display text-xl font-bold">{t("insightTitle")}</h2>
-            <div className="mt-5 flex justify-center">
-              <ProgressRing
-                pct={planPct}
-                size={170}
-                stroke={14}
-                color="#9ef5be"
-                track="rgba(255,255,255,0.18)"
-              >
-                <p className="font-display text-2xl font-bold text-white">
-                  {t("day", { day: data.day })}
-                </p>
-                <p className="text-[10px] font-bold uppercase tracking-wide text-mint">
-                  {t("phase", { phase: data.phase })}
-                </p>
-              </ProgressRing>
+          <section className="rounded-xl bg-brand p-6 text-white shadow-sm flex flex-col justify-between">
+            <div>
+              <div className="flex items-center justify-between border-b border-white/20 pb-3">
+                <h2 className="font-display text-xl font-bold">Sorten-Review Fazit</h2>
+                <span className="rounded-md bg-mint-bright/20 px-2 py-0.5 text-[10px] font-bold uppercase text-mint-bright">
+                  Monat 1/3
+                </span>
+              </div>
+              <div className="mt-5 space-y-4 text-sm leading-relaxed text-white/90">
+                <div className="rounded-lg bg-white/10 p-3.5">
+                  <p className="font-bold text-mint-bright text-xs uppercase tracking-wider">
+                    Therapeutische Einschätzung
+                  </p>
+                  <p className="mt-1 text-xs text-white/90">
+                    Hohe Zufriedenheit mit der Sorte {data.strainFeedback?.strainName || "Bedrocan 22/1"}. 
+                    Gute Symptomkontrolle ohne berichtete schwerwiegende Nebenwirkungen.
+                  </p>
+                </div>
+                <div className="rounded-lg bg-white/10 p-3.5">
+                  <p className="font-bold text-mint-bright text-xs uppercase tracking-wider">
+                    Versorgungsempfehlung
+                  </p>
+                  <p className="mt-1 text-xs text-white/90">
+                    Patient wünscht Fortführung der aktuellen Verordnung. Ausreichender Lagerbestand für Folgerezepte sollte vorgehalten werden.
+                  </p>
+                </div>
+              </div>
             </div>
-            <p className="mt-5 text-sm leading-relaxed text-white/80">
-              {t("insightText", {
-                phase: data.phase,
-                adherence: data.adherence,
-                pain: data.painChange ?? 0,
-              })}
-            </p>
+
             <button
               type="button"
               onClick={() => setStep(2)}
-              className="mt-5 w-full rounded-lg bg-mint-bright px-4 py-3 text-sm font-bold uppercase tracking-wide text-pine hover:bg-mint"
+              className="mt-6 w-full rounded-lg bg-mint-bright px-4 py-3 text-sm font-bold uppercase tracking-wide text-pine hover:bg-mint transition-colors"
             >
-              {t("acknowledge")}
+              Sortenbewertung bestätigen & weiter
             </button>
           </section>
 

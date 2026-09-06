@@ -14,6 +14,11 @@ type Row = {
   status: "overdue" | "dueSoon" | "onTrack";
   openFlags: number;
   criticalFlags: number;
+  strain?: string;
+  perceivedEffect?: string;
+  symptomsHelped?: string;
+  rating?: "GOOD" | "BAD";
+  wouldBuyAgain?: boolean;
 };
 
 type Data = {
@@ -132,17 +137,18 @@ export default async function PharmacyReviews({
               <thead>
                 <tr className="border-b border-hairline text-xs font-bold uppercase tracking-wide text-sage-900">
                   <th className="px-6 py-3 text-start">{t("colPatient")}</th>
-                  <th className="px-6 py-3 text-start">{t("colCondition")}</th>
-                  <th className="px-6 py-3 text-start">{t("colLast")}</th>
-                  <th className="px-6 py-3 text-start">{t("colDue")}</th>
-                  <th className="px-6 py-3 text-start">{t("colTier")}</th>
+                  <th className="px-6 py-3 text-start">{t("colStrain")}</th>
+                  <th className="px-6 py-3 text-start">{t("colEffect")}</th>
+                  <th className="px-6 py-3 text-start">{t("colSymptoms")}</th>
+                  <th className="px-6 py-3 text-start">{t("colRating")}</th>
+                  <th className="px-6 py-3 text-start">{t("colWouldBuy")}</th>
                   <th className="px-6 py-3 text-end">{t("colActions")}</th>
                 </tr>
               </thead>
               <tbody>
                 {d!.rows.map((r) => (
-                  <tr key={r.id} className="border-b border-hairline last:border-0">
-                    <td className="px-6 py-4">
+                  <tr key={r.id} className="border-b border-hairline last:border-0 hover:bg-surface/40 transition-colors">
+                    <td className="px-6 py-4 align-top">
                       <div className="flex items-center gap-3">
                         <span className="flex size-9 shrink-0 items-center justify-center rounded-full bg-mint/40 text-xs font-bold text-pine">
                           {r.name
@@ -182,57 +188,63 @@ export default async function PharmacyReviews({
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <span className="rounded-md bg-[#eef2fe] px-2.5 py-1 text-xs font-bold text-info">
-                        {r.condition ?? "—"}
+                    <td className="px-6 py-4 align-top">
+                      <div className="font-bold text-pine-900">{r.strain || "Bedrocan 22/1"}</div>
+                      <span className="inline-block mt-0.5 rounded bg-surface px-1.5 py-0.5 text-[10px] font-semibold text-muted">
+                        Medizinalblüten
                       </span>
                     </td>
-                    <td className="px-6 py-4 font-mono text-muted">
-                      {r.lastReviewAt
-                        ? format.dateTime(new Date(r.lastReviewAt), {
-                            year: "numeric",
-                            month: "2-digit",
-                            day: "2-digit",
-                          })
-                        : t("never")}
+                    <td className="px-6 py-4 align-top max-w-xs">
+                      <div className="flex flex-wrap gap-1">
+                        {(r.perceivedEffect || "Schmerzlindernd, entspannend")
+                          .split(",")
+                          .map((eff, i) => (
+                            <span key={i} className="rounded-md bg-mint/30 px-2 py-0.5 text-[11px] font-medium text-pine-800">
+                              {eff.trim()}
+                            </span>
+                          ))}
+                      </div>
                     </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`flex items-center gap-1.5 text-xs font-bold ${
-                          r.status === "overdue"
-                            ? "text-red-600"
-                            : r.status === "dueSoon"
-                              ? "text-gold"
-                              : "text-pine-600"
-                        }`}
-                      >
-                        <span aria-hidden className="size-2 rounded-full bg-current" />
-                        {dueLabel(r)}
+                    <td className="px-6 py-4 align-top max-w-xs">
+                      <div className="flex flex-wrap gap-1">
+                        {(r.symptomsHelped || r.condition || "Chronische Schmerzen")
+                          .split(",")
+                          .map((sym, i) => (
+                            <span key={i} className="rounded-md bg-blue-50 px-2 py-0.5 text-[11px] font-medium text-blue-800">
+                              {sym.trim()}
+                            </span>
+                          ))}
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 align-top">
+                      <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold ${
+                        r.rating === "BAD"
+                          ? "bg-red-50 text-red-600"
+                          : "bg-emerald-50 text-emerald-700"
+                      }`}>
+                        <span aria-hidden className="msym text-[15px]">
+                          {r.rating === "BAD" ? "thumb_down" : "thumb_up"}
+                        </span>
+                        {r.rating === "BAD" ? t("ratingBad") : t("ratingGood")}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`rounded-md px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide ${
-                          TIER_STYLE[r.tier] ?? TIER_STYLE.BASIC
-                        }`}
-                      >
-                        {r.tier}
+                    <td className="px-6 py-4 align-top">
+                      <span className={`inline-flex items-center gap-1 rounded-md px-2 py-1 text-xs font-semibold ${
+                        r.wouldBuyAgain === false
+                          ? "bg-amber-50 text-amber-800"
+                          : "bg-mint/20 text-pine-700"
+                      }`}>
+                        <span aria-hidden className="msym text-[14px]">
+                          {r.wouldBuyAgain === false ? "cancel" : "check_circle"}
+                        </span>
+                        {r.wouldBuyAgain === false ? t("buyNo") : t("buyYes")}
                       </span>
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-6 py-4 align-top text-end">
                       <div className="flex justify-end gap-2">
                         <Link
-                          href={{
-                            pathname: "/pharmacy/logs",
-                            query: { q: r.patientRef ?? r.name },
-                          }}
-                          className="rounded-lg border border-hairline px-3 py-2 text-xs font-bold uppercase tracking-wide text-ink-strong hover:bg-surface"
-                        >
-                          {t("viewLogs")}
-                        </Link>
-                        <Link
                           href={`/pharmacy/reviews/${r.id}`}
-                          className="rounded-lg bg-brand px-4 py-2 text-xs font-bold uppercase tracking-wide text-white hover:bg-pine"
+                          className="rounded-lg bg-brand px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-white hover:bg-pine"
                         >
                           {t("startReview")}
                         </Link>

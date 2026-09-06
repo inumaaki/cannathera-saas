@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { api } from "@/lib/api";
 import { Card } from "@/components/ui/layout";
 import Link from "next/link";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, type Locale } from "date-fns";
 import { ar, bg, de, enUS, pl, ro, ru, tr, uk } from "date-fns/locale";
 import { useParams } from "next/navigation";
 

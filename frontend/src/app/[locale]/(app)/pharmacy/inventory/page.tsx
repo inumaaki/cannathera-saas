@@ -5,6 +5,7 @@ import { apiServer } from "@/lib/api-server";
 import { InventoryFilters } from "@/components/pharmacy/InventoryFilters";
 import { InventoryTable, type Item } from "@/components/pharmacy/InventoryTable";
 import { ReorderButton } from "@/components/pharmacy/ReorderButton";
+import { WebshopSyncBar } from "@/components/pharmacy/WebshopSyncBar";
 
 type Data = {
   items: Item[];
@@ -37,9 +38,10 @@ export default async function PharmacyInventory({
   const query = new URLSearchParams({ category, status, sort });
   if (q) query.set("q", q);
 
-  const [t, d] = await Promise.all([
+  const [t, d, webshop] = await Promise.all([
     getTranslations("pharmacy.inventory"),
     apiServer<Data>(`/pharmacy/inventory?${query.toString()}`),
+    apiServer<any>("/pharmacy/inventory/webshop").catch(() => null),
   ]);
 
   const shortages = d?.shortages ?? [];
@@ -61,6 +63,10 @@ export default async function PharmacyInventory({
           </span>
           {t("exportCsv")}
         </a>
+      </div>
+
+      <div className="mt-6">
+        <WebshopSyncBar initialData={webshop} />
       </div>
 
       {/* Stat cards describe the whole inventory, never the current filter. */}

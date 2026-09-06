@@ -35,11 +35,11 @@ export default async function PharmacyPrescriptionsPage({
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="font-display text-2xl font-bold text-pine-900">
-          Prescriptions Inbox
+          {t("title")}
         </h1>
         <div className="flex items-center gap-4">
           <div className="text-sm font-medium text-muted">
-            {(prescriptions || []).length} Total Prescriptions
+            {t("totalPrescriptions", { count: (prescriptions || []).length })}
           </div>
           <AiUploadButton />
         </div>
@@ -49,17 +49,17 @@ export default async function PharmacyPrescriptionsPage({
         {(!prescriptions || prescriptions.length === 0) ? (
           <div className="p-12 text-center text-muted">
             <span aria-hidden className="msym text-[48px] mb-2 opacity-30">inbox</span>
-            <p>No prescriptions received yet.</p>
+            <p>{t("noPrescriptions")}</p>
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm">
               <thead className="bg-[#f6f8fc] text-xs uppercase tracking-wide text-muted">
                 <tr>
-                  <th className="px-6 py-4 font-semibold">Patient</th>
-                  <th className="px-6 py-4 font-semibold">Date Received</th>
-                  <th className="px-6 py-4 font-semibold">Note</th>
-                  <th className="px-6 py-4 font-semibold text-right">Status</th>
+                  <th className="px-6 py-4 font-semibold">{t("colPatient")}</th>
+                  <th className="px-6 py-4 font-semibold">{t("colDate")}</th>
+                  <th className="px-6 py-4 font-semibold">{t("colNote")}</th>
+                  <th className="px-6 py-4 font-semibold text-right">{t("colStatus")}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-hairline">
@@ -72,7 +72,7 @@ export default async function PharmacyPrescriptionsPage({
                         {isUnmatched ? (
                           <div className="font-bold text-red-600 flex items-center gap-2">
                             <span className="msym text-[18px]">error</span>
-                            Unknown Patient
+                            {t("unknownPatient")}
                           </div>
                         ) : (
                           <>
@@ -84,7 +84,7 @@ export default async function PharmacyPrescriptionsPage({
                             </div>
                             {p.patient?.dateOfBirth && (
                               <div className="text-muted text-xs mt-0.5">
-                                DOB: {format(new Date(p.patient.dateOfBirth), "PP")}
+                                {t("dob")} {format(new Date(p.patient.dateOfBirth), "PP")}
                               </div>
                             )}
                           </>
@@ -99,12 +99,12 @@ export default async function PharmacyPrescriptionsPage({
                         {p.note ? (
                           <p className={`line-clamp-3 ${isUnmatched ? 'text-red-800 font-medium' : 'text-ink-strong'}`}>{p.note}</p>
                         ) : (
-                          <span className="text-muted italic">No note provided.</span>
+                          <span className="text-muted italic">{t("noNote")}</span>
                         )}
                         
                         {p.status === 'CANCELLED' && p.rejectionReason && (
                           <div className="mt-2 text-xs font-medium text-red-600 bg-white p-2 rounded border border-red-200">
-                            <strong>Rejection Reason:</strong> {p.rejectionReason}
+                            <strong>{t("rejectionReason")}</strong> {p.rejectionReason}
                           </div>
                         )}
                       </td>
@@ -113,7 +113,7 @@ export default async function PharmacyPrescriptionsPage({
                         <div className="flex justify-end items-center gap-3">
                           {isUnmatched ? (
                             <button className="text-xs font-bold bg-white text-red-600 border border-red-200 px-3 py-1.5 rounded-md hover:bg-red-50">
-                              Assign Patient
+                              {t("assignPatient")}
                             </button>
                           ) : (
                             <PrescriptionStatusEditor id={p.id} currentStatus={p.status} />

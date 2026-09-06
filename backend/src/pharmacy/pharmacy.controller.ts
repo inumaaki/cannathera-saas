@@ -331,6 +331,21 @@ export class PharmacyController {
     return this.pharmacy.exportInventoryCsv(user.sub);
   }
 
+  @Get('inventory/webshop')
+  getWebshop(@CurrentUser() user: SessionPayload) {
+    return this.pharmacy.getWebshop(user.sub);
+  }
+
+  @Post('inventory/webshop')
+  setWebshop(@CurrentUser() user: SessionPayload, @Body() dto: { url: string }) {
+    return this.pharmacy.setWebshop(user.sub, dto.url);
+  }
+
+  @Post('inventory/sync-webshop')
+  syncWebshop(@CurrentUser() user: SessionPayload, @Body() dto?: { url?: string }) {
+    return this.pharmacy.syncWebshop(user.sub, dto?.url);
+  }
+
   @Get('inventory')
   inventory(
     @CurrentUser() user: SessionPayload,

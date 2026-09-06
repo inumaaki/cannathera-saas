@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { api } from "@/lib/api";
 
 export function AiUploadButton() {
   const router = useRouter();
+  const t = useTranslations("pharmacy.prescriptions");
   const [isUploading, setIsUploading] = useState(false);
 
   async function handleUpload() {
@@ -19,10 +21,10 @@ export function AiUploadButton() {
         }),
       });
       router.refresh();
-      alert("Prescription successfully processed and matched by AI!");
+      alert(t("scanSuccess"));
     } catch (err) {
-          const error = err as Error;
-      alert(error.message || "AI matching failed. Red flag raised.");
+      const error = err as Error;
+      alert(error.message || t("scanError"));
     } finally {
       setIsUploading(false);
     }
@@ -35,7 +37,7 @@ export function AiUploadButton() {
       className="flex items-center gap-2 rounded-lg bg-pine-600 px-4 py-2 text-sm font-bold text-white shadow-sm hover:bg-pine-700 disabled:opacity-50"
     >
       <span aria-hidden className="msym text-[18px]">document_scanner</span>
-      {isUploading ? "Scanning..." : "Upload (AI Scan)"}
+      {isUploading ? t("scanning") : t("scanButton")}
     </button>
   );
 }
