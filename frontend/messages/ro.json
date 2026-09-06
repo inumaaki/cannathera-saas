@@ -814,7 +814,19 @@
       "title": "Rețeaua de farmacii",
       "subtitle": "Găsiți și contactați farmaciile din rețeaua dvs.",
       "searchPlaceholder": "Cauta dupa farmacie sau oras...",
-      "noResults": "Nu au fost găsite farmacii."
+      "noResults": "Nu au fost găsite farmacii.",
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
+    },
+    "pharmacies": {
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
     }
   },
   "legal": {

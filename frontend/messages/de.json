@@ -814,7 +814,19 @@
       "title": "Apotheken-Netzwerk",
       "subtitle": "Finden und kontaktieren Sie Apotheken in Ihrem Netzwerk.",
       "searchPlaceholder": "Nach Apotheke oder Stadt suchen...",
-      "noResults": "Keine Apotheken gefunden."
+      "noResults": "Keine Apotheken gefunden.",
+      "contact": "Kontakt",
+      "address": "Adresse",
+      "openingHours": "Oeffnungszeiten",
+      "viewOnMap": "Auf Karte anzeigen",
+      "noContact": "Keine Kontaktdaten hinterlegt."
+    },
+    "pharmacies": {
+      "contact": "Kontakt",
+      "address": "Adresse",
+      "openingHours": "Oeffnungszeiten",
+      "viewOnMap": "Auf Karte anzeigen",
+      "noContact": "Keine Kontaktdaten hinterlegt."
     }
   },
   "legal": {

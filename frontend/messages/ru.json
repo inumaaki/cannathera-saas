@@ -814,7 +814,19 @@
       "title": "Аптечная сеть",
       "subtitle": "Найдите и свяжитесь с аптеками в вашей сети.",
       "searchPlaceholder": "Поиск по аптеке или городу...",
-      "noResults": "Аптеки не найдены."
+      "noResults": "Аптеки не найдены.",
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
+    },
+    "pharmacies": {
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
     }
   },
   "legal": {

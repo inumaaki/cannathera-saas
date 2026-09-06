@@ -814,7 +814,19 @@
       "title": "شبكة الصيدلة",
       "subtitle": "ابحث عن الصيدليات في شبكتك واتصل بها.",
       "searchPlaceholder": "البحث عن طريق الصيدلية أو المدينة...",
-      "noResults": "لم يتم العثور على صيدليات."
+      "noResults": "لم يتم العثور على صيدليات.",
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
+    },
+    "pharmacies": {
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
     }
   },
   "legal": {

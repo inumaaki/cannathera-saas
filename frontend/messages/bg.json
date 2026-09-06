@@ -814,7 +814,19 @@
       "title": "Аптечна мрежа",
       "subtitle": "Намерете и се свържете с аптеки във вашата мрежа.",
       "searchPlaceholder": "Търсене по аптека или град...",
-      "noResults": "Няма намерени аптеки."
+      "noResults": "Няма намерени аптеки.",
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
+    },
+    "pharmacies": {
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
     }
   },
   "legal": {

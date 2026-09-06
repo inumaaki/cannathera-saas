@@ -822,7 +822,19 @@
       "title": "Pharmacy Network",
       "subtitle": "Find and contact pharmacies in your network.",
       "searchPlaceholder": "Search by pharmacy or city...",
-      "noResults": "No pharmacies found."
+      "noResults": "No pharmacies found.",
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
+    },
+    "pharmacies": {
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
     }
   },
   "legal": {

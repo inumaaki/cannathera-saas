@@ -814,7 +814,19 @@
       "title": "Eczane Ağı",
       "subtitle": "Ağınızdaki eczaneleri bulun ve onlarla iletişime geçin.",
       "searchPlaceholder": "Eczaneye veya şehre göre arayın...",
-      "noResults": "Eczane bulunamadı."
+      "noResults": "Eczane bulunamadı.",
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
+    },
+    "pharmacies": {
+      "contact": "Contact",
+      "address": "Address",
+      "openingHours": "Opening hours",
+      "viewOnMap": "View on map",
+      "noContact": "No contact info available."
     }
   },
   "legal": {

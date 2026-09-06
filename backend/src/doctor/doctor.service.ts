@@ -880,6 +880,9 @@ export class DoctorService {
         postalCode: true,
         city: true,
         street: true,
+        phone: true,
+        email: true,
+        website: true,
         lat: true,
         lng: true,
         description: true,
@@ -900,7 +903,16 @@ export class DoctorService {
         const distance = getDistanceKm(coords.lat, coords.lng, p.lat, p.lng);
         if (distance <= radiusKm) {
           results.push({
-            ...p,
+            id: p.id,
+            name: p.name,
+            postalCode: p.postalCode,
+            city: p.city,
+            street: p.street,
+            phone: (p as any).phone ?? null,
+            email: (p as any).email ?? null,
+            website: (p as any).website ?? null,
+            description: p.description,
+            operatingHours: p.operatingHours,
             distanceKm: parseFloat(distance.toFixed(2)),
             availableStrainsCount: p.inventory.length,
           });
@@ -935,10 +947,13 @@ export class DoctorService {
         id: true,
         name: true,
         city: true,
+        street: true,
+        postalCode: true,
         phone: true,
         email: true,
         website: true,
         description: true,
+        operatingHours: true,
       },
       orderBy: { name: 'asc' },
     });
