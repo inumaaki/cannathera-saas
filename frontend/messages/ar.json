@@ -831,6 +831,18 @@
       "subtitle": "Partner pharmacies sorted by distance — recommend the nearest one directly during consultations.",
       "noResults": "No pharmacies found. Please ensure your practice postal code is set in Settings.",
       "chatButton": "Send message"
+    },
+    "chat": {
+      "title": "Messages",
+      "subtitle": "Secure messaging with your partner pharmacies.",
+      "noThreads": "No conversations yet.",
+      "browsePharmacies": "Browse pharmacies to start a conversation",
+      "noMessages": "Start the conversation by sending a message below.",
+      "messagePlaceholder": "Write a message...",
+      "sending": "Sending...",
+      "chatWith": "Chat with",
+      "you": "You",
+      "backToList": "Back"
     }
   },
   "legal": {

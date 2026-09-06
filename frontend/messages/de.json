@@ -831,6 +831,18 @@
       "subtitle": "Partner-Apotheken nach Entfernung sortiert - empfehlen Sie die naechstgelegene direkt beim Patientengespraech.",
       "noResults": "Keine Apotheken gefunden. Bitte sicherstellen, dass die Postleitzahl der Praxis in den Einstellungen hinterlegt ist.",
       "chatButton": "Nachricht senden"
+    },
+    "chat": {
+      "title": "Nachrichten",
+      "subtitle": "Sicherer Austausch mit Ihren Partner-Apotheken.",
+      "noThreads": "Noch keine Konversationen vorhanden.",
+      "browsePharmacies": "Apotheken durchsuchen",
+      "noMessages": "Starten Sie die Konversation mit einer Nachricht.",
+      "messagePlaceholder": "Nachricht schreiben...",
+      "sending": "Wird gesendet...",
+      "chatWith": "Chat mit",
+      "you": "Sie",
+      "backToList": "Zurück"
     }
   },
   "legal": {
