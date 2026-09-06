@@ -67,7 +67,9 @@
       "appointments": "Appts",
       "profile": "Profile",
       "quickLog": "Open quick log",
-      "navigation": "Navigation"
+      "navigation": "Navigation",
+      "inventory": "Inventory",
+      "feedback": "Strain Feedback"
     },
     "header": {
       "notifications": "Notifications",
@@ -83,7 +85,9 @@
       "language": "Language",
       "logout": "Log out",
       "myForms": "My forms",
-      "myReports": "My reports"
+      "myReports": "My reports",
+      "myInventory": "Pharmacy Inventory & Shop",
+      "myFeedback": "Strain Feedback to Pharmacy"
     },
     "welcome": {
       "title": "Your journey to relief starts here",
@@ -124,7 +128,13 @@
         "activity": "/10",
         "qol": "/10"
       },
-      "stable": "Stable"
+      "stable": "Stable",
+      "inventoryTileTitle": "Pharmacy Inventory & Live Stock",
+      "inventoryTileDesc": "Browse full strain inventory of your pharmacy with prices per gram and product photos.",
+      "feedbackTileTitle": "Monthly Strain Feedback",
+      "feedbackTileDesc": "Provide direct strain feedback to your pharmacy (effects, relief, repurchase).",
+      "viewInventory": "View Inventory",
+      "giveFeedback": "Give Feedback"
     },
     "quickLog": {
       "title": "Quick Log Entry",
@@ -252,6 +262,10 @@
         "cycleCompletion": {
           "title": "Cycle Completion & Renewal",
           "description": "Final assessment of the continuous protocol. Determining maintenance dosage or transitioning to the next cycle."
+        },
+        "monthlyStrainFeedback": {
+          "title": "Monthly Strain & Feedback Review",
+          "description": "Monthly evaluation of your prescribed flower and extract strains (effectiveness, tolerability, symptom relief) sent directly to your pharmacy."
         }
       }
     },
@@ -311,7 +325,25 @@
       "dateOfBirth": "Date of Birth",
       "treatingPhysician": "Treating Physician / Practice",
       "changePassword": "Change Password",
-      "passwordAndSecurity": "Password & Security"
+      "passwordAndSecurity": "Password & Security",
+      "remindersTitle": "Intake & Log Reminder Times",
+      "remindersSubtitle": "Set between 3 and 10 daily reminder times so you never forget to log your intake and symptoms. You will receive a live pop-up notification at these exact times.",
+      "dailyReminders": "Daily Reminders ({count}/10)",
+      "addTime": "+ Add Another Time",
+      "removeTime": "Remove",
+      "saveReminders": "Save Reminders",
+      "remindersSaved": "Saved!",
+      "radiusMapTitle": "Local Partner Pharmacies within 25–30 km Radius",
+      "radiusMapSubtitle": "Interactive map of all cooperating pharmacies in your care area. Click a marker to view details and live stock.",
+      "radiusFilter": "Radius 25–30 km",
+      "patientLocation": "Your Location",
+      "pharmacyLocation": "Pharmacy",
+      "distanceKm": "{dist} km away",
+      "availableStrainsCount": "{count} strains available",
+      "selectAsFavorite": "Add to Favorites",
+      "removeFavorite": "Remove Favorite",
+      "viewShop": "View Inventory",
+      "favoriteLimitReached": "You can only select up to 3 favorite pharmacies."
     },
     "reports": {
       "title": "My reports",
@@ -370,6 +402,66 @@
         "rejectionReason": "Reason for rejection:",
         "yourNote": "Your note:"
       }
+    },
+    "inventory": {
+      "title": "Pharmacy Inventory & Live Shop",
+      "subtitle": "Explore inventory of your partner pharmacies with live pricing and stock levels.",
+      "selectPharmacy": "Select Pharmacy",
+      "favoritesOnly": "From Favorites",
+      "allPharmacies": "All Partner Pharmacies",
+      "inStock": "In Stock",
+      "lowStock": "Low Stock",
+      "outOfStock": "Out of Stock",
+      "pricePerGram": "{price} € / g",
+      "thc": "THC {val}%",
+      "cbd": "CBD {val}%",
+      "genetics": "Genetics: {val}",
+      "filterAll": "All Products",
+      "filterFlowers": "Cannabis Flowers",
+      "filterExtracts": "Extracts & Oils",
+      "searchPlaceholder": "Search strain name, THC level, genetics...",
+      "giveFeedback": "Rate Strain",
+      "redeemPrescription": "Redeem Prescription",
+      "noProducts": "No products found for the current selection.",
+      "operatingHours": "Opening Hours",
+      "contact": "Contact",
+      "phone": "Phone",
+      "email": "Email",
+      "address": "Address",
+      "badgeSativa": "Sativa",
+      "badgeIndica": "Indica",
+      "badgeHybrid": "Hybrid"
+    },
+    "feedback": {
+      "title": "Monthly Strain Feedback",
+      "subtitle": "Submit direct feedback to your pharmacy for their monthly quality statistics.",
+      "pharmacyLabel": "Recipient Pharmacy",
+      "pharmacySelect": "-- Select Pharmacy --",
+      "strainLabel": "Used Strain",
+      "strainPlaceholder": "e.g. Bedrocan 22/1, Pedanios 22/1, Tilray THC 25...",
+      "ratingLabel": "How do you rate this strain overall?",
+      "ratingGood": "Good / Highly Recommended",
+      "ratingBad": "Poor / Not Suitable",
+      "ratingScore": "Satisfaction ({val}/5 stars)",
+      "wouldBuyAgainLabel": "Would you purchase this strain again?",
+      "wouldBuyAgainYes": "Yes, would purchase again",
+      "wouldBuyAgainNo": "No, prefer different strain",
+      "effectsLabel": "Perceived Main Effects (Multiple choice)",
+      "effectPain": "Pain Relief",
+      "effectEuphoric": "Mood Elevation / Euphoric",
+      "effectRelax": "Physical Relaxation",
+      "effectSleep": "Sleep Promoting",
+      "effectFocus": "Focusing / Uplifting",
+      "symptomsLabel": "Which symptoms did this strain help with?",
+      "symptomsPlaceholder": "e.g. Chronic back pain, sleep onset insomnia, muscle spasms...",
+      "noteLabel": "Additional notes for the pharmacy (Optional)",
+      "notePlaceholder": "Remarks on aroma, tolerability, consistency...",
+      "submit": "Send Feedback to Pharmacy",
+      "submitting": "Submitting...",
+      "successTitle": "Thank you for your strain feedback!",
+      "successDesc": "Your review has been directly transmitted to the pharmacy and is visible in their monthly quality statistics.",
+      "backToShop": "Back to Shop",
+      "backHome": "Back to Dashboard"
     }
   },
   "doctor": {
@@ -2035,29 +2127,33 @@
       "title": "An Architected Ecosystem for Complete Therapy Compliance",
       "subtitle": "Cannathera bridges the critical structural gap between medical prescription, pharmaceutical dispensation, and daily patient reality. By translating highly individualized therapy regimens into secure, algorithmically monitored clinical workflows, we elevate cannabis treatment from anecdotal care to the highest evidence-based medical standards.",
       "patientBullets": [
-        "Ongoing documentation",
-        "Daily Dosage Logs",
-        "Adherence Analytics"
+        "Ongoing documentation & symptom tracking",
+        "Daily dosage logs & adherence analysis",
+        "Direct view of local pharmacy inventory",
+        "Regular review of strains and feedback within the structured therapy plan"
       ],
       "doctorBullets": [
-        "Automated Red-Flags",
-        "Patient Roster Management",
-        "Clinical PDF Exports"
+        "Structured patient progress data and reports — no unstructured notes",
+        "Automated triage protocols – monitoring of clinical metrics at a glance",
+        "Seamless networking within a closed local care system, directly connecting with regional pharmacies",
+        "Maximum therapy safety through automated alerts"
       ],
       "pharmacyBullets": [
-        "Inventory Tracking",
-        "Compliance Reviews",
-        "Billing Logs Audit"
+        "Simple live inventory connection / webshop integration via weblink",
+        "Direct patient feedback on dispensed strains (effects, intent to repurchase)",
+        "Focus on the closed loop: Establishing a stable local cycle between pharmacy, physician, and patient to retain regular local patients against mail-order giants",
+        "Review of billing records and compliance checks"
       ],
       "enterpriseBullets": [
-        "Custom Tenant Branding",
-        "Webhook & API access",
-        "Comprehensive Security Policy"
+        "Seamless, scalable interfaces for telemedicine platforms, hospital groups, and medical care centers (MVZs) to relieve medical staff",
+        "Standardized pre-screening and structured provision of therapy data prior to the consultation with the physician",
+        "Comprehensive system integrations (APIs and webhooks) while adhering to the strictest data protection and security guidelines"
       ],
       "patientDescSuffix": "Securely record symptoms, dosages, and daily activity. Track adherence metrics in real-time.",
       "doctorDescSuffix": "Automated triage protocols monitor patient values. Generate structured PDF course reports with one click.",
       "pharmacyDescSuffix": "Log dispensations and manage stocks. Track patient reviews and monthly assessment targets.",
-      "enterpriseDescSuffix": "Support platform scaling with secure integrations, telemetry API webhooks, and partner settings."
+      "enterpriseDescSuffix": "Support platform scaling with secure integrations, telemetry API webhooks, and partner settings.",
+      "enterpriseTitle": "Enterprise Partner / Telemedicine"
     },
     "trust": {
       "tag": "Compliance & Security",
@@ -2213,7 +2309,7 @@
       "section2_text": "Cannabis therapy only works through the collaborative efforts of the prescribing physician, the dispensing pharmacy, and the patient in their daily life. Where interface issues and information gaps previously hampered the process, Cannathera connects all involved parties via a secure, data protection-compliant architecture. No anonymous algorithms, but clinically sound logic that puts people first."
     },
     "footer": {
-      "description": "Structured clinical therapy accompaniment connecting patients, practitioners, and pharmacies securely.",
+      "description": "Structured clinical therapy support that securely connects patients, physicians, and pharmacies.",
       "portals": "Portals",
       "patientArea": "Patient Area",
       "clinicalPortal": "Clinical Portal",

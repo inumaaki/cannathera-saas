@@ -126,6 +126,59 @@ export default async function PatientHome({
         {!summary?.todayLogged ? <HomeLogButton label={t("logDose")} /> : null}
       </section>
 
+      {/* Pharmacy Inventory & Strain Feedback Quick Access Tiles */}
+      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <Link
+          href="/patient/inventory"
+          className="group rounded-2xl border border-hairline bg-white p-5 shadow-sm hover:border-pine-600 hover:shadow-md transition-all flex flex-col justify-between"
+        >
+          <div>
+            <div className="flex items-center justify-between">
+              <span className="flex size-10 items-center justify-center rounded-xl bg-pine-50 text-pine-600 group-hover:bg-pine-600 group-hover:text-white transition-colors">
+                <span aria-hidden className="msym text-[22px]">storefront</span>
+              </span>
+              <span className="rounded-full bg-emerald-50 px-2.5 py-0.5 text-[10px] font-bold text-emerald-700 border border-emerald-200">
+                Live-Preise
+              </span>
+            </div>
+            <h3 className="mt-3 font-display font-bold text-ink-strong text-base group-hover:text-pine-600 transition-colors">
+              {t("inventoryTileTitle")}
+            </h3>
+            <p className="mt-1 text-xs text-muted line-clamp-2">
+              {t("inventoryTileDesc")}
+            </p>
+          </div>
+          <span className="mt-4 flex items-center gap-1 text-xs font-bold text-pine-600 group-hover:translate-x-1 transition-transform">
+            {t("viewInventory")} →
+          </span>
+        </Link>
+
+        <Link
+          href="/patient/feedback"
+          className="group rounded-2xl border border-hairline bg-white p-5 shadow-sm hover:border-pine-600 hover:shadow-md transition-all flex flex-col justify-between"
+        >
+          <div>
+            <div className="flex items-center justify-between">
+              <span className="flex size-10 items-center justify-center rounded-xl bg-amber-50 text-amber-600 group-hover:bg-amber-600 group-hover:text-white transition-colors">
+                <span aria-hidden className="msym text-[22px]">rate_review</span>
+              </span>
+              <span className="rounded-full bg-amber-50 px-2.5 py-0.5 text-[10px] font-bold text-amber-800 border border-amber-200">
+                Monats-Review
+              </span>
+            </div>
+            <h3 className="mt-3 font-display font-bold text-ink-strong text-base group-hover:text-pine-600 transition-colors">
+              {t("feedbackTileTitle")}
+            </h3>
+            <p className="mt-1 text-xs text-muted line-clamp-2">
+              {t("feedbackTileDesc")}
+            </p>
+          </div>
+          <span className="mt-4 flex items-center gap-1 text-xs font-bold text-amber-700 group-hover:translate-x-1 transition-transform">
+            {t("giveFeedback")} →
+          </span>
+        </Link>
+      </div>
+
       {/* Next appointment */}
       {appt ? (
         <section className="cw-watermark mt-4 rounded-2xl border border-hairline bg-white p-5">

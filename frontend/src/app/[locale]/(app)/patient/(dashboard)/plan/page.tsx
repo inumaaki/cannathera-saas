@@ -1,4 +1,5 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import { Link } from "@/i18n/navigation";
 import { apiServer } from "@/lib/api-server";
 import { ProgressRing } from "@/components/patient/charts";
 
@@ -86,6 +87,21 @@ export default async function PatientPlan({
               <p className="mt-2 leading-relaxed text-muted">
                 {t(`phases.${key}.description`)}
               </p>
+
+              {key === "monthlyStrainFeedback" && (
+                <div className="mt-4 pt-3 border-t border-hairline flex flex-wrap items-center justify-between gap-3">
+                  <span className="text-xs text-muted">
+                    Fließt direkt in den Monatsbericht Ihrer Apotheke ein
+                  </span>
+                  <Link
+                    href="/patient/feedback"
+                    className="inline-flex items-center gap-1.5 rounded-xl bg-pine-600 px-4 py-2 text-xs font-bold text-white hover:bg-pine-700 shadow-sm transition-colors"
+                  >
+                    <span aria-hidden className="msym text-[16px]">rate_review</span>
+                    Sorten-Feedback abgeben
+                  </Link>
+                </div>
+              )}
             </section>
           </li>
         ))}

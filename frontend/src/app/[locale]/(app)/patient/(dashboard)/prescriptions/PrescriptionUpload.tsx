@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { api } from "@/lib/api";
 import { useRouter } from "@/i18n/navigation";
@@ -19,6 +19,29 @@ export function PrescriptionUpload({
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Fallback pharmacies if no favorites yet
+  const [fallbackPharmacies, setFallbackPharmacies] = useState<
+    Array<{ id: string; name: string; distanceKm?: number }>
+  >([]);
+  const [loadingFallback, setLoadingFallback] = useState(false);
+
+  useEffect(() => {
+    if (!favoritePharmacies || favoritePharmacies.length === 0) {
+      setLoadingFallback(true);
+      api<Array<{ id: string; name: string; distanceKm: number }>>("/patient/pharmacies/search")
+        .then((res) => {
+          setFallbackPharmacies(res);
+          if (res.length > 0) {
+            setPharmacyId(res[0].id);
+          }
+        })
+        .catch(() => {})
+        .finally(() => setLoadingFallback(false));
+    } else if (favoritePharmacies.length > 0) {
+      setPharmacyId(favoritePharmacies[0].id);
+    }
+  }, [favoritePharmacies]);
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!pharmacyId) {
@@ -32,49 +55,57 @@ export function PrescriptionUpload({
 
     setPending(true);
     setError(null);
-      const reader = new FileReader();
-      reader.onload = async (event) => {
-        const base64String = event.target?.result as string;
-        try {
-          await api("/patient/prescriptions", {
-            method: "POST",
-            body: {
-              pharmacyId,
-              note,
-              fileUrl: base64String, // Send base64 data string
-            },
-          });
-          setNote("");
-          setPharmacyId("");
-          setFile(null);
-          router.refresh();
-        } catch (err) {
-          const error = err as Error;
-          setError(error.message || "Failed to upload prescription");
-        } finally {
-          setPending(false);
-        }
-      };
-      reader.onerror = () => {
-        setError("Failed to read file.");
+    const reader = new FileReader();
+    reader.onload = async (event) => {
+      const base64String = event.target?.result as string;
+      try {
+        await api("/patient/prescriptions", {
+          method: "POST",
+          body: {
+            pharmacyId,
+            note,
+            fileUrl: base64String,
+          },
+        });
+        setNote("");
+        setFile(null);
+        router.refresh();
+      } catch (err) {
+        const error = err as Error;
+        setError(error.message || "Failed to upload prescription");
+      } finally {
         setPending(false);
-      };
-      reader.readAsDataURL(file);
-
+      }
+    };
+    reader.onerror = () => {
+      setError("Failed to read file.");
+      setPending(false);
+    };
+    reader.readAsDataURL(file);
   }
 
-  if (!favoritePharmacies || favoritePharmacies.length === 0) {
+  const availablePharmacies =
+    favoritePharmacies && favoritePharmacies.length > 0
+      ? favoritePharmacies
+      : fallbackPharmacies;
+
+  if (availablePharmacies.length === 0 && !loadingFallback) {
     return (
       <div className="rounded-xl border border-hairline bg-[#f6f8fc] p-6 text-center">
-        <h3 className="font-bold text-ink-strong">{t("upload.noFavoritesTitle")}</h3>
-        <p className="mt-2 text-sm text-muted">
+        <div className="mx-auto flex size-12 items-center justify-center rounded-full bg-amber-100 text-amber-800 mb-3">
+          <span aria-hidden className="msym text-2xl">map</span>
+        </div>
+        <h3 className="font-bold text-ink-strong text-lg">{t("upload.noFavoritesTitle")}</h3>
+        <p className="mt-2 text-sm text-muted max-w-md mx-auto">
           {t("upload.noFavoritesText")}
         </p>
         <button
+          type="button"
           onClick={() => router.push("/patient/profile#network")}
-          className="mt-4 h-10 rounded-lg bg-pine-600 px-5 font-bold text-white"
+          className="mt-4 inline-flex items-center gap-2 h-11 rounded-xl bg-pine-600 px-6 font-bold text-white shadow-sm hover:bg-pine-700 transition-colors"
         >
-          {t("upload.manageNetwork")}
+          <span aria-hidden className="msym text-[18px]">explore</span>
+          {t("upload.manageNetwork")} (Karte im 25–30 km Radius)
         </button>
       </div>
     );
@@ -82,8 +113,18 @@ export function PrescriptionUpload({
 
   return (
     <form onSubmit={handleSubmit} className="rounded-xl border border-hairline bg-white p-5 space-y-4 shadow-sm">
-      <h3 className="font-bold text-pine-900 text-xl border-b border-hairline pb-2">{t("upload.title")}</h3>
-      
+      <div className="flex flex-wrap items-center justify-between border-b border-hairline pb-2 gap-2">
+        <h3 className="font-bold text-pine-900 text-xl">{t("upload.title")}</h3>
+        <button
+          type="button"
+          onClick={() => router.push("/patient/profile#network")}
+          className="text-xs font-bold text-pine-600 hover:underline flex items-center gap-1"
+        >
+          <span aria-hidden className="msym text-[15px]">map</span>
+          Apotheke auf 25–30 km Karte wählen
+        </button>
+      </div>
+
       <div>
         <label className="block text-xs font-semibold uppercase tracking-wide text-muted mb-1">
           {t("upload.selectPharmacy")}
@@ -97,9 +138,9 @@ export function PrescriptionUpload({
           <option value="" disabled>
             {t("upload.choosePlaceholder")}
           </option>
-          {favoritePharmacies.map((p) => (
+          {availablePharmacies.map((p) => (
             <option key={p.id} value={p.id}>
-              {p.name}
+              {p.name} {"distanceKm" in p ? `(${p.distanceKm} km)` : ""}
             </option>
           ))}
         </select>

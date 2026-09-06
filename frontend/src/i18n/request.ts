@@ -15,6 +15,9 @@ function deepMerge<T>(base: T, override: unknown): T {
   ) {
     return (override ?? base) as T;
   }
+  if (Array.isArray(base) || Array.isArray(override)) {
+    return ((Array.isArray(override) ? override : base) as unknown) as T;
+  }
   const out: Record<string, unknown> = { ...(base as Record<string, unknown>) };
   for (const [key, value] of Object.entries(override as Record<string, unknown>)) {
     if (key.startsWith("_")) continue; // skip meta keys like "_note"

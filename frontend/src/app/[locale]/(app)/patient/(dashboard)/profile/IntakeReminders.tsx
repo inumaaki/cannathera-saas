@@ -66,14 +66,16 @@ export function IntakeReminders({
   return (
     <div className="mt-8 space-y-6">
       <div className="border-t border-hairline pt-6">
-        <h2 className="text-lg font-bold text-pine-900">Push Notification Reminders</h2>
+        <h2 className="text-lg font-bold text-pine-900">{t("remindersTitle")}</h2>
         <p className="text-sm text-muted mt-1">
-          Set between 3 and 10 daily reminder times so you never forget to log your intake and symptoms. You will receive a live pop-up notification at these exact times.
+          {t("remindersSubtitle")}
         </p>
       </div>
 
       <div className="rounded-xl border border-hairline bg-[#f6f8fc] p-5">
-        <h3 className="font-semibold text-ink-strong mb-3">Daily Reminders ({times.length}/10)</h3>
+        <h3 className="font-semibold text-ink-strong mb-3">
+          {t("dailyReminders", { count: times.length })}
+        </h3>
         
         <div className="space-y-3">
           {times.map((time, idx) => (
@@ -91,7 +93,7 @@ export function IntakeReminders({
                   onClick={() => handleRemoveTime(idx)}
                   className="text-red-500 hover:text-red-700 text-sm font-semibold ml-auto"
                 >
-                  Remove
+                  {t("removeTime")}
                 </button>
               )}
             </div>
@@ -107,7 +109,7 @@ export function IntakeReminders({
             disabled={times.length >= 10}
             className="text-sm font-bold text-pine-600 hover:text-pine-800 disabled:opacity-50"
           >
-            + Add Another Time
+            {t("addTime")}
           </button>
 
           <button
@@ -116,7 +118,7 @@ export function IntakeReminders({
             disabled={saving}
             className="h-10 rounded-lg bg-pine-600 px-5 font-bold text-white disabled:opacity-50"
           >
-            {saved ? "Saved!" : "Save Reminders"}
+            {saved ? t("remindersSaved") : t("saveReminders")}
           </button>
         </div>
       </div>

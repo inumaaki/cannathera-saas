@@ -30,6 +30,7 @@ export type Branding = {
 const NAV = [
   { href: "/patient", key: "home", icon: "explore" },
   { href: "/patient/progress", key: "progress", icon: "monitoring" },
+  { href: "/patient/inventory", key: "inventory", icon: "storefront" },
   { href: "/patient/prescriptions", key: "prescriptions", icon: "receipt_long" },
   { href: "/patient/profile", key: "profile", icon: "person" },
 ] as const;
@@ -229,6 +230,8 @@ export function PatientShell({
                   <p className="border-b border-hairline px-5 py-3 text-sm text-muted rounded-t-2xl">
                     {userName}
                   </p>
+                  <MenuLink href="/patient/inventory" icon="storefront" label={th("myInventory")} />
+                  <MenuLink href="/patient/feedback" icon="rate_review" label={th("myFeedback")} />
                   <MenuLink href="/patient/profile" icon="person" label={th("myProfile")} />
                   <MenuLink href="/patient/forms" icon="assignment" label={th("myForms")} />
                   <MenuLink href="/patient/reports" icon="picture_as_pdf" label={th("myReports")} />

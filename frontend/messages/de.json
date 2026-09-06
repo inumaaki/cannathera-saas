@@ -59,7 +59,9 @@
       "profile": "Profil",
       "quickLog": "Schnelleintrag öffnen",
       "navigation": "Navigation",
-      "prescriptions": "Rezepte"
+      "prescriptions": "Rezepte",
+      "inventory": "Sortiment",
+      "feedback": "Sorten-Feedback"
     },
     "header": {
       "notifications": "Benachrichtigungen",
@@ -75,7 +77,9 @@
       "language": "Sprache",
       "logout": "Abmelden",
       "myForms": "Meine Formulare",
-      "myReports": "Meine Berichte"
+      "myReports": "Meine Berichte",
+      "myInventory": "Apotheken-Sortiment & Shop",
+      "myFeedback": "Sorten-Feedback an Apotheke"
     },
     "welcome": {
       "title": "Ihr Weg zur Linderung beginnt hier",
@@ -116,7 +120,13 @@
         "activity": "/10",
         "qol": "/10"
       },
-      "stable": "Stabil"
+      "stable": "Stabil",
+      "inventoryTileTitle": "Apotheken-Sortiment & Live-Bestand",
+      "inventoryTileDesc": "Stöbern Sie im aktuellen Sortiment Ihrer Apotheke inklusive Preisen pro Gramm und Blütenansichten.",
+      "feedbackTileTitle": "Monatliches Sorten-Feedback",
+      "feedbackTileDesc": "Geben Sie Ihrer Apotheke direktes Feedback zu Ihrer aktuellen Blütensorte.",
+      "viewInventory": "Sortiment ansehen",
+      "giveFeedback": "Feedback abgeben"
     },
     "quickLog": {
       "title": "Schnelleintrag",
@@ -244,6 +254,10 @@
         "cycleCompletion": {
           "title": "Zyklusabschluss & Verlängerung",
           "description": "Abschlussbewertung des Therapie-Protokolls. Festlegung der Erhaltungsdosis oder Übergang in den nächsten Zyklus."
+        },
+        "monthlyStrainFeedback": {
+          "title": "Monatliches Sorten- und Feedback-Review",
+          "description": "Monatliche Bewertung der verordneten Blüten- und Extraktsorten (Wirkung, Symptomlinderung, Wiederkauf) direkt an Ihre Apotheke."
         }
       }
     },
@@ -303,7 +317,25 @@
       "recommendedPharmacies": "Lokale Apotheken finden",
       "locatingPartners": "Suche nach Partnern in der Nähe...",
       "addToFavorites": "Zu Favoriten hinzufügen",
-      "added": "Hinzugefügt"
+      "added": "Hinzugefügt",
+      "remindersTitle": "Erinnerungszeiten für Einnahme & Protokoll",
+      "remindersSubtitle": "Legen Sie zwischen 3 und 10 tägliche Erinnerungszeiten fest, um die Dokumentation Ihrer Einnahme und Symptome nicht zu vergessen. Zu diesen Zeiten erhalten Sie eine Live-Benachrichtigung.",
+      "dailyReminders": "Tägliche Erinnerungen ({count}/10)",
+      "addTime": "+ Weitere Zeit hinzufügen",
+      "removeTime": "Entfernen",
+      "saveReminders": "Erinnerungen speichern",
+      "remindersSaved": "Gespeichert!",
+      "radiusMapTitle": "Lokale Partner-Apotheken im Umkreis (25–30 km)",
+      "radiusMapSubtitle": "Interaktive Kartenansicht der Apotheken in Ihrem Versorgungsbereich. Klicken Sie auf einen Marker, um Details und Bestände zu sehen.",
+      "radiusFilter": "Umkreis 25–30 km",
+      "patientLocation": "Ihr Standort",
+      "pharmacyLocation": "Apotheke",
+      "distanceKm": "{dist} km entfernt",
+      "availableStrainsCount": "{count} Sorten verfügbar",
+      "selectAsFavorite": "Als Favorit wählen",
+      "removeFavorite": "Aus Favoriten entfernen",
+      "viewShop": "Zum Sortiment",
+      "favoriteLimitReached": "Sie können maximal 3 Apotheken als Favoriten hinterlegen."
     },
     "reports": {
       "title": "Meine Berichte",
@@ -362,6 +394,66 @@
         "yourNote": "Ihre Notiz:",
         "rejectionReason": "Grund für die Ablehnung:"
       }
+    },
+    "inventory": {
+      "title": "Apotheken-Sortiment & Live-Shop",
+      "subtitle": "Entdecken Sie das Sortiment Ihrer Partner-Apotheken mit tagesaktuellen Preisen und Verfügbarkeiten.",
+      "selectPharmacy": "Apotheke auswählen",
+      "favoritesOnly": "Aus Favoriten",
+      "allPharmacies": "Alle Partner-Apotheken",
+      "inStock": "Sofort verfügbar",
+      "lowStock": "Geringer Bestand",
+      "outOfStock": "Vergriffen",
+      "pricePerGram": "{price} € / g",
+      "thc": "THC {val}%",
+      "cbd": "CBD {val}%",
+      "genetics": "Genetik: {val}",
+      "filterAll": "Alle Produkte",
+      "filterFlowers": "Cannabisblüten",
+      "filterExtracts": "Extrakte & Öle",
+      "searchPlaceholder": "Sortenname, THC-Gehalt, Genetik suchen...",
+      "giveFeedback": "Sorte bewerten",
+      "redeemPrescription": "Rezept einreichen",
+      "noProducts": "Keine Produkte für die aktuelle Filterung gefunden.",
+      "operatingHours": "Öffnungszeiten",
+      "contact": "Kontakt",
+      "phone": "Tel.",
+      "email": "E-Mail",
+      "address": "Adresse",
+      "badgeSativa": "Sativa",
+      "badgeIndica": "Indica",
+      "badgeHybrid": "Hybrid"
+    },
+    "feedback": {
+      "title": "Monatliches Sorten-Feedback",
+      "subtitle": "Übermitteln Sie Ihr persönliches Feedback direkt an Ihre Apotheke für deren monatliche Qualitätsstatistik.",
+      "pharmacyLabel": "Empfangende Apotheke",
+      "pharmacySelect": "-- Apotheke auswählen --",
+      "strainLabel": "Verwendete Sorte",
+      "strainPlaceholder": "z. B. Bedrocan 22/1, Pedanios 22/1, Tilray THC 25...",
+      "ratingLabel": "Wie bewerten Sie diese Sorte insgesamt?",
+      "ratingGood": "Gut / Sehr hilfreich",
+      "ratingBad": "Ungenügend / Nicht passend",
+      "ratingScore": "Zufriedenheit ({val}/5 Sterne)",
+      "wouldBuyAgainLabel": "Würden Sie diese Sorte wieder beziehen?",
+      "wouldBuyAgainYes": "Ja, würde ich wieder kaufen",
+      "wouldBuyAgainNo": "Nein, bitte andere Sorte bevorzugen",
+      "effectsLabel": "Wahrgenommene Wirkung (Mehrfachauswahl)",
+      "effectPain": "Schmerzlindernd",
+      "effectEuphoric": "Stimmungsaufhellend / Euphorisierend",
+      "effectRelax": "Körperlich entspannend",
+      "effectSleep": "Schlaffördernd",
+      "effectFocus": "Fokussierend / Aktivierend",
+      "symptomsLabel": "Bei welchen Beschwerden hat die Sorte geholfen?",
+      "symptomsPlaceholder": "z. B. Chronische Schmerzen, Schlafstörungen, Muskelkrämpfe...",
+      "noteLabel": "Zusätzliche Notizen an die Apotheke (Optional)",
+      "notePlaceholder": "Anmerkungen zu Geschmack, Verträglichkeit, Konsistenz...",
+      "submit": "Feedback an Apotheke senden",
+      "submitting": "Wird gesendet...",
+      "successTitle": "Vielen Dank für Ihr Sorten-Feedback!",
+      "successDesc": "Ihre Bewertung wurde direkt an die Apotheke übermittelt und ist in deren Monatsstatistik für Sortenbewertungen sichtbar.",
+      "backToShop": "Zum Sortiment",
+      "backHome": "Zum Dashboard"
     }
   },
   "doctor": {
@@ -2027,29 +2119,33 @@
       "title": "Ein entwickeltes Ökosystem für vollständige Therapie-Compliance",
       "subtitle": "Cannathera überbrückt die kritische strukturelle Lücke zwischen ärztlicher Verordnung, pharmazeutischer Abgabe und der täglichen Patientenrealität. Indem wir hochindividualisierte Therapieregime in sichere, algorithmisch überwachte klinische Workflows übersetzen, heben wir die Cannabisbehandlung auf den höchsten evidenzbasierten medizinischen Standard.",
       "patientBullets": [
-        "Laufende Dokumentation",
-        "Tägliche Dosierungsprotokolle",
-        "Adhärenzanalyse"
+        "Laufende Dokumentation & Symptom-Tracking",
+        "Tägliche Dosierungsprotokolle & Adhärenzanalyse",
+        "Direkte Einsicht in das Sortiment lokaler Apotheken",
+        "Regelmäßiges Sorten-Review & Feedback im strukturierten Therapieplan"
       ],
       "doctorBullets": [
-        "Automatisierte Warnsignale",
-        "Verwaltung von Patientenlisten",
-        "Klinische PDF-Exporte"
+        "Strukturierte Verlaufsdaten & Berichte – keine unstrukturierten Notizen",
+        "Automatisierte Triage-Protokolle – Überwachung klinischer Metriken auf einen Blick",
+        "Nahtlose Vernetzung im geschlossenen lokalen Versorgungskreis direkt mit regionalen Apotheken",
+        "Maximale Therapiesicherheit durch automatisierte Warnsignale"
       ],
       "pharmacyBullets": [
-        "Bestandsverfolgung",
-        "Compliance-Überprüfungen",
-        "Prüfung der Abrechnungsprotokolle"
+        "Einfache Live-Bestandsanbindung / Webshop-Integration per Weblink",
+        "Direktes Patienten-Feedback zu abgegebenen Sorten (Wirkung, Wiederkaufabsicht)",
+        "Fokus auf Closed-Loop: Fester Versorgungskreis (Apotheke, Arzt, Patient) zur Bindung lokaler Stammkundschaft gegen Versandriesen",
+        "Prüfung der Abrechnungsprotokolle und Compliance-Checks"
       ],
       "enterpriseBullets": [
-        "Individuelles Mieter-Branding",
-        "Webhook- und API-Zugriff",
-        "Umfassende Sicherheitsrichtlinie"
+        "Nahtlose, skalierbare Schnittstellen für Telemedizin-Plattformen, Klinikketten und MVZs zur spürbaren Entlastung des Fachpersonals",
+        "Standardisiertes Pre-Screening und strukturierte Bereitstellung von Therapiedaten vor der Arztkonsultation",
+        "Umfassende Systemintegrationen (APIs und Webhooks) unter Einhaltung strengster Datenschutz- und Sicherheitsrichtlinien"
       ],
       "patientDescSuffix": "Dokumentieren Sie Symptome, Dosierungen und Aktivitäten. Verfolgen Sie die Therapietreue in Echtzeit.",
       "doctorDescSuffix": "Automatisierte Triage-Protokolle überwachen die Werte. Erstellen Sie strukturierte PDF-Verlaufsberichte mit einem Klick.",
       "pharmacyDescSuffix": "Dokumentieren Sie Abgaben und verwalten Sie Bestände. Verfolgen Sie Patientenbewertungen und monatliche Ziele.",
-      "enterpriseDescSuffix": "Skalieren Sie Ihre Plattform mit sicheren Integrationen, API-Webhooks und Partnereinstellungen."
+      "enterpriseDescSuffix": "Skalieren Sie Ihre Plattform mit sicheren Integrationen, API-Webhooks und Partnereinstellungen.",
+      "enterpriseTitle": "Enterprise Partner / Telemedizin"
     },
     "trust": {
       "tag": "Compliance & Datenschutz",
@@ -2205,7 +2301,7 @@
       "section2_text": "Cannabistherapie funktioniert nur im Zusammenspiel zwischen verordnendem Arzt, abgebender Apotheke und dem Patienten im Alltag. Wo bisher Schnittstellenprobleme und Informationslücken den Ablauf hemmten, vernetzt Cannathera alle Beteiligten über eine sichere, datenschutzkonforme Architektur. Keine anonymen Algorithmen, sondern klinisch fundierte Logik, bei der der Mensch im Mittelpunkt steht."
     },
     "footer": {
-      "description": "Strukturierte klinische Therapiebegleitung, die Patient:innen, Behandelnde und Apotheken sicher verbindet.",
+      "description": "Strukturierte klinische Therapiebegleitung, die Patient:innen, Ärzt:innen und Apotheken sicher verbindet.",
       "portals": "Portale",
       "patientArea": "Patientenbereich",
       "clinicalPortal": "Klinisches Portal",

@@ -23,6 +23,7 @@ import {
   UpdateProfileDto,
   CompleteOnboardingDto,
   CreatePrescriptionDto,
+  SubmitStrainFeedbackDto,
 } from './patient.dto';
 
 @Controller('patient')
@@ -159,5 +160,21 @@ export class PatientController {
   @Get('prescriptions')
   listPrescriptions(@CurrentUser() user: SessionPayload) {
     return this.patients.listPrescriptions(user.sub);
+  }
+
+  @Get('pharmacies/:pharmacyId/inventory')
+  getPharmacyInventory(
+    @CurrentUser() user: SessionPayload,
+    @Param('pharmacyId') pharmacyId: string,
+  ) {
+    return this.patients.getPharmacyInventory(user.sub, pharmacyId);
+  }
+
+  @Post('strain-feedback')
+  submitStrainFeedback(
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: SubmitStrainFeedbackDto,
+  ) {
+    return this.patients.submitStrainFeedback(user.sub, dto);
   }
 }

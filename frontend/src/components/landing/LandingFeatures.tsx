@@ -2,9 +2,21 @@
 
 import { useTranslations } from "next-intl";
 
+function toBullets(raw: unknown): string[] {
+  if (Array.isArray(raw)) return raw;
+  if (typeof raw === "object" && raw !== null) return Object.values(raw) as string[];
+  return [];
+}
+
 export function LandingFeatures() {
   const tr = useTranslations("auth.signup.chooseRole");
   const t = useTranslations("landing.features");
+
+  const patientBullets = toBullets(t.raw("patientBullets"));
+  const doctorBullets = toBullets(t.raw("doctorBullets"));
+  const pharmacyBullets = toBullets(t.raw("pharmacyBullets"));
+  const enterpriseBullets = toBullets(t.raw("enterpriseBullets"));
+
 
   const features = [
     {
@@ -12,44 +24,28 @@ export function LandingFeatures() {
       desc: tr("patientDesc") + " " + t("patientDescSuffix"),
       icon: "person",
       color: "bg-mint/20 text-pine-600 border-mint/30",
-      bullets: [
-        t("patientBullets.0"),
-        t("patientBullets.1"),
-        t("patientBullets.2"),
-      ],
+      bullets: patientBullets,
     },
     {
       title: tr("doctor"),
       desc: tr("doctorDesc") + " " + t("doctorDescSuffix"),
       icon: "psychiatry",
       color: "bg-info/20 text-blue-600 border-info/30",
-      bullets: [
-        t("doctorBullets.0"),
-        t("doctorBullets.1"),
-        t("doctorBullets.2"),
-      ],
+      bullets: doctorBullets,
     },
     {
       title: tr("pharmacy"),
       desc: tr("pharmacyDesc") + " " + t("pharmacyDescSuffix"),
       icon: "medication",
       color: "bg-[#fdf3d7] text-gold border-yellow-200",
-      bullets: [
-        t("pharmacyBullets.0"),
-        t("pharmacyBullets.1"),
-        t("pharmacyBullets.2"),
-      ],
+      bullets: pharmacyBullets,
     },
     {
-      title: tr("enterprise"),
+      title: t("enterpriseTitle") || tr("enterprise"),
       desc: tr("enterpriseDesc") + " " + t("enterpriseDescSuffix"),
       icon: "business",
       color: "bg-purple-100 text-purple-700 border-purple-200",
-      bullets: [
-        t("enterpriseBullets.0"),
-        t("enterpriseBullets.1"),
-        t("enterpriseBullets.2"),
-      ],
+      bullets: enterpriseBullets,
     },
   ];
 
@@ -86,15 +82,15 @@ export function LandingFeatures() {
               </div>
 
               <div className="mt-6 border-t border-hairline pt-4">
-                <ul className="space-y-2">
+                <ul className="space-y-2.5">
                   {f.bullets.map((b, bi) => (
-                    <li key={bi} className="flex items-center gap-2 text-xs font-bold text-ink-strong">
-                      <span className="flex size-4 items-center justify-center rounded-full bg-pine-600/10 text-pine-600">
+                    <li key={bi} className="flex items-start gap-2 text-xs font-semibold text-ink-strong leading-snug">
+                      <span className="mt-0.5 flex size-4 shrink-0 items-center justify-center rounded-full bg-pine-600/10 text-pine-600">
                         <span aria-hidden className="msym text-[10px]">
                           check
                         </span>
                       </span>
-                      {b}
+                      <span>{b}</span>
                     </li>
                   ))}
                 </ul>

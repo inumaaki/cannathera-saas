@@ -186,3 +186,46 @@ export class CreatePrescriptionDto {
   @MaxLength(500)
   note?: string;
 }
+
+export class SubmitStrainFeedbackDto {
+  @IsString()
+  pharmacyId!: string;
+
+  @IsString()
+  @MaxLength(120)
+  strain!: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  batchNumber?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(100)
+  manufacturer?: string;
+
+  @IsNumber()
+  @Min(0)
+  @Max(10)
+  benefitRating!: number;
+
+  @IsBoolean()
+  wouldBuyAgain!: boolean;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  effectDescription?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(2000)
+  symptomsText?: string;
+
+  @IsOptional()
+  @IsString()
+  @MaxLength(500)
+  note?: string;
+}
+
