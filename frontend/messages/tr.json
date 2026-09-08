@@ -2068,9 +2068,9 @@
         "Comprehensive Security Policy"
       ],
       "patientDescSuffix": "Semptomları, dozajları ve günlük aktiviteleri güvenle kaydedin. Uyum metriklerini gerçek zamanlı izleyin.",
-      "doctorDescSuffix": "Otomatik triyaj protokolleri hasta değerlerini izler. Tek tıkla yapılandırılmış PDF raporları oluşturun.",
-      "pharmacyDescSuffix": "İlaç teslimatlarını kaydedin ve stokları yönetin. Aylık değerlendirme hedeflerini takip edin.",
-      "enterpriseDescSuffix": "Güvenli entegrasyonlar, API webhook'ları ve iş ortağı ayarları ile platformunuzu ölçeklendirin."
+      "doctorDescSuffix": "Otomatik triyaj protokolleri klinik metrikleri arka planda sürekli olarak izler.",
+      "pharmacyDescSuffix": "Sadık yerel bir müşteri tabanı oluşturun — şeffaf envanter, gerçek hasta geri bildirimi ve doktorla doğrudan koordinasyon ile.",
+      "enterpriseDescSuffix": "Tele-tıp platformları, klinik zincirleri ve tıp merkezleri için ölçeklenebilir ortak entegrasyonu — API-first, gizlilik uyumlu."
     },
     "trust": {
       "tag": "Uyum ve Güvenlik",

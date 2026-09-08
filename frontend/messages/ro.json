@@ -2068,9 +2068,9 @@
         "Politică de securitate cuprinzătoare"
       ],
       "patientDescSuffix": "Înregistrează în siguranță simptome, doze și activități zilnice. Monitorizează indicatorii de conformitate în timp real.",
-      "doctorDescSuffix": "Protocoalele de triere automatizate monitorizează valorile pacienților. Generează rapoarte structurate PDF despre curs cu un singur clic.",
-      "pharmacyDescSuffix": "Înregistrează distribuțiile și gestionează stocurile. Urmărește recenziile pacienților și obiectivele evaluărilor lunare.",
-      "enterpriseDescSuffix": "Susține scalarea platformei cu integrări securizate, webhook-uri API de telemetrie și setări pentru parteneri."
+      "doctorDescSuffix": "Protocoalele automate de triaj monitorizează continuu indicatorii clinici în fundal.",
+      "pharmacyDescSuffix": "Construiți o bază loială de clienți locali — printr-un inventar transparent, feedback real de la pacienți și coordonare directă cu medicul.",
+      "enterpriseDescSuffix": "Integrare scalabilă pentru platforme de telemedicină, lanțuri de clinici și centre medicale — API-first, conform cu confidențialitatea."
     },
     "trust": {
       "tag": "Conformitate & Securitate",

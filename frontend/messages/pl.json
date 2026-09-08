@@ -2068,9 +2068,9 @@
         "Kompleksowa polityka bezpieczeństwa"
       ],
       "patientDescSuffix": "Bezpieczne rejestrowanie objawów, dawek i codziennej aktywności. Śledzenie wskaźników przestrzegania zaleceń w czasie rzeczywistym.",
-      "doctorDescSuffix": "Zautomatyzowane protokoły triage monitorują wartości pacjentów. Generowanie uporządkowanych raportów kursu w formacie PDF jednym kliknięciem.",
-      "pharmacyDescSuffix": "Rejestrowanie wydawania leków i zarządzanie zapasami. Śledzenie przeglądów pacjentów i miesięcznych celów oceny.",
-      "enterpriseDescSuffix": "Wsparcie skalowania platformy poprzez bezpieczne integracje, webhooks API telemetrii i ustawienia partnerów."
+      "doctorDescSuffix": "Zautomatyzowane protokoły triage stale monitorują wskaźniki kliniczne w tle.",
+      "pharmacyDescSuffix": "Buduj lojalną lokalną bazę klientów — przez transparentny asortyment, prawdziwe opinie pacjentów i bezpośrednią koordynację z lekarzem.",
+      "enterpriseDescSuffix": "Skalowalna integracja partnerska dla platform telemedycznych, sieci klinik i centrów medycznych — API-first, zgodność z RODO."
     },
     "trust": {
       "tag": "Zgodność i bezpieczeństwo",
