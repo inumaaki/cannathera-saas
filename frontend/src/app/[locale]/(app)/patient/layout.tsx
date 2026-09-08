@@ -39,9 +39,9 @@ export default async function PatientLayout({
     getTranslations("patient.header"),
     getTranslations("patient.plan.phases"),
     getFormatter(),
-    apiServer<Summary>("/patient/summary"),
-    apiServer<Plan>("/patient/plan"),
-    apiServer<Branding>("/patient/branding"),
+    apiServer<Summary>("/patient/summary").catch(() => null),
+    apiServer<Plan>("/patient/plan").catch(() => null),
+    apiServer<Branding>("/patient/branding").catch(() => null),
   ]);
 
   // Derived notifications (no dedicated table yet — computed from live state).
@@ -68,7 +68,7 @@ export default async function PatientLayout({
       href: "/patient/appointments",
     });
   }
-  const nextPhase = plan?.phases.find((p) => p.status === "pending");
+  const nextPhase = (plan?.phases ?? []).find((p) => p.status === "pending");
   if (nextPhase) {
     notifications.push({
       id: "milestone",

@@ -2142,9 +2142,9 @@
         "Umfassende Systemintegrationen (APIs und Webhooks) unter Einhaltung strengster Datenschutz- und Sicherheitsrichtlinien"
       ],
       "patientDescSuffix": "Dokumentieren Sie Symptome, Dosierungen und Aktivitäten. Verfolgen Sie die Therapietreue in Echtzeit.",
-      "doctorDescSuffix": "Automatisierte Triage-Protokolle überwachen die Werte. Erstellen Sie strukturierte PDF-Verlaufsberichte mit einem Klick.",
-      "pharmacyDescSuffix": "Dokumentieren Sie Abgaben und verwalten Sie Bestände. Verfolgen Sie Patientenbewertungen und monatliche Ziele.",
-      "enterpriseDescSuffix": "Skalieren Sie Ihre Plattform mit sicheren Integrationen, API-Webhooks und Partnereinstellungen.",
+      "doctorDescSuffix": "Automatisierte Triage-Protokolle überwachen klinische Metriken kontinuierlich im Hintergrund.",
+      "pharmacyDescSuffix": "Bauen Sie einen stabilen Stammkundenkreis auf – durch transparentes Sortiment, echtes Patientenfeedback und direkten Draht zum Arzt.",
+      "enterpriseDescSuffix": "Skalierbare Partnerintegration für Telemedizin-Plattformen, Klinikketten und MVZs – API-first, datenschutzkonform.",
       "enterpriseTitle": "Enterprise Partner / Telemedizin"
     },
     "trust": {

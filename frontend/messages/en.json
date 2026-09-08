@@ -2150,9 +2150,9 @@
         "Comprehensive system integrations (APIs and webhooks) while adhering to the strictest data protection and security guidelines"
       ],
       "patientDescSuffix": "Securely record symptoms, dosages, and daily activity. Track adherence metrics in real-time.",
-      "doctorDescSuffix": "Automated triage protocols monitor patient values. Generate structured PDF course reports with one click.",
-      "pharmacyDescSuffix": "Log dispensations and manage stocks. Track patient reviews and monthly assessment targets.",
-      "enterpriseDescSuffix": "Support platform scaling with secure integrations, telemetry API webhooks, and partner settings.",
+      "doctorDescSuffix": "Automated triage protocols continuously monitor clinical metrics in the background.",
+      "pharmacyDescSuffix": "Build a loyal local customer base – through transparent inventory, real patient feedback, and direct physician coordination.",
+      "enterpriseDescSuffix": "Scalable partner integration for telemedicine platforms, clinic chains and medical centers – API-first, privacy-compliant.",
       "enterpriseTitle": "Enterprise Partner / Telemedicine"
     },
     "trust": {
