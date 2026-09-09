@@ -1364,7 +1364,18 @@
       "connectedStatus": "Live connected to webshop: {url}",
       "notConnected": "No external webshop linked yet",
       "lastSync": "Last live sync: {date}",
-      "realtimeNote": "Real-time synchronization active: inventory level changes in the webshop are mirrored 1:1 in Cannathera."
+      "realtimeNote": "Real-time synchronization active: inventory level changes in the webshop are mirrored 1:1 in Cannathera.",
+      "search": "Search",
+      "filterStatus": "Status",
+      "sortBy": "Sort by",
+      "statusAll": "All",
+      "statusPending": "Pending",
+      "sortName": "Name",
+      "sortSku": "SKU",
+      "sortStock": "Stock",
+      "sortCategory": "Category",
+      "allProducts": "All products",
+      "reset": "Reset"
     },
     "logs": {
       "title": "Clinical Logs",

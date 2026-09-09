@@ -28,7 +28,7 @@ export default async function PatientProfilePage({
 
   const [t, profile] = await Promise.all([
     getTranslations("patient.profile"),
-    apiServer<Profile>("/patient/profile"),
+    apiServer<Profile>("/patient/profile").catch(() => null),
   ]);
 
   return (

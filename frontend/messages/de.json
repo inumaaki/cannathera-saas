@@ -1356,7 +1356,18 @@
       "connectedStatus": "Live verbunden mit Webshop: {url}",
       "notConnected": "Noch kein externer Webshop verknüpft",
       "lastSync": "Letzter Live-Abgleich: {date}",
-      "realtimeNote": "Echtzeit-Synchronisation aktiv: Bestandsänderungen im Webshop werden automatisch 1:1 in Cannathera aktualisiert."
+      "realtimeNote": "Echtzeit-Synchronisation aktiv: Bestandsänderungen im Webshop werden automatisch 1:1 in Cannathera aktualisiert.",
+      "search": "Suche",
+      "filterStatus": "Status",
+      "sortBy": "Sortierung",
+      "statusAll": "Alle",
+      "statusPending": "Ausstehend",
+      "sortName": "Name",
+      "sortSku": "SKU",
+      "sortStock": "Bestand",
+      "sortCategory": "Kategorie",
+      "allProducts": "Alle Produkte",
+      "reset": "Zurücksetzen"
     },
     "logs": {
       "title": "Klinische Protokolle",
