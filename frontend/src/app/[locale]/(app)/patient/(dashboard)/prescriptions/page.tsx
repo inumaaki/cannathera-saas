@@ -27,8 +27,8 @@ export default async function PatientPrescriptionsPage({
 
   const [t, profile, prescriptions] = await Promise.all([
     getTranslations("patient.prescriptions"),
-    apiServer<Profile>("/patient/profile"),
-    apiServer<Prescription[]>("/patient/prescriptions"),
+    apiServer<Profile>("/patient/profile").catch(() => null),
+    apiServer<Prescription[]>("/patient/prescriptions").catch(() => []),
   ]);
 
   const statusColors: Record<string, string> = {
@@ -48,10 +48,10 @@ export default async function PatientPrescriptionsPage({
         <div className="p-5 max-w-4xl mx-auto space-y-12">
           
           <div className="w-full">
-            {profile && <PrescriptionUpload favoritePharmacies={profile.favoritePharmacies} />}
+            {profile && <PrescriptionUpload favoritePharmacies={profile.favoritePharmacies || []} />}
           </div>
 
-          <PrescriptionHistoryBubble prescriptions={prescriptions} />
+          <PrescriptionHistoryBubble prescriptions={prescriptions || []} />
 
         </div>
       </section>

@@ -59,7 +59,9 @@
       "profile": "Профил",
       "quickLog": "Отвори бърз запис",
       "navigation": "Навигация",
-      "prescriptions": "Prescriptions"
+      "prescriptions": "Prescriptions",
+      "inventory": "Асортимент",
+      "feedback": "Обратна връзка за сортове"
     },
     "header": {
       "notifications": "Известия",
@@ -362,6 +364,35 @@
         "rejectionReason": "Reason for rejection:",
         "yourNote": "Your note:"
       }
+    },
+    "inventory": {
+      "title": "Apotheken-Sortiment & Live-Shop",
+      "subtitle": "Entdecken Sie das Sortiment Ihrer Partner-Apotheken mit tagesaktuellen Preisen und Verfügbarkeiten.",
+      "selectPharmacy": "Apotheke auswählen",
+      "favoritesOnly": "Aus Favoriten",
+      "allPharmacies": "Alle Partner-Apotheken",
+      "inStock": "Sofort verfügbar",
+      "lowStock": "Geringer Bestand",
+      "outOfStock": "Vergriffen",
+      "pricePerGram": "{price} € / g",
+      "thc": "THC {val}%",
+      "cbd": "CBD {val}%",
+      "genetics": "Genetik: {val}",
+      "filterAll": "Alle Produkte",
+      "filterFlowers": "Cannabisblüten",
+      "filterExtracts": "Extrakte & Öle",
+      "searchPlaceholder": "Sortenname, THC-Gehalt, Genetik suchen...",
+      "giveFeedback": "Sorte bewerten",
+      "redeemPrescription": "Rezept einreichen",
+      "noProducts": "Keine Produkte für die aktuelle Filterung gefunden.",
+      "operatingHours": "Öffnungszeiten",
+      "contact": "Kontakt",
+      "phone": "Tel.",
+      "email": "E-Mail",
+      "address": "Adresse",
+      "badgeSativa": "Sativa",
+      "badgeIndica": "Indica",
+      "badgeHybrid": "Hybrid"
     }
   },
   "doctor": {

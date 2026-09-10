@@ -4,6 +4,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useTranslations } from "next-intl";
 import { api } from "@/lib/api";
 import { Link, useRouter } from "@/i18n/navigation";
+import { formatOperatingHours } from "@/lib/formatHours";
 
 export type PharmacyResult = {
   id: string;
@@ -14,7 +15,7 @@ export type PharmacyResult = {
   phone?: string | null;
   email?: string | null;
   website?: string | null;
-  operatingHours?: string | null;
+  operatingHours?: any;
   distanceKm: number;
   availableStrainsCount: number;
   lat: number;
@@ -454,10 +455,10 @@ export function FavoritePharmacies({
                       {selectedPharmacy.phone}
                     </span>
                   )}
-                  {selectedPharmacy.operatingHours && (
+                  {formatOperatingHours(selectedPharmacy.operatingHours) && (
                     <span className="flex items-center gap-1 text-muted">
                       <span aria-hidden className="msym text-[14px]">schedule</span>
-                      {selectedPharmacy.operatingHours}
+                      {formatOperatingHours(selectedPharmacy.operatingHours)}
                     </span>
                   )}
                 </div>

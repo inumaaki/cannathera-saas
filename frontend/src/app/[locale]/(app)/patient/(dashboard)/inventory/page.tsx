@@ -6,6 +6,8 @@ import { useTranslations } from "next-intl";
 import { api } from "@/lib/api";
 import { Link, useRouter } from "@/i18n/navigation";
 
+import { formatOperatingHours } from "@/lib/formatHours";
+
 type InventoryItem = {
   id: string;
   sku: string;
@@ -23,13 +25,13 @@ type InventoryItem = {
 type PharmacyInfo = {
   id: string;
   name: string;
-  street: string;
-  postalCode: string;
-  city: string;
+  street?: string | null;
+  postalCode?: string | null;
+  city?: string | null;
   phone?: string | null;
   email?: string | null;
   website?: string | null;
-  operatingHours?: string | null;
+  operatingHours?: any;
   productFocus?: string | null;
 };
 
@@ -277,8 +279,13 @@ function InventoryContent() {
             <div className="flex flex-wrap items-center gap-4">
               <span className="font-semibold text-ink-strong flex items-center gap-1">
                 <span aria-hidden className="msym text-[16px] text-pine-600">location_on</span>
-                {inventoryData.pharmacy.street}, {inventoryData.pharmacy.postalCode}{" "}
-                {inventoryData.pharmacy.city}
+                {[
+                  inventoryData.pharmacy.street,
+                  inventoryData.pharmacy.postalCode,
+                  inventoryData.pharmacy.city,
+                ]
+                  .filter(Boolean)
+                  .join(", ") || "Apotheke vor Ort"}
               </span>
               {inventoryData.pharmacy.phone && (
                 <span className="flex items-center gap-1">
@@ -286,10 +293,10 @@ function InventoryContent() {
                   {inventoryData.pharmacy.phone}
                 </span>
               )}
-              {inventoryData.pharmacy.operatingHours && (
+              {formatOperatingHours(inventoryData.pharmacy.operatingHours) && (
                 <span className="flex items-center gap-1">
                   <span aria-hidden className="msym text-[16px] text-pine-600">schedule</span>
-                  {inventoryData.pharmacy.operatingHours}
+                  {formatOperatingHours(inventoryData.pharmacy.operatingHours)}
                 </span>
               )}
             </div>
@@ -473,14 +480,14 @@ function InventoryContent() {
                     Preis
                   </span>
                   <span className="font-display text-xl font-bold text-pine-900">
-                    {item.price.toFixed(2)} € <span className="text-xs font-normal text-muted">/ g</span>
+                    {(item.price ?? 0).toFixed(2)} € <span className="text-xs font-normal text-muted">/ g</span>
                   </span>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <Link
                     href={`/patient/feedback?pharmacyId=${selectedPharmacyId}&strain=${encodeURIComponent(
-                      item.name
+                      item.name || ""
                     )}`}
                     title="Feedback zu dieser Sorte an Apotheke senden"
                     className="size-9 rounded-xl border border-hairline bg-white flex items-center justify-center text-amber-600 hover:bg-amber-50 hover:border-amber-300 transition-colors shadow-sm"
