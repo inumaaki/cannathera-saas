@@ -154,6 +154,7 @@ export class PatientController {
       dto.pharmacyId,
       dto.fileUrl,
       dto.note,
+      dto.selectedItems,
     );
   }
 

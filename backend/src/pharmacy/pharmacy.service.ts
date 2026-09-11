@@ -14,7 +14,7 @@ import {
 } from '@prisma/client';
 import { NotificationsService } from '../notifications/notifications.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { getCoordinatesForPostalCode } from '../shared/geocode';
+import { getCoordinatesForPostalCode, getDistanceKm } from '../shared/geocode';
 import OpenAI from 'openai';
 
 type Metrics = {
@@ -1464,7 +1464,15 @@ export class PharmacyService {
   }
 
   async getNetworkPhysicians(userId: string, query?: string) {
-    await this.orgOf(userId); // ensure user belongs to an org
+    const org = await this.orgOf(userId); // ensure user belongs to an org
+    let pharmacyCoords = {
+      lat: org.lat ?? 50.1109,
+      lng: org.lng ?? 8.6821,
+    };
+    if (!org.lat && org.postalCode) {
+      const geo = await getCoordinatesForPostalCode(org.postalCode);
+      if (geo) pharmacyCoords = geo;
+    }
 
     // In a real scenario, this might be filtered by doctors who have prescribed to this pharmacy,
     // or doctors within the same enterprise. For now, we return all PRACTICE organizations
@@ -1492,6 +1500,8 @@ export class PharmacyService {
         city: true,
         street: true,
         postalCode: true,
+        lat: true,
+        lng: true,
         phone: true,
         email: true,
         website: true,
@@ -1515,7 +1525,7 @@ export class PharmacyService {
       orderBy: { name: 'asc' },
     });
 
-    return practices.map((p) => {
+    const results = practices.map((p, idx) => {
       const branding = (p.branding as Record<string, any>) || {};
       const specialty =
         branding.specialty ||
@@ -1527,11 +1537,19 @@ export class PharmacyService {
               ? 'Klinik / MVZ'
               : 'Allgemeinmedizin');
 
+      const plat = p.lat ?? 50.1109 + ((idx + 1) * 0.035);
+      const plng = p.lng ?? 8.6821 + ((idx + 1) * 0.035);
+      const dist = getDistanceKm(pharmacyCoords.lat, pharmacyCoords.lng, plat, plng);
+      const distanceKm = parseFloat(dist.toFixed(1));
+
       return {
         ...p,
         specialty,
+        distanceKm,
       };
     });
+
+    return results.sort((a, b) => a.distanceKm - b.distanceKm);
   }
 
   async uploadAiPrescription(userId: string, fileUrl: string) {

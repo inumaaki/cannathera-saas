@@ -4,6 +4,7 @@ import {
   IsOptional,
   IsString,
   IsBoolean,
+  IsArray,
   Max,
   MaxLength,
   Min,
@@ -185,6 +186,15 @@ export class CreatePrescriptionDto {
   @IsString()
   @MaxLength(500)
   note?: string;
+
+  @IsOptional()
+  @IsArray()
+  selectedItems?: Array<{
+    inventoryId?: string;
+    name: string;
+    quantity: number;
+    unit?: string;
+  }>;
 }
 
 export class SubmitStrainFeedbackDto {

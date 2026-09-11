@@ -447,7 +447,7 @@ export function FavoritePharmacies({
                   </span>
                   <span className="flex items-center gap-1 font-semibold text-emerald-700 bg-emerald-50 px-2 py-1 rounded-md">
                     <span aria-hidden className="msym text-[14px]">inventory_2</span>
-                    {selectedPharmacy.availableStrainsCount} Sorten am Lager
+                    {selectedPharmacy.availableStrainsCount} Sorten im Sortiment
                   </span>
                   {selectedPharmacy.phone && (
                     <span className="flex items-center gap-1 text-muted">

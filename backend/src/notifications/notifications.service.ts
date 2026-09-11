@@ -82,13 +82,21 @@ export class NotificationsService {
     this.events$.next({ ...event, at: new Date().toISOString() });
   }
 
-  notifyPharmacyNewPrescription(pharmacyId: string, prescriptionId: string) {
+  notifyPharmacyNewPrescription(
+    pharmacyId: string,
+    prescriptionId: string,
+    details?: { patientName?: string; itemsSummary?: string },
+  ) {
+    const text = details?.itemsSummary
+      ? `Neues Rezept von ${details.patientName || 'Patient'}: ${details.itemsSummary}`
+      : 'Ein Patient hat ein neues Rezept an Ihre Apotheke übermittelt.';
+
     this.publish({
       target: { orgId: pharmacyId },
       kind: 'prescription_received',
       severity: 'info',
-      title: 'New Prescription Received',
-      text: 'A patient has routed a new prescription to your pharmacy.',
+      title: 'Neues E-Rezept eingegangen',
+      text,
       href: `/pharmacy/prescriptions?highlight=${prescriptionId}`,
     });
   }

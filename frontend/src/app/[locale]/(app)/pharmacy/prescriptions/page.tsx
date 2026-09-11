@@ -4,11 +4,20 @@ import { PrescriptionStatusEditor } from "./PrescriptionStatusEditor";
 import { AiUploadButton } from "./AiUploadButton";
 import { format } from "date-fns";
 
+type PrescriptionItem = {
+  inventoryId?: string;
+  name: string;
+  quantity: number;
+  unit?: string;
+};
+
 type Prescription = {
   id: string;
   status: string;
   note: string | null;
   rejectionReason: string | null;
+  parsedData: PrescriptionItem[] | null;
+  fileUrl: string | null;
   createdAt: string;
   patient: {
     user: {
@@ -58,6 +67,7 @@ export default async function PharmacyPrescriptionsPage({
                 <tr>
                   <th className="px-6 py-4 font-semibold">{t("colPatient")}</th>
                   <th className="px-6 py-4 font-semibold">{t("colDate")}</th>
+                  <th className="px-6 py-4 font-semibold">Sorten & Grammatur</th>
                   <th className="px-6 py-4 font-semibold">{t("colNote")}</th>
                   <th className="px-6 py-4 font-semibold text-right">{t("colStatus")}</th>
                 </tr>
@@ -93,6 +103,27 @@ export default async function PharmacyPrescriptionsPage({
                       
                       <td className={`px-6 py-4 align-top ${isUnmatched ? 'text-red-900 font-medium' : 'text-ink-strong'}`}>
                         {format(new Date(p.createdAt), "PPP p")}
+                      </td>
+
+                      <td className="px-6 py-4 align-top">
+                        {p.parsedData && Array.isArray(p.parsedData) && p.parsedData.length > 0 ? (
+                          <div className="flex flex-wrap gap-1.5 max-w-sm">
+                            {p.parsedData.map((item, idx) => (
+                              <span
+                                key={idx}
+                                className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-800 border border-emerald-200 shadow-xs"
+                              >
+                                <span className="msym text-[14px]">psychiatry</span>
+                                <span className="bg-emerald-600 text-white rounded px-1.5 py-0.2 text-[10px]">
+                                  {item.quantity} {item.unit || "g"}
+                                </span>
+                                <span className="font-semibold text-ink-strong truncate max-w-[140px]">{item.name}</span>
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <span className="text-xs text-muted italic">Keine Sortenauswahl</span>
+                        )}
                       </td>
 
                       <td className="px-6 py-4 align-top max-w-xs">

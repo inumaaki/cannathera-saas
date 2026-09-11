@@ -712,23 +712,95 @@ export class PatientService {
     });
 
     const decorated = items.map((it, idx) => {
-      const basePrice = 7.5 + (it.thc || 18) * 0.22 + (idx % 5) * 0.35;
-      const price = parseFloat(basePrice.toFixed(2));
-
       const lower = it.name.toLowerCase();
+      const isExtract =
+        it.category === 'Extract' ||
+        it.category === 'Oil' ||
+        lower.includes('extrakt') ||
+        lower.includes('oil') ||
+        lower.includes('tropfen') ||
+        lower.includes('lösung');
+
       let genetics: 'Sativa' | 'Indica' | 'Hybrid' = 'Hybrid';
       if (
         lower.includes('sativa') ||
         lower.includes('bedrocan') ||
-        lower.includes('ghost')
-      )
+        lower.includes('ghost') ||
+        lower.includes('haze') ||
+        lower.includes('lemon')
+      ) {
         genetics = 'Sativa';
-      else if (
+      } else if (
         lower.includes('indica') ||
         lower.includes('kush') ||
-        lower.includes('punch')
-      )
+        lower.includes('punch') ||
+        lower.includes('biscotti') ||
+        lower.includes('bafokeng')
+      ) {
         genetics = 'Indica';
+      }
+
+      // 1. Realistic German Medical Cannabis Market Prices
+      let price = 7.95;
+      const unit = isExtract ? 'ml' : (it.unit || 'g');
+      if (isExtract) {
+        // Medical extracts: 2.25 € - 3.20 € / ml
+        const extractBase = 2.40 + ((it.thc || 10) * 0.035) + ((idx * 7) % 5) * 0.12;
+        price = parseFloat(extractBase.toFixed(2));
+      } else {
+        // High quality medical flower: 6.45 € - 9.80 € / g
+        if (lower.includes('enua') || lower.includes('bcp')) price = 6.45;
+        else if (lower.includes('remexian') || lower.includes('frosted')) price = 6.90;
+        else if (lower.includes('drapalin')) price = 7.50;
+        else if (lower.includes('avaay')) price = 7.80;
+        else if (lower.includes('tilray')) price = 7.95;
+        else if (lower.includes('pedanios 18')) price = 8.20;
+        else if (lower.includes('demecan')) price = 8.50;
+        else if (lower.includes('pedanios') || lower.includes('ghost')) price = 8.90;
+        else if (lower.includes('cannamedical')) price = 8.95;
+        else if (lower.includes('bedrocan')) price = 9.20;
+        else if (lower.includes('420') || lower.includes('evolution')) price = 9.40;
+        else if (lower.includes('aurora') || lower.includes('pink kush')) price = 9.80;
+        else {
+          const calc = 6.50 + ((Math.min(it.thc || 20, 28) - 15) * 0.18) + ((idx * 3) % 5) * 0.20;
+          price = parseFloat(Math.min(10.20, Math.max(5.95, calc)).toFixed(2));
+        }
+      }
+
+      // 2. Real Product Images
+      let imageUrl = '/products/cannabis_flower_hybrid.jpg';
+      if (isExtract) {
+        imageUrl = '/products/cannabis_extract_oil.jpg';
+      } else if (lower.includes('kush') || lower.includes('pink') || lower.includes('og')) {
+        imageUrl = '/products/cannabis_flower_kush.jpg';
+      } else if (genetics === 'Sativa') {
+        imageUrl = '/products/cannabis_flower_sativa.jpg';
+      } else if (genetics === 'Indica') {
+        imageUrl = '/products/cannabis_flower_indica.jpg';
+      } else {
+        imageUrl = '/products/cannabis_flower_hybrid.jpg';
+      }
+
+      // 3. Therapeutic Effect Profile tags
+      const effects: string[] = [];
+      if (isExtract) {
+        effects.push('pain', 'calm', 'sleep');
+      } else if (genetics === 'Indica') {
+        effects.push('pain', 'calm');
+        if (lower.includes('kush') || lower.includes('pink') || (it.thc || 0) >= 22) {
+          effects.push('sleep');
+        }
+      } else if (genetics === 'Sativa') {
+        effects.push('focus', 'euphoric');
+        if ((it.thc || 0) >= 20) {
+          effects.push('pain');
+        }
+      } else {
+        effects.push('calm', 'pain');
+        if (lower.includes('cookies') || lower.includes('lemon') || (it.thc || 0) >= 22) {
+          effects.push('euphoric');
+        }
+      }
 
       return {
         id: it.id,
@@ -737,11 +809,13 @@ export class PatientService {
         category: it.category,
         thc: it.thc,
         cbd: it.cbd,
-        stockLevel: it.stockLevel,
-        unit: it.unit,
+        unit,
         inStock: it.stockLevel > 0,
+        availability: it.stockLevel > 0 ? ('IN_STOCK' as const) : ('ON_REQUEST' as const),
         genetics,
         price,
+        imageUrl,
+        effects,
       };
     });
 
@@ -857,8 +931,17 @@ export class PatientService {
     pharmacyId: string,
     fileUrl?: string,
     note?: string,
+    selectedItems?: Array<{ inventoryId?: string; name: string; quantity: number; unit?: string }>,
   ) {
     const profile = await this.profileOf(userId);
+
+    const pharmacy = await this.prisma.organization.findUnique({
+      where: { id: pharmacyId, type: 'PHARMACY' },
+      select: { id: true, name: true },
+    });
+    if (!pharmacy) {
+      throw new NotFoundException('PHARMACY_NOT_FOUND');
+    }
 
     const hasFavorite = await this.prisma.patientProfile.findFirst({
       where: {
@@ -870,13 +953,20 @@ export class PatientService {
     });
 
     if (!hasFavorite) {
-      throw new ForbiddenException('PHARMACY_NOT_IN_FAVORITES');
+      // Auto-connect favorite pharmacy for smooth patient workflow
+      await this.prisma.patientProfile.update({
+        where: { id: profile.id },
+        data: {
+          favoritePharmacies: { connect: { id: pharmacyId } },
+        },
+      });
     }
 
     // --- Real AI OCR Integration ---
     let parsedData: any = null;
-
-    if (fileUrl && process.env.OPENAI_API_KEY) {
+    if (selectedItems && selectedItems.length > 0) {
+      parsedData = selectedItems;
+    } else if (fileUrl && process.env.OPENAI_API_KEY) {
       try {
         const inventory = await this.prisma.inventoryItem.findMany({
           where: { orgId: pharmacyId, active: true },
@@ -938,6 +1028,14 @@ Respond ONLY with raw JSON array. Do not include markdown formatting like \`\`\`
     }
     // --- End AI OCR Integration ---
 
+    // Build human-readable items summary
+    let itemsSummary: string | undefined;
+    if (parsedData && Array.isArray(parsedData) && parsedData.length > 0) {
+      itemsSummary = parsedData
+        .map((it: any) => `${it.quantity}${it.unit || 'g'} ${it.name}`)
+        .join(', ');
+    }
+
     const prescription = await this.prisma.prescription.create({
       data: {
         patientId: profile.id,
@@ -949,9 +1047,14 @@ Respond ONLY with raw JSON array. Do not include markdown formatting like \`\`\`
       },
     });
 
+    const patientName =
+      [profile.user.firstName, profile.user.lastName].filter(Boolean).join(' ') ||
+      profile.user.email;
+
     this.notifications.notifyPharmacyNewPrescription(
       pharmacyId,
       prescription.id,
+      { patientName, itemsSummary },
     );
 
     return prescription;

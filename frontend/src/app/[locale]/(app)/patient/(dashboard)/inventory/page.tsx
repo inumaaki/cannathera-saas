@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { api } from "@/lib/api";
 import { Link, useRouter } from "@/i18n/navigation";
-
+import Image from "next/image";
 import { formatOperatingHours } from "@/lib/formatHours";
 
 type InventoryItem = {
@@ -15,11 +15,13 @@ type InventoryItem = {
   category: string;
   thc: number | null;
   cbd: number | null;
-  stockLevel: number;
   unit: string;
   inStock: boolean;
+  availability?: "IN_STOCK" | "ON_REQUEST";
   genetics: "Sativa" | "Indica" | "Hybrid";
   price: number;
+  imageUrl?: string;
+  effects?: string[];
 };
 
 type PharmacyInfo = {
@@ -47,6 +49,23 @@ type PharmacyOption = {
   isFavorite?: boolean;
 };
 
+const EFFECT_OPTIONS = [
+  { key: "ALL", label: "Alle Wirkungen", icon: "tune" },
+  { key: "pain", label: "Schmerzlindernd", icon: "healing" },
+  { key: "calm", label: "Beruhigend / Sedierend", icon: "spa" },
+  { key: "euphoric", label: "Stimmungsaufhellend", icon: "flare" },
+  { key: "sleep", label: "Schlaffördernd", icon: "bedtime" },
+  { key: "focus", label: "Fokussierend", icon: "psychology" },
+] as const;
+
+const EFFECT_LABELS: Record<string, string> = {
+  pain: "Schmerzlindernd",
+  calm: "Beruhigend / Sedierend",
+  euphoric: "Stimmungsaufhellend",
+  sleep: "Schlaffördernd",
+  focus: "Fokussierend",
+};
+
 function InventoryContent() {
   const t = useTranslations("patient.inventory");
   const searchParams = useSearchParams();
@@ -66,7 +85,8 @@ function InventoryContent() {
   const [searchQuery, setSearchQuery] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<"ALL" | "Flower" | "Extract">("ALL");
   const [geneticsFilter, setGeneticsFilter] = useState<"ALL" | "Sativa" | "Indica" | "Hybrid">("ALL");
-  const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "thc-desc" | "stock-desc">("price-asc");
+  const [effectFilter, setEffectFilter] = useState<string>("ALL");
+  const [sortBy, setSortBy] = useState<"price-asc" | "price-desc" | "thc-desc" | "name-asc">("price-asc");
 
   // 1. Fetch available pharmacies (favorites + network search)
   useEffect(() => {
@@ -140,6 +160,13 @@ function InventoryContent() {
         // Genetics
         if (geneticsFilter !== "ALL" && item.genetics !== geneticsFilter) return false;
 
+        // Effect profile filter
+        if (effectFilter !== "ALL") {
+          if (!item.effects || !item.effects.includes(effectFilter)) {
+            return false;
+          }
+        }
+
         // Search
         if (searchQuery.trim()) {
           const q = searchQuery.toLowerCase();
@@ -155,60 +182,24 @@ function InventoryContent() {
         if (sortBy === "price-asc") return a.price - b.price;
         if (sortBy === "price-desc") return b.price - a.price;
         if (sortBy === "thc-desc") return (b.thc || 0) - (a.thc || 0);
-        if (sortBy === "stock-desc") return b.stockLevel - a.stockLevel;
+        if (sortBy === "name-asc") return a.name.localeCompare(b.name);
         return 0;
       });
-  }, [inventoryData?.items, categoryFilter, geneticsFilter, searchQuery, sortBy]);
+  }, [inventoryData?.items, categoryFilter, geneticsFilter, effectFilter, searchQuery, sortBy]);
 
-  // Flower photo placeholder generator with high aesthetic styling
-  function getStrainIllustration(genetics: string, index: number) {
-    // Curated high quality cannabis flower illustrations/renders
-    const colors = {
-      Sativa: "from-amber-700/20 via-emerald-800/40 to-pine-950",
-      Indica: "from-purple-900/30 via-emerald-900/40 to-slate-950",
-      Hybrid: "from-emerald-700/20 via-teal-900/40 to-pine-900",
-    };
-    const colorGradient = colors[genetics as keyof typeof colors] || colors.Hybrid;
-
-    return (
-      <div className={`relative h-44 w-full overflow-hidden rounded-t-2xl bg-gradient-to-br ${colorGradient} flex items-center justify-center p-4`}>
-        {/* Organic bud silhouette pattern */}
-        <div className="absolute inset-0 opacity-20 mix-blend-overlay pointer-events-none bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]" />
-        
-        {/* Flower Strain Art Badge */}
-        <div className="relative z-10 flex flex-col items-center text-center">
-          <div className="size-20 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-lg group-hover:scale-105 transition-transform">
-            <span aria-hidden className="msym text-4xl text-emerald-300">
-              {genetics === "Indica" ? "psychiatry" : genetics === "Sativa" ? "spa" : "eco"}
-            </span>
-          </div>
-          <span className="mt-2 text-[10px] uppercase font-bold tracking-widest text-emerald-200/90">
-            Medizinisches Cannabis
-          </span>
-        </div>
-
-        {/* Genetics Corner Badge */}
-        <div className="absolute top-3 left-3">
-          <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md shadow-sm ${
-            genetics === "Sativa"
-              ? "bg-amber-500/80 text-white"
-              : genetics === "Indica"
-                ? "bg-purple-600/80 text-white"
-                : "bg-emerald-600/80 text-white"
-          }`}>
-            {genetics}
-          </span>
-        </div>
-
-        {/* Stock Status Badge */}
-        <div className="absolute top-3 right-3">
-          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold backdrop-blur-md bg-black/40 text-emerald-300 border border-emerald-500/30 flex items-center gap-1">
-            <span className="size-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            {t("inStock")}
-          </span>
-        </div>
-      </div>
-    );
+  // Resolve authentic real product image
+  function getProductImage(item: InventoryItem): string {
+    if (item.imageUrl) return item.imageUrl;
+    if (item.category === "Extract" || item.unit === "ml") {
+      return "/products/cannabis_extract_oil.jpg";
+    }
+    if (item.genetics === "Sativa") {
+      return "/products/cannabis_flower_sativa.jpg";
+    }
+    if (item.genetics === "Indica") {
+      return "/products/cannabis_flower_indica.jpg";
+    }
+    return "/products/cannabis_flower_hybrid.jpg";
   }
 
   return (
@@ -252,9 +243,11 @@ function InventoryContent() {
                     </span>
                     <span>{p.name}</span>
                     {p.isFavorite && (
-                      <span className={`rounded-full px-1.5 py-0.2 text-[9px] ${
-                        active ? "bg-white/20 text-white" : "bg-emerald-100 text-emerald-800"
-                      }`}>
+                      <span
+                        className={`rounded-full px-1.5 py-0.2 text-[9px] ${
+                          active ? "bg-white/20 text-white" : "bg-emerald-100 text-emerald-800"
+                        }`}
+                      >
                         ★ Favorit
                       </span>
                     )}
@@ -322,90 +315,120 @@ function InventoryContent() {
       </div>
 
       {/* Filter and Search Controls */}
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        {/* Category Tabs */}
-        <div className="flex items-center gap-1.5 rounded-xl bg-white p-1 border border-hairline shadow-sm">
-          <button
-            type="button"
-            onClick={() => setCategoryFilter("ALL")}
-            className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
-              categoryFilter === "ALL"
-                ? "bg-pine-600 text-white"
-                : "text-muted hover:text-ink-strong"
-            }`}
-          >
-            {t("filterAll")}
-          </button>
-          <button
-            type="button"
-            onClick={() => setCategoryFilter("Flower")}
-            className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
-              categoryFilter === "Flower"
-                ? "bg-pine-600 text-white"
-                : "text-muted hover:text-ink-strong"
-            }`}
-          >
-            {t("filterFlowers")}
-          </button>
-          <button
-            type="button"
-            onClick={() => setCategoryFilter("Extract")}
-            className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
-              categoryFilter === "Extract"
-                ? "bg-pine-600 text-white"
-                : "text-muted hover:text-ink-strong"
-            }`}
-          >
-            {t("filterExtracts")}
-          </button>
-        </div>
-
-        {/* Genetics Filter */}
-        <div className="flex items-center gap-1.5 rounded-xl bg-white p-1 border border-hairline shadow-sm text-xs">
-          {(["ALL", "Sativa", "Indica", "Hybrid"] as const).map((gen) => (
+      <div className="space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          {/* Category Tabs */}
+          <div className="flex items-center gap-1.5 rounded-xl bg-white p-1 border border-hairline shadow-sm">
             <button
-              key={gen}
               type="button"
-              onClick={() => setGeneticsFilter(gen)}
-              className={`rounded-lg px-2.5 py-1.5 font-bold transition-colors ${
-                geneticsFilter === gen
-                  ? "bg-[#0c3527] text-white"
+              onClick={() => setCategoryFilter("ALL")}
+              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+                categoryFilter === "ALL"
+                  ? "bg-pine-600 text-white"
                   : "text-muted hover:text-ink-strong"
               }`}
             >
-              {gen === "ALL" ? "Alle Genetiken" : gen}
+              {t("filterAll")}
             </button>
-          ))}
-        </div>
+            <button
+              type="button"
+              onClick={() => setCategoryFilter("Flower")}
+              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+                categoryFilter === "Flower"
+                  ? "bg-pine-600 text-white"
+                  : "text-muted hover:text-ink-strong"
+              }`}
+            >
+              {t("filterFlowers")}
+            </button>
+            <button
+              type="button"
+              onClick={() => setCategoryFilter("Extract")}
+              className={`rounded-lg px-3 py-1.5 text-xs font-bold transition-colors ${
+                categoryFilter === "Extract"
+                  ? "bg-pine-600 text-white"
+                  : "text-muted hover:text-ink-strong"
+              }`}
+            >
+              {t("filterExtracts")}
+            </button>
+          </div>
 
-        {/* Search Bar */}
-        <div className="relative min-w-[220px] flex-1 sm:max-w-xs">
-          <span
-            aria-hidden
-            className="msym absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-muted pointer-events-none"
+          {/* Genetics Filter */}
+          <div className="flex items-center gap-1.5 rounded-xl bg-white p-1 border border-hairline shadow-sm text-xs">
+            {(["ALL", "Sativa", "Indica", "Hybrid"] as const).map((gen) => (
+              <button
+                key={gen}
+                type="button"
+                onClick={() => setGeneticsFilter(gen)}
+                className={`rounded-lg px-2.5 py-1.5 font-bold transition-colors ${
+                  geneticsFilter === gen
+                    ? "bg-[#0c3527] text-white"
+                    : "text-muted hover:text-ink-strong"
+                }`}
+              >
+                {gen === "ALL" ? "Alle Genetiken" : gen}
+              </button>
+            ))}
+          </div>
+
+          {/* Search Bar */}
+          <div className="relative min-w-[200px] flex-1 sm:max-w-xs">
+            <span
+              aria-hidden
+              className="msym absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-muted pointer-events-none"
+            >
+              search
+            </span>
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={t("searchPlaceholder")}
+              className="h-10 w-full rounded-xl border border-hairline bg-white pl-9 pr-3 text-xs text-ink-strong outline-none focus:border-pine-600 shadow-sm"
+            />
+          </div>
+
+          {/* Sort dropdown */}
+          <select
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
+            className="h-10 rounded-xl border border-hairline bg-white px-3 text-xs font-medium text-ink-strong outline-none focus:border-pine-600 shadow-sm"
           >
-            search
-          </span>
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder={t("searchPlaceholder")}
-            className="h-10 w-full rounded-xl border border-hairline bg-white pl-9 pr-3 text-xs text-ink-strong outline-none focus:border-pine-600 shadow-sm"
-          />
+            <option value="price-asc">Preis: aufsteigend (€/g)</option>
+            <option value="price-desc">Preis: absteigend (€/g)</option>
+            <option value="thc-desc">THC-Gehalt: absteigend</option>
+            <option value="name-asc">Sorte: A–Z</option>
+          </select>
         </div>
 
-        {/* Sort dropdown */}
-        <select
-          value={sortBy}
-          onChange={(e) => setSortBy(e.target.value as typeof sortBy)}
-          className="h-10 rounded-xl border border-hairline bg-white px-3 text-xs font-medium text-ink-strong outline-none focus:border-pine-600 shadow-sm"
-        >
-          <option value="price-asc">Preis: aufsteigend (€/g)</option>
-          <option value="price-desc">Preis: absteigend (€/g)</option>
-          <option value="thc-desc">THC-Gehalt: absteigend</option>
-          <option value="stock-desc">Verfügbarkeit: am meisten</option>
-        </select>
+        {/* Advanced Effect Profile Filter Bar */}
+        <div className="flex flex-wrap items-center gap-2 rounded-2xl border border-hairline bg-white p-3 shadow-sm">
+          <span className="text-xs font-bold uppercase tracking-wider text-muted mr-1 flex items-center gap-1">
+            <span aria-hidden className="msym text-[16px] text-pine-600">filter_list</span>
+            Wirkprofil:
+          </span>
+          {EFFECT_OPTIONS.map((eff) => {
+            const active = effectFilter === eff.key;
+            return (
+              <button
+                key={eff.key}
+                type="button"
+                onClick={() => setEffectFilter(eff.key)}
+                className={`flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-semibold transition-all ${
+                  active
+                    ? "bg-pine-600 text-white shadow-xs"
+                    : "bg-[#f6f8fc] text-ink-strong hover:bg-slate-200"
+                }`}
+              >
+                <span aria-hidden className="msym text-[14px]">
+                  {eff.icon}
+                </span>
+                <span>{eff.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* Product Grid */}
@@ -430,82 +453,140 @@ function InventoryContent() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {filteredItems.map((item, idx) => (
-            <div
-              key={item.id}
-              className="group flex flex-col justify-between rounded-2xl border border-hairline bg-white shadow-sm hover:border-pine-600 hover:shadow-md transition-all overflow-hidden"
-            >
-              <div>
-                {/* Visual Strain Presentation */}
-                {getStrainIllustration(item.genetics, idx)}
+          {filteredItems.map((item) => {
+            const imgSrc = getProductImage(item);
+            const isAvailable = item.availability === "IN_STOCK" || item.inStock;
 
-                {/* Body Content */}
-                <div className="p-5">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="text-[10px] font-mono font-semibold uppercase text-muted">
-                      SKU: {item.sku}
-                    </span>
-                    <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
-                      {item.stockLevel} {item.unit} auf Lager
-                    </span>
-                  </div>
-
-                  <h3 className="mt-2 font-display text-lg font-bold text-ink-strong group-hover:text-pine-600 transition-colors">
-                    {item.name}
-                  </h3>
-
-                  {/* Cannabinoid Profile Pills */}
-                  <div className="mt-3 flex flex-wrap gap-2 text-xs">
-                    {item.thc !== null && (
-                      <span className="rounded-lg bg-emerald-50 px-2.5 py-1 font-bold text-emerald-800 border border-emerald-100">
-                        THC {item.thc}%
-                      </span>
-                    )}
-                    {item.cbd !== null && (
-                      <span className="rounded-lg bg-blue-50 px-2.5 py-1 font-bold text-blue-800 border border-blue-100">
-                        CBD {item.cbd}%
-                      </span>
-                    )}
-                    <span className="rounded-lg bg-slate-50 px-2.5 py-1 font-medium text-slate-700 border border-slate-200">
-                      {item.category === "Flower" ? "Cannabisblüte" : item.category}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Price & Actions Footer */}
-              <div className="border-t border-hairline bg-[#f8fafc] p-4 flex items-center justify-between">
+            return (
+              <div
+                key={item.id}
+                className="group flex flex-col justify-between rounded-2xl border border-hairline bg-white shadow-sm hover:border-pine-600 hover:shadow-md transition-all overflow-hidden"
+              >
                 <div>
-                  <span className="block text-[10px] font-bold uppercase tracking-wider text-muted">
-                    Preis
-                  </span>
-                  <span className="font-display text-xl font-bold text-pine-900">
-                    {(item.price ?? 0).toFixed(2)} € <span className="text-xs font-normal text-muted">/ g</span>
-                  </span>
+                  {/* Real Product Image Showcase */}
+                  <div className="relative h-48 w-full overflow-hidden bg-slate-100">
+                    <img
+                      src={imgSrc}
+                      alt={item.name}
+                      className="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+
+                    {/* Genetics Corner Badge */}
+                    <div className="absolute top-3 left-3">
+                      <span
+                        className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider backdrop-blur-md shadow-sm ${
+                          item.genetics === "Sativa"
+                            ? "bg-amber-500/90 text-white"
+                            : item.genetics === "Indica"
+                              ? "bg-purple-600/90 text-white"
+                              : "bg-emerald-600/90 text-white"
+                        }`}
+                      >
+                        {item.genetics}
+                      </span>
+                    </div>
+
+                    {/* Stock Status Badge without raw numeric inventory */}
+                    <div className="absolute top-3 right-3">
+                      <span
+                        className={`px-2.5 py-1 rounded-full text-[11px] font-bold backdrop-blur-md shadow-sm flex items-center gap-1.5 ${
+                          isAvailable
+                            ? "bg-emerald-900/85 text-emerald-200 border border-emerald-500/30"
+                            : "bg-amber-900/85 text-amber-200 border border-amber-500/30"
+                        }`}
+                      >
+                        <span
+                          className={`size-1.5 rounded-full ${
+                            isAvailable ? "bg-emerald-400 animate-pulse" : "bg-amber-400"
+                          }`}
+                        />
+                        {isAvailable ? "Sofort verfügbar" : "Auf Anfrage"}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Body Content */}
+                  <div className="p-5">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="text-[10px] font-mono font-semibold uppercase text-muted">
+                        SKU: {item.sku}
+                      </span>
+                      <span className="text-[11px] font-medium text-muted">
+                        {item.category === "Flower" ? "Cannabisblüte" : item.category}
+                      </span>
+                    </div>
+
+                    <h3 className="mt-2 font-display text-lg font-bold text-ink-strong group-hover:text-pine-600 transition-colors line-clamp-1">
+                      {item.name}
+                    </h3>
+
+                    {/* Cannabinoid Profile Pills */}
+                    <div className="mt-3 flex flex-wrap gap-2 text-xs">
+                      {item.thc !== null && (
+                        <span className="rounded-lg bg-emerald-50 px-2.5 py-1 font-bold text-emerald-800 border border-emerald-100">
+                          THC {item.thc}%
+                        </span>
+                      )}
+                      {item.cbd !== null && (
+                        <span className="rounded-lg bg-blue-50 px-2.5 py-1 font-bold text-blue-800 border border-blue-100">
+                          CBD {item.cbd}%
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Therapeutic Effect Profile Tags */}
+                    {item.effects && item.effects.length > 0 && (
+                      <div className="mt-3 flex flex-wrap gap-1.5 pt-2 border-t border-hairline">
+                        {item.effects.map((eff) => (
+                          <span
+                            key={eff}
+                            className="rounded-md bg-slate-50 px-2 py-0.5 text-[10px] font-semibold text-slate-700 border border-slate-200/80"
+                          >
+                            {EFFECT_LABELS[eff] || eff}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <Link
-                    href={`/patient/feedback?pharmacyId=${selectedPharmacyId}&strain=${encodeURIComponent(
-                      item.name || ""
-                    )}`}
-                    title="Feedback zu dieser Sorte an Apotheke senden"
-                    className="size-9 rounded-xl border border-hairline bg-white flex items-center justify-center text-amber-600 hover:bg-amber-50 hover:border-amber-300 transition-colors shadow-sm"
-                  >
-                    <span aria-hidden className="msym text-[18px]">rate_review</span>
-                  </Link>
+                {/* Price & Actions Footer */}
+                <div className="border-t border-hairline bg-[#f8fafc] p-4 flex items-center justify-between">
+                  <div>
+                    <span className="block text-[10px] font-bold uppercase tracking-wider text-muted">
+                      Preis
+                    </span>
+                    <span className="font-display text-xl font-bold text-pine-900">
+                      {(item.price ?? 0).toFixed(2)} €{" "}
+                      <span className="text-xs font-normal text-muted">
+                        / {item.unit || "g"}
+                      </span>
+                    </span>
+                  </div>
 
-                  <Link
-                    href="/patient/prescriptions"
-                    className="h-9 px-3 rounded-xl bg-pine-600 font-bold text-xs text-white shadow-sm hover:bg-pine-700 flex items-center gap-1 transition-colors"
-                  >
-                    <span aria-hidden className="msym text-[16px]">receipt</span>
-                    Rezept
-                  </Link>
+                  <div className="flex items-center gap-2">
+                    <Link
+                      href={`/patient/feedback?pharmacyId=${selectedPharmacyId}&strain=${encodeURIComponent(
+                        item.name || ""
+                      )}`}
+                      title="Feedback zu dieser Sorte an Apotheke senden"
+                      className="size-9 rounded-xl border border-hairline bg-white flex items-center justify-center text-amber-600 hover:bg-amber-50 hover:border-amber-300 transition-colors shadow-sm"
+                    >
+                      <span aria-hidden className="msym text-[18px]">rate_review</span>
+                    </Link>
+
+                    <Link
+                      href="/patient/prescriptions"
+                      className="h-9 px-3 rounded-xl bg-pine-600 font-bold text-xs text-white shadow-sm hover:bg-pine-700 flex items-center gap-1 transition-colors"
+                    >
+                      <span aria-hidden className="msym text-[16px]">receipt</span>
+                      Rezept
+                    </Link>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>

@@ -25,6 +25,7 @@ type PhysicianPractice = {
   website: string | null;
   description: string | null;
   specialty?: string | null;
+  distanceKm?: number;
   operatingHours: OperatingHour[] | null;
   branding?: any;
   memberships: {
@@ -115,11 +116,19 @@ function PhysicianDrawer({
             <h2 className="font-display text-xl font-bold text-ink-strong leading-tight">
               {practice.name}
             </h2>
-            <p className="mt-1 flex items-center gap-1.5 text-sm text-muted">
+            <p className="mt-1 flex items-center gap-1.5 text-sm text-muted flex-wrap">
               <span className="msym text-[14px]">location_on</span>
-              {practice.city
-                ? [practice.postalCode, practice.city].filter(Boolean).join(" ")
-                : t("address")}
+              <span>
+                {practice.city
+                  ? [practice.postalCode, practice.city].filter(Boolean).join(" ")
+                  : t("address")}
+              </span>
+              {practice.distanceKm != null && (
+                <span className="ml-1 inline-flex items-center gap-1 rounded-full bg-pine/10 px-2.5 py-0.5 text-xs font-bold text-pine">
+                  <span className="msym text-[12px]">near_me</span>
+                  {practice.distanceKm} km entfernt
+                </span>
+              )}
             </p>
           </div>
           <button
@@ -411,12 +420,18 @@ export default function PharmacyNetworkPage() {
                   </div>
                 </div>
 
-                {/* Specialty Badge (Item 7 Requirement) */}
+                {/* Specialty and Distance Badges */}
                 <div className="mt-3 flex flex-wrap items-center gap-2">
                   <span className="inline-flex items-center gap-1 rounded-md bg-pine-50 px-2.5 py-1 text-xs font-semibold text-pine-700 ring-1 ring-inset ring-pine-600/20">
                     <span className="msym text-[14px]">stethoscope</span>
                     {specialty}
                   </span>
+                  {practice.distanceKm != null && (
+                    <span className="inline-flex items-center gap-1 rounded-md bg-emerald-50 px-2.5 py-1 text-xs font-bold text-emerald-800 ring-1 ring-inset ring-emerald-600/20">
+                      <span className="msym text-[14px]">near_me</span>
+                      {practice.distanceKm} km
+                    </span>
+                  )}
                   {Array.isArray(practice.operatingHours) &&
                     practice.operatingHours.length > 0 && (
                       <span className="inline-flex items-center gap-1 rounded-md bg-blue-50 px-2 py-1 text-[11px] font-medium text-blue-700 ring-1 ring-inset ring-blue-600/20">
