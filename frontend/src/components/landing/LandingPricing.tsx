@@ -205,7 +205,8 @@ export function LandingPricing() {
           )}
 
           {activeTab === "pharmacies" && (
-            <div className="grid gap-8 md:grid-cols-3">
+            <div>
+              <div className="grid gap-8 md:grid-cols-3">
               {/* Flex */}
               <div className="rounded-2xl border border-hairline bg-white p-8 transition-all hover:border-pine-600 duration-300 flex flex-col justify-between">
                 <div>
@@ -251,15 +252,19 @@ export function LandingPricing() {
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyS0") || "Everything in Starter"}
+                      {t("bulletPharmacyS0")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyS1") || "Priority Routing in Network"}
+                      {t("bulletPharmacyS1")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyS2") || "Analytics & Inventory Sync"}
+                      {t("bulletPharmacyS2")}
+                    </li>
+                    <li className="flex gap-2.5 items-center font-semibold">
+                      <span className="msym text-[18px] text-pine-600">check_circle</span>
+                      {t("bulletPharmacyS3")}
                     </li>
                   </ul>
                 </div>
@@ -282,15 +287,19 @@ export function LandingPricing() {
                   <ul className="mt-6 space-y-3 text-sm text-ink-strong">
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyM0") || "Everything in Pro"}
+                      {t("bulletPharmacyM0")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyM1") || "Custom ERP Integrations"}
+                      {t("bulletPharmacyM1")}
                     </li>
                     <li className="flex gap-2.5 items-center font-semibold">
                       <span className="msym text-[18px] text-pine-600">check_circle</span>
-                      {t("bulletPharmacyM2") || "Dedicated Account Manager"}
+                      {t("bulletPharmacyM2")}
+                    </li>
+                    <li className="flex gap-2.5 items-center font-semibold">
+                      <span className="msym text-[18px] text-pine-600">check_circle</span>
+                      {t("bulletPharmacyM3")}
                     </li>
                   </ul>
                 </div>
@@ -306,12 +315,25 @@ export function LandingPricing() {
                     onClick={() => setActiveTab("enterprise")}
                     className="mt-4 flex items-center justify-center gap-1 w-full text-center text-xs font-semibold text-pine-600 hover:text-pine hover:underline transition-colors cursor-pointer"
                   >
-                    <span>{t("flashbackMEnterpriseNote") || "Looking for Telemedicine Enterprise?"}</span>
+                    <span>{t("flashbackMEnterpriseNote")}</span>
                     <span aria-hidden className="msym text-[14px]">arrow_forward</span>
                   </button>
                 </div>
               </div>
             </div>
+
+            <div className="mt-8 flex justify-center">
+              <button
+                type="button"
+                onClick={() => setActiveTab("enterprise")}
+                className="inline-flex items-center gap-2 rounded-xl border border-pine-200 bg-pine-50/70 px-5 py-3 text-xs sm:text-sm font-bold text-pine-800 hover:bg-pine-100 hover:text-pine-900 transition-colors cursor-pointer shadow-xs"
+              >
+                <span aria-hidden className="msym text-[18px] text-pine-600">domain</span>
+                <span>{t("flashbackMEnterpriseNote")}</span>
+                <span aria-hidden className="msym text-[16px]">arrow_forward</span>
+              </button>
+            </div>
+          </div>
           )}
 
           {activeTab === "physicians" && (
