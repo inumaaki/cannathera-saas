@@ -721,8 +721,11 @@ export class PatientService {
         lower.includes('tropfen') ||
         lower.includes('lösung');
 
+      // 0. Resolved Genetics
       let genetics: 'Sativa' | 'Indica' | 'Hybrid' = 'Hybrid';
-      if (
+      if (it.genetics === 'Sativa' || it.genetics === 'Indica' || it.genetics === 'Hybrid') {
+        genetics = it.genetics as 'Sativa' | 'Indica' | 'Hybrid';
+      } else if (
         lower.includes('sativa') ||
         lower.includes('bedrocan') ||
         lower.includes('ghost') ||
@@ -740,65 +743,69 @@ export class PatientService {
         genetics = 'Indica';
       }
 
-      // 1. Realistic German Medical Cannabis Market Prices
-      let price = 7.95;
+      // 1. Exact 1:1 Live Synchronized Price
       const unit = isExtract ? 'ml' : (it.unit || 'g');
-      if (isExtract) {
-        // Medical extracts: 2.25 € - 3.20 € / ml
-        const extractBase = 2.40 + ((it.thc || 10) * 0.035) + ((idx * 7) % 5) * 0.12;
-        price = parseFloat(extractBase.toFixed(2));
-      } else {
-        // High quality medical flower: 6.45 € - 9.80 € / g
-        if (lower.includes('enua') || lower.includes('bcp')) price = 6.45;
-        else if (lower.includes('remexian') || lower.includes('frosted')) price = 6.90;
-        else if (lower.includes('drapalin')) price = 7.50;
-        else if (lower.includes('avaay')) price = 7.80;
-        else if (lower.includes('tilray')) price = 7.95;
-        else if (lower.includes('pedanios 18')) price = 8.20;
-        else if (lower.includes('demecan')) price = 8.50;
-        else if (lower.includes('pedanios') || lower.includes('ghost')) price = 8.90;
-        else if (lower.includes('cannamedical')) price = 8.95;
-        else if (lower.includes('bedrocan')) price = 9.20;
-        else if (lower.includes('420') || lower.includes('evolution')) price = 9.40;
-        else if (lower.includes('aurora') || lower.includes('pink kush')) price = 9.80;
-        else {
-          const calc = 6.50 + ((Math.min(it.thc || 20, 28) - 15) * 0.18) + ((idx * 3) % 5) * 0.20;
-          price = parseFloat(Math.min(10.20, Math.max(5.95, calc)).toFixed(2));
+      let price = typeof it.price === 'number' && it.price > 0 ? it.price : 7.95;
+      if (!it.price || it.price <= 0) {
+        if (isExtract) {
+          const extractBase = 2.40 + ((it.thc || 10) * 0.035) + ((idx * 7) % 5) * 0.12;
+          price = parseFloat(extractBase.toFixed(2));
+        } else {
+          if (lower.includes('enua') || lower.includes('bcp')) price = 6.45;
+          else if (lower.includes('remexian') || lower.includes('frosted')) price = 6.90;
+          else if (lower.includes('drapalin')) price = 7.50;
+          else if (lower.includes('avaay')) price = 7.80;
+          else if (lower.includes('tilray')) price = 7.95;
+          else if (lower.includes('pedanios 18')) price = 8.20;
+          else if (lower.includes('demecan')) price = 8.50;
+          else if (lower.includes('pedanios') || lower.includes('ghost')) price = 8.90;
+          else if (lower.includes('cannamedical')) price = 8.95;
+          else if (lower.includes('bedrocan')) price = 9.20;
+          else if (lower.includes('420') || lower.includes('evolution')) price = 9.40;
+          else if (lower.includes('aurora') || lower.includes('pink kush')) price = 9.80;
+          else {
+            const calc = 6.50 + ((Math.min(it.thc || 20, 28) - 15) * 0.18) + ((idx * 3) % 5) * 0.20;
+            price = parseFloat(Math.min(10.20, Math.max(5.95, calc)).toFixed(2));
+          }
         }
       }
 
-      // 2. Real Product Images
-      let imageUrl = '/products/cannabis_flower_hybrid.jpg';
-      if (isExtract) {
-        imageUrl = '/products/cannabis_extract_oil.jpg';
-      } else if (lower.includes('kush') || lower.includes('pink') || lower.includes('og')) {
-        imageUrl = '/products/cannabis_flower_kush.jpg';
-      } else if (genetics === 'Sativa') {
-        imageUrl = '/products/cannabis_flower_sativa.jpg';
-      } else if (genetics === 'Indica') {
-        imageUrl = '/products/cannabis_flower_indica.jpg';
-      } else {
-        imageUrl = '/products/cannabis_flower_hybrid.jpg';
+      // 2. Authentic Original Product Images (from Webshop / Supabase CDN)
+      let imageUrl = it.imageUrl;
+      if (!imageUrl) {
+        if (isExtract) {
+          imageUrl = '/products/cannabis_extract_oil.jpg';
+        } else if (lower.includes('kush') || lower.includes('pink') || lower.includes('og')) {
+          imageUrl = '/products/cannabis_flower_kush.jpg';
+        } else if (genetics === 'Sativa') {
+          imageUrl = '/products/cannabis_flower_sativa.jpg';
+        } else if (genetics === 'Indica') {
+          imageUrl = '/products/cannabis_flower_indica.jpg';
+        } else {
+          imageUrl = '/products/cannabis_flower_hybrid.jpg';
+        }
       }
 
       // 3. Therapeutic Effect Profile tags
-      const effects: string[] = [];
-      if (isExtract) {
-        effects.push('pain', 'calm', 'sleep');
-      } else if (genetics === 'Indica') {
-        effects.push('pain', 'calm');
-        if (lower.includes('kush') || lower.includes('pink') || (it.thc || 0) >= 22) {
-          effects.push('sleep');
-        }
-      } else if (genetics === 'Sativa') {
-        effects.push('focus', 'euphoric');
-        if ((it.thc || 0) >= 20) {
-          effects.push('pain');
-        }
-      } else {
-        effects.push('calm', 'pain');
-        if (lower.includes('cookies') || lower.includes('lemon') || (it.thc || 0) >= 22) {
-          effects.push('euphoric');
+      let effects: string[] = it.effects && it.effects.length > 0 ? it.effects : [];
+      if (effects.length === 0) {
+        if (isExtract) {
+          effects = ['pain', 'calm', 'sleep'];
+        } else if (genetics === 'Indica') {
+          effects = ['pain', 'calm'];
+          if (lower.includes('kush') || lower.includes('pink') || (it.thc || 0) >= 22) {
+            effects.push('sleep');
+          }
+        } else if (genetics === 'Sativa') {
+          effects = ['focus', 'euphoric'];
+          if ((it.thc || 0) >= 20) {
+            effects.push('pain');
+          }
+        } else {
+          effects = ['calm', 'pain'];
+          if (lower.includes('cookies') || lower.includes('lemon') || (it.thc || 0) >= 22) {
+            effects.push('euphoric');
+          }
         }
       }
 

@@ -709,6 +709,10 @@ model InventoryItem {
   reorderQty      Float? // quantity of the open purchase order
   orderedAt       DateTime? // when the reorder was placed
   lastRestockAt   DateTime? // when goods were last booked in
+  price           Float?
+  imageUrl        String?
+  genetics        String?
+  effects         String[]  @default([])
   active          Boolean   @default(true) // archived instead of deleted (audit trail)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt

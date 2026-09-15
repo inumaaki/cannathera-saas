@@ -12,6 +12,7 @@ import {
   SubscriptionTier,
 } from "@prisma/client";
 import * as argon2 from "argon2";
+import { GRASTHEKE_SNAPSHOT_CATALOG } from "../src/pharmacy/grastheke-catalog";
 
 const prisma = new PrismaClient();
 const DAY = 86_400_000;
@@ -76,12 +77,15 @@ async function main() {
           street: p.address,
           lat: p.city === "Berlin" ? 52.5 : 51.47, // rough coords
           lng: p.city === "Berlin" ? 13.4 : 6.85,
-          branding: { contactPerson: "Management", address: p.address },
+          branding: { contactPerson: "Management", address: p.address, webshopUrl: "https://www.grastheke.de" },
+          website: "https://www.grastheke.de",
         },
       });
       if (p.name === pharmaciesToCreate[0].name) {
         org = created;
       }
+    } else if (p.name === pharmaciesToCreate[0].name) {
+      org = exists;
     }
   }
 
@@ -132,10 +136,16 @@ async function main() {
   }
 
   // --- Inventory ------------------------------------------------------------
-  for (const item of ITEMS) {
+  for (const item of [...ITEMS, ...GRASTHEKE_SNAPSHOT_CATALOG]) {
     await prisma.inventoryItem.upsert({
       where: { orgId_sku: { orgId: org.id, sku: item.sku } },
-      update: { stockLevel: item.stockLevel },
+      update: {
+        stockLevel: item.stockLevel,
+        price: (item as any).price,
+        imageUrl: (item as any).imageUrl || null,
+        genetics: (item as any).genetics,
+        effects: (item as any).effects || [],
+      },
       create: { ...item, orgId: org.id },
     });
   }

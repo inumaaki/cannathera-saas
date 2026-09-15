@@ -5,7 +5,22 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   // Workspace TS packages consumed as source — transpile them.
-  transpilePackages: ["@cannathera/shared", "@cannathera/ui"],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.supabase.co",
+      },
+      {
+        protocol: "https",
+        hostname: "**.grastheke.de",
+      },
+      {
+        protocol: "https",
+        hostname: "**.digitaloceanspaces.com",
+      },
+    ],
+  },
   async rewrites() {
     return [
       {

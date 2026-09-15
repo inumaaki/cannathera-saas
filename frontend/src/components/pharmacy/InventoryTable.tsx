@@ -12,6 +12,10 @@ export type Item = {
   category: string;
   thc: number | null;
   cbd: number | null;
+  price?: number | null;
+  imageUrl?: string | null;
+  genetics?: string | null;
+  effects?: string[];
   stockLevel: number;
   unit: string;
   safetyThreshold: number;
@@ -151,13 +155,37 @@ export function InventoryTable({ items }: Readonly<{ items: Item[] }>) {
                 {items.map((i) => (
                   <tr key={i.id} className="border-b border-hairline last:border-0">
                     <td className="px-6 py-4">
-                      <p className="font-bold text-ink-strong">{i.name}</p>
-                      <p className="font-mono text-xs text-muted">{i.sku}</p>
-                      {i.lastRestockAt ? (
-                        <p className="mt-0.5 text-xs text-muted">
-                          {t("lastRestock", { date: day(i.lastRestockAt) })}
-                        </p>
-                      ) : null}
+                      <div className="flex items-center gap-3">
+                        {i.imageUrl ? (
+                          <img
+                            src={i.imageUrl}
+                            alt={i.name}
+                            className="size-10 rounded-lg object-cover border border-hairline shrink-0 bg-slate-50"
+                          />
+                        ) : (
+                          <div className="size-10 rounded-lg border border-hairline shrink-0 bg-slate-100 flex items-center justify-center text-muted">
+                            <span aria-hidden className="msym text-[18px]">
+                              {i.category === "Extract" || i.category === "Oil" ? "science" : "spa"}
+                            </span>
+                          </div>
+                        )}
+                        <div className="min-w-0">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <p className="font-bold text-ink-strong">{i.name}</p>
+                            {i.price != null && i.price > 0 ? (
+                              <span className="rounded-md bg-emerald-50 px-1.5 py-0.5 text-[11px] font-bold text-emerald-700 border border-emerald-100 shrink-0">
+                                {i.price.toFixed(2)} €
+                              </span>
+                            ) : null}
+                          </div>
+                          <p className="font-mono text-xs text-muted">{i.sku}</p>
+                          {i.lastRestockAt ? (
+                            <p className="mt-0.5 text-xs text-muted">
+                              {t("lastRestock", { date: day(i.lastRestockAt) })}
+                            </p>
+                          ) : null}
+                        </div>
+                      </div>
                     </td>
                     <td className="px-6 py-4 text-ink-strong">{categoryLabel(i.category)}</td>
                     <td className="px-6 py-4 font-mono text-ink-strong">
