@@ -38,6 +38,11 @@ export function useLiveNotifications() {
   const [connected, setConnected] = useState(false);
 
   useEffect(() => {
+    // Request browser notification permission eagerly so reminders can fire.
+    if (typeof Notification !== "undefined" && Notification.permission === "default") {
+      Notification.requestPermission();
+    }
+
     const source = new EventSource(`${API_URL}/notifications/stream`, {
       withCredentials: true,
     });
@@ -53,6 +58,33 @@ export function useLiveNotifications() {
       setLive((prev) => [payload, ...prev].slice(0, 20));
       // Pull the server-rendered counts back in sync with what just arrived.
       router.refresh();
+
+      // Fire a real browser push notification for reminder and critical events.
+      const shouldPush =
+        payload.kind === "intake_reminder" ||
+        payload.severity === "critical" ||
+        payload.kind === "prescription_status_update";
+
+      if (shouldPush && typeof Notification !== "undefined") {
+        if (Notification.permission === "granted") {
+          new Notification(payload.title, {
+            body: payload.text,
+            icon: "/icon-192.png",
+            tag: payload.kind, // prevents duplicate stacking for same kind
+          });
+        } else if (Notification.permission === "default") {
+          // Ask again then fire
+          Notification.requestPermission().then((perm) => {
+            if (perm === "granted") {
+              new Notification(payload.title, {
+                body: payload.text,
+                icon: "/icon-192.png",
+                tag: payload.kind,
+              });
+            }
+          });
+        }
+      }
     };
 
     return () => source.close();

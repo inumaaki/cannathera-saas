@@ -32,14 +32,34 @@ export function LiveReminders({ reminderTimes }: { reminderTimes: string[] }) {
   const [show, setShow] = useState(false);
   const lastTriggeredRef = useRef<string>("");
 
-  useEffect(() => {
-    if (!reminderTimes || reminderTimes.length === 0) return;
+  function fireBrowserNotification(title: string, body: string) {
+    if (typeof Notification === "undefined") return;
+    if (Notification.permission === "granted") {
+      new Notification(title, { body, icon: "/icon-192.png", tag: "intake_reminder" });
+    } else if (Notification.permission === "default") {
+      Notification.requestPermission().then((perm) => {
+        if (perm === "granted") {
+          new Notification(title, { body, icon: "/icon-192.png", tag: "intake_reminder" });
+        } else {
+          setShow(true);
+        }
+      });
+    } else {
+      setShow(true);
+    }
+  }
 
+  useEffect(() => {
     // Request browser notification permission eagerly
     if (typeof Notification !== "undefined" && Notification.permission === "default") {
       Notification.requestPermission();
     }
 
+    if (!reminderTimes || reminderTimes.length === 0) return;
+
+    // Clock-based polling (5 s) as fallback in case the SSE connection drops
+    // or the backend missed a cycle. The primary path is useLiveNotifications,
+    // which fires browser notifications when it receives an intake_reminder SSE event.
     const interval = setInterval(() => {
       const now = new Date();
       const hh = String(now.getHours()).padStart(2, "0");
@@ -51,25 +71,14 @@ export function LiveReminders({ reminderTimes }: { reminderTimes: string[] }) {
         lastTriggeredRef.current !== currentTimeStr
       ) {
         lastTriggeredRef.current = currentTimeStr;
-        // Also persist across page reloads
         localStorage.setItem("lastReminderTrigger", currentTimeStr);
-
-        // Play audible alarm
         playAlarm();
-
-        if (typeof Notification !== "undefined" && Notification.permission === "granted") {
-          new Notification(t("logDueTitle"), {
-            body: t("logDueText"),
-            icon: "/icon-192.png",
-          });
-        } else {
-          // Fallback: show in-app banner
-          setShow(true);
-        }
+        fireBrowserNotification(t("logDueTitle"), t("logDueText"));
       }
-    }, 15_000);
+    }, 5_000);
 
     return () => clearInterval(interval);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reminderTimes, t]);
 
   if (!show) return null;
