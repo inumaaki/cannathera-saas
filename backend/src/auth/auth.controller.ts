@@ -158,13 +158,14 @@ export class AuthController {
     };
   }
 
-  /** Cookie lifetime tracks the org's session policy, not a hard-coded 30 days. */
   private setSessionCookie(res: Response, session: string, ttlMin: number) {
+    const maxAgeMs = ttlMin * 60 * 1000;
     res.cookie(SESSION_COOKIE, session, {
       httpOnly: true,
       sameSite: cookieSameSite,
       secure: isProd,
-      maxAge: ttlMin * 60 * 1000,
+      maxAge: maxAgeMs,
+      expires: new Date(Date.now() + maxAgeMs),
       path: '/',
     });
   }

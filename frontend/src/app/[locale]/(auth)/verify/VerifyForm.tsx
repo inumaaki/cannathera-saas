@@ -47,6 +47,7 @@ export function VerifyForm() {
         { method: "POST", body: { code } },
       );
       sessionStorage.removeItem("cannathera_dev_code");
+      sessionStorage.removeItem("cannathera_remember");
       if (res.pendingActivation) {
         window.location.assign(`/${locale}/pending-approval`);
         return;

@@ -45,6 +45,8 @@ export function LoginForm() {
         window.location.assign(res.home);
         return;
       }
+      const rememberMe = form.get("remember") === "on";
+      sessionStorage.setItem("cannathera_remember", rememberMe ? "true" : "false");
       sessionStorage.removeItem("cannathera_dev_code");
       if (
         process.env.NEXT_PUBLIC_EXPOSE_DEV_AUTH_CODES === "true" &&

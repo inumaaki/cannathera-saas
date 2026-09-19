@@ -3,6 +3,7 @@ import { apiServer } from "@/lib/api-server";
 import { LogoUpload } from "./LogoUpload";
 import { PracticeForm } from "./PracticeForm";
 import { requirePermission } from "@/lib/permissions";
+import type { OperatingHour } from "@/types/operatingHours";
 
 type Org = {
   id: string;
@@ -13,8 +14,8 @@ type Org = {
   phone?: string | null;
   email?: string | null;
   website?: string | null;
-  operatingHours?: any;
-  branding: Record<string, any> | null;
+  operatingHours?: OperatingHour[];
+  branding: Record<string, unknown> | null;
 };
 
 /* Figma 5.7 Profile — Clinic Identity (persists to Organization). */

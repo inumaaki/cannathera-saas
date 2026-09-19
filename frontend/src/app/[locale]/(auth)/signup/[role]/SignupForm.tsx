@@ -1,6 +1,5 @@
- 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
 
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
@@ -55,6 +54,10 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
   const [account, setAccount] = useState<Record<string, string>>({});
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  /** Compares role without triggering TS control-flow narrowing in JSX. */
+  const isRole = (...roles: SignupRole[]) => (roles as string[]).includes(role as string);
+
 
   const langRef = useRef<HTMLDivElement>(null);
   const [langOpen, setLangOpen] = useState(false);
@@ -353,7 +356,7 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
             </>
           )}
 
-          {role === ("doctor" as any) && (
+          {isRole("doctor") && (
             <>
               <TextField
                 label={f("practiceName")}
@@ -391,7 +394,7 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
             </>
           )}
 
-          {role === ("pharmacy" as any) && (
+          {isRole("pharmacy") && (
             <>
               <TextField
                 label={f("pharmacyName")}
@@ -429,7 +432,7 @@ export function SignupForm({ role }: Readonly<{ role: SignupRole }>) {
             </>
           )}
 
-          {role === ("enterprise" as any) && (
+          {isRole("enterprise") && (
             <>
               <TextField
                 label={f("companyName")}

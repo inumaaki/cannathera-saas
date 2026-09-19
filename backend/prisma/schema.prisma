@@ -744,6 +744,7 @@ model InventoryTransaction {
 model PricingPlan {
   id           String           @id @default(cuid())
   tier         SubscriptionTier
+  targetGroup  OrgType          @default(PRACTICE)
   name         String
   monthlyPrice Decimal          @db.Decimal(10, 2)
   reviewCap    Int? // included reviews per month; null = unlimited/tiered

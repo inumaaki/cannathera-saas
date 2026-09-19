@@ -93,7 +93,7 @@ export async function fetchGrasthekeLiveCatalog(baseUrl: string): Promise<Synced
       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
       'Accept-Language': 'de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
     },
-    signal: AbortSignal.timeout(10000),
+    signal: AbortSignal.timeout(3500),
   });
 
   if (!resp.ok) {

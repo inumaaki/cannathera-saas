@@ -133,8 +133,8 @@ export class AdminController {
   }
 
   @Get('pricing-plans')
-  async listPricingPlans() {
-    return this.adminService.listPricingPlans();
+  async listPricingPlans(@Query('targetGroup') targetGroup?: OrgType) {
+    return this.adminService.listPricingPlans(targetGroup);
   }
 
   @Patch('pricing-plans/:id')

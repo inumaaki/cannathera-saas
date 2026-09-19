@@ -7,6 +7,7 @@ import { api } from "@/lib/api";
 import { Link, useRouter } from "@/i18n/navigation";
 import Image from "next/image";
 import { formatOperatingHours } from "@/lib/formatHours";
+import type { OperatingHour } from "@/types/operatingHours";
 
 type InventoryItem = {
   id: string;
@@ -33,7 +34,7 @@ type PharmacyInfo = {
   phone?: string | null;
   email?: string | null;
   website?: string | null;
-  operatingHours?: any;
+  operatingHours?: OperatingHour[];
   productFocus?: string | null;
 };
 

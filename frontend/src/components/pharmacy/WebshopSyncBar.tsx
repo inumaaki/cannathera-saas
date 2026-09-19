@@ -47,7 +47,8 @@ export function WebshopSyncBar({ initialData }: Readonly<{ initialData?: Webshop
     setSyncing(true);
     setMessage(null);
     try {
-      const res: any = await api("/pharmacy/inventory/sync-webshop", {
+      type SyncResult = { lastSync: string; syncedCount: number };
+      const res = await api<SyncResult>("/pharmacy/inventory/sync-webshop", {
         method: "POST",
         body: { url: url.trim() },
       });
@@ -57,8 +58,9 @@ export function WebshopSyncBar({ initialData }: Readonly<{ initialData?: Webshop
         t("syncSuccess", { count: res?.syncedCount || 12 })
       );
       router.refresh();
-    } catch {
-      setMessage("Synchronisation fehlgeschlagen. Bitte Verbindung prüfen.");
+    } catch (err: unknown) {
+      const errorMsg = err instanceof Error ? err.message : "Synchronisation fehlgeschlagen. Bitte Verbindung prüfen.";
+      setMessage(errorMsg);
     } finally {
       setSyncing(false);
     }

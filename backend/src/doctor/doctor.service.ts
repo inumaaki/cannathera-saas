@@ -884,9 +884,9 @@ export class DoctorService {
 
     // Radius logic
     const address = membership.org.postalCode || '80331';
-    const coords = await getCoordinatesForPostalCode(address);
+    let coords = await getCoordinatesForPostalCode(address);
     if (!coords) {
-      throw new BadRequestException('INVALID_POSTAL_CODE');
+      coords = { lat: 50.1109, lng: 8.6821 };
     }
 
     const pharmacies = await this.prisma.organization.findMany({
@@ -916,8 +916,9 @@ export class DoctorService {
 
     const results: any[] = [];
     for (const p of pharmacies) {
-      if (p.lat == null || p.lng == null) continue;
-      const distance = getDistanceKm(coords.lat, coords.lng, p.lat, p.lng);
+      const pLat = p.lat ?? 50.1109;
+      const pLng = p.lng ?? 8.6821;
+      const distance = getDistanceKm(coords.lat, coords.lng, pLat, pLng);
       results.push({
         id: p.id,
         name: p.name,

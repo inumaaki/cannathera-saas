@@ -1,4 +1,6 @@
+import { Logger } from '@nestjs/common';
 import type { ReportData } from './reports.service';
+
 
 /* Branded A4 report — mirrors the client's "Muster-Monatsreport" (concept PDF
    p. 4): dosage curve, strain history, symptom development, side effects,
@@ -320,10 +322,9 @@ export async function renderReportPdf(d: ReportData): Promise<Buffer> {
 
     const buffer = Buffer.from(pdfBytes);
 
-    console.log(
-      `[ReportsService] generate: PDF rendered, size=${buffer.length}, header=${buffer
-        .subarray(0, 5)
-        .toString()}`,
+    const pdfLogger = new Logger('renderReportPdf');
+    pdfLogger.log(
+      `PDF rendered, size=${buffer.length}, header=${buffer.subarray(0, 5).toString()}`,
     );
 
     return buffer;

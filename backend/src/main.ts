@@ -22,6 +22,10 @@ async function bootstrap() {
     app.getHttpAdapter().getInstance().set('trust proxy', trustProxyHops);
   }
 
+  const express = await import('express');
+  app.use(express.json({ limit: '50mb' }));
+  app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
   app.use(cookieParser());
   // Public assets only — practice logos. Report PDFs are Art. 9 health data and
   // are NEVER served statically; they go through GET /reports/file/:id, which
@@ -47,7 +51,6 @@ async function bootstrap() {
     new ValidationPipe({
       whitelist: true,
       transform: true,
-      forbidUnknownValues: false,
     }),
   );
 

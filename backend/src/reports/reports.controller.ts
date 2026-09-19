@@ -2,6 +2,7 @@ import {
   Controller,
   ForbiddenException,
   Get,
+  Logger,
   Param,
   Query,
   Res,
@@ -29,6 +30,8 @@ function toType(value?: string): ReportType {
 @Controller('documents')
 @UseGuards(SessionGuard, PermissionsGuard)
 export class ReportsController {
+  private readonly logger = new Logger(ReportsController.name);
+
   constructor(private readonly reports: ReportsService) {}
 
   /** Practice team or pharmacy: report for a patient on their own case. */
@@ -162,9 +165,7 @@ export class ReportsController {
       throw new ForbiddenException();
     }
 
-    console.log(
-      `[ReportsController] Received request for myReport (type: ${type}) from user ${user.sub}`,
-    );
+    this.logger.log(`myReport request type=${type} user=${user.sub}`);
 
     const patientId = await this.reports.patientIdOfUser(user.sub);
 
@@ -181,9 +182,7 @@ export class ReportsController {
 
       const pdfHeader = buffer.subarray(0, 5).toString();
 
-      console.log(
-        `[ReportsController] Sending PDF: filename=${filename}, size=${buffer.length}, header=${pdfHeader}`,
-      );
+      this.logger.log(`Sending PDF: filename=${filename}, size=${buffer.length}, header=${pdfHeader}`);
 
       if (buffer.length < 1000 || pdfHeader !== '%PDF-') {
         throw new Error(

@@ -104,7 +104,7 @@ export default function DoctorChatThreadPage() {
     try {
       const msg = await api<Message>(`/doctor/chat/${pharmacyId}/messages`, {
         method: "POST",
-        body: JSON.stringify({ content: text }),
+        body: { content: text },
       });
       setMessages((prev) => [...prev, msg]);
       setContent("");

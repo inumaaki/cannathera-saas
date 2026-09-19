@@ -65,6 +65,12 @@ export function useLiveNotifications() {
         payload.severity === "critical" ||
         payload.kind === "prescription_status_update";
 
+      if (shouldPush) {
+        import("@/components/patient/LiveReminders").then((m) => {
+          m.playAudibleNotificationChime?.();
+        }).catch(() => {});
+      }
+
       if (shouldPush && typeof Notification !== "undefined") {
         if (Notification.permission === "granted") {
           new Notification(payload.title, {

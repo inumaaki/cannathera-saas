@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { api } from "@/lib/api";
+import type { OperatingHour } from "@/types/operatingHours";
 
 type Org = {
   id: string;
@@ -13,16 +14,12 @@ type Org = {
   phone?: string | null;
   email?: string | null;
   website?: string | null;
-  operatingHours?: any;
-  branding: Record<string, any> | null;
+  operatingHours?: OperatingHour[];
+  branding: Record<string, unknown> | null;
 };
 
-type DaySchedule = {
-  day: string;
-  open: string;
-  close: string;
-  closed: boolean;
-};
+/** Alias for shared OperatingHour — same shape as the API response. */
+type DaySchedule = OperatingHour;
 
 const DAYS_OF_WEEK = [
   "Montag",
@@ -103,27 +100,28 @@ function parseInitialHours(raw: any): DaySchedule[] {
 export function PracticeForm({ org }: Readonly<{ org: Org }>) {
   const t = useTranslations("doctor.settings");
   const b = org.branding ?? {};
+  const bs = (k: string): string => String((b as Record<string, unknown>)[k] ?? "");
 
-  const initialSpecialty = (b.specialty as string) ||
-    (b.practiceType === "pain"
+  const initialSpecialty = bs("specialty") ||
+    (bs("practiceType") === "pain"
       ? "Spezielle Schmerztherapie"
-      : b.practiceType === "general"
+      : bs("practiceType") === "general"
         ? "Allgemeinmedizin"
-        : b.practiceType === "clinic"
+        : bs("practiceType") === "clinic"
           ? "Klinik / MVZ"
           : "Allgemeinmedizin");
 
   const [form, setForm] = useState({
     name: org.name ?? "",
-    practiceType: b.practiceType ?? "pain",
+    practiceType: bs("practiceType") || "pain",
     specialty: initialSpecialty,
-    email: org.email ?? b.email ?? "",
-    phone: org.phone ?? b.phone ?? "",
-    website: org.website ?? b.website ?? "",
-    street: org.street ?? b.street ?? "",
-    postal: org.postalCode ?? b.postal ?? "",
-    city: org.city ?? b.city ?? "",
-    country: b.country ?? "Deutschland",
+    email: org.email ?? bs("email"),
+    phone: org.phone ?? bs("phone"),
+    website: org.website ?? bs("website"),
+    street: org.street ?? bs("street"),
+    postal: org.postalCode ?? bs("postal"),
+    city: org.city ?? bs("city"),
+    country: bs("country") || "Deutschland",
   });
 
   const [hours, setHours] = useState<DaySchedule[]>(() =>

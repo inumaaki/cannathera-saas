@@ -65,6 +65,7 @@ type GlobalUser = {
 type PricingPlan = {
   id: string;
   tier: string;
+  targetGroup?: string;
   name: string;
   monthlyPrice: string | number;
   reviewCap: number | null;
@@ -1241,9 +1242,18 @@ export default function AdminDashboardPage() {
                   <div>
                     <div className="flex items-center justify-between border-b border-hairline pb-3">
                       <div>
-                        <span className="rounded-full bg-brand/15 px-2.5 py-0.5 text-[10px] font-bold text-brand uppercase tracking-wider">
-                          {p.tier}
-                        </span>
+                        <div className="flex items-center gap-1.5">
+                          <span className="rounded-full bg-brand/15 px-2.5 py-0.5 text-[10px] font-bold text-brand uppercase tracking-wider">
+                            {p.tier}
+                          </span>
+                          <span className={`rounded-full px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
+                            p.targetGroup === "PHARMACY"
+                              ? "bg-amber-100 text-amber-800"
+                              : "bg-blue-100 text-blue-800"
+                          }`}>
+                            {p.targetGroup === "PHARMACY" ? "Apotheke" : "Arzt / Praxis"}
+                          </span>
+                        </div>
                         <h4 className="text-lg font-extrabold text-pine mt-1">{p.name}</h4>
                       </div>
                       <span className="msym text-[28px] text-muted">payments</span>
@@ -1817,12 +1827,31 @@ export default function AdminDashboardPage() {
                     label={t("licensePlan")}
                     value={formData.planTier}
                     onChange={(planTier) => setFormData((current) => ({ ...current, planTier }))}
-                    options={[
-                      { value: "BASIC", label: t("basicOption") },
-                      { value: "PLUS", label: t("plusOption") },
-                      { value: "PREMIUM", label: t("premiumOption") },
-                      { value: "ENTERPRISE", label: t("enterpriseOption") },
-                    ]}
+                    options={
+                      formData.type === "PHARMACY"
+                        ? [
+                            { value: "BASIC", label: "Apotheke Flex (199 € - bis 50 Pat.)" },
+                            { value: "PLUS", label: "Apotheke Flashback S (399 € - bis 150 Pat.)" },
+                            { value: "PREMIUM", label: "Apotheke Flashback M (699 € - bis 350 Pat.)" },
+                            { value: "ENTERPRISE", label: "Apotheke Enterprise (999 € - 350+ Pat.)" },
+                          ]
+                        : formData.type === "PRACTICE"
+                        ? [
+                            { value: "BASIC", label: "Arzt-Praxis Basic (149 € - bis 50 Fälle)" },
+                            { value: "PLUS", label: "Arzt-Praxis Pro (249 € - bis 150 Fälle)" },
+                            { value: "PREMIUM", label: "Arzt-Praxis Premium (349 € - bis 300 Fälle)" },
+                            { value: "ENTERPRISE", label: "Arzt-Praxis Enterprise (799 € - Unbegrenzt)" },
+                          ]
+                        : formData.type === "PATIENT"
+                        ? [
+                            { value: "BASIC", label: "Patient Basic (19 € / Mt.)" },
+                            { value: "PLUS", label: "Patient Plus (39 € / Mt.)" },
+                            { value: "PREMIUM", label: "Patient Premium (69 € / Mt.)" },
+                          ]
+                        : [
+                            { value: "ENTERPRISE", label: "Telemedizin Plattform (Individuell)" },
+                          ]
+                    }
                   />
                 </div>
 

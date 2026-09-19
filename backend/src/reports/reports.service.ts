@@ -1,6 +1,7 @@
 import {
   ForbiddenException,
   Injectable,
+  Logger,
   NotFoundException,
 } from '@nestjs/common';
 import { ReportType, Role, SubscriptionTier } from '@prisma/client';
@@ -98,6 +99,8 @@ import { AiService } from './ai.service';
 
 @Injectable()
 export class ReportsService {
+  private readonly logger = new Logger(ReportsService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly aiService: AiService,
@@ -444,15 +447,11 @@ export class ReportsService {
       }
     }
 
-    console.log(
-      `[ReportsService] generate: building data for patientId=${patientId} type=${type}`,
-    );
+    this.logger.log(`generate: building data for patientId=${patientId} type=${type}`);
     const data = await this.buildData(patientId, type);
-    console.log(`[ReportsService] generate: rendering PDF...`);
+    this.logger.log('generate: rendering PDF...');
     const buffer = await renderReportPdf(data);
-    console.log(
-      `[ReportsService] generate: PDF rendered, size=${buffer.length}`,
-    );
+    this.logger.log(`generate: PDF rendered, size=${buffer.length}`);
 
     const fs = await import('fs/promises');
     const path = await import('path');

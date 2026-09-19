@@ -2,6 +2,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { apiServer } from "@/lib/api-server";
 import { PrescriptionStatusEditor } from "./PrescriptionStatusEditor";
 import { AiUploadButton } from "./AiUploadButton";
+import { AssignPatientButton } from "./AssignPatientButton";
 import { format } from "date-fns";
 
 type PrescriptionItem = {
@@ -143,9 +144,7 @@ export default async function PharmacyPrescriptionsPage({
                       <td className="px-6 py-4 align-top text-right">
                         <div className="flex justify-end items-center gap-3">
                           {isUnmatched ? (
-                            <button className="text-xs font-bold bg-white text-red-600 border border-red-200 px-3 py-1.5 rounded-md hover:bg-red-50">
-                              {t("assignPatient")}
-                            </button>
+                            <AssignPatientButton prescriptionId={p.id} />
                           ) : (
                             <PrescriptionStatusEditor id={p.id} currentStatus={p.status} />
                           )}

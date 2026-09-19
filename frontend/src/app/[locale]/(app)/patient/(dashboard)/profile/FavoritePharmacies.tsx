@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { api } from "@/lib/api";
 import { Link, useRouter } from "@/i18n/navigation";
 import { formatOperatingHours } from "@/lib/formatHours";
+import type { OperatingHour } from "@/types/operatingHours";
 
 export type PharmacyResult = {
   id: string;
@@ -15,7 +16,7 @@ export type PharmacyResult = {
   phone?: string | null;
   email?: string | null;
   website?: string | null;
-  operatingHours?: any;
+  operatingHours?: OperatingHour[];
   distanceKm: number;
   availableStrainsCount: number;
   lat: number;

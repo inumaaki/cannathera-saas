@@ -3,13 +3,10 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { api } from "@/lib/api";
+import type { OperatingHour } from "@/types/operatingHours";
 
-type OperatingHour = {
-  day: string;
-  open: string;
-  close: string;
-  closed: boolean;
-};
+
+
 
 type SettingsData = {
   name: string;
@@ -20,7 +17,7 @@ type SettingsData = {
   email?: string;
   website?: string;
   productFocus?: string;
-  operatingHours?: any;
+  operatingHours?: OperatingHour[];
 };
 
 const DAYS_OF_WEEK = [
@@ -36,10 +33,10 @@ const DAYS_OF_WEEK = [
 const miniInput =
   "h-9 rounded-lg border border-hairline bg-white px-2.5 text-xs text-ink-strong outline-none focus:border-pine-600 focus:ring-2 focus:ring-pine-600/20 disabled:bg-surface disabled:text-muted";
 
-function parseInitialHours(raw: any): OperatingHour[] {
+function parseInitialHours(raw: OperatingHour[] | unknown): OperatingHour[] {
   if (Array.isArray(raw) && raw.length > 0) {
     return DAYS_OF_WEEK.map((dayName) => {
-      const match = raw.find((r: any) => {
+      const match = (raw as OperatingHour[]).find((r) => {
         if (!r?.day) return false;
         const d = String(r.day).toLowerCase();
         const target = dayName.toLowerCase();

@@ -102,6 +102,13 @@ class RescheduleDto {
   scheduledAt!: string;
 }
 
+class SendMessageDto {
+  @IsString()
+  @MinLength(1)
+  @MaxLength(5000)
+  content!: string;
+}
+
 @Controller('doctor')
 @UseGuards(SessionGuard, RolesGuard, SubscriptionGuard, PermissionsGuard)
 /* Practice-scoped: platform Role.ADMIN has no practice and is deliberately not
@@ -233,20 +240,9 @@ export class DoctorController {
   sendChatMessage(
     @CurrentUser() user: SessionPayload,
     @Param('pharmacyId') pharmacyId: string,
-    @Body() body: any,
+    @Body() dto: SendMessageDto,
   ) {
-    let content = body;
-    if (typeof body === 'string') {
-      try {
-        const parsed = JSON.parse(body);
-        content = parsed.content ?? parsed;
-      } catch {
-        content = body;
-      }
-    } else if (body && typeof body === 'object') {
-      content = body.content ?? body;
-    }
-    return this.doctors.sendChatMessage(user.sub, pharmacyId, String(content));
+    return this.doctors.sendChatMessage(user.sub, pharmacyId, dto.content);
   }
 
   @Get('patients')

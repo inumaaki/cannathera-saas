@@ -65,11 +65,13 @@ export class SessionGuard implements CanActivate {
       { expiresIn: `${ttlMin}m` },
     );
     const res = ctx.switchToHttp().getResponse<Response>();
+    const maxAgeMs = ttlMin * 60 * 1000;
     res.cookie(SESSION_COOKIE, renewed, {
       httpOnly: true,
       sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
       secure: process.env.NODE_ENV === 'production',
-      maxAge: ttlMin * 60 * 1000,
+      maxAge: maxAgeMs,
+      expires: new Date(Date.now() + maxAgeMs),
       path: '/',
     });
   }

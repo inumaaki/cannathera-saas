@@ -197,6 +197,11 @@ class UploadAiPrescriptionDto {
   fileUrl!: string;
 }
 
+class SendChatMessageDto {
+  @IsString()
+  content!: string;
+}
+
 @Controller('pharmacy')
 @UseGuards(SessionGuard, RolesGuard, SubscriptionGuard)
 @Roles(Role.PHARMACY)
@@ -228,6 +233,34 @@ export class PharmacyController {
       dto.status,
       dto.rejectionReason,
     );
+  }
+
+  @Patch('prescriptions/:id/status')
+  updatePrescriptionStatusAlt(
+    @Param('id') id: string,
+    @CurrentUser() user: SessionPayload,
+    @Body() dto: UpdatePrescriptionStatusDto,
+  ) {
+    return this.pharmacy.updatePrescriptionStatus(
+      user.sub,
+      id,
+      dto.status,
+      dto.rejectionReason,
+    );
+  }
+
+  @Patch('prescriptions/:id/assign-patient')
+  assignPatient(
+    @Param('id') id: string,
+    @CurrentUser() user: SessionPayload,
+    @Body('patientId') patientId: string,
+  ) {
+    return this.pharmacy.assignPatientToPrescription(user.sub, id, patientId);
+  }
+
+  @Get('patients')
+  getPatients(@CurrentUser() user: SessionPayload) {
+    return this.pharmacy.getPatients(user.sub);
   }
 
   @Post('prescriptions/:id/process')
@@ -463,19 +496,9 @@ export class PharmacyController {
   sendChatMessage(
     @CurrentUser() user: SessionPayload,
     @Param('practiceId') practiceId: string,
-    @Body() body: any,
+    @Body() dto: SendChatMessageDto,
   ) {
-    let content = body;
-    if (typeof body === 'string') {
-      try {
-        const parsed = JSON.parse(body);
-        content = parsed.content ?? parsed;
-      } catch {
-        content = body;
-      }
-    } else if (body && typeof body === 'object') {
-      content = body.content ?? body;
-    }
-    return this.pharmacy.sendChatMessage(user.sub, practiceId, String(content));
+    const content = typeof dto?.content === 'string' ? dto.content : String((dto as any) || '');
+    return this.pharmacy.sendChatMessage(user.sub, practiceId, content);
   }
 }

@@ -3,25 +3,50 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 
-/** Plays a short beep via the Web Audio API — no external file needed. */
-function playAlarm() {
+let sharedAudioCtx: AudioContext | null = null;
+function getAudioContext() {
+  if (!sharedAudioCtx && typeof window !== "undefined") {
+    const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
+    if (AudioCtx) sharedAudioCtx = new AudioCtx();
+  }
+  if (sharedAudioCtx?.state === "suspended") {
+    sharedAudioCtx.resume().catch(() => {});
+  }
+  return sharedAudioCtx;
+}
+
+/** Plays a distinct, audible notification chime via Web Audio API */
+export function playAudibleNotificationChime() {
   try {
-    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
-    const osc = ctx.createOscillator();
-    const gain = ctx.createGain();
+    const ctx = getAudioContext();
+    if (!ctx) return;
+    const now = ctx.currentTime;
 
-    osc.type = "sine";
-    osc.frequency.setValueAtTime(880, ctx.currentTime);         // A5
-    osc.frequency.setValueAtTime(660, ctx.currentTime + 0.15);  // E5
-    osc.frequency.setValueAtTime(880, ctx.currentTime + 0.30);  // A5
+    // First note: C5 (523.25 Hz)
+    const osc1 = ctx.createOscillator();
+    const gain1 = ctx.createGain();
+    osc1.type = "sine";
+    osc1.frequency.setValueAtTime(523.25, now);
+    gain1.gain.setValueAtTime(0, now);
+    gain1.gain.linearRampToValueAtTime(0.5, now + 0.05);
+    gain1.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+    osc1.connect(gain1);
+    gain1.connect(ctx.destination);
+    osc1.start(now);
+    osc1.stop(now + 0.4);
 
-    gain.gain.setValueAtTime(0.6, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.60);
-
-    osc.connect(gain);
-    gain.connect(ctx.destination);
-    osc.start(ctx.currentTime);
-    osc.stop(ctx.currentTime + 0.65);
+    // Second note: G5 (783.99 Hz)
+    const osc2 = ctx.createOscillator();
+    const gain2 = ctx.createGain();
+    osc2.type = "sine";
+    osc2.frequency.setValueAtTime(783.99, now + 0.15);
+    gain2.gain.setValueAtTime(0, now + 0.15);
+    gain2.gain.linearRampToValueAtTime(0.6, now + 0.20);
+    gain2.gain.exponentialRampToValueAtTime(0.001, now + 0.65);
+    osc2.connect(gain2);
+    gain2.connect(ctx.destination);
+    osc2.start(now + 0.15);
+    osc2.stop(now + 0.7);
   } catch {
     // Silently ignore if AudioContext is blocked
   }
@@ -40,16 +65,22 @@ export function LiveReminders({ reminderTimes }: { reminderTimes: string[] }) {
       Notification.requestPermission().then((perm) => {
         if (perm === "granted") {
           new Notification(title, { body, icon: "/icon-192.png", tag: "intake_reminder" });
-        } else {
-          setShow(true);
         }
       });
-    } else {
-      setShow(true);
     }
+    setShow(true);
   }
 
   useEffect(() => {
+    // Unlock AudioContext on user interaction
+    const unlockAudio = () => {
+      getAudioContext();
+      window.removeEventListener("click", unlockAudio);
+      window.removeEventListener("touchstart", unlockAudio);
+    };
+    window.addEventListener("click", unlockAudio, { once: true });
+    window.addEventListener("touchstart", unlockAudio, { once: true });
+
     // Request browser notification permission eagerly
     if (typeof Notification !== "undefined" && Notification.permission === "default") {
       Notification.requestPermission();
@@ -57,9 +88,7 @@ export function LiveReminders({ reminderTimes }: { reminderTimes: string[] }) {
 
     if (!reminderTimes || reminderTimes.length === 0) return;
 
-    // Clock-based polling (5 s) as fallback in case the SSE connection drops
-    // or the backend missed a cycle. The primary path is useLiveNotifications,
-    // which fires browser notifications when it receives an intake_reminder SSE event.
+    // Clock-based polling (5 s)
     const interval = setInterval(() => {
       const now = new Date();
       const hh = String(now.getHours()).padStart(2, "0");
@@ -72,13 +101,13 @@ export function LiveReminders({ reminderTimes }: { reminderTimes: string[] }) {
       ) {
         lastTriggeredRef.current = currentTimeStr;
         localStorage.setItem("lastReminderTrigger", currentTimeStr);
-        playAlarm();
+        playAudibleNotificationChime();
         fireBrowserNotification(t("logDueTitle"), t("logDueText"));
+        setShow(true);
       }
     }, 5_000);
 
     return () => clearInterval(interval);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reminderTimes, t]);
 
   if (!show) return null;

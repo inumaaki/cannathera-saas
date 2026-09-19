@@ -1,5 +1,6 @@
 import {
   Injectable,
+  Logger,
   NotFoundException,
   BadRequestException,
 } from '@nestjs/common';
@@ -21,6 +22,8 @@ import {
 
 @Injectable()
 export class AdminService {
+  private readonly logger = new Logger(AdminService.name);
+
   constructor(private readonly prisma: PrismaService) {}
 
   private async sendActivationEmail(user: {
@@ -32,9 +35,7 @@ export class AdminService {
       !process.env.SMTP_USER ||
       !process.env.SMTP_PASS
     ) {
-      console.log(
-        `[ACTIVATION MOCK EMAIL] Account activated for ${user.email}`,
-      );
+      this.logger.log(`[MOCK] Activation email skipped (no SMTP) for ${user.email}`);
       return;
     }
 
@@ -56,9 +57,9 @@ export class AdminService {
         to: user.email,
         ...accountActivatedEmail({ firstName: user.firstName }),
       });
-      console.log(`Activation email sent to ${user.email}`);
+      this.logger.log(`Activation email sent to ${user.email}`);
     } catch (error) {
-      console.error(`Failed to send activation email to ${user.email}:`, error);
+      this.logger.error(`Failed to send activation email to ${user.email}:`, error);
     }
   }
 
@@ -482,22 +483,17 @@ export class AdminService {
               ...message,
             })
             .then(() => {
-              console.log(`Onboarding email sent to ${user.email}`);
+              this.logger.log(`Onboarding email sent to ${user.email}`);
             })
             .catch((err) => {
-              console.error('Failed to send onboarding email:', err);
+              this.logger.error('Failed to send onboarding email:', err);
             });
         })
         .catch((err: any) => {
-          console.error(
-            'Failed to resolve SMTP host to IPv4 for onboarding:',
-            err,
-          );
+          this.logger.error('Failed to resolve SMTP host to IPv4 for onboarding:', err);
         });
     } else {
-      console.log(
-        `[ONBOARDING MOCK EMAIL] Temporary credentials for ${user.email}: ${tempPassword}`,
-      );
+      this.logger.log(`[MOCK] Onboarding email skipped (no SMTP) for ${user.email}`);
     }
 
     return { orgId: org.id, userId: user.id, tempPassword };
@@ -639,37 +635,97 @@ export class AdminService {
     return { userId: updated.id, isActive: updated.isActive };
   }
 
-  async listPricingPlans() {
-    const tiers = [
-      SubscriptionTier.BASIC,
-      SubscriptionTier.PLUS,
-      SubscriptionTier.PREMIUM,
-      SubscriptionTier.ENTERPRISE,
+  async listPricingPlans(targetGroup?: OrgType) {
+    const defaultPlans = [
+      // Doctor / Practice Plans
+      {
+        tier: SubscriptionTier.BASIC,
+        targetGroup: OrgType.PRACTICE,
+        name: 'Arzt-Praxis Basic',
+        monthlyPrice: 149,
+        reviewCap: 50,
+        features: { pdfExports: true, patientCaseLimit: 50 },
+      },
+      {
+        tier: SubscriptionTier.PLUS,
+        targetGroup: OrgType.PRACTICE,
+        name: 'Arzt-Praxis Pro',
+        monthlyPrice: 249,
+        reviewCap: 150,
+        features: { pdfExports: true, patientCaseLimit: 150 },
+      },
+      {
+        tier: SubscriptionTier.PREMIUM,
+        targetGroup: OrgType.PRACTICE,
+        name: 'Arzt-Praxis Premium',
+        monthlyPrice: 349,
+        reviewCap: 300,
+        features: { pdfExports: true, patientCaseLimit: 300, prioritySupport: true },
+      },
+      {
+        tier: SubscriptionTier.ENTERPRISE,
+        targetGroup: OrgType.PRACTICE,
+        name: 'Arzt-Praxis Enterprise',
+        monthlyPrice: 799,
+        reviewCap: null,
+        features: { pdfExports: true, patientCaseLimit: null, customIntegrations: true },
+      },
+      // Pharmacy Plans
+      {
+        tier: SubscriptionTier.BASIC,
+        targetGroup: OrgType.PHARMACY,
+        name: 'Apotheke Flex (bis 50 Pat.)',
+        monthlyPrice: 199,
+        reviewCap: 50,
+        features: { webshopSync: true, maxPatients: 50 },
+      },
+      {
+        tier: SubscriptionTier.PLUS,
+        targetGroup: OrgType.PHARMACY,
+        name: 'Apotheke Flashback S (bis 150 Pat.)',
+        monthlyPrice: 399,
+        reviewCap: 150,
+        features: { webshopSync: true, maxPatients: 150 },
+      },
+      {
+        tier: SubscriptionTier.PREMIUM,
+        targetGroup: OrgType.PHARMACY,
+        name: 'Apotheke Flashback M (bis 350 Pat.)',
+        monthlyPrice: 699,
+        reviewCap: 350,
+        features: { webshopSync: true, maxPatients: 350, priorityDispense: true },
+      },
+      {
+        tier: SubscriptionTier.ENTERPRISE,
+        targetGroup: OrgType.PHARMACY,
+        name: 'Apotheke Enterprise (350+ Pat.)',
+        monthlyPrice: 999,
+        reviewCap: null,
+        features: { webshopSync: true, maxPatients: null, dedicatedApi: true },
+      },
     ];
-    for (const tier of tiers) {
+
+    for (const p of defaultPlans) {
       const exists = await this.prisma.pricingPlan.findFirst({
-        where: { tier },
+        where: { tier: p.tier, targetGroup: p.targetGroup },
       });
       if (!exists) {
         await this.prisma.pricingPlan.create({
-          data: {
-            tier,
-            name: tier.toString(),
-            monthlyPrice: tier === SubscriptionTier.PREMIUM ? 349 : 149,
-            reviewCap: tier === SubscriptionTier.ENTERPRISE ? null : 100,
-            features: { pdfExports: true },
-          },
+          data: p,
         });
       }
     }
+
+    const where = targetGroup ? { targetGroup } : {};
     return this.prisma.pricingPlan.findMany({
-      orderBy: { monthlyPrice: 'asc' },
+      where,
+      orderBy: [{ targetGroup: 'asc' }, { monthlyPrice: 'asc' }],
     });
   }
 
   async updatePricingPlan(
     id: string,
-    dto: { monthlyPrice?: number; reviewCap?: number; isActive?: boolean },
+    dto: { monthlyPrice?: number; reviewCap?: number; isActive?: boolean; targetGroup?: OrgType; name?: string },
   ) {
     const plan = await this.prisma.pricingPlan.findUnique({ where: { id } });
     if (!plan) throw new NotFoundException('PRICING_PLAN_NOT_FOUND');
