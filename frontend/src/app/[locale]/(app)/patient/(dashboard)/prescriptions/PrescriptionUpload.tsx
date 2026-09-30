@@ -29,6 +29,11 @@ type SelectedStrainItem = {
   genetics: string;
 };
 
+type CreatedPrescription = {
+  id: string;
+  status: string;
+};
+
 export function PrescriptionUpload({
   favoritePharmacies,
 }: Readonly<{
@@ -42,6 +47,8 @@ export function PrescriptionUpload({
   const [file, setFile] = useState<File | null>(null);
   const [pending, setPending] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [submittedPrescription, setSubmittedPrescription] =
+    useState<CreatedPrescription | null>(null);
 
   // Pharmacy Inventory for strain selection
   const [inventoryItems, setInventoryItems] = useState<InventoryItem[]>([]);
@@ -158,10 +165,11 @@ export function PrescriptionUpload({
 
     setPending(true);
     setError(null);
+    setSubmittedPrescription(null);
 
     const postPayload = async (base64String?: string) => {
       try {
-        await api("/patient/prescriptions", {
+        const createdPrescription = await api<CreatedPrescription>("/patient/prescriptions", {
           method: "POST",
           body: {
             pharmacyId,
@@ -178,6 +186,7 @@ export function PrescriptionUpload({
         setNote("");
         setFile(null);
         setSelectedStrains([]);
+        setSubmittedPrescription(createdPrescription);
         router.refresh();
       } catch (err) {
         const error = err as Error;
@@ -232,6 +241,35 @@ export function PrescriptionUpload({
 
   return (
     <form onSubmit={handleSubmit} className="rounded-2xl border border-hairline bg-white p-6 space-y-6 shadow-sm">
+      {submittedPrescription && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="flex gap-3 rounded-xl border border-emerald-200 bg-emerald-50 p-4 text-emerald-950"
+        >
+          <span
+            aria-hidden
+            className="msym flex size-9 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-xl text-white"
+          >
+            check
+          </span>
+          <div>
+            <p className="font-bold">Rezept erfolgreich eingereicht</p>
+            <p className="mt-1 text-sm text-emerald-800">
+              Ihre Apotheke hat das Rezept erhalten. Der aktuelle Status ist
+              <span className="ml-1 inline-flex rounded-full bg-blue-100 px-2 py-0.5 text-xs font-bold text-blue-800">
+                {submittedPrescription.status === "RECEIVED"
+                  ? "Eingegangen"
+                  : submittedPrescription.status}
+              </span>
+            </p>
+            <p className="mt-1 text-xs text-emerald-700">
+              Den weiteren Verlauf finden Sie über das Rezept-Symbol unten rechts.
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="flex flex-wrap items-center justify-between border-b border-hairline pb-4 gap-2">
         <div>
           <h3 className="font-display font-bold text-pine-900 text-xl">{t("upload.title")}</h3>

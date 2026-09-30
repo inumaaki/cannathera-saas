@@ -5,7 +5,6 @@ import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { api } from "@/lib/api";
 import { Link, useRouter } from "@/i18n/navigation";
-import Image from "next/image";
 import { formatOperatingHours } from "@/lib/formatHours";
 import type { OperatingHour } from "@/types/operatingHours";
 
@@ -453,7 +452,7 @@ function InventoryContent() {
           </p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(min(100%,18rem),1fr))] gap-5">
           {filteredItems.map((item) => {
             const imgSrc = getProductImage(item);
             const isAvailable = item.availability === "IN_STOCK" || item.inStock;
